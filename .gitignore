@@ -24,3 +24,7 @@
 /web/uploads/
 /web/css/
 /web/assetic/
+/web/app/firebase/firebase.js
+/src/OP/SocialBundle/Firebase/
+/src/OP/UserBundle/Security/Http/Authentication/google-service-account.json
+/src/OP/UserBundle/EventListener/google-service-account.json

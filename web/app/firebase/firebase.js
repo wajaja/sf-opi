@@ -29,6 +29,8 @@ const auth = firebase.auth();
 const db = firebase.database();
 
 export { 
+  prodConfig,
+  devConfig,
 	auth,
 	db,
 };

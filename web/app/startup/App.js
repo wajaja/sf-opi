@@ -37,6 +37,8 @@ import {
 const ModalPicture  = require('./../routes/media/pictures/ModalPicture').default,
 ModalVideo    = require('./../routes/media/videos/ModalVideo').default;
 
+import { prodConfig, devConfig } from './../firebase/firebase'
+
 import './../styles/social/social-layout.scss'
 import './../styles/social/opinion-animate.scss'
 import './../styles/social/rc-menu.scss';
@@ -463,23 +465,6 @@ const App = createReactClass ({
         { username, id, } = user;
 
         import('firebase').then((firebase) => {
-            const prodConfig = {
-                apiKey: "AIzaSyAlorCgK7NTTKQUB-jmGpntxKYfnIJNtbQ",
-                authDomain: "opinion-5f379.firebaseapp.com",
-                databaseURL: "https://opinion-5f379.firebaseio.com",
-                projectId: "opinion-5f379",
-                storageBucket: "opinion-5f379.appspot.com",
-                messagingSenderId: "335779001608"
-            };
-
-            const devConfig = {
-                apiKey: "AIzaSyAlorCgK7NTTKQUB-jmGpntxKYfnIJNtbQ",
-                authDomain: "opinion-5f379.firebaseapp.com",
-                databaseURL: "https://opinion-5f379.firebaseio.com",
-                projectId: "opinion-5f379",
-                storageBucket: "opinion-5f379.appspot.com",
-                messagingSenderId: "335779001608"
-            };
 
             const config = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
 
