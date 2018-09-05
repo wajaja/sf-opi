@@ -1,0 +1,32 @@
+<svg width="40" height="30" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient5060">
+   <stop stop-color="black" offset="0" id="stop5062"/>
+   <stop stop-color="black" stop-opacity="0" offset="1" id="stop5064"/>
+  </linearGradient>
+  <radialGradient xlink:href="#linearGradient5060" r="117.14286" id="radialGradient6877" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-2.774389,0,0,1.969706,112.7623,-872.8854)" fy="486.64789" fx="605.71429" cy="486.64789" cx="605.71429"/>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="32" width="42" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path opacity="0.402062" fill="url(#radialGradient6877)" fill-rule="nonzero" stroke-linecap="round" marker-start="none" marker-mid="none" marker-end="none" stroke-miterlimit="4" stroke-dashoffset="0" id="path6871" d="m18.577243,18.759265c0,0 0,9.981606 0,9.981606c-2.169885,0.01879 -5.245724,-2.236371 -5.245724,-4.991445c0,-2.755074 2.421427,-4.99016 5.245724,-4.990161z"/>
+  <path stroke="url(#gradbox_stroke)" fill="#086c92" fill-rule="nonzero" stroke-width="0.999999" stroke-miterlimit="4" stroke-dashoffset="0" marker-start="none" marker-mid="none" marker-end="none" id="path29441" d="m33.844578,2.411342c1.339106,0 2.400724,1.077824 2.400724,2.388753l0,18.801837c0,1.310938 -0.951929,2.350234 -2.291035,2.350234l-17.780651,0c-3.187014,2.016977 -1.742189,1.544129 -6.735649,3.403479c2.223211,-2.557724 2.016883,-2.22716 1.766236,-3.403479l-4.830293,0c-1.339097,0 -2.440089,-1.039296 -2.440089,-2.350234l0,-18.801837c0,-1.310929 1.100992,-2.388753 2.440089,-2.388753l27.470668,0z"/>
+  <polyline stroke-linecap="round" id="svg_1" points="16.705668903878014,21.422303211876745 16.705668903878014,21.422303211876745 " stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_2" points="24.274222973538414,21.20292483304601 24.274222973538414,21.20292483304601 " stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_3" points="34.25593921033691,21.20292483304601 34.25593921033691,21.20292483304601 " stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <polyline stroke="url(#gradbox_stroke)" stroke-linecap="round" id="svg_4" points="25.700182435938196,26.68738430381442 25.700182435938196,26.68738430381442 " stroke-width="0.999999" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_5" points="15.27970944147823,20.215722128307696 15.27970944147823,20.215722128307696 " stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_6" points="25.151736488861367,21.093235643630642 25.151736488861367,21.093235643630642 " stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_7" points="16.157222956801178,20.435100507138433 16.157222956801178,20.435100507138433 16.157222956801178,20.435100507138433 " stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_8" points="25.371114867692093,20.215722128307696 25.371114867692093,20.215722128307696 " stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <polyline stroke-linecap="round" id="svg_9" points="25.371114867692093,20.215722128307696 25.371114867692093,20.215722128307696 " stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <ellipse stroke="url(#gradbox_stroke)" ry="0.548446" rx="0.603291" id="svg_15" cy="14.292506" cx="16.979892" fill-opacity="null" stroke-opacity="null" stroke-width="0.999999" fill="none"/>
+  <ellipse rx="0.054845" id="svg_16" cy="23.067641" cx="17.308959" fill-opacity="null" stroke-opacity="null" stroke-width="0.999999" stroke="url(#gradbox_stroke)" fill="none"/>
+  <ellipse stroke="url(#gradbox_stroke)" ry="0.548446" rx="0.548446" id="svg_17" cy="14.292506" cx="20.76417" fill-opacity="null" stroke-opacity="null" stroke-width="0.999999" fill="none"/>
+  <ellipse stroke="url(#gradbox_stroke)" ry="0.548444" rx="0.548446" id="svg_18" cy="14.292503" cx="24.274223" fill-opacity="null" stroke-opacity="null" stroke-width="0.999999" fill="none"/>
+  <ellipse stroke="url(#gradbox_stroke)" ry="0.054845" id="svg_19" cy="22.354661" cx="16.266912" fill-opacity="null" stroke-opacity="null" stroke-width="0.999999" fill="none"/>
+ </g>
+</svg>

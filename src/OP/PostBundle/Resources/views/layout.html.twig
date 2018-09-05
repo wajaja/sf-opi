@@ -1,0 +1,21 @@
+{% extends::base.html.twig %}
+{% block navigation %}
+
+{% endblock %}
+
+{% block under_navigation}
+{% endblock %}
+
+
+{% block: op_post_body <>%}
+
+{% block view_post %}
+
+{% endblock %}
+
+
+{% include "OPSocialBundle:Social:online_users.html.twig" %}
+
+{% include "OPSocialBundle:Social:waiting.html.twig" %}
+
+{% endblock}

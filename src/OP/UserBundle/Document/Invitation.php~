@@ -1,0 +1,184 @@
+<?php
+
+namespace OP\UserBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
+/**
+ * OP\UserBundle\Document\Invitation
+ *
+ * @ODM\Document(
+ *      db="opinion",
+ *      collection="invitations",
+ *     repositoryClass="OP\UserBundle\Repository\InvitationRepository"
+ * )
+ * @ODM\ChangeTrackingPolicy("DEFERRED_IMPLICIT")
+ */
+class Invitation
+{
+    /**
+     * @var MongoId $id
+     *
+     * @ODM\Id(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string $sender
+     *
+     * @ODM\ReferenceOne(targetDocument="OP\UserBundle\Document\User")
+     */
+    protected $sender;
+
+    /**
+     * @var string $receiver
+     *
+     * @ODM\ReferenceOne(targetDocument="OP\UserBundle\Document\User")
+     */
+    protected $receiver;
+
+    /**
+     * @var boolean $status
+     *
+     * @ODM\Field(name="status", type="boolean")
+     */
+    protected $status;
+
+    /**
+     * @var date $sendingDate
+     *
+     * @ODM\Field(name="sendingDate", type="date")
+     */
+    protected $sendingDate;
+
+    /**
+     * @var date $confirmDate
+     *
+     * @ODM\Field(name="confirmDate", type="date")
+     */
+    protected $confirmDate;
+
+    public function __construct(){
+        $this->sendingDate = new \Datetime();
+    }
+
+    /**
+     * Get id
+     *
+     * @return id $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set sender
+     *
+     * @param OP\UserBundle\Document\User $sender
+     * @return self
+     */
+    public function setSender(\OP\UserBundle\Document\User $sender)
+    {
+        $this->sender = $sender;
+        return $this;
+    }
+
+    /**
+     * Get sender
+     *
+     * @return OP\UserBundle\Document\User $sender
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    /**
+     * Set receiver
+     *
+     * @param OP\UserBundle\Document\User $receiver
+     * @return self
+     */
+    public function setReceiver(\OP\UserBundle\Document\User $receiver)
+    {
+        $this->receiver = $receiver;
+        return $this;
+    }
+
+    /**
+     * Get receiver
+     *
+     * @return OP\UserBundle\Document\User $receiver
+     */
+    public function getReceiver()
+    {
+        return $this->receiver;
+    }
+
+    /**
+     * Set status
+     *
+     * @param boolean $status
+     * @return self
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return boolean $status
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set sendingDate
+     *
+     * @param date $sendingDate
+     * @return self
+     */
+    public function setSendingDate($sendingDate)
+    {
+        $this->sendingDate = $sendingDate;
+        return $this;
+    }
+
+    /**
+     * Get sendingDate
+     *
+     * @return date $sendingDate
+     */
+    public function getSendingDate()
+    {
+        return $this->sendingDate;
+    }
+
+    /**
+     * Set confirmDate
+     *
+     * @param date $confirmDate
+     * @return self
+     */
+    public function setConfirmDate($confirmDate)
+    {
+        $this->confirmDate = $confirmDate;
+        return $this;
+    }
+
+    /**
+     * Get confirmDate
+     *
+     * @return date $confirmDate
+     */
+    public function getConfirmDate()
+    {
+        return $this->confirmDate;
+    }
+}

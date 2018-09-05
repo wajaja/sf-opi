@@ -1,0 +1,426 @@
+.o-modal {
+    &.opinion {
+        outline: 0;
+        z-index: 1040;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        .black-drop-dv{
+            opacity: 0.7;
+            background: #101011;
+        }
+        .container {
+            border-radius: 4px;
+            background: #040404;
+            margin: 25px auto;
+            .loading-dv{
+                left: 44%;
+                top: 160px;
+                width: 200px;
+                height: 100px;
+                position: fixed;
+                border-radius: 3px;
+                display: inline-block;
+                background: rgba( 255, 255, 255, 1 ) url('http://opinion/images/big-snake.gif') 50% 50% no-repeat;
+            }
+            .dv-op-ctnr{
+                padding: 0;
+                height: 100%;
+                position: relative;
+                .op_header{
+                    z-index: 8;
+                    right: 10px;
+                    position: absolute;
+                    .op-close{
+                        color: #fff;
+                        font-size: 25px;
+                        cursor: pointer;
+                    }
+                }
+
+                .rght-b, .lft-b{
+                    padding: 30px 10px 10px 10px;
+                }
+                .actties-ctnr{
+                    height: -webkit-calc(100% - 20px);
+                    height: -moz-calc(100% - 20px);
+                    height: -o-calc(100% - 20px);
+                    height: calc(100% - 20px);
+                    position: relative;
+                    .frm-ctnr{
+                        border-top: 1px solid #dee0e1;
+                        background: #f2f2ff;
+                        position: absolute;
+                        width: 100%;
+                        bottom: 0;
+                        .divUploadComment{
+                            right: 5px !important;
+                        }
+                    }
+                    .center-commentForm{
+                        border: 1px solid #d3d7d8;
+                        background-color: #fff;
+                        border-radius: 1px;
+                        .cmt-ctnr{
+                            min-height: 26px !important;
+                        }
+                    }
+                    .actties-ctnr-a{
+                        background: #f2f2ff;
+                        .formComment{
+                            background-color: #f2f2ff;
+                        }
+                        .gComment{
+                            padding: 0 5px;
+                            background-color: #fff;
+                        }
+                        .side-div-a{
+                            padding: 5px;
+                            min-height: 130px;
+                            border-bottom: 1px solid #e2e3ea;
+                        }
+                        .cmts-ctnr{
+                            position: initial !important;
+                            background-color: #fff;
+                        }
+                        .pls-lks-a{
+                            display: block;
+                            border-top: 1px solid #e2e3ea;
+                            padding: 3px 0px;
+                            margin-bottom: 3px;
+                            color: #575759;
+                            font-weight: 600;
+                            font-size: 14px;
+                            font-stretch: extra-condensed;
+                        }
+                        .side-like-ctnr{
+                            display: inline-block;
+                            margin-right: 25px;
+                        }
+                        .side-div-c{
+                            background: #f2f2ff;
+                            position: relative;
+                            width: 100%;
+                            .side-foo-content{
+                                position: relative;
+                                overflow: hidden;
+                            }
+                            .side-foo-left{
+                                margin-top: 12px;
+                            }
+                            .side-foo{
+                                margin-top: 4px;
+                                line-height: 16px;
+                                .mr-btn-ctnr{
+                                    position: relative;
+                                    z-index: 2;
+                                }
+                                .mr-btn-ctnr-a{
+                                    position: absolute;
+                                    text-align: center;
+                                    width: 100%;
+                                    bottom: 0;
+                                }
+                                .see-ll-out{
+                                    position: absolute;
+                                    width: 100%;
+                                    height: 100%;
+                                    background: #fff;
+                                    z-index: -1;
+                                    left: 0;
+                                }
+                                .see-ll-btn{
+                                     cursor: pointer;
+                                }
+                            }
+                            .side-sp-nm-ct{
+                                display: inline-block;
+                            }
+                            .cmt-dv{
+                                display: inline-block;
+                            }
+                            .side-link-name{
+                                position: relative;
+                                font-family: 'Droid serif', sans-serif;
+                                text-transform: capitalize;
+                                letter-spacing: 0.6px;
+                                color: #337ab7;
+                                font-size: 14px;
+                                font-weight: 600;
+                                margin: 0 auto;
+                                top: -3px;
+                            }
+                            .side-div-left{
+                                display: inline-block;
+                                vertical-align: top;
+                            }
+                            .side-div-right{
+                                width: -webkit-calc(100% - 42px);
+                                width: -moz-calc(100% - 42px);
+                                width: -o-calc(100% - 42px);
+                                width: calc(100% - 42px);
+                                display: inline-block;
+                                position: relative;
+                                left: 4px;
+                                .side-head-name{
+                                    position: relative;
+                                    font-stretch: semi-condensed;
+                                }
+                                .side-dv-dte{
+                                    position: absolute;
+                                    text-align: right;
+                                    font-size: 13px;
+                                    color: #8e919c;
+                                    width: 70px;
+                                    right: 21px;
+                                    top: 0px;
+                                }
+                                .side-head-opt{
+                                    position: absolute;
+                                    font-size: 15px;
+                                    right: 0;
+                                    top: -2px;
+                                }
+                            }
+                        }
+                    }
+                }
+                .op-ctnr-a {
+                    height: 100%;
+                    .op-ctnr-b{
+                        margin: 0;
+                        padding: 0;
+                        height: 100%;
+                        overflow: hidden;
+                        border-radius: 3px;
+                        .load-cmt{
+                            height: 40px;
+                            position: absolute;
+                            left: 135px;
+                            top: 50px;
+                        }
+                        .op-lft {
+                            border-radius: 3px;
+                            position: relative;
+                            display: inline-block;
+                            background: #040404;
+                            height: 100%;
+                            vertical-align: top;
+                            &:hover{
+                                .shadow{
+                                    top: 0;
+                                    left: 0;
+                                    right: 0;
+                                    bottom: 0;
+                                    opacity: 1;
+                                    position: absolute;
+                                    -webkit-box-shadow: inset 200px -19px 44px 12px rgba(0, 0, 0, 0.73);
+                                    -moz-box-shadow: inset 200px -19px 44px 12px rgba(0, 0, 0, 0.73);
+                                    box-shadow: inset 200px -19px 44px 12px rgba(0, 0, 0, 0.73);
+                                }
+                                .op-lft-tp, .mdl-ct, .op-lft-btm{
+                                    opacity: 1 !important;
+                                }
+                            }
+                            .op-lft-btm, .mdl-ct, .op-lft-tp, .shadow{
+                                opacity: 0;
+                                -webkit-transition: opacity .6s ease-in-out .6s;
+                                    -moz-transition: opacity .6s ease-in-out .6s;
+                                        transition: opacity .6s ease-in-out .6s;
+                            }
+
+                            .op-lft-tp{
+                                position: absolute;
+                                z-index: 2;
+                                width: 100%;
+                                color: #fff;
+                                padding: 10px;
+                                .op-lft-tp-r{
+                                    display: inline-block;
+                                    vertical-align: top;
+                                    .tp-r-avatar{
+                                        display: inline-block;
+                                        border: 1px solid #ffc;
+                                        border-radius: 2px;
+                                        color: #aab1af;
+                                    }
+                                    .tp-r-name{
+                                        display: inline-block;
+                                        vertical-align: top;
+                                        position: relative;
+                                        top: -4px;
+                                        left: 4px;
+                                        .pst-aut-nm{
+                                            color: #aab1d7;
+                                        }
+                                    }
+                                }
+                                .op-lft-tp-l{
+                                    display: inline-block;
+                                    position: absolute;
+                                    right: 10px;
+                                    top: 0;
+                                    .dte-ctnr{
+                                        display: inline-block;
+                                        margin-right: 10px
+                                    }
+                                    .img-opt{
+                                        display: inline-block;
+                                    }
+                                }
+                            }
+                            .op-rght-mdl{
+                                display: inline-block;
+                                position: relative;
+                                height: 100%;
+                                width: 100%;
+                                color: #ffe;
+                                margin: 0 auto;
+                                .mdl-ct{
+                                    position: absolute;
+                                    margin: 5px 10px;
+                                    z-index: 2;
+                                    top: 70px;
+                                    width: 300px;
+                                    max-height: 220px;
+                                    overflow: hidden;
+                                    .emojione{
+                                        height: 15px;
+                                    }
+                                    p{
+                                        margin: 0 0 4px;
+                                        line-height: 16px;
+                                    }
+                                }
+                                .mdl-img{
+                                    position: relative;
+                                    margin: 0 auto;
+                                    img {
+                                        height:auto;
+                                        display: block;
+                                        margin: 0 auto;
+                                    }
+                                }
+                            }
+                            .op-lft-a{
+                                position: relative;
+                                height: 100%;
+                                .op-lft-btm{
+                                    position: absolute;
+                                    padding: 5px;
+                                    width: 100%;
+                                    z-index: 2;
+                                    bottom: 0;
+                                }
+                            }
+                        }
+
+                        .op-cter{
+                            display: inline-block;
+                            vertical-align: top;
+                            position: relative;
+                            height: 100%;
+                            background-color: #fff;
+                            height: 100%;
+                            border-radius: 2px;
+                            .center{
+                                position: relative;
+                                height: 100%;
+                                padding: 10px;
+                            }
+                            .blck-drp{
+                                &.nxt-pst{
+                                    background: #040404;
+                                    z-index: 2;
+                                    position: absolute;
+                                    width: 100%;
+                                    height: 100%;
+                                    left: 0;
+                                    top: 0;
+                                }
+                            }
+                            .center-a{
+                                width: 100%;
+                                height: 100%;
+                                position: relative;
+                                .nxt-frm-ctnr{
+                                    position: absolute;
+                                    width: 100%;
+                                    bottom: 25px;
+                                }
+                                .postContent{
+                                    font-family: 'Droid serif', sans-serif;
+                                    color: #222227;
+                                    font-size: 13px;
+                                    text-decoration: none;
+                                    margin: 0 auto;
+                                    display: block;
+                                }
+                                .nav-allie{
+                                    position: absolute;
+                                    width: 100%;
+                                    bottom: 72px;
+                                    .prev-al-ctnr{
+                                        position: absolute;
+                                        cursor: pointer;
+                                        top: 4px;
+                                        left: 0;
+                                    }
+                                    .nxt-al-ctnr{
+                                        position: absolute;
+                                        cursor: pointer;
+                                        right: 0;
+                                        top: 4px;
+                                    }
+                                    span.glyphicon{
+                                        font-size: 17px;
+                                    }
+
+                                    .pst-lr-cmts-frm-b{
+                                        position: absolute;
+                                        width: 100%;
+                                        bottom: -35px;
+                                        padding: 0 20px;
+
+                                    }
+                                    .formComment{
+                                        padding: 5px 0 0 5px;
+                                        border: 1px solid #a5b0b3;
+                                        .cmt-frm-btm-dv{
+                                            padding: 0 5px;
+                                            border-left: 1px solid #d6d9db;
+                                            border-top: 1px solid #d6d9db;
+                                            background-color: #f2f2ff;
+                                        }
+                                    }
+                                }
+                            }
+                            .head{
+                                margin-bottom: 10px;
+                                height: 100%;
+                                .pst-dv-txt-ctn {
+                                    &.nxt-pst{
+                                        height: 100%;
+                                        .ctnr{
+                                            height: 100%;
+                                            position: relative;
+                                        }
+                                    }
+                                }
+                            }
+                            .foot{
+                                text-align: center;
+                                bottom: 0;
+                                align-items: center;
+                                align-content: center;
+                                width: 100%;
+                                height: 30px;
+                                background: #fff;
+                                position: absolute;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

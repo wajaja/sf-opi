@@ -1,0 +1,225 @@
+''+
+'<div class="gl-oq-frm-ctnr" id="gl_oq_frm_ctnr">'+
+    '<div class="gl-oq-frm" id="gl_oq_frm">'+
+        {{ render(controller('OPMessageBundle:Oquestion:createOnOpinion', {'opinionId': '67788dgfgd56CVBCV32'})) }}
+    '</div>'+
+'</div>'+
+'<div class="gl-pq-frm-ctnr" id="gl_pq_frm_ctnr">'+
+    '<div class="gl-pq-frm" id="gl_pq_frm">'+
+        {{ render(controller('OPMessageBundle:Pquestion:createOnPost', {'postId': '67788dgfgd56CVBCV32'})) }}
+    '</div>'+
+'</div>'+
+'<div id="" class="news-div-a" >'+
+    '<div id="_nws_dv_b" class="nws-div-b" id="news-div-b" >'+
+        {% for news in listNews %}
+            {% set post = news.data %}
+            '<div class ="pst-c"  >'+
+                '<div class="pst-edt-out"></div>'+
+                '<div class ="pst-d" >'+
+                    '<div class ="pst-e" id="_pst_e">'+
+                        '<div class ="pst-f" >'+
+                            '<div class ="pst-g" id="_pst_g" data-pst-id="{{post.id}}" data-auth-id="{{post.author.id}}">'+
+                                '<div class ="pst-h" >'+
+                                    '<div class ="pst-i" >'+
+                                        '<div class ="pst-j" id="_pst_j" data-pst-id="{{post.id}}">'+
+                                            '<div class ="pst-ctnr" >'+
+                                                '<div class ="pst-ctnr-tp" >'+
+                                                    '<div class ="lft-pst-ctnr-tp" data-aut-arr="">'+
+                                                        '<div class ="pst-dv-pic" data-aut-id="{{post.author.id}}">'+
+                                                            '<a href="{{ path('fos_user_profile_show', {'username': post.author.username})}}" class="pst-aut-pic-lk" >'+
+                                                                '<img src="{{asset (post.author.profilePic.webPath|default("/images/favicon.ico"))}}" id="user-profile" class ="pst-aut-pic"  />'+
+                                                            '</a>'+
+                                                        '</div>'+                             
+                                                    '</div>'+                                                    
+                                                    '<div class="rght-pst-ctnr-tp">'+
+                                                        '<div class="rght-pst-dv-aut" data-usr-id="{{post.author.id}}">'+
+                                                            '<a class ="pst-aut-nm" href="{{ path('fos_user_profile_show', {'username': post.author.username})}}" data-userurl="{{ path('fos_user_profile_show', {'username': post.author.username})}}">{{ post.author.firstname }}  {{ post.author.lastname }}</a>'+
+                                                            '<a href="" class="pst-aut-pub">@{{post.author.username}}</a>'+
+                                                        '</div>'+
+                                                        '<div class ="pst-dv-dte" data-dte-cmp="">'+
+                                                            {% set date = post.isUpdated ? post.updatedAtTrans : post.createdAtTrans %}
+                                                            '<span class="pst-dte {{post.updated ? 'dte-mdf' : ''}}" >'+
+                                                                '{% if date.date.month %}{{ date.date.month }} month '+
+                                                                '{% elseif date.date.day %} {{ date.date.day }} day '+
+                                                                '{% elseif date.time.hour %}{{ date.time.hour }} h '+
+                                                                '{% elseif date.time.minute %} {{ date.time.minute }} min '+
+                                                                '{% endif %}'+
+                                                            '</span>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                    '<div class ="rght-pst-ctnr-tp-abs">'+
+                                                        '<div class ="pst-opt" data-pst-id="{{post.id}}">'+
+                                                            '<a href="" class="pst-opt-lk" data-pst-id="{{post.id}}" data-auth-id="{{post.author.id}}"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '<div class="pst-ctnr-mdl">'+                                                                                                   
+                                                    '<div class="rght-pst-ctnr-mdl" >'+
+                                                        '<div class ="rght-pst-ctnr-mdl-a">'+
+                                                            '<div class ="pst-dv-txt-ctn">'+
+                                                                {% set contents = post.content|split('\r\n') %}
+                                                                '<div id="postContent" class ="postContent" >'+
+                                                                    {% for content in contents %}
+                                                                        '<span> {{content}} </span><br/>'+
+                                                                    {% endfor %}
+                                                                '</div>'+
+                                                            '</div>'+
+                                                            '<div class ="pst-dv-img-ctn">'+
+                                                                '<div class ="pst-dv-img-ctn-a">'+
+                                                                    '<div class ="pst-dv-img-ctn-b">'+
+                                                                        '<div class ="pst-dv-img">'+
+                                                                        {% if post.images|length == 0 %}
+                                                                        {% elseif post.images|length ==1 %}
+                                                                            '<div class ="pst-dv-one-img" data-pst-id="{{post.id}}" data-imgs-id="">'+
+                                                                                {% for key, image in post.images %}                                                                                
+                                                                                    '<a href="" class="pst-img-lk" data-img-id="{{image.id}}" id=>'+
+                                                                                        '<img src="{{asset( image.webPath) }}" class="pst-jst-oe-img" data-img-id={{image.id}}/>'+
+                                                                                    '</a>'+                                                                                
+                                                                                {% endfor %}
+                                                                            '</div>'+
+                                                                        {% elseif post.images|length == 2%}
+                                                                            '<div class ="pst-dv-two-img" data-pst-id="{{post.id}}" data-imgs-id="">'+
+                                                                                {% for key, image in post.images %}                                                                                
+                                                                                    '<a href="" class="pst-img-lk" data-img-id="{{image.id}}" >'+
+                                                                                        '<img src="{{asset( image.webPath) }}" class="pst-jst-to-img" data-img-id={{image.id}}/>'+
+                                                                                    '</a>'+                                                                                
+                                                                                {% endfor %}
+                                                                            '</div>'+
+                                                                        {% elseif post.images|length > 2 %}
+                                                                            '<div class ="pst-dv-pls-img" data-pst-id="{{post.id}}" data-imgs-id="">'+
+                                                                                {% for key, image in post.images %}
+                                                                                    {% if key == 0 %}
+                                                                                        '<a href="" class="pst-img-lk first" data-img-id="{{image.id}}" >'+
+                                                                                            '<img src="{{asset( image.webPath) }}" class="pst-jst-pls-img" data-img-id={{image.id}}/>'+
+                                                                                        '</a>'+
+                                                                                    {% elseif key == 1%}
+                                                                                    '<div class="pst-dv-pls-img-lft">'+
+                                                                                        '<a href="" class="pst-img-lk scond" data-img-id="{{image.id}}" >'+
+                                                                                            '<img src="{{asset( image.webPath) }}" class="pst-jst-pls-img" data-img-id={{image.id}}/>'+
+                                                                                        '</a>'+
+                                                                                    {% elseif key == 2%}
+                                                                                        '<div class ="pst-dv-thir-img" data-pst-id="{{post.id}}" data-imgs-id="">'+
+                                                                                            '<a href="" class="pst-img-lk thir" data-img-id="{{image.id}}" >'+
+                                                                                                '<img src="{{asset( image.webPath) }}" class="pst-jst-pls-img" data-img-id={{image.id}}/>'+
+                                                                                            '</a>'+
+                                                                                            '<a href="" class="see-mr-pst-img {{post.images | length - 3 ? '' : 'none-see-mr-img'}}" data-pst-id="{{post.id}}">'+
+                                                                                                '<i class="fa fa-plus" aria-hidden="true"></i>'+
+                                                                                                '<span class="nb-img-txt">{{post.images |length - 3}}</span>'+
+                                                                                            '</a>'+
+                                                                                        '</div>'+
+                                                                                    '</div>'+
+                                                                                    {% else %}
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            '</div>'+
+                                                                        {% endif %}                                                                            
+                                                                        '</div>'+
+                                                                    '</div>'+
+                                                                '</div>'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="fooPost" >'+
+                                    '<div class ="fooPost-a">'+
+                                        '<div class ="fooPost-b" >'+
+                                            '<div class ="fooPost-c" >'+
+                                                '<div id="postQuestionDiv" class ="postQuestionDiv" data-pst-id="{{post.id}}">'+
+                                                    '<a href="" class="postQuestion-icon-form" id="postQuestion-icon-form" data-form-question="" data-pst-id="{{post.id}}">'+
+                                                        '<span class="glyphicon glyphicon-question-sign"></span>'+
+                                                    '</a>'+
+                                                    '<span class="pst-qst-noti" data-qst-id=""></span>'+
+                                                    '<span class="pst-qst-nb" data-qst-nb=""></span>'+
+                                                '</div>'+
+                                                '<div id="postShareDiv" class ="postShareDiv" data-pst-id="{{post.id}}">'+
+                                                    '<a href="" class="postShare-icon-form" data-pst-id="{{post.id}}" id="postShare-icon-form" >'+
+                                                        '<i class="fa fa-share-alt"></i>'+
+                                                    '</a>'+
+                                                    '<span class="pst-shr-nb"></span>'+
+                                                '</div>'+
+                                                '<div id="comment" class ="pCommentDiv" >'+
+                                                    '<a href="" class ="linkPcomment" ><i class="fa fa-comment"></i></a>'+
+                                                    '<span class="pst-cmts-nb"></span>'+
+                                                '</div>'+
+                                                '<div id="_plke_dv" class="plikeDiv" data-pst-id="{{post.id}}">'+
+                                                    '<span class="sp-like-icn-ctnr">'+
+                                                        '<a class ="{{post.is_liker(app.user.id) ? 'linkPlike checked' : 'linkPlike'}}" rel="linkPlike" href="" >'+
+                                                            '<i class="fa fa-thumbs-o-up like-sty"></i>'+
+                                                        '</a>'+
+                                                    '</span>'+
+                                                    '<span class="hide-rat pst-like-rat-ctnr"></span>'+
+                                                    '<span class="sp-like-mr-i">'+
+                                                        '<a href="" class="lk-graph-plike" data-rat="{{ post.getTotalRate() }}" data-ttl-rat="{{post.getNbPlikers() * 50}}" data-pst-id="{{post.id}}"></a>'+
+                                                        '<span name="nbPlikes" class="nbPlikes" data-lkr-nb="{{post.getNbPlikers()}}">'+
+                                                            '{{post.getNbPlikers() == 0 ? '' : post.getNbPlikers()}}'+
+                                                            '{{post.getNbPlikers() == 0 ? '' : post.getNbPlikers() == 1 ? ' personne ...' : " personnes..."}}'+
+                                                        '</span>'+
+                                                    '</span>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class ="postDetail">'+
+                                        '<div class ="" style="width: auto; overflow: visible; background-color: #f6f7f8 ">'+
+                                            '<div class ="" style="display: block">'+
+                                                '<span></span><a href=""></a>'+
+                                                '<span></span>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class="pst-cmt-ctnr">'+
+                                        '<div class="pst-cmt-ctnr-a">'+
+                                            '<div class="containerComments" >'+
+                                                '<div class ="gComment" >'+
+                                                    {{ render(controller('OPPostBundle:Comment:listComments', {'id': post.id})) }}
+                                                '</div>'+
+                                                '<div class="gComment-dv-pls">'+
+                                                    {% if post.nbComment > 5 %}
+                                                        '<a href class="pst-pls-cmt-lk" data-pst-id={{post.id}}>More comment</a>'+
+                                                    {% endif %}
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class ="pst-cmt-frm">'+
+                                        '<div class ="pst-cmt-frm-a">'+
+                                            '<div class ="pst-cmt-frm-b">'+
+                                                '<div class ="pst-cmt-frm-ctnr" id="" data-pst-id="{{post.id}}" data-pst-val="{{post.id}}">'+
+                                                   {{ render(controller('OPPostBundle:Comment:create', {'id': post.id})) }}
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+        {% endfor %}
+    '</div>'+
+'</div>'+
+'<div class="gl-reply-frm-ctnr" id="gl_reply_frm_ctnr">'+
+    '<div class="gl-reply-frm" id="gl_reply_frm">'+
+        {{ render(controller('OPPostBundle:UnderComment:create', {'id': 'default'})) }}
+    '</div>'+
+'</div>'+
+'<div class="gl-clike-frm-ctnr" id="gl_clike_frm_ctnr">'+
+    '<div class="gl-clike-frm" id="gl_clike_frm">'+
+        '<span class="cmt-like-rate-ctnr"><i class="fa fa-thumbs-o-up cmt-like-rate"></i></span>'+
+        {{ render(controller('OPPostBundle:Clike:create', {'id': 'default'})) }}
+    '</div>'+
+'</div>'+
+'<div class="gl-plike-frm-ctnr" id="gl_plike_frm_ctnr">'+
+    '<div class="gl-plike-frm" id="gl_plike_frm">'+
+        '<span class="pst-like-rate-ctnr"><i class="fa fa-heart pst-like-rate" aria-hidden="true"></i></span>'+
+        {{ render(controller('OPPostBundle:Plike:create', {'id': 'default'})) }}
+    '</div>'+
+'</div>'+
+'<div class="opinion_modal share opinion-modal-off" id="share_dialog">'+
+'</div>'+
+''

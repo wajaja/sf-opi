@@ -1,0 +1,12 @@
+<h1>Post creation</h1>
+
+{{ form_start(commentForm, {'method': 'POST', 'action':path('comment_create', { 'id': postValid }), 'attr': {'class':'formComment'} }) }}
+    {{ form_widget(commentForm.content) }}
+    {{ form_widget(commentForm.file) }}
+    {{ form_rest(commentForm) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+{{form_end(commentForm, {'render_rest': false}) }}
+
+

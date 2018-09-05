@@ -1,0 +1,164 @@
+<div class="edt-frm-pst" id="edt_frm_pst" style="">
+        <div id="post_form_body" class="tab-pane in active ">
+            {{ form_start(editForm, {'attr':{'class':'edit-form-post'}, 'method':'post', 'action':path('post_edit', { 'id': post.id}) }) }}
+            {{ form_errors(editForm) }}
+                <div class="form-body form-triangle ">
+                    <div class="edit-post-dv-textarea" id="_pst_sp_ttr" data-pst-id="{{post.id}}">
+                        {{ form_widget(editForm.content, {'attr': {'class': 'edit-post-form-textarea autoExpand-edit-post','data-min-rows-post':'2', 'rows':'2', 'placeholder':'Edit your post'} }) }}
+                    </div>
+                </div>
+                <div id="uploader-edit-post" data-pst-id="{{post.id}}">
+                    <div class="qq-gallery edit-gallery">
+                        <div class="zone-upload-form" id="image" name="">
+                            <ul class="edt-pst-upload-list-selector" data-input-nb="1" role="region" aria-live="polite" aria-relevant="additions removals">
+                                {% for image in post.images %}
+                                    <li class="qq-upload-success" data-pth="{{image.path}}" data-img-id="{{image.id}}">
+                                        <div class="qq-thumbnail-wrapper">
+                                            <a class="preview-link" target="_blank">
+                                                <img class="qq-thumbnail-selector pst-edit-thumb" src="/opinion/web/{{image.webPath}}" data-img-id="{{post.id}}">
+                                            </a>
+                                        </div>
+                                        <button type="button" class="qq-upload-cancel-selector pst-edit-thumb-btn">X</button>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            {{ form_widget(editForm.rmv_arr, {'attr': {'class': 'edit-post-form-rmv_arr'} }) }}
+                        </div>
+                        <div class="edit-frm-foo" data-pst-id="{{post.id}}">
+                            <div class="edit-frm-foo-ct" id="_edit_frm_foo_ct">
+                                <div class="edit-frm-btm-li-post-l opt-lft">
+                                    <a href="" class="edit-post-upload-lk" id="edit_post_upload_lk">
+                                        <span class="glyphicon glyphicon-camera edit-post-upload-ic">
+                                            <input type="file" id="post_type_files_0" name="post_type[files][0]" class="edit-post-file-selector">
+                                        </span>
+                                    </a>
+                                </div>                                
+                                <div class="edit-frm-btm-li-post-r" data-pst-id="{{post.id}}">
+                                    {{form_widget(editForm.confidence, {'attr':{'class': 'edt-pst-frm-confid'}})}}
+                                    <span class="gl-ldr-pst"></span>
+                                    <input type="submit" id="update-post" name="_update" value="Update" class="btn btn-primary btn-sm">
+                                </div>
+                            </div>
+                            {{ form_widget(editForm.editorTexts, {'attr': {'class': 'edt-inp-frm-editor', 'value':''} }) }}
+                            {{ form_widget(editForm.gapHours, {'attr':{'class': 'edt-frm-gapHours frm-gap'} }) }}
+                            {{ form_widget(editForm.gapMinutes, {'attr':{'class': 'edt-frm-gapMinutes frm-gap'} }) }}
+                            {{ form_widget(editForm.recipients, {'attr': {'class': 'edt-inp-frm-recip', 'value':''} }) }}
+                        </div>                        
+                    </div>
+                    {{ form_rest(editForm) }}
+                </div>
+            {{ form_end(editForm)}}
+        </div>
+    </div>
+<script type="text/javascript">  //for opinion
+    $('form.edit-form-post').on('submit', function(e){
+    e.preventDefault();
+    var element = $(this),
+        post_body = element.parents('.pst-c'),
+        post_out = post_body.find('.pst-edt-out'),
+        $post_container = element.parents('.pst-ctnr-mdl'),     //for jquery usage
+        post_container = $post_container[0];                    //plain javascript usage e.g: getComputedStyle to animate
+    $.ajax({
+        type: 'post',
+        url: 'http://127.0.0.1//opinion/web/app_dev.php/post/edit/' +$(this).find('.edit-frm-foo').attr('data-pst-id'),
+        beforeSend: function () {
+           // loading div when the ajax request
+            if ($post_container.find('.ajax-loader-form').length) {
+                 return false;              
+            }
+            $post_container.find('.gl-ldr-pst').html('<div class="ajax-loader-form" id=""></div>');
+            $post_container.addClass("minOpac");
+        },
+        data: new FormData(this),
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            post_out.removeClass("editing");
+            $post_container.removeClass("minOpac");
+            var post = data.response.post,
+                date = post.updated ? post.updateAt : post.createdAt,
+                image_HTML = '',
+                nb_img = 0,
+                images = post.images;
+
+            if (images.length === 0){ }
+            else if (images.length === 1){
+                image_HTML += '<div class ="pst-dv-one-img" data-pst-id='+ post.id +' data-imgs-id="">';
+                images.forEach(function(image, index){
+                    image_HTML +=   '<a href="" class="pst-img-lk" data-img-id='+image.id+' id=>'+
+                                        '<img src='+ image.webPath +' class="pst-jst-oe-img" data-img-id='+ image.id +'/>'+
+                                    '</a>';
+                    });
+                image_HTML += '</div>';
+            }
+            else if(images.length === 2){
+                image_HTML += '<div class ="pst-dv-two-img" data-pst-id='+ post.id +' data-imgs-id="">';
+                images.forEach(function(image, index){
+                    image_HTML +=    '<a href="" class="pst-img-lk" data-img-id='+image.id+' >'+
+                                        '<img src='+ image.webPath +' class="pst-jst-to-img" data-img-id='+image.id+'/>'+
+                                    '</a>';                                                                               
+                });
+                image_HTML += '</div>';
+            }
+            else if (images.length > 2) {
+                nb_img = images.length - 3;
+                image_HTML += '<div class ="pst-dv-pls-img" data-pst-id='+ post.id +' data-imgs-id="">';
+                images.forEach(function(image, index){
+                    if (index === 0){
+                        image_HTML +=   '<a href="" class="pst-img-lk first" data-img-id='+ image.id +' >'+
+                                            '<img src='+ image.webPath +' class="pst-jst-pls-img" data-img-id='+ image.id +'/>'+
+                                        '</a>';
+                    }
+                    else if (index === 1){
+                        image_HTML += '<div class="pst-dv-pls-img-lft">'+
+                                        '<a href="" class="pst-img-lk scond" data-img-id='+ image.id +' >'+
+                                            '<img src='+ image.webPath +' class="pst-jst-pls-img" data-img-id='+ image.id +'/>'+
+                                        '</a>';
+                    }
+                    else if (index === 2){
+                        image_HTML +=  '<div class ="pst-dv-thir-img" data-pst-id='+ post.id +'>'+
+                                            '<a href="" class="pst-img-lk thir" data-img-id='+ image.id +'>'+
+                                                '<img src='+ image.webPath +' class="pst-jst-pls-img" data-img-id='+ image.id +'/>'+
+                                            '</a>'+
+                                            '<a href="" class="see-mr-pst-img '+ (nb_img ? '' : 'none-see-mr-img')+'" data-pst-id='+ post.id +'>'+
+                                                '<i class="fa fa-plus" aria-hidden="true"></i>'+
+                                                '<span class="nb-img-txt">'+ nb_img +'</span>'+
+                                            '</a>'+
+                                        '</div>';     
+                    }                    
+                });
+                image_HTML += '</div>';
+            }else{
+                
+            }            
+            //prepend the new post to news list
+            $post_container.html('<div class="rght-pst-ctnr-mdl updt-pst">'+
+                                    '<div class ="rght-pst-ctnr-mdl-a">'+
+                                        '<div class ="pst-dv-txt-ctn">'+
+                                            '<div id="postContent" class ="postContent" >'+ post.content +'</div>'+
+                                        '</div>'+
+                                        '<div class ="pst-dv-img-ctn">'+
+                                            '<div class ="pst-dv-img-ctn-a">'+
+                                                '<div class ="pst-dv-img-ctn-b">'+
+                                                    '<div class ="pst-dv-img">'+
+                                                        image_HTML +
+                                                    '</div>'+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>');
+            //animate opacity after prepreding data to news div container 
+            var second_middle = post_container.querySelector('.rght-pst-ctnr-mdl');
+            window.getComputedStyle(second_middle).opacity;
+            second_middle.className += 'appended';
+            //post_body.find('.pst-dte').html(date.time.minute);
+        },
+        failure: function () {}
+    });
+    return false;
+});
+</script>
+<script type="text/javascript">
+
+</script>

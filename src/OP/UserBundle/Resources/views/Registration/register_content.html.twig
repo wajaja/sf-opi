@@ -1,0 +1,99 @@
+{% trans_default_domain 'validators' %}
+<section class="h-sign-sect">
+    <span class="sign-ttl">Sign Up</span>
+    {{ form_start(form, {'method': 'post', 'action': path('api_register_registration'), 'attr': {'class': 'signup-form'}}) }}
+            {{form_errors(form)}}
+            <div class="fld-wrp fisrtname">
+                <div class="flash firstname">
+                    {% if app.request.hasPreviousSession %}
+                        {% for message in app.session.flashbag.get('registration.firstname') %}
+                                {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {{ form_widget(form.firstname, {'attr': {'class':'form-registration-firstname in-sign-up', 'placeholder':'firstname' }})}} 
+                {{form_errors(form.firstname)}}
+            </div>
+
+             <div class="fld-wrp lastname">
+                {{ form_widget(form.lastname, {'attr': {'class':'form-registration-lastname in-sign-up', 'placeholder':'lastname'}})}} 
+                {{form_errors(form.lastname)}}
+                <div class="flash lastname">
+                    {% if app.request.hasPreviousSession %}
+                        {% for message in app.session.flashbag.get('registration.lastname') %}
+                                {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+             <div class="fld-wrp email">
+                {{ form_widget(form.email, {'attr': {'class':'form-registration-email in-sign-up', 'placeholder':'email'}})}} 
+                {{form_errors(form.email)}}
+                <div class="flash email">
+                    {% if app.request.hasPreviousSession %}
+                        {% for message in app.session.flashbag.get('registration.email') %}
+                                {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+             <div class="fld-wrp pwd-fisrt">
+                {{ form_widget(form.plainPassword.first, {'attr': {'class':'form-registration-password_confirmation in-sign-up', 'placeholder':'password'}})}} {{form_errors(form.plainPassword.first)}}
+                <div class="flash first">
+                    {% if app.request.hasPreviousSession %}
+                        {% for message in app.session.flashbag.get('registration.plainPassword.first') %}
+                                {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+             <div class="fld-wrp pwd-second">
+                {{ form_widget(form.plainPassword.second, {'attr': {'class':'form-registration-password in-sign-up', 'placeholder':'repeat password'}})}} 
+                {{form_errors(form.plainPassword.second)}}
+                <div class="flash second">
+                    {% if app.request.hasPreviousSession %}
+                        {% for message in app.session.flashbag.get('registration.plainPassword.second') %}
+                                {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="fld-wrp gender">
+                {{ form_widget(form.gender, {'attr': {'class':'form-registration-gender '}})}} {{form_errors(form.gender)}}
+                <div class="flash gender">
+                    {% if app.request.hasPreviousSession %}
+                        {% for message in app.session.flashbag.get('registration.gender') %}
+                                {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <div class="regist-sbm-type">
+                <input type="submit" class="form-registration-submit" value="{{ 'OPUserBundle.registration.submit'|trans }}" />
+            </div>
+        {{ form_end(form) }}
+        <div class="reg-msg-ctnr">
+            <input type="hidden" id="firstname_blank" value="{{ 'fos_user.firstname.blank'|trans }}" />
+             <input type="hidden" id="firstname_short" value="{{ 'fos_user.firstname.short'|trans }}" />
+             <input type="hidden" id="firstname_long" value="{{ 'fos_user.firstname.long'|trans }}" />
+
+             <input type="hidden" id="lastname_blank" value="{{ 'fos_user.lastname.blank'|trans }}" />
+             <input type="hidden" id="lastname_short" value="{{ 'fos_user.lastname.short'|trans }}" />
+             <input type="hidden" id="lastname_long" value="{{ 'fos_user.lastname.long'|trans }}" />
+
+            <input type="hidden" id="email_blank" value="{{ 'fos_user.email.blank'|trans }}" />
+            <input type="hidden" id="email_short" value="{{ 'fos_user.email.short'|trans }}" />
+            <input type="hidden" id="email_long" value="{{ 'fos_user.email.long'|trans }}" />
+            <input type="hidden" id="email_already_used" value="{{ 'fos_user.email.already_used'|trans }}" />
+
+            <input type="hidden" id="password_blank" value="{{ 'fos_user.password.blank'|trans }}" />
+            <input type="hidden" id="password_short" value="{{ 'fos_user.password.short'|trans }}" />
+            <input type="hidden" id="password_mismatch" value="{{ 'fos_user.password.mismatch'|trans }}" />
+        </div>
+</section>

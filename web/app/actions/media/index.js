@@ -1,0 +1,5 @@
+export * as Photo 	from './Photo'
+export * as Photos 	from './Photos'
+export * as FriendTag from './FriendTag'
+export * as EveryWhere from './EveryWhere'
+export * as Video 		from './Video'

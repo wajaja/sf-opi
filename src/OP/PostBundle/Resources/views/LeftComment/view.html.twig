@@ -1,0 +1,37 @@
+{# src/OP/OpposedPostBundle/Resources/view/OpposedPost/view.html.twig #}
+
+{% extends "OPOpposedPostBundle::layout.html.twig" %}
+
+{% block title %}
+  view for - {{ parent() }}
+{% endblock %}
+
+{% block op_opposed_post_body %}
+
+  <h2></h2>
+  <i>Par</i>
+
+  <div class="well">
+    {{ opposedpost.content }}
+    <img 
+  src="{{ asset(opposedpost.image.webPath) }}"
+  alt="{{ opposedpost.image.alt }}"
+
+  </div>
+
+  <p>
+    <a href="{{ path('oc_social_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'accueil
+    </a>
+    <a href="{{ path('oc_opposed_post_edit', {'id': opposedpost.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modify
+    </a>
+    <a href="{{ path('oc_opposed_post_delete', {'id': opposedpost.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      delete
+    </a>
+  </p>
+
+{% endblock %}

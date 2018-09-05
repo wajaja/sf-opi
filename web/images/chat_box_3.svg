@@ -1,0 +1,23 @@
+<svg width="38" height="32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <radialGradient xlink:href="#linearGradient5060" r="117.14286" id="radialGradient6719" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-2.774389,0,0,1.969706,112.7623,-872.8854)" fy="486.64789" fx="605.71429" cy="486.64789" cx="605.71429"/>
+  <linearGradient id="linearGradient5060">
+   <stop stop-color="black" offset="0" id="stop5062"/>
+   <stop stop-color="black" stop-opacity="0" offset="1" id="stop5064"/>
+  </linearGradient>
+  <radialGradient xlink:href="#linearGradient5060" r="117.14286" id="radialGradient6875" gradientUnits="userSpaceOnUse" gradientTransform="matrix(2.774389,0,0,1.969706,-1891.633,-872.8854)" fy="486.64789" fx="605.71429" cy="486.64789" cx="605.71429"/>
+  <radialGradient xlink:href="#linearGradient5060" r="117.14286" id="radialGradient6877" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-2.774389,0,0,1.969706,112.7623,-872.8854)" fy="486.64789" fx="605.71429" cy="486.64789" cx="605.71429"/>
+ </defs>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="34" width="40" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path opacity="0.25" fill="url(#radialGradient6719)" fill-rule="nonzero" stroke-linecap="round" marker-start="none" marker-mid="none" marker-end="none" stroke-miterlimit="4" stroke-dashoffset="0" id="path6713" d="m8.827243,28.759265c0,0 0,9.981606 0,9.981606c-2.169885,0.01879 -5.245724,-2.236371 -5.245724,-4.991445c0,-2.755074 2.421427,-4.99016 5.245724,-4.990161z"/>
+  <path opacity="0.402062" fill="url(#radialGradient6875)" fill-rule="nonzero" stroke-linecap="round" marker-start="none" marker-mid="none" marker-end="none" stroke-miterlimit="4" stroke-dashoffset="0" id="path6869" d="m38.922766,18.759265c0,0 0,9.981606 0,9.981606c2.169884,0.01879 5.245724,-2.236371 5.245723,-4.991445c0,-2.755074 -2.421428,-4.99016 -5.245723,-4.990161z"/>
+  <path opacity="0.402062" fill="url(#radialGradient6877)" fill-rule="nonzero" stroke-linecap="round" marker-start="none" marker-mid="none" marker-end="none" stroke-miterlimit="4" stroke-dashoffset="0" id="path6871" d="m18.577243,18.759265c0,0 0,9.981606 0,9.981606c-2.169885,0.01879 -5.245724,-2.236371 -5.245724,-4.991445c0,-2.755074 2.421427,-4.99016 5.245724,-4.990161z"/>
+  <path fill="url(#gradbox_fill)" fill-rule="nonzero" stroke="#45414f" stroke-miterlimit="4" stroke-dashoffset="0" marker-start="none" marker-mid="none" marker-end="none" id="rect29408" d="m13.36801,1.73865c-1.07132,0 -1.92065,0.86341 -1.92065,1.91356l0,15.06162c0,1.05015 0.84933,1.8827 1.92065,1.8827l14.13723,0c0.85632,1.1037 2.52271,2.89321 6.51761,4.38268c-1.77862,-2.04892 -1.77483,-3.44036 -1.5743,-4.38268l2.89671,0c1.07132,0 1.95213,-0.83255 1.95213,-1.8827l0,-15.06162c0,-1.05015 -0.88081,-1.91356 -1.95213,-1.91356l-21.97725,0z"/>
+  <path fill="url(#gradbox_fill)" fill-rule="nonzero" stroke="#45414f" stroke-miterlimit="4" stroke-dashoffset="0" marker-start="none" marker-mid="none" marker-end="none" id="path29441" d="m25.345992,8.157721c1.03908,0 1.86284,0.87061 1.86284,1.92951l0,15.18714c0,1.05891 -0.82376,1.8984 -1.86284,1.8984l-13.71173,0c-0.83054,1.1129 -2.44678,2.91731 -6.32144,4.4192c1.72509,-2.066 1.72141,-3.46903 1.52692,-4.4192l-2.80953,0c-1.03907,0 -1.89338,-0.83949 -1.89338,-1.8984l0,-15.18714c0,-1.0589 0.85431,-1.92951 1.89338,-1.92951l21.31578,0z"/>
+ </g>
+</svg>

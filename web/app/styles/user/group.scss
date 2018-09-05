@@ -1,0 +1,137 @@
+.hm-container.group {
+    .hm-main-blk-ctnr{
+        /*width: 700px;
+        min-height: 100px;*/
+    }
+    #hm_main_blk{
+        margin-top: 0px;
+    }
+    .grp-lft-dv{
+        width: 280px;
+        min-height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 59px;
+        /*background: #dee4e7;*/
+        /*border-right: 1px solid #c2c5c5;*/
+    }
+
+    .center-tp{
+        position: relative;
+        background: #ffffff;
+        height: 280px;
+        overflow: hidden;
+        margin-bottom: 12px;
+        /*border: 1px solid #c5c8cc*/
+    }
+    .home-center-div{
+        width: 500px;
+    }
+    .center-bd-empt-lst{
+        width: 100%;
+        background: #fff;
+        font-size: 14px;
+        color: #b1aeae;
+        font-weight: 600;
+        padding: 25px 10px;
+        border-radius: 3px;
+        border: 1px solid #c4c8c9;
+        margin-bottom: 12px;
+        text-transform: capitalize;
+    }
+
+    .show-grp-plus-intro{
+        display: block;
+        margin-top: 12px 0 0 10px;
+        .avatar{
+            margin-bottom: 10px;
+        }
+        .grp-top-avatar-img{
+            display: inline-block;
+            .img-dv-ctnr{
+                display: inline-block;
+            }
+            img{
+                width: 160px;
+                height: 160px;
+            }
+        }
+
+        .group-name{
+            color: #2c4887;
+            font-size: 17px;
+            font-weight: 600;
+        }
+    }
+    .grp-intro-about-ctnr{
+        margin-top: 10px;
+    }
+    .grp-intro-cont{
+        font-size: 12px;
+        color: #100e96;
+        margin-top: 10px;
+    }
+    .grp-intro-hd{
+        text-align: center;
+    }
+    .pic-grp-list{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+    .pic-dv-grp-list{
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+
+
+.grp-form{
+	width: 100%;
+    background: #fff;
+    font-size: 12px;
+    border-radius: 3px;
+    border: 1px solid #c4c8c9;
+    margin-bottom: 12px;
+    .grp-form-tp{
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+    }
+    .inp-tgther{
+    	margin-bottom: 30px;
+        line-height: 16px;
+    	label{
+            margin-bottom: 10px;
+    		color: #4e505c;
+    		display: block;
+    	}
+    	.inp-elm{
+    		display: block;
+    	}
+        .grp-inp-nm{
+            height: 32px;
+        }
+    	input{
+    		width: 100%;
+		    height: 26px;
+		    padding: 0 5px;
+		    border-radius: 2px;
+		    border: 1px solid #e1e1e6;
+    	}
+    }
+
+    .grp-form-btm{
+    	position: relative;
+    	width: 100%;
+        height: 40px;
+        padding: 4px 20px;
+    	.grp-form-btm-rght{
+    		position: absolute;
+    		right: 20px;
+    	}
+    	.create-grp{
+    		padding: 3px 5px;
+    		border-radius: 2px;
+    	}
+    }
+}

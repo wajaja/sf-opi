@@ -1,0 +1,41 @@
+<h1>Response list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Createdat</th>
+            <th>Updateat</th>
+            <th>Content</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for document in documents %}
+        <tr>
+            <td><a href="{{ path('response_show', { 'id': document.id }) }}">{{ document.id }}</a></td>
+            <td>{% if document.createdAt %}{{ document.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if document.updateAt %}{{ document.updateAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ document.content }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('response_show', { 'id': document.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('response_edit', { 'id': document.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('response_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

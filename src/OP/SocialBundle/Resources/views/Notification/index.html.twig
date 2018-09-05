@@ -1,0 +1,6 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+{{ redux_store('opinionStore', initialState) }}
+{{ react_component('mainNode', {'rendering': 'client_side', 'trace': true}) }}
+{% endblock %}

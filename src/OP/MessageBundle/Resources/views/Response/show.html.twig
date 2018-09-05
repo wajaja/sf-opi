@@ -1,0 +1,41 @@
+<h1>Response</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ document.id }}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{{ document.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updateat</th>
+            <td>{{ document.updateAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ document.content }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('response') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('response_edit', { 'id': document.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('response_delete', { 'id': document.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

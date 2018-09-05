@@ -1,0 +1,205 @@
+/*
+    Created on : 20 janv. 2016, 11:50:40
+    Author     : CEDRICK
+*/
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+body .share-modal-on{
+    max-height: 500px;
+    overflow-y: auto;
+}
+.formPshare{
+    background-color: #f0f1f1;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 5px;
+}
+.share_form_header{
+    width: 100%;
+    border-bottom: 1px solid rgba(49, 49, 49, 0.17);
+    background:#F1F7F5;
+    height: 30px;
+    padding: 8px 15px 28px 15px;
+    text-align: center;
+}
+
+
+/*
+*for postShare message of the shared User
+*content all about style in the message over the post
+*/
+
+/*Customize from jquery-ui*/
+.ui-dialog .ui-dialog-content {
+    position: relative;
+    border: 0;
+    padding: .5em 1em;
+    background: white;
+    overflow: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    border-bottom-right-radius: 0px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+    border-bottom-left-radius: 0px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 0px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+    border-top-left-radius: 0px;
+}
+
+.ui-widget-content {
+    /*border: 1px solid #fff;*/
+    background: #fff;
+    color: #333;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding: .4em 1em;
+    position: relative;
+    border-radius: 1px;
+}
+.ui-widget-header {
+    border: 1px solid #8FAEB1;
+    color: #fff;
+    font-weight: bold;
+}
+
+
+/*
+* global div on the share Modal
+* all about div
+*/
+.postShare-a{
+    display:inline-block;
+    width:100%;
+}
+.postShare-b{
+    display:block;
+    width: 100%;
+}
+.postShare-c{
+    display: block;
+}
+.postShare-d{
+    display:block;
+    width: 100%;
+}
+
+/*
+*all about content
+*/
+.postShare-content{
+    margin-top:10px;
+}
+.postShare-content-a{
+    background: rgba(191, 205, 209, 0.1);
+    border: 1px solid #D8E6D3;
+    border-radius: 0%;
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+.postShare-content-content {
+    display: inline-block; 
+    position:inherit; 
+    margin-left: 5px; 
+    margin-right: 5px;
+    .postShare-content-content-b {
+        font-size: 12px;
+    }
+}
+.pst-shr-ct-ct-txt{
+        font-size: 14px;
+    color: #666671;
+    font-family: sans-serif;
+}
+
+
+.postShare-author{
+    font-size: 16px;
+    font-style: normal;
+    font-family: initial;
+    padding: 5px 5px 5px 5px;
+    font-stretch: expanded;
+    color: #1C8AEA;
+}
+
+.postShareAnimatedModal{
+    border:1px solid #EFFFFF;
+    border-radius: 5px;
+    background:#FFFFFF;
+
+}
+.postShareRightIcons{
+    position: absolute;
+    right: 6px;
+    top: 5px;
+}
+.postShareRightIcons>span{
+    display: block;
+    margin: 0 1px 5px 1px;
+}
+.postImageShare{
+    width:24%;
+    position: inherit;
+}
+.postShare-nbImages{
+    position:absolute;
+}
+.hiddenPshare{
+    display: none;
+}
+
+
+.shr-frm-pr-pic-lk{
+    display: inline-block;
+}
+
+.pst-shr-tp-ctnr{
+    background-color: #fff;
+    padding: 10px;
+}
+.pst-shr-tp-ctnr-a{
+    border: 1px solid #e7e8e9;
+    border-radius: 3px;
+    padding: 4px;
+    background: #f5f6f6;
+    min-height: 110px;
+    position: relative;
+}
+.shr-link-name{
+    font-size: 12px;
+    text-transform: capitalize;
+    font-family: sans-serif;
+    font-weight: bold;
+    display: block;
+}
+.shr-link-picture{
+    display: inline-block;
+    vertical-align: top;
+}
+.shr-foo-ldg-ctnr{
+    display: inline-block;
+    position: relative;
+    right: 10px;
+    top: 4px;
+}
+.postShare-nbImages{
+    font-size:22px; 
+    left:12%; 
+    color:#fff;
+    width:35px;
+    border:3px solid #E2E5E8; 
+    border-radius:50%;
+    top:55%;
+}

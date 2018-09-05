@@ -1,0 +1,65 @@
+<h1>Comment</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ document.id }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ document.content }}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{{ document.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updateat</th>
+            <td>{{ document.updateAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Visible</th>
+            <td>{{ document.visible }}</td>
+        </tr>
+        <tr>
+            <th>Images</th>
+            <td>{{ document.images }}</td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>{{ document.author }}</td>
+        </tr>
+        <tr>
+            <th>Liker</th>
+            <td>{{ document.liker }}</td>
+        </tr>
+        <tr>
+            <th>Nbliker</th>
+            <td>{{ document.nbLiker }}</td>
+        </tr>
+        <tr>
+            <th>Undercomments</th>
+            <td>{{ document.underComments }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('comment') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('comment_edit', { 'id': document.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('comment_delete', { 'id': document.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

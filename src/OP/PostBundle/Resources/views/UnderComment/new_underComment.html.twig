@@ -1,0 +1,41 @@
+'<div class="div-underForm" id="" style="" >'+
+        '{{ form_start(underForm, {'attr':{'class':'form-und-cmt'}, 'method':'post', 'action':path('undercomment_create', { 'id': '57f123bcaa95aa3805000031'}) }) }}'+
+        '{{ form_errors(underForm) }}'+
+        '{{ form_widget(underForm.commentValid, {'attr': {'class': ''} }) }}'+
+        '<div class="vis-part" data-c-name="{{app.user.firstname}} {{app.user.lastname}}" data-c-username="{{ path('fos_user_profile_show', {'username': app.user.username})}}">'+
+            '<div class ="left-underForm" style="">'+
+                '<a href="{{ path('fos_user_profile_show', {'username': app.user.username})}}" class="cmt-frm-pr-pic-lk" hover="" >'+
+                    '<img src="{{asset(app.user.profilePic.webPath|default("/images/favicon.ico"))}}" class="und-cmt-frm-pr-pic" alt="" style="" />'+
+                '</a>'+
+            '</div>'+
+            '<div class ="center-underForm" style="">'+
+                '<div class ="sCenter-underForm" style="">'+
+                    '<div class ="sCenter-underForm-a">'+
+                        '<div class ="dv-ttrea-under">'+
+                            '<div class="expandingArea">'+
+                                '<pre><span></span><br></pre>'+
+                                '{{ form_widget(underForm.content, {'attr': {'class': 'under-form-textarea autoExpand-underForm', 'placeholder':'reply comment'} }) }}'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="underFormImageHolder">'+
+                            '<ul class="upl-list-ul" data-input-nb="1"></ul>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="und-cmt-rght-mr">'+
+                        '<div class ="und-cmt-rght-mr-ctnr">'+
+                            '<div class ="divUploadComment">'+
+                                '<a href="#" class="linkUploadComment">'+
+                                    '<i class="fa fa-camera underForm-camera">'+
+                                         '{{ form_widget(underForm.file, {'attr': {'class': 'uploadComment', 'id': 'pictureLoader', 'name':'pictureLoader'} }) }}'+
+                                    '</i>'+
+                                '</a>'+
+                                '<a href="#" class="lk-autocol"><i class="fa fa-smile-o smile-ic" aria-hidden="true"></i></a>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '{{ form_rest(underForm) }}'+
+            '</div>'+
+        '</div>'+
+    '{{ form_end(underForm) }}'+
+'</div>'+

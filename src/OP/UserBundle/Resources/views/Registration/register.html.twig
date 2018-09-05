@@ -1,0 +1,9 @@
+{% extends "OPSocialBundle::layout.html.twig" %}
+
+{% block title %}
+    {{title}}
+{% endblock title %}
+
+{% block user_auth %}
+    {{ include('@OPUser/Registration/register_content.html.twig') }}
+{% endblock user_auth %}

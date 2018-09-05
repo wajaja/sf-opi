@@ -1,0 +1,113 @@
+'<div class="ibx-pg-nw-form" id="ibx_pg_nw_form">'+
+    '<div class="ibx-pg-nw-tp" id="_ibx_pg_nw_tp">'+
+        '<span class="ibx-thr-select-hd"><span class="ibx-thr-select-nm"> No Selection </span></span>'+
+        '<span class="ibx-thr-select-out"></span>'+
+    '</div>'+
+    '<div class="ibx-pg-nw-bd-a" data-cur-id="{{user.id}}" data-cur-username="{{user.username}}" data-cur-first="{{user.firstname}}" data-cur-last="{{user.lastname}}" data-cur-pic="{{asset (user.profilePic.WebPath|default("")) }}" data-users="2" id="_ibx_pg_nw_bd_a">'+
+        '<div class="nw-thr-recip-dv">'+
+            '{{ form_start(thread_form, {'attr':{'class':'thread-form'}, 'method':'post', 'action':path('messages_new_thread', { 'id': 'create'}) }) }}'+
+            '{{ form_errors(thread_form) }}'+
+            '<div class="ibx-pg-nw-bd" id="_ibx_pg_nw_bd">'+
+                 '<div class="nw-thr-recip-a" id="_nw_thr_recip_a">'+
+                    '<div class="nw-thr-recip-b" id="_nw_thr_recip_b" data-users="">'+
+                        '{{ form_widget(thread_form.recipients, {'attr':{'class': 'nw-msg-recip selectized', 'value':''} }) }}'+
+                    '</div>'+
+                '</div>'+
+                '<div class="ibx-thr-select-bd" id="_ibx_thr_select_bd">'+
+                    '<div class="thr-idtf" id="_thr_idtf" data-cur-id="{{user.id}}" data-cur-username="{{user.username}}" data-cur-first="{{user.firstname}}" data-cur-last="{{user.lastname}}" data-cur-pic="{{asset(user.profilePic.WebPath|default(""))}}" data-users="2" data-thr-id="">'+
+                        '<div class="msg-container" id="_msg_container" data-thr-id="">'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="ibx-pg-nw-msg-ct">'+
+                '<div class="nw-thr-ttl-b is-closed">'+
+                    '{{ form_widget(thread_form.subject, {'attr':{'class': 'nw-msg-subj', 'placeholder':'Title'} }) }}'+
+                '</div>'+
+                '<div class="ibx-pg-nw-msg-bd" id="_ibx_pg_nw_msg_bd">'+
+                    '<div class="nw-thr-bd-a">'+
+                        '<div class="nw-thr-bd-b">'+
+                            '{{ form_widget(thread_form.body, {'attr':{'class': 'nw-msg-bod autoExpand-message', 'data-min-rows-message':'3', 'rows':'3', 'placeholder':'content'} }) }}'+
+                        '</div>'+
+                        '<div class="documents-container"></div>'+
+                    '</div>'+
+                    '<span class="msg-opt-plus doc-sp">'+
+                        '<a href="" class="msg-opt-plus-ct file-opt link-doc-upload" id="">'+
+                            '<span class="glyphicon glyphicon-paperclip msg-ic-doc" aria-hidden="true"></span>'+
+                            '{{ form_widget(thread_form.document, {'attr': {'class': 'in-doc-upload' } }) }}'+
+                        '</a>'+
+                    '</span>'+
+                    '<div type="text/template" style="display:none" id="qq-template-thread">'+
+                        '<div class="qq-gallery">'+
+                            '<div class="qq-uploader-selector qq-uploader " qq-drop-area-text="Drop files here"></div>'+
+                            '<div class="zone-upload-form" id="image" name="">'+
+                                '<ul class="qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals">'+
+                                    '<li>'+
+                                        '<span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>'+
+                                        '<div class="qq-progress-bar-container-selector qq-progress-bar-container">'+
+                                            '<div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>'+
+                                        '</div>'+
+                                        '<span class="qq-upload-spinner-selector qq-upload-spinner"></span>'+
+                                        '<div class="qq-thumbnail-wrapper">'+
+                                            '<a class="preview-link" target="_blank">'+
+                                                '<img class="qq-thumbnail-selector" qq-max-size="120" qq-server-scale>'+
+                                            '</a>'+
+                                        '</div>'+
+                                        '<button type="button" class="qq-upload-cancel-selector qq-upload-cancel">X</button>'+
+                                        '<button type="button" class="qq-upload-retry-selector qq-upload-retry"><span class="qq-btn qq-retry-icon" aria-label="Retry"></span>Retry</button>'+
+                                    '</li>'+
+                                '</ul>'+
+                            '</div>'+
+                            '<dialog class="qq-alert-dialog-selector">'+
+                                '<div class="qq-dialog-message-selector"></div>'+
+                                '<div class="qq-dialog-buttons">'+
+                                    '<button type="button" class="qq-cancel-button-selector">Close</button>'+
+                                '</div>'+
+                            '</dialog>'+
+                            '<dialog class="qq-confirm-dialog-selector">'+
+                                '<div class="qq-dialog-message-selector"></div>'+
+                                '<div class="qq-dialog-buttons">'+
+                                    '<button type="button" class="qq-cancel-button-selector">No</button>'+
+                                    '<button type="button" class="qq-ok-button-selector">Yes</button>'+
+                                '</div>'+
+                            '</dialog>'+
+                            '<dialog class="qq-prompt-dialog-selector">'+
+                                '<div class="qq-dialog-message-selector"></div>'+
+                                '<input type="text">'+
+                                '<div class="qq-dialog-buttons">'+
+                                    '<button type="button" class="qq-cancel-button-selector">Cancel</button>'+
+                                    '<button type="button" class="qq-ok-button-selector">Ok</button>'+
+                                '</div>'+
+                            '</dialog>'+
+                            '<div class="nw-thr-foo">'+
+                                '<div>'+
+                                    '<ul class="nav nav-pills">'+
+                                        '<li class="pull-left">'+
+                                            '<span class="msg-opt-plus">'+
+                                                '<a href="" class="msg-opt-plus-ct img-opt qq-upload-button-selector">'+
+                                                    '<i class="fa fa-camera-retro" aria-hidden="true"></i>'+
+                                                '</a>'+
+                                            '</span>'+
+                                            '<span class="msg-opt-plus">'+
+                                                '<a href="" class="msg-opt-plus-ct add-ttl">'+
+                                                    '<i class="fa fa-cc" aria-hidden="true"></i>'+
+                                                '</a>'+
+                                            '</span>'+
+                                        '</li>'+
+                                        '<li class="pull-right">'+
+                                            '<button type="submit" id="submit-msg" name="_submit" value="Send"  class="nw-thr-sbmt">Send</button>'+
+                                        '</li>'+
+                                    '</ul>'+
+                                '</div>'+
+                            '</div>'+
+                           '{{ form_rest(thread_form) }}'+
+                        '</div>'+
+                    '</div>'+
+                    '<div id="fine-uploader-thread"></div>'+
+                '</div>'+
+            '</div>'+
+        '{{ form_end(thread_form) }}'+
+        '</div>'+
+    '</div>'+
+'</div>'+
+''

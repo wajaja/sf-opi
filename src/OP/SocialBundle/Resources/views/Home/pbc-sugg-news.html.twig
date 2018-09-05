@@ -1,0 +1,11 @@
+'<div id="" class="pbc-sugg-dv">'+
+	{% for pbc_sugg in list_pbc_suggs %}
+	'<div id="" tabindex="{{pbc_sugg.id}}" class="pbc-sugg-ctent" data-ct-url="{{pbc_sugg.link}}">'+
+		'<span class="pbc-sugg-sp-usr" data-frsugg-usrnm="{{pbc_sugg.author.username}}"><a href="#" class="" data-frsugg-usrnm="{{pbc_sugg.author.username}}">{{pbc_sugg.author.firstname}} {{pbc_sugg.author.lastname}}</a></span>'+
+		'<span class="pbc-sugg-sp-tp">{{pbc_sugg.content}}</span>'+
+		'<span class="pbc-sugg-sp-ct" data-ctid="{{pbc_sugg.link}}"> <a href="#" class="" data-ctid-lk="{{pbc_sugg.link}}">{{pbc_sugg.content}}</a></span>'+
+		'<span class="pbc-sugg-sp-tm" data-ts-db="{{pbc_sugg.date.time.hour}}">il y a<span class="tm-vl">{{pbc_sugg.date.date.day}}{{pbc_sugg.date.time.hour}}h {{pbc_sugg.date.time.minute}} min</span></span>'+
+	'</div>'+
+	{% endfor %}
+'</div>'+
+''

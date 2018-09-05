@@ -1,0 +1,91 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    # op_message.twig_extension:
+    #     class: OP\MessageBundle\Twig\Extension\MessageExtension
+    #     arguments: ["@op_message.participant_provider", "@op_message.provider", "@op_message.authorizer"]
+    #     tags:
+    #         - {name: "twig.extension"}
+
+    OP\MessageBundle\Form\UserSelectorType:
+        arguments: ['@op_user.user_manager']
+        tags:
+            - { name: form.type }
+    OP\MessageBundle\Document\Message: ~
+    OP\MessageBundle\Document\Thread: ~
+
+    OP\MessageBundle\Reader\Reader:
+        arguments: ["@op_message.participant_provider", "@op_message.thread_manager", "@event_dispatcher"]
+    OP\MessageBundle\Security\Authorizer:
+        arguments: ["@op_message.participant_provider"]
+
+    OP\MessageBundle\DocumentManager\MessageManager:
+        arguments: ["@doctrine.odm.mongodb.document_manager.public", 'OP\MessageBundle\Document\Message', 'OP\MessageBundle\Document\MessageMetadata', "@oneup_uploader.orphanage_manager", "@op_media.video_orphanage", '@OP\UserBundle\Security\UserProvider', "@request_stack", "@op_message.object_to_array.transformer"]
+
+    OP\MessageBundle\DocumentManager\ThreadManager:
+        arguments:
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - 'OP\MessageBundle\Document\Thread' 
+            - 'OP\MessageBundle\Document\ThreadMetadata'
+            - '@op_message.message_manager' 
+            - '@op_message.object_to_array.transformer'
+            - '@op_user.user_manager'
+
+    OP\MessageBundle\Sender\Sender:
+        arguments: 
+            - '@op_message.message_manager'
+            - '@op_message.thread_manager'
+            - '@service_container'
+            - '@request_stack'
+            - '@OP\MessageBundle\DataTransformer\ObjectToArrayTransformer'
+            - '@OP\SocialBundle\Firebase\Firebase'
+
+    OP\MessageBundle\Composer\Composer:
+        arguments: ["@op_message.message_manager", "@op_message.thread_manager"]
+
+    OP\MessageBundle\Security\ParticipantProvider:
+        arguments: ["@security.token_storage", "@lexik_jwt_authentication.encoder.default", "@op_user.user_manager"]
+
+    OP\MessageBundle\FormHandler\MessageFormHandler:
+        arguments: ["@request_stack", "@op_message.composer", "@op_message.sender", "@op_message.question_manager", "@op_message.participant_provider", "@op_message.thread_manager", "@op_message.message_manager", "@username_to_user_transformer", "@service_container"]
+
+    OP\MessageBundle\Provider\Provider:
+        arguments: ["@op_message.thread_manager", "@op_message.message_manager", "@op_message.thread_reader", "@op_message.authorizer", "@op_message.participant_provider"]
+    OP\MessageBundle\NewComposer\ThreadConstructor:
+        arguments: ['@OP\SocialBundle\SeveralClass\DateTransformer', "@op_message.participant_provider"]
+    OP\MessageBundle\Deleter\Deleter:
+        arguments: ["@op_message.authorizer", "@op_message.participant_provider", "@event_dispatcher"]
+#part of question 
+    OP\MessageBundle\Document\Question: ~
+    OP\MessageBundle\Document\Response: ~
+    OP\MessageBundle\DocumentManager\QuestionManager:
+        arguments: ["@doctrine.odm.mongodb.document_manager.public", 'OP\MessageBundle\Document\Question', "@oneup_uploader.orphanage_manager", '@OP\UserBundle\Security\UserProvider', "@request_stack"]
+    OP\MessageBundle\DataTransformer\ObjectToArrayTransformer:
+        arguments: ["@service_container", "@request_stack", "@doctrine.odm.mongodb.document_manager.public", "@op_user.user_manager", "@op_media.image_constructor", '@OP\SocialBundle\SeveralClass\DateTransformer', '@OP\UserBundle\Security\UserProvider']
+    
+    OP\MessageBundle\Listener\MessageListener:
+        arguments: 
+            - '@request_stack' 
+            - '@service_container'
+            - '@op_message.object_to_array.transformer'
+            - '@op_user.user_manager'
+            - '@op_message.participant_provider'
+        tags:
+            - { name: kernel.event_listener, event: op_message.thread_create, method: onThreadCreate }
+            - { name: kernel.event_listener, event: op_message.message_send, method: onMessageSend }
+            - { name: kernel.event_listener, event: op_message.message_read, method: onMessageRead }
+            - { name: kernel.event_listener, event: op_message.message_writing, method: onMessageWriting }
+    OP\MessageBundle\Topic\ThreadCreateTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    OP\MessageBundle\Topic\MessageSendTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    OP\MessageBundle\Topic\MessageReadTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    oOP\MessageBundle\Topic\MessageWritingTopic:
+        tags:
+            - { name: gos_web_socket.topic }

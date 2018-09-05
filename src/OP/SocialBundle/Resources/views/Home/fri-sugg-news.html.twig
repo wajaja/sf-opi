@@ -1,0 +1,11 @@
+'<div id="" class="fr-sugg-dv">'+
+	{% for fr_sugg in list_fr_suggs %}
+	'<div id="" tabindex="{{fr_sugg.id}}" class="fr-sugg-ctent" data-ct-url="{{fr_sugg.link}}">'+
+		'<span class="fr-sugg-sp-usr" data-frsugg-usrnm="{{fr_sugg.author.username}}"><a href="#" class="" data-frsugg-usrnm="{{fr_sugg.author.username}}">{{fr_sugg.author.firstname}} {{fr_sugg.author.lastname}}</a></span>'+
+		'<span class="fr-sugg-sp-tp">{{fr_sugg.content}}</span>'+
+		'<span class="fr-sugg-sp-ct" data-ctid="{{fr_sugg.link}}"> <a href="#" class="" data-ctid-lk="{{fr_sugg.link}}">{{fr_sugg.content}}</a></span>'+
+		'<span class="fr-sugg-sp-tm" data-ts-db="{{fr_sugg.date.time.hour}}">il y a<span class="tm-vl">{{fr_sugg.date.date.day}} {{fr_sugg.date.time.hour}}</span></span>'+
+	'</div>'+
+	{% endfor %}
+'</div>'+
+''

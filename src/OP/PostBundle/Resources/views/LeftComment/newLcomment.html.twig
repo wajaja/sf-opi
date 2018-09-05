@@ -1,0 +1,37 @@
+'<div class="div-lCommentForm" id="" style="" >'+
+    '<form name="op_opinionbundle_lcommenttype" method="post" action="{{path('leftcomment_create', { 'id': opinionValid })}}" class="formLcomment" enctype="multipart/form-data">'+
+        '{{ form_errors(lCommentForm) }}'+
+        '{{ form_widget(lCommentForm.opinionId, {'attr': {'class': 'hiddenLcomment'} }) }}'+
+        '{{ form_widget(lCommentForm.opinionValid, {'attr': {'class': ''} }) }}'+
+        '<div class="l-c-vis-part" data-c-name="{{app.user.firstname}} {{app.user.lastname}}" data-c-username="{{ path('fos_user_profile_show', {'username': app.user.username})}}">'+
+            '<div class="center-lCommentForm">'+
+                '<div class ="sCenter-lCommentForm" style="">'+
+                    '<div class ="opinion-lCommentForm-left" style="display: inline-block;">'+
+                        '<div class ="left-lCommentForm" style="">'+
+                            '<a href="{{ path('fos_user_profile_show', {'username': app.user.username})}}" hover="" >'+
+                                {% if app.user.profilePic is null %}'<div class ="profilePic-commentform" style=""></div>'+
+                                {% else %} '<img src="{{asset(app.user.profilePic.webPath)}}" class="profilePic-thumbnail-in-comment-form" alt="" style="" />'+
+                                {% endif %}
+                            '</a>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class ="lCommentContent" style="display: inline-block">'+
+                        '<div>'+
+                            '<div class ="div-textareaLcomment" style="">{{ form_widget(lCommentForm.content, {'attr': {'class': 'lComment-form-textarea autoExpand-lComment', 'data-min-rows-rComment':'1', 'rows':'1', 'placeholder':'avis contraire'} }) }}</div>'+
+                            '<div class="lCommentFormImageHolder">'+'</div>'+
+                        '</div>'+
+                        '<div style="display: block; padding-left: 8px; padding-right:8px;">'+
+                            '<div class ="dynamic-partInLcommentForm" style="">'+
+                                '<div class ="divUploadLcomment" style=""><a href="" class="linkUploadLcomment"><i class="fa fa-camera lCommentForm-camera"></i></a>'+
+                                    '{{ form_widget(lCommentForm.file, {'attr': {'class': 'uploadLcomment', 'name':'pictureLoader'} }) }}'+
+                                '</div>'+
+                                '<div class ="divSubmitLcomment" style=""><button type="submit" id="submit-lComment" name="_submit" value="Post"  class="submit-lComment">comment</button></div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '{{ form_rest(lCommentForm) }}'+
+            '</div>'+
+        '</div>'+
+    '</form>'+
+'</div>'+

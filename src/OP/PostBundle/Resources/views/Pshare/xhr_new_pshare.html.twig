@@ -1,0 +1,199 @@
+<div class="all-modal" id="all_modal">
+    {{form_start(pShareForm, {'attr':{'class':'formPshare'}, 'method':'post', 'action':path('pshare_create', { 'id': post.id}) }) }}
+        <div class="share_form_header">
+            <span class="share_header_title">Share this post</span>
+            <a href="" id="opinion-modal-close" class="opinion-modal-close"><i class="fa fa-times "></i></a>
+        </div> 
+        <div class="pst-shr-ctnr" data-pst-id="{{post.id}}">
+            <div class="pst-shr-tp-ctnr">
+                <div class="pst-shr-tp-ctnr-a" data-pst-id="{{post.id}}" data-aut-id="{{post.author.id}}">
+                    <div class ="postShare-content-b">                        
+                            {% if post.getImages()|length == 0 %}
+                                <div class ="postShare-content-content" style="display: inline-block; position:inherit; margin-left: 5px; margin-right: 5px;">
+                                    <span class ="postShare-content-content-b" style="font-size: 12px">{{post.getContent()}}</span>
+                                </div>
+                            {% elseif post.getImages()|length ==1 %}
+                                {% for image in post.getImages() %}
+                                    <span id="image" class ="postShare-content-image-b" style="font-size: 12px">
+                                            <img class="shr-img" style="margin:5px" src="{{ image.webPath| imagine_filter('image_in_post')}}" />
+                                        </span>
+                                    <div class ="postShare-content-content" style="display: inline-block; position:inherit; margin-left: 5px; margin-right: 5px;">
+                                        <span class ="postShare-content-content-b" style="font-size: 12px">{{post.getContent()}}</span>
+                                    </div>
+                                {% endfor %}
+                            {% elseif post.getImages()|length > 1 %}
+                                <div class ="pst-shr-gl-content">
+                                    <img src="{{post.getImages()|first.webPath | imagine_filter('image_in_post')}}" class="shr-img"  alt="" />
+                                    <span id="image" class ="postShare-content-image-b" style="font-size: 12px">
+                                        <span class ="postShare-nbImages">{{post.getImages()|length - 1}}</span>
+                                    </span>
+                                </div>
+                                <div class ="pst-shr-ct-ct">
+                                    <span class ="pst-shr-ct-ct-txt">{{post.getContent()}}</span>
+                                </div>                                
+                            {% endif %}
+                    </div>
+                    <div class="pst-shr-ctnr-usr-btm" data-pst-id="{{post.id}}">
+                        <div class ="postShare-content-user-a">
+                            <span class ="postShare-content-user-b">
+                                <span class ="postShare-content-by" data-pst-id="{{post.id}}">
+                                    <span class="pst-usr-nm-dte" data-aut-username="{{post.author.username}}" data-aut-id="{{post.author.id}}">
+                                        <a href="{{post.author.username}}" class ="shr-link-name">{{post.author.getFirstname()}} {{post.author.getLastname()}}</a>
+                                        <span class ="postShare-createdAt">{{post.getCreatedAt()|date("m/d/y")}}</span>
+                                    </span>                               
+                                    <a href="{{post.author.username}}" class ="shr-link-picture" style="">
+                                        <img class="profilePic-in-nav" style="margin:5px" src="{{post.author.profilePic.webPath|default("/images/favicon.ico")}}" />
+                                    </a>
+                                </span>                            
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class ="postShare-message">
+                <div class="lft-pst-shr-frm">
+                    <div class="lft-shr-frm-tp" data-pst-id="{{post.id}}"></div>
+                    <div class="lft-shr-frm-btm">
+                         <a href="{{ path('fos_user_profile_show', {'username': user.username})}}" class="shr-frm-pr-pic-lk" hover="" >
+                            <img src="{{asset(user.profilePic.webPath|default("/images/favicon.ico"))}}" class="shr-frm-pr-pic" />
+                        </a>
+                    </div>
+                </div>
+                <div class ="postShare-message-a" data-pst-id="{{post.id}}">
+                    {{ form_widget(pShareForm.postValid, {'attr': {'class': 'hiddenPostValid'} }) }}
+                    <div class="dv-ttrea-share-ctnr">
+                        <div class="sp-ttrea-shr-ctnr">
+                            {{ form_widget(pShareForm.content, {'attr': {'class': 'postShare-textarea  form-group autoExpand-pShare', 'id': 'content', 'data-min-rows-pshare':'2', 'rows':'2', 'placeholder':'opinion with freind'} }) }}
+                        </div>              
+                </div>
+            </div>
+            {{ form_errors(pShareForm) }}        
+            {{ form_rest(pShareForm) }}
+            <div class ="postShare-foo">
+                <span class="shr-foo-lft">
+                    
+                </span>
+                <span class="shr-foo-rght">
+                    <span class="shr-foo-ldg-ctnr"></span>
+                    <button  id="opinion-modal-cancel" name="" value=""  class="opinion-modal-cancel btn btn-default btn-sm">
+                    cancel
+                    </button>
+                    <button type="submit" id="submit-share" name="" value=""  class="pshare-post btn btn-primary btn-sm">
+                        Share
+                    </button>
+                </span>                
+            </div>
+        </div>
+    {{ form_end(pShareForm)}}
+</div>
+
+
+
+
+
+
+
+
+
+
+<script name='All about fineUploader Instance POST'>
+    //for fineUploader   //for pshare  //Ngeja 05.02
+    var pShareUploader = new qq.FineUploader({
+        debug: true,   element: $('#fine-uploader-pshare')[0],
+        template: 'qq-template-pshare',
+        request: { endpoint: "{{ oneup_uploader_endpoint('gallerypshare') }}"},
+        autoUpload: true, //
+        //editFilename: {
+        //  enabled: false
+        //}
+        success: true, iframeSupport: {localBlankPagePath: ""},
+        cors: {expected: true},
+        resume: {enabled: true },
+        deleteFile: {enabled: true, method: "POST", endpoint: ""},
+        validation: {itemLimit: 5, sizeLimit: 15000000, allowedExtensions: ['jpeg', 'jpg', 'gif', 'png']}
+    });
+</script>
+<script type="text/javascript">
+    var modal = $('.opinion_modal'),
+        closeBt = $('.opinion-modal-close, .opinion-modal-cancel');
+
+    closeBt.click(function (e) {
+        e.preventDefault();
+        $('body, html').css({'overflow':'auto'});
+        //options.beforeClose(); //beforeClose
+        // $(".opinion_share_form").remove();
+        if (modal.hasClass('opinion-modal'+'-on')) {
+            modal.removeClass('opinion-modal'+'-on');
+            modal.addClass('opinion-modal'+'-off');
+        }
+
+        if (modal.hasClass('opinion-modal'+'-off')) {
+            modal.removeClass('zoomIn');
+            modal.addClass('zoomOut');
+            modal.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', afterClose);
+        };
+        function afterClose(){
+            modal.css({'z-index':'-9999'});
+            modal.html('');                           //to be empty the modal element
+        }
+        function beforeClose(){
+
+        }
+        return false;
+    });
+</script>
+<script type="text/javascript">
+    $('form.formPshare').on('submit', (function(e){
+        e.preventDefault();                                //refresh false
+        var pShareFormData = new FormData(this);
+            modal = $('.opinion_modal');
+        //console.log(content);
+        $.ajax({
+            url:'http://127.0.0.1/opinion/web/app_dev.php/post/pshare/create/'+$(this).find('.lft-shr-frm-tp').attr('data-pst-id'),
+            type:'POST',
+            data: pShareFormData,
+            beforeSend:function(){
+                // loading div when the ajax request
+                if (!modal.find('.ajax-loader-form').length) {
+                    modal.find('.shr-foo-ldg-ctnr').html('<div class="ajax-loader-form" id=""></div>');
+                    modal.find('.postShare-message').css("opacity", "0.5");
+                }
+            },
+            contentType:false,
+            processData: false,
+            success:function(data){
+                console.log(data);
+                //stuff who animate the modal before removing
+                    $('body, html').css({'overflow':'auto'});
+                    //options.beforeClose(); //beforeClose
+                    if (modal.hasClass('opinion-modal'+'-on')) {
+                        modal.removeClass('opinion-modal'+'-on');
+                        modal.addClass('opinion-modal'+'-off');
+                    }
+
+                    if (modal.hasClass('opinion-modal'+'-off')) {
+                        modal.removeClass('zoomIn');
+                        modal.addClass('zoomOut');
+                        modal.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', afterClose);
+                    };
+                    function afterClose(){
+                        modal.css({'z-index':'-9999'});
+                        modal.html('');                           //to be empty the modal element
+                    }
+                    function beforeClose(){
+
+                    }
+                    //add some flash message after sharing publication
+                    setTimeout(function(){
+                        $("body").flash_message({
+                               text: 'saved!',
+                               how: 'append',
+                               time: 1800,
+                               class_name:'post_share_flash_message'
+                           });   //add message
+                    }, 1300);
+                }
+            });
+        return false;
+    }));
+</script>

@@ -1,0 +1,9 @@
+media_topic:
+    channel: media/channel/{username}
+    handler:
+        callback: 'media.topic' #related to the getName() of your topic
+    requirements:
+        # # room:
+        # #     pattern: "[a-z]+" #accept all valid regex, don't put delimiters !
+        username:
+            pattern: '[a-zA-Z0-9]'

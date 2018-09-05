@@ -1,0 +1,31 @@
+# This file is a "template" of what your parameters.yml file should look like
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     opinion
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+#parameters for session handler:
+#parameters:
+    #mongo.session.options:
+        #database: "%mongodb_database%"
+        #collection: sessions
+#jwt_bundle 
+    jwt_private_key_path: %kernel.root_dir%/../var/jwt/private.pem              # ssh private key path
+    jwt_public_key_path:  %kernel.root_dir%/../var/jwt/public.pem           # ssh public key path
+    jwt_key_pass_phrase:  'opinion'                                         # ssh key pass phrase
+    jwt_token_ttl:        3600

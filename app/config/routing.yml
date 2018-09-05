@@ -1,0 +1,87 @@
+#op_js_routing:
+#    resource: "@OPJsRoutingBundle/Resources/config/routing.yml"
+#    prefix:   /
+#refresh token 
+op_user_refresh_token:
+    path:     /api/token/refresh
+    defaults: { _controller: op_user.jwtrefreshtoken:refresh }
+
+OPMessage:
+    resource: "@OPMessageBundle/Controller"
+    prefix: /
+    type: annotation
+OPMessageMobile:
+    resource: "@OPMessageBundle/Controller/Mobile/"
+    prefix:   /
+    type: annotation
+    host: m.opinion.com
+
+OPPost:
+    resource: "@OPPostBundle/Controller/"
+    prefix: /posts
+    type: annotation
+OPPostMobile:
+    resource: "@OPPostBundle/Controller/Mobile"
+    prefix: /posts
+    type: annotation
+    host: m.opinion.com
+
+op_social_mobile:
+    resource: "@OPSocialBundle/Controller/Mobile/"
+    prefix:   /
+    type: annotation
+    host: m.opinion.com
+op_social:
+    resource: "@OPSocialBundle/Controller/"
+    prefix:   /
+    type: annotation
+
+OPMedia:
+    resource: "@OPMediaBundle/Controller/"
+    type: annotation
+OPMediaMobile:
+    resource: "@OPMediaBundle/Controller/Mobile"
+    type: annotation
+    host: m.opinion.com
+
+#route de UserBundle
+op_user_mobile:
+    resource: "@OPUserBundle/Controller/Mobile/"
+    prefix:   /
+    type: annotation
+    host: m.opinion.com
+op_user:
+    resource: "@OPUserBundle/Resources/config/routing/all.xml"
+    prefix:    /
+
+    #route pour acceder au groupe
+op_user_group:
+    resource: "@OPUserBundle/Resources/config/routing/group.xml"
+    prefix: /groups
+
+#app:
+#    resource: "@AppBundle/Controller/"
+#    type:     annotation
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+##REST
+#Users :
+#    type : rest
+#    resource: OP\UserBundle\Controller\UsersController
+##
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+oneup_uploader:
+    resource: .
+    type: uploader
+#REST 
+rest :
+    type : rest
+    resource : "routing_rest.yml"
+    prefix : /api
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

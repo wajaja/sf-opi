@@ -1,0 +1,111 @@
+.tab-nav-container{
+    display: inline-block;
+    min-width: 40px;
+    height: 28px;
+    position: relative;
+    left: 150px;
+    vertical-align: top;
+    &>div{
+        position: relative;
+        display: inline-block;
+        height: 28px;
+    }
+}
+.note-alert{
+	color: #fff;
+    background-color: #eb1111;
+    z-index: 99;
+}
+.dv-tabnav-ct{
+    display: inline-block;
+}
+
+.unseenMessages,
+.unseenNotifications,
+.unseenInvitations
+{
+    padding: 0 3px;
+    display: inline-block;
+    top: -1px;
+    margin-right: 3px;
+    margin-left: 25px;
+    border-radius: 4px;
+    position: absolute;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+
+div#tabnav_nt #nt_nv_ct,
+div#tabnav_msg #msg_nv_ct,
+div#tabnav_invit #invit_nv_ct
+{
+    position: absolute;
+    top: 31px;
+    right: -20px;
+    width: 480px;
+    min-height: 90px;
+    border-radius: 4px;
+}
+div#tabnav_nt, div#tabnav_invit, div#tabnav_msg{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 7px;
+    height: 28px;
+    &>div {
+        min-width: 28px;
+        display: block;
+        top: 1px;
+        height: 26px;
+        position: relative;
+        /*background: #fff;*/
+        border-radius: 12px;
+    }
+
+}
+div#tabnav_nt .nt-nv-arraw, div#tabnav_nt .nt-nv-arraw:after,
+div#tabnav_invit .invit-nv-arraw, div#tabnav_invit .invit-nv-arraw:after,
+div#tabnav_msg .msg-nv-arraw, div#tabnav_msg .msg-nv-arraw:after
+{
+    left: 3px;
+    margin-top: 12px;
+    border-bottom-color: #f1f7f5;
+    border-left-width: 0;
+    content: '';
+    position: absolute;
+    border-width: 10px;
+    /* color: rgb(255, 255, 255); */
+    /* border-color: rgb(203, 197, 197); */
+    z-index: -2;
+}
+#nt_nv_ct, 
+#invit_nv_ct, 
+#msg_nv_ct {
+    background-color: #f1f7f5;
+    box-shadow:  0px 5px 14px #928d8d;
+    -webkit-box-shadow: 0px 5px 14px #928d8d;
+    overflow: visible;
+    z-index: 7;
+}
+.nt-nv-arraw,
+.invit-nv-arraw,
+.msg-nv-arraw
+{
+    border: 10px solid #0294a5;
+    width: 0;
+    height: 0;
+}
+
+.currentTab{
+	position: relative;
+    display: inline-block;
+}
+.tabnav-box-ctnr
+{
+    position: relative;
+    top: 11px;
+}
+.tabnav-box-hd{
+
+}

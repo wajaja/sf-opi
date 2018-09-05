@@ -1,0 +1,3 @@
+op_post_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: OPPostBundle:Default:index }

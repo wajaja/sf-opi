@@ -1,0 +1,10 @@
+question_notification:
+    channel: notification:{post_id}:{question_id}
+    handler:
+        callback: op_message.question_notification
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        post_id:
+            pattern: '[a-z0-9]+'
+        question_id:
+            pattern: '[a-z0-9]+'

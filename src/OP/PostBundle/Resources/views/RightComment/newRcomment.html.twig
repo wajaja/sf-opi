@@ -1,0 +1,48 @@
+'<div class="div-rCommentForm" id="" style="" >'+
+    '<form name="op_opinionbundle_rightcommenttype" method="post" action="{{path('rightcomment_create', { 'id': opinionValid })}}" class="formRcomment" enctype="multipart/form-data">'+
+        '{{ form_errors(rCommentForm) }}'+
+        '{{ form_widget(rCommentForm.opinionId, {'attr': {'class': 'hiddenRcomment'} }) }}'+
+        '{{ form_widget(rCommentForm.opinionValid, {'attr': {'class': ''} }) }}'+
+        '<div class="r-c-vis-part" data-c-name="{{app.user.firstname}} {{app.user.lastname}}" data-c-username="{{ path('fos_user_profile_show', {'username': app.user.username})}}">'+
+            '<div class ="center-rCommentForm" style="">'+
+                '<div class ="sCenter-rCommentForm" style="">'+
+                    '<div class ="opinion-rCommentForm-left" style="">'+
+                        '<div class ="left-rCommentForm" style="">'+
+                            '<a href="{{ path('fos_user_profile_show', {'username': app.user.username})}}" hover="" >'+
+                                {% if app.user.profilePic is null %}
+                                    '<div class ="profilePic-commentform" style="">'+
+                                    '</div>'+
+                                {% else %}
+                                    '<img src="{{asset(app.user.profilePic.webPath)}}" class="profilePic-thumbnail-in-comment-form" alt="" style="" />'+
+                                {% endif %}
+                            '</a>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class ="rCommentContent" style="display: inline-block">'+
+                        '<div>'+
+                            '<div class ="div-textareaRcomment" style="">'+
+                                '{{ form_widget(rCommentForm.content, {'attr': {'class': "rComment-form-textarea autoExpand-rComment", 'data-min-rows-rComment':'1', 'rows':'1', 'placeholder':'meme avis'} }) }}'+
+                            '</div>'+
+                            '<div class="rCommentFormImageHolder">'+'</div>'+
+                        '</div>'+
+                        '<div style="display: block; padding-left: 8px; padding-right:8px;">'+
+                            '<div class ="dynamic-partInRcommentForm" style="">'+
+                                '<div class ="divUploadRcomment" style="">'+
+                                    '<a href="#" class="linkUploadRcomment">'+
+                                        '<i class="fa fa-camera rCommentForm-camera">'+
+                                             '{{ form_widget(rCommentForm.file, {'attr': {'class': 'uploadRcomment', 'name':'pictureLoader'} }) }}'+
+                                        '</i>'+
+                                    '</a>'+
+                                '</div>'+
+                                '<div class ="divSubmitRcomment" style="">'+
+                                    '<button type="submit" id="submit-rComment" name="_submit" value="Post"  class="submit-rComment">comment</button>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '{{ form_rest(rCommentForm) }}'+
+            '</div>'+
+        '</div>'+
+    '</form>'+
+'</div>'+

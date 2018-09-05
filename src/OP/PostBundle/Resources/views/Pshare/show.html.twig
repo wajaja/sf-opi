@@ -1,0 +1,49 @@
+<h1>Pshare</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ document.id }}</td>
+        </tr>
+        <tr>
+            <th>Postid</th>
+            <td>{{ document.postId }}</td>
+        </tr>
+        <tr>
+            <th>Picture</th>
+            <td>{{ document.picture }}</td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>{{ document.author }}</td>
+        </tr>
+        <tr>
+            <th>Message</th>
+            <td>{{ document.message }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ document.status }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('pshare') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('pshare_edit', { 'id': document.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('pshare_delete', { 'id': document.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

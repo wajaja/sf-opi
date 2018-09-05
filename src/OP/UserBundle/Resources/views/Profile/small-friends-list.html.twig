@@ -1,0 +1,59 @@
+{% if followers %}
+    ''+
+    '<div id="show-usr-plus-ff-ctnr" class="show-usr-plus-ff-ctnr">'+
+        '<span class="ff-hdr">'+
+            '<a href="" class="usr-plus-flwr-tg">Followers</a>'+
+            '<a href="" class="usr-plus-fr-tg">Friends</a>'+
+            '<a href="" class="usr-plus-flg-tg">Followings</a>'+
+        '</span>'+
+        '<div id="usr-plus-flw-ctnr" class="usr-plus-flwr-ctnr">'+
+            {% for follower in followers %}
+                '<div class="sml-dv-usr-ctnr">'+
+                    '<a href="" class="sml-usr-lk" data-usr-id="{{follower.id}}" data-usr-nm="{{follower.name}}" data-usr-usrnm="{{follower.username}}">'+
+                        '<img src="{{follower.picPath}}" class="sml-usr-prof-pic">'+
+                    '</a>'+
+                '</div>'+
+            {% endfor %}
+        '</div>'+
+    '</div>'+
+    ''
+{% elseif followeds %}
+    ''+
+    '<div id="show-usr-plus-ff-ctnr" class="show-usr-plus-ff-ctnr">'+
+        '<span class="ff-hdr">'+
+            '<a href="" class="usr-plus-flwr-tg">Followers</a>'+
+            '<a href="" class="usr-plus-fr-tg">Friends</a>'+
+            '<a href="" class="usr-plus-flg-tg">Followings</a>'+
+        '</span>'+
+        '<div id="usr-plus-flw-ctnr" class="usr-plus-flwr-ctnr">'+
+            {% for follower in followers %}
+                '<div class="sml-dv-usr-ctnr">'+
+                    '<a href="" class="sml-usr-lk" data-usr-id="{{follower.id}}" data-usr-nm="{{follower.name}}" data-usr-usrnm="{{follower.username}}">'+
+                        '<img src="{{follower.picPath}}" class="sml-usr-prof-pic">'+
+                    '</a>'+
+                '</div>'+
+            {% endfor %}
+        '</div>'+
+    '</div>'+
+    ''
+{% elseif friends %}
+    ''+
+    '<div id="show-usr-plus-ff-ctnr" class="show-usr-plus-ff-ctnr">'+
+        '<span class="ff-hdr">'+
+            '<a href="" class="usr-plus-flwr-tg">Followers</a>'+
+            '<a href="" class="usr-plus-fr-tg">Friends</a>'+
+            '<a href="" class="usr-plus-flg-tg">Followings</a>'+
+        '</span>'+
+        '<div id="usr-plus-flw-ctnr" class="usr-plus-flwr-ctnr">'+
+            {% for follower in followers %}
+                '<div class="sml-dv-usr-ctnr">'+
+                    '<a href="" class="sml-usr-lk" data-usr-id="{{follower.id}}" data-usr-nm="{{follower.name}}" data-usr-usrnm="{{follower.username}}">'+
+                        '<img src="{{follower.picPath}}" class="sml-usr-prof-pic">'+
+                    '</a>'+
+                '</div>'+
+            {% endfor %}
+        '</div>'+
+    '</div>'+
+    ''
+{% else %}
+{% endif %}

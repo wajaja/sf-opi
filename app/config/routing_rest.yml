@@ -1,0 +1,21 @@
+#app/routing_rest.yml
+Api_User :
+    type : rest
+    resource: "@OPUserBundle/Resources/config/routing_rest.yml"
+    name_prefix:  api_
+Api_Social :
+    type : rest
+    resource: "@OPSocialBundle/Resources/config/routing_rest.yml"
+    name_prefix:  api_
+Api_Message:
+    type: rest
+    resource: "@OPMessageBundle/Resources/config/routing_rest.yml"
+    name_prefix: api_
+Api_Post:
+    type: rest
+    resource: "@OPPostBundle/Resources/config/routing_rest.yml"
+    name_prefix: api_
+Api_Media:
+    type: rest
+    resource: "@OPMediaBundle/Resources/config/routing_rest.yml"
+    name_prefix: api_

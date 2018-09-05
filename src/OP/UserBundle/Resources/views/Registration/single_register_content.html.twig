@@ -1,0 +1,15 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<section class="h-sign-sect">
+    <span class="sign-ttl">Sign Up</span>
+    <form action="{{ path('fos_user_registration_register') }}"  method="POST" class="fos_user_registration_register">
+        {{form_start(form)}} {{form_errors(form)}}
+        {{ form_widget(form.firstname, {'attr': {'class':'form-registration-firstname in-sign-up', 'placeholder':'firstname' }})}} {{form_errors(form.firstname)}}
+        {{ form_widget(form.lastname, {'attr': {'class':'form-registration-lastname in-sign-up', 'placeholder':'lastname'}})}} {{form_errors(form.lastname)}}
+        {{ form_widget(form.email, {'attr': {'class':'form-registration-email in-sign-up', 'placeholder':'email'}})}} {{form_errors(form.email)}}
+        {{ form_widget(form.plainPassword.first, {'attr': {'class':'form-registration-password_confirmation in-sign-up', 'placeholder':'password'}})}} {{form_errors(form.plainPassword.first)}}
+        {{ form_widget(form.plainPassword.second, {'attr': {'class':'form-registration-password in-sign-up', 'placeholder':'repeat password'}})}} {{form_errors(form.plainPassword.second)}}
+        {{ form_rest(form) }}
+        {{ form_widget(form.gender, {'attr': {'class':'form-registration-gender '}})}} {{form_errors(form.gender)}}
+        <div><input type="submit" class="form-registration-submit" value="{{ 'registration.submit'|trans }}" /></div>
+    </form>
+</section>

@@ -1,0 +1,170 @@
+/*   Created on : 13 mars 2016, 01:53:42  Author : CEDRICK */
+.recordAnimatedModal{
+    display:none;
+}
+.close-meetingAnimatedModal, .close-recordAnimatedModal{
+    z-index: 99999;
+    position: relative;
+    left: 97%;
+    color: #fff;
+    border-radius: 5px;
+    font-size:16px;
+    top:5px;
+}
+.mediastream-out{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    opacity: 0.5;
+    background: #43595B;
+    z-index: 9999;
+}
+.mediastream-in-meeting, .mediastream-in-record{
+    position: fixed;
+    top: 30px;
+    left: 2%;
+    width: 96%;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 5px;
+    border: 2px solid #fff;
+    background: #fff;
+    z-index: 99999;
+    height: auto;
+}
+.mediastream-in-meeting{
+    left: 20%;
+    width: 60%;
+    height: auto;
+}
+.mediastream-record-left{
+    padding: 10px;
+    width: 23%;
+    display:inline-block;
+
+}
+.start-recording-record, .stop-recording-record, .resume-recording-record, .pause-recording-record{
+    position: relative;
+    color: #fff;
+    display: inline-block;
+    top: 5px;
+    background: #2255E4;
+    font-size: 11px;
+    margin-right: 6px;
+    border-radius: 6px;
+}
+.time-interval-record{
+    position: relative;
+    display: block;
+    top: 5px;
+}
+.mediastream-meeting-bottom, .mediastream-record-bottom{
+    position: relative;
+    left: 86%;
+    padding-left: 20px;
+    display: inline-block;
+}
+.mediaStreamFoo{
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+.start-recording-record, .stop-recording-record, .resume-recording-record, .pause-recording-record{
+
+}
+.save-recording-record{
+    position: relative;
+    right: 10px;
+}
+.mediaContainer{
+    display:inline-block;
+    position: relative;
+    width: 70%;
+}
+#bar-recording-record {
+    position: absolute;
+    width:0px;
+    height:4px;
+    border:1px solid #FF0101;
+    background-color:#FF0101;
+    border-radius:2px;
+}
+#time-recording-record{
+    display: inline-block;
+    font-size: 18px;
+    font-family: initial;
+    font-weight: 600;
+    color: #877F7F;
+    position: relative;
+    margin-right: 2.2%;
+}
+#audio-in-media{
+    padding: 5px;
+    width: 700px;
+    position: relative;
+    top: 26px;
+    margin-left: 30px;
+}
+.delete-record{
+    background-color: #EE1515;
+    position: relative;
+    color: #fff;
+    display: inline-block;
+    left: 88.7%;
+    top: 10px;
+    font-size: 11px;
+    margin-left: 16px;
+    border-radius: 6px;
+}
+.progressBarContainer{
+    position: relative;
+    top: 8px;
+}
+.separate{
+    position: relative;
+    top:20px;
+    border-top: 1px solid #dcdcdc;
+    width: 98%;
+    left:1%;
+    display:block;
+
+}
+.addCameraContain{
+    position: relative;
+    top: 10px;
+    left: 95%;
+}
+#border-bar-recording-record{
+    display: inline-block;
+    width: 600px;
+    height: 6px;
+    border: 1px solid #877F7F;
+    border-radius: 2px;
+    margin-right:10px;
+}
+#micro-support, #addCameraIcon{
+    display: inline-block;
+    border: 1px solid #dcdcdc;
+    border-radius: 50%;
+    margin-right: 10px;
+    width: 29px;
+    height: 29px;
+    background-color: #dcdcdc;
+}
+.micro-icon, .camera-icon{
+    font-size: 19px;
+    position: relative;
+    top: 5px;
+    left: 7px;
+}
+.video-in-modal{
+    border-radius: 5px;
+}
+.mediaStream-footer{
+    display: inline;
+    position: relative;
+    left: 84%;
+}

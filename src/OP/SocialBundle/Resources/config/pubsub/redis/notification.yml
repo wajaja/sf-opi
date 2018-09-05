@@ -1,0 +1,8 @@
+news_notification:
+    channel: notification:{news_id}
+    handler:
+        callback: op_social.news_notification
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        news_id:
+            pattern: '[a-z0-9]+'

@@ -1,0 +1,81 @@
+/* Created on : 5 mars 2016, 11:28:36    Author     : CEDRICK */
+.popover-title-question{
+    padding: 5px 14px;
+    font-weight: 600;
+    color: #5f7180;
+    margin: 0;
+    font-size: 12px;
+    background-color: #eaefef;
+    border-bottom: 1px solid #e0e1e1;
+    border-radius: 5px 5px 0 0;
+}
+.quest-prev-msg {
+    border-top: 3px solid #c2c7c7;
+    border-left: 3px solid #c2c7c7;
+    height: 190px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #f8fbff;
+    width: 100%;
+    margin: 0;
+    padding: 1px 5px;
+}
+
+.popover-footer {
+    margin: 0;
+    padding: 0px 0px 7px 45px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+}
+.question-submit{
+    width: 38px;
+}
+.loading-post-question, .loading-opinion-question{
+    position: relative;
+    left: 177px;
+    width: 30px;
+    height: 25px;
+    display: inline-block;
+    background: url('http://opinion/images/loading-question.gif');
+}
+.question-error, .error-submit-question{
+    position: relative;
+    top: -5px;
+}
+.question-error{
+    float: right;
+}
+.loading-submit{
+    position: relative;
+    top: 3px;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background: url('http://opinion/images/loading-submit.gif');
+}
+.check-submit{
+    color:green;
+    position: relative;
+    top: 3px;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+}
+.postQuestionDiv>.popover, .opinionQuestionDiv>.popover{
+    left: 0px !important;
+    border: 2px solid #c9caca;
+}
+.question-popover>.arrow{
+    left: 18px !important;
+}
+.res-img-auth{
+    width: 33px;
+    height: 33px;
+}
+.res-tp-container{
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    vertical-align: text-top;
+}

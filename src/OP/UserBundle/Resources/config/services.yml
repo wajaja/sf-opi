@@ -1,0 +1,240 @@
+#src/OP/UserBundle/Resources/config/services.yml  depuis doc/controller_events
+parameters:
+    op_user.jwtrefreshtoken.refresh_token.class: OP\UserBundle\Document\RefreshToken
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+    OP\UserBundle\FormHandler\NewFormHandler:
+        arguments: 
+            - "@request_stack"
+            - '@OP\UserBundle\DocumentManager\GroupManager'
+            - "@op_user.setting_manager"
+            - "@op_message.participant_provider"
+            - "@username_to_user_transformer"
+            - "@service_container"
+    OP\UserBundle\DataTransformer\ObjectToArrayTransformer:
+        arguments: 
+            - "@service_container"
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@op_user.user_manager"
+            - '@OP\UserBundle\Security\UserProvider'
+    OP\UserBundle\Security\JwtTokenAuthenticator:
+        autowire: true
+    OP\UserBundle\Encoder\OPJWTEncoder: ~
+    OP\UserBundle\Security\OnlineUsers:
+        arguments: ["@snc_redis.default"]
+    OP\UserBundle\EventListener\ActivityListener:
+        arguments: 
+            - "@security.token_storage" 
+            - "@op_user.user_manager"
+            - '@OP\UserBundle\DocumentManager\GroupManager'
+            - '@OP\UserBundle\Security\OnlineUsers'
+            - "@service_container"
+            - "@request_stack"
+            - "@templating"
+            - "@router"
+            - '@Symfony\Component\HttpKernel\Controller\ControllerResolver'
+            - '@OP\UserBundle\Security\UserProvider'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onCoreRequest }
+            - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }
+            - { name: kernel.event_listener, event: kernel.response, method: onCoreResponse }
+            - { name: kernel.event_listener, event: kernel.exception, method: onCoreException }
+    OP\UserBundle\Security\UserProvider:
+        arguments: ["@request_stack", "@service_container", "@op_user.user_manager"]
+    OP\UserBundle\Security\DeviceDetector:
+        arguments: ["@request_stack", "@service_container"]
+        # src/Acme/UserBundle/Resources/config/services.yml
+        #services qui sert à l'ajout des champs à la registration d'un utilisation
+        #specialement le champ firstname; lastname;...
+    # op_user.registration.form.type:
+    #     class: OP\UserBundle\Form\Type\RegistrationFormType
+    #     tags:
+    #         - { name: form.type, alias: op_user_registration }
+    # op_user.form.handler.registration:
+    #     class: OP\UserBundle\Form\Handler\RegistrationFormHandler
+    #     arguments: ["fos_user.registration.form", "request", "fos_user.user_manager", "fos_user.mailer"]
+    #     scope: request
+    #     public: false
+    OP\UserBundle\Service\LogoutService:
+        arguments: ["@security.token_storage", "@session"]
+    OP\UserBundle\Repository\OpinionUserManager:
+        arguments: ["@fos_user.util.password_updater", "@fos_user.util.canonical_fields_updater", "@fos_user.object_manager", 'OP\UserBundle\Document\User']
+    OP\UserBundle\DocumentManager\GroupManager:
+        arguments: 
+            - "@fos_user.object_manager"
+            - OP\UserBundle\Document\Group
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@service_container'
+            - '@request_stack'
+            - '@OP\UserBundle\Security\UserProvider'
+    OP\UserBundle\EventListener\UserClientEventListener: # Gos\Bundle\WebSocketBundle\Event\ClientEventListener
+        tags:
+            - { name: kernel.event_listener, event: 'gos_web_socket.client_connected', method: onClientConnect }
+            - { name: kernel.event_listener, event: 'gos_web_socket.client_disconnected', method: onClientDisconnect }
+            - { name: kernel.event_listener, event: 'gos_web_socket.client_error', method: onClientError }
+            - { name: kernel.event_listener, event: 'gos_web_socket.server_launched', method: onServerStart }
+            - { name: kernel.event_listener, event: 'gos_web_socket.client_rejected', method: onClientRejected }
+    OP\UserBundle\DataTransformer\UsernameToUserTransformer:
+        arguments: ["@op_user.user_manager"]
+    OP\UserBundle\EventListener\AttachRefreshTokenOnSuccessListener:
+        arguments: [ "@op_user.jwtrefreshtoken.refresh_token_manager", "%op_user.refresh_token.ttl%", "@validator", "@request_stack" ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: attachRefreshToken }
+
+    OP\UserBundle\DocumentManager\RefreshTokenManager:
+        arguments: [ "@doctrine.odm.mongodb.document_manager.public", "%op_user.jwtrefreshtoken.refresh_token.class%" ]
+
+    OP\UserBundle\Service\RefreshToken:
+        arguments: [ "@op_user.jwtrefreshtoken.authenticator", "@op_user.jwtrefreshtoken.user_provider", "@op_user.jwt.handler.authentication_success", "@op_user.jwt.handler.authentication_failure", "@op_user.jwtrefreshtoken.refresh_token_manager", "%op_user.refresh_token.ttl%", "%op_user.refresh_token.security.firewall%", "%op_user.refresh_token.ttl_update%" ]
+
+    OP\UserBundle\Security\RefreshTokenProvider:
+        arguments: [ "@op_user.jwtrefreshtoken.refresh_token_manager" ]
+
+    OP\UserBundle\Security\RefreshTokenAuthenticator: ~
+    OP\UserBundle\Security\WebsocketAuthenticationProvider:
+        arguments:
+            - '@security.token_storage'
+            - '%gos_web_socket.firewall%'
+            - '@gos_web_socket.client_storage'
+            - '@service_container'
+            - '@monolog.logger.websocket'
+    #in replacement of bundle service
+    OP\UserBundle\EventSubscriber\LocaleSubscriber:
+        arguments: 
+            - '%kernel.default_locale%'
+            - '@session'
+            - '@op_user.user_manager'
+            - '@service_container'
+        # redundant if you're using autoconfigure
+        tags: 
+            - { name: kernel.event_subscriber }
+    #op_user.jwt.event.jwt_created_listener:
+    OP\UserBundle\EventListener\Auth\JWTCreatedListener:
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+    #op_user.jwt.event.authentication_success_listener:
+    OP\UserBundle\EventListener\AuthenticationSuccessListener:
+        arguments: [ '@request_stack' ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+    #op_user.jwt.event.jwt_authentication_failure_listener:
+    OP\UserBundle\EventListener\Auth\AuthenticationFailureListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_failure, method: onAuthenticationFailureResponse }
+    #op_user.jwt.event.bad_jwt_token_listener:
+    OP\UserBundle\EventListener\Auth\BadJwtTokenListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_invalid, method: onJWTInvalid }
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_not_found, method: onJWTNotFound }
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_expired, method: onJWTExpired }
+    #:
+    OP\UserBundle\Security\Http\Authentication\AuthenticationSuccessHandler:
+        arguments: 
+            - '@request_stack'
+            - '@lexik_jwt_authentication.jwt_manager'
+            - '@event_dispatcher'
+            - '@service_container'
+            - '@op_user.user_manager'
+            - '@OP\SocialBundle\Firebase\Firebase'
+            - '@OP\UserBundle\Security\DeviceDetector'
+            - '@doctrine.odm.mongodb.document_manager.public'
+        tags: 
+            - { name: monolog.logger , channel: security }
+    OP\UserBundle\Security\Http\Authentication\AuthenticationFailureHandler:
+        arguments: 
+            - '@event_dispatcher'
+            - '@router'
+            - '@OP\SocialBundle\Firebase\Firebase'
+        tags: 
+            - { name: monolog.logger , channel: security }
+    # op_user.jwt.handler.logout_success:
+    #     class: OP\UserBundle\Security\Http\AuthenticationFailureHandler
+    #     arguments: 
+    #         - '@router'
+    #         - '@service_container'
+    #     tags:
+    #         - { name: monolog.logger , channel: security }
+    OP\UserBundle\EventListener\RegistrationListener:
+        arguments: 
+            - '@router'
+            - '@request_stack'
+            - '@event_dispatcher'
+            - '@lexik_jwt_authentication.jwt_manager'
+            - '@service_container'
+            - '@OP\SocialBundle\Firebase\Firebase'
+        tags:
+            - { name: kernel.event_subscriber }
+    OP\UserBundle\EventListener\ProfileListener:
+        arguments: 
+            - '@router'
+            - '@request_stack'
+            - '@event_dispatcher'
+            - '@lexik_jwt_authentication.jwt_manager'
+            - '@service_container'
+            - '@OP\SocialBundle\Firebase\Firebase'
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    OP\UserBundle\EventListener\ResettingListener:
+        arguments: 
+            - '@router'
+            - '@request_stack'
+            - '@event_dispatcher'
+            - '@lexik_jwt_authentication.jwt_manager'
+            - '@service_container'
+            - '@OP\SocialBundle\Firebase\Firebase'
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    OP\UserBundle\EventListener\SettingListener:
+        arguments: 
+            - '@router'
+            - '@request_stack'
+            - '@event_dispatcher'
+            - '@lexik_jwt_authentication.jwt_manager'
+            - '@service_container'
+            - '@OP\SocialBundle\Firebase\Firebase'
+        tags:
+            - { name: kernel.event_subscriber }
+    OP\UserBundle\EventListener\GroupListener:
+        arguments: 
+            - '@router'
+            - '@request_stack'
+            - '@event_dispatcher'
+            - '@service_container'
+        tags:
+            - { name: kernel.event_subscriber }
+    OP\UserBundle\DocumentManager\InvitationManager:
+        arguments: 
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@service_container'
+            - '@OP\UserBundle\DataTransformer\ObjectToArrayTransformer'
+            - '@OP\UserBundle\Security\UserProvider'
+            - '@OP\UserBundle\Repository\OpinionUserManager'
+    OP\UserBundle\DocumentManager\SettingManager:
+        arguments: 
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@service_container'
+            - '@form.factory'
+            - "@op_user.user_manager"
+            - '@OP\UserBundle\Security\UserProvider'
+    OP\UserBundle\Serializer\UserSerializerSubscriber:
+        arguments: 
+            - '@service_container'
+            - '@request_stack'
+            - '@OP\UserBundle\Security\UserProvider'
+            - '@op_message.thread_manager'
+            - '@OP\UserBundle\DataTransformer\ObjectToArrayTransformer'
+        tags:
+            - { name: jms_serializer.event_subscriber }
+    OP\UserBundle\Serializer\GroupSerializerSubscriber:
+        # arguments:
+        #     - @bundle.my_very_needed_service
+        tags:
+            - { name: jms_serializer.event_subscriber }
+    OP\UserBundle\Elastica\QuerySearch: ~

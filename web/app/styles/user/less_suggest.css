@@ -1,0 +1,116 @@
+.less-sugg-ul{
+    padding: 5px 5px 5px 5px;
+}
+.u-sugg-el{
+    display: block;
+    padding: 2px 2px 2px 2px;
+    border: 1px solid rgba(241, 236, 236, 0.57);
+    margin-bottom: 3px;
+    border-radius: 2px;
+}
+.u-sugg-l{
+    display: inline-block;
+    width: 100%;
+    position:relative;
+}
+.pic-u-sugg{
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+    border: 1px solid #CCC;
+}
+.sugg-add-sp{
+    display: inline-block;
+    font-size: 12px;
+    position: relative;
+    width: auto;
+    margin-top: 8px;
+}
+.add-u-sugg{
+    border-radius: 3px;    
+    font-weight: 600;
+    color: blue;
+    background: rgba(247, 246, 246, 0.97);
+    border: 1px solid #DCDCDC;
+}
+.u-sugg-scs-sp{
+    border: 1px solid #dfe1dc;
+    padding: 1px;
+    color: #12f;
+    font-weight: 700;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+.sugg-txt{
+    vertical-align: top;
+    font-size: 14px;
+    font-family: sans-serif;
+    font-weight: 600;
+    position: relative;
+    color: #345D80;
+    top: -3px;
+    border-bottom: 1px solid #dcdcdc;
+    width: 100%;
+    display: block;
+}
+.u-sugg-r{
+    display:inline-block;
+}
+.nm-link-u-sugg{
+    vertical-align: top;
+    font-size: 13px;
+    font-family: sans-serif;
+    font-weight: 600;
+    text-transform: capitalize;
+    position: relative;
+    display: block;
+}
+.inf-u-sugg{
+    display: inline-block;
+    margin-left: 10px;
+}
+.pic-link-u-sugg{
+    display: inline-block;
+    vertical-align: top;
+}
+.h-sugg-remove{
+    display: inline-block;
+    float: right;
+    position: absolute;
+    right: 4px;
+    font-size: 13px;
+    top: -3px;
+}
+.sugg-lk-msk-iv{
+    display: block;
+    /*display: none;*/
+}
+ .sugg-cfm-sp{
+    display: block;
+    margin-top:5px;
+ }
+.sugg-btn-cfm-fri{
+    background: #3ab8dc;
+    border: none;
+    border-radius: 2px;
+    color: #fdfbfb;
+    font-size: 13px;
+    font-family: sans-serif;
+    margin: 3px;
+}
+.sugg-btn-cfm-flw{
+    background: #04d992;
+    border: none;
+    border-radius: 2px;
+    color: #fdfbfb;
+    font-size: 13px;
+    font-family: sans-serif;
+    margin: 2px;
+}
+.loading-invit-cfr{
+    position: absolute;
+    display: inline-block;
+    height: 20px;
+    width: 40px;
+    background: rgba( 255, 255, 255, 1 ) url('http://opinion/images/loading-question.gif') 50% 50% no-repeat;
+}

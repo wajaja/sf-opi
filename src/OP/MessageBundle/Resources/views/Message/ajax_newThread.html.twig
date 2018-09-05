@@ -1,0 +1,481 @@
+<div class="ibx-pg-nw-form" id="ibx_pg_nw_form">
+    <div class="ibx-pg-nw-tp" id="_ibx_pg_nw_tp">
+        <span class="ibx-thr-select-hd">
+            <span class="ibx-thr-select-nm"> No Selection </span>
+        </span>
+        <span class="ibx-thr-select-out"></span>
+    </div>
+    <div class="ibx-pg-nw-bd-a" data-cur-id="{{user.id}}" data-cur-username="{{user.username}}" data-cur-first="{{user.firstname}}" data-cur-last="{{user.lastname}}" data-cur-pic="{{asset(user.profilePic.WebPath|default(""))}}" data-users="2" id="_ibx_pg_nw_bd_a">
+        <div class="nw-thr-recip-dv" data-cur-id="{{user.id}}" data-cur-username="{{user.username}}" data-cur-first="{{user.firstname}}" data-cur-last="{{user.lastname}}" data-cur-pic="{{asset(user.profilePic.WebPath|default(""))}}" data-users="2">
+            {{ form_start(thread_form, {'attr':{'class':'xhr-thread-form'}, 'method':'post', 'action':path('messages_new_thread', { 'id': 'create'}) }) }}
+            {{ form_errors(thread_form) }}
+            <div class="ibx-pg-nw-bd" id="_ibx_pg_nw_bd">
+                 <div class="nw-thr-recip-a" id="_nw_thr_recip_a">
+                    <div class="nw-thr-recip-b" id="_nw_thr_recip_b" data-users="">
+                        {{ form_widget(thread_form.recipients, {'attr':{'class': 'nw-msg-recip modal-recip  selectized', 'value':''} }) }}
+                    </div>
+                </div>
+                <div class="ibx-thr-select-bd" id="_ibx_thr_select_bd">
+                    <div class="thr-idtf" data-cur-id="{{user.id}}" data-cur-username="{{user.username}}" data-cur-first="{{user.firstname}}" data-cur-last="{{user.lastname}}" data-cur-pic="{{asset(user.profilePic.WebPath|default(""))}}" id="_thr_idtf" data-thr-id="">
+                        <div class="msg-container" id="_msg_container"  data-thr-id="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibx-pg-nw-msg-ct">
+                <div class="nw-thr-ttl-b is-closed">
+                    {{ form_widget(thread_form.subject, {'attr':{'class': 'nw-msg-subj', 'placeholder':'Title'} }) }}
+                </div>
+                <div class="ibx-pg-nw-msg-bd" id="_ibx_pg_nw_msg_bd">
+                    <div class="nw-thr-bd-a">
+                        <div class="nw-thr-bd-b">
+                            {{ form_widget(thread_form.body, {'attr':{'class': 'nw-msg-bod autoExpand-message', 'data-min-rows-message':'3', 'rows':'3', 'placeholder':'content'} }) }}
+                        </div>
+                        <div class="documents-container"></div>
+                    </div>
+                    <span class="msg-opt-plus doc-sp">
+                        <a href="" class="msg-opt-plus-ct file-opt link-doc-upload" id="">
+                            <span class="glyphicon glyphicon-paperclip msg-ic-doc" aria-hidden="true"></span>
+                            {{ form_widget(thread_form.document, {'attr': {'class': 'in-doc-upload' } }) }}
+                        </a>
+                    </span>
+                    <div type="text/template" style="display:none" id="qq-template-ajax-new-thread">
+                        <div class="qq-gallery">
+                            <div class="qq-uploader-selector qq-uploader " qq-drop-area-text="Drop files here"></div>
+                            <div class="zone-upload-form" id="image" name="">
+                                <ul class="qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals">
+                                    <li>
+                                        <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                                        <div class="qq-progress-bar-container-selector qq-progress-bar-container">
+                                            <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+                                        </div>
+                                        <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                                        <div class="qq-thumbnail-wrapper">
+                                            <a class="preview-link" target="_blank">
+                                                <img class="qq-thumbnail-selector" qq-max-size="120" qq-server-scale>
+                                            </a>
+                                        </div>
+                                        <button type="button" class="qq-upload-cancel-selector qq-upload-cancel">X</button>
+                                        <button type="button" class="qq-upload-retry-selector qq-upload-retry"><span class="qq-btn qq-retry-icon" aria-label="Retry"></span>Retry</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <dialog class="qq-alert-dialog-selector">
+                                <div class="qq-dialog-message-selector"></div>
+                                <div class="qq-dialog-buttons">
+                                    <button type="button" class="qq-cancel-button-selector">Close</button>
+                                </div>
+                            </dialog>
+                            <dialog class="qq-confirm-dialog-selector">
+                                <div class="qq-dialog-message-selector"></div>
+                                <div class="qq-dialog-buttons">
+                                    <button type="button" class="qq-cancel-button-selector">No</button>
+                                    <button type="button" class="qq-ok-button-selector">Yes</button>
+                                </div>
+                            </dialog>
+                            <dialog class="qq-prompt-dialog-selector">
+                                <div class="qq-dialog-message-selector"></div>
+                                <input type="text">
+                                <div class="qq-dialog-buttons">
+                                    <button type="button" class="qq-cancel-button-selector">Cancel</button>
+                                    <button type="button" class="qq-ok-button-selector">Ok</button>
+                                </div>
+                            </dialog>
+                            <div class="nw-thr-foo">
+                                <div>
+                                    <ul class="nav nav-pills">
+                                        <li class="pull-left">
+                                            <span class="msg-opt-plus">
+                                                <a href="" class="msg-opt-plus-ct img-opt qq-upload-button-selector">
+                                                    <i class="fa fa-camera-retro" aria-hidden="true"></i>
+                                                </a>
+                                            </span>
+                                            <span class="msg-opt-plus">
+                                                <a href="" class="msg-opt-plus-ct add-ttl">
+                                                    <i class="fa fa-cc" aria-hidden="true"></i>
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li class="pull-right">
+                                            <button type="submit" id="submit-msg" name="_submit" value="Send"  class="nw-thr-sbmt">Send</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                           {{ form_rest(thread_form) }}
+                        </div>
+                    </div>
+                    <div id="fine-uploader-ajax-new-thread"></div>
+                </div>
+            </div>
+        {{ form_end(thread_form) }}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+//for fineUploader   //for post  //Ajout de Endpoint Par Cedrick Ngeja le 14.09
+var ajaxNewThreadUploader = new qq.FineUploader({
+    debug: true,
+        element: $('#fine-uploader-ajax-new-thread')[0], template: 'qq-template-ajax-new-thread',
+    request: {endpoint: "/opinion/web/app_dev.php/_uploader/gallerythread/upload"},
+    autoUpload: true, success: true,
+    iframeSupport: {localBlankPagePath: ""	},
+    cors: {	expected: true },
+    resume: {enabled: true},
+    deleteFile: {enabled: true,
+        method: "POST",	endpoint: ""},
+    validation: {itemLimit: 50, sizeLimit: 15000000, allowedExtensions: ['jpeg', 'jpg', 'gif', 'png']}
+});
+//
+//$( ".link-doc-upload").click(function(e) {
+//    e.preventDefault();
+//    $(this).nextAll().trigger( "click" );
+//    return false;
+//});
+/*jslint unparam: true */
+/*global window, $ */
+
+//get friend list stokage
+var options = $('.fri-stk-data').attr('data-users');
+    console.log(typeof(options));
+    options = JSON.parse(options);
+    console.log(typeof(options));
+var REGEX_EMAIL = '([a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@' +
+    '(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)';
+
+  $('.modal-recip').selectize({
+      persist: false,
+      maxItems: null,
+      valueField: 'username',
+      labelField: 'name',
+      searchField: ['name', 'username'],
+      options: options,
+      render: {
+          item: function(item, escape) {
+              return '<div class="selec-field">' +
+                  (item.name ? '<span class="selec-name">' + escape(item.name) + '</span><br/>' : '') +
+                  (item.pic ? '<span class="selec-pic" data-pic-url='+escape(item.pic)+'></span>':'') +
+              '</div>';
+          },
+          option: function(item, escape) {
+              var label = item.name || item.username;
+              var caption = item.name ? item.username : null;
+              return '<div class="selec-sugg">' +
+                  '<span class="label">' + escape(label) + '</span><br/>' +
+                  (caption ? '<span class="caption">' + escape(caption) + '</span>' : '') +
+              '</div>';
+          }
+      },
+      createFilter: function(input) {
+          var match, regex;
+
+          // username@address.com
+          regex = new RegExp('^' + REGEX_EMAIL + '$', 'i');
+          match = input.match(regex);
+          if (match) return !this.options.hasOwnProperty(match[0]);
+
+          // name <username@address.com>
+          regex = new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i');
+          match = input.match(regex);
+          if (match) return !this.options.hasOwnProperty(match[2]);
+
+          return false;
+      },
+      create: function(input) {
+          if ((new RegExp('^' + REGEX_EMAIL + '$', 'i')).test(input)) {
+              return {username: input};
+          }
+          var match = input.match(new RegExp('^([^<]*)\<' + REGEX_EMAIL + '\>$', 'i'));
+          if (match) {
+              return {
+                  username : match[2],
+                  name  : $.trim(match[1])
+              };
+          }
+          alert('Invalid username address.');
+          return false;
+      },
+          hideSelected: true,
+  openOnFocus: false
+  });
+
+// created an textarea dynamic height
+$(document).one('focus.textarea', '.autoExpand-message', function(){
+          var savedValue = this.value;
+          this.value = '';
+          this.baseScrollHeight = this.scrollHeight;
+          this.value = savedValue;
+  }).on('input.textarea', '.autoExpand-message', function(){
+          var minRows = this.getAttribute('data-min-rows-message')|0, rows;
+          this.rows = minRows;
+// console.log(this.scrollHeight , this.baseScrollHeight);
+          rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 17);
+          this.rows = minRows + rows;
+  });
+
+  //manage scrolling massage container
+  var height = 0;
+  $('.ibx-pg-nw-bd .msg-dv-th').each(function(i, value){
+      //add all height value for each message div
+      height +=parseInt($(this).height());
+  });
+  height +='';
+  $('.ibx-pg-nw-bd').animate({scrollTop : height});
+
+  //manage submit by handle submit event
+  $('form.xhr-thread-form').on('submit', function(e){
+      e.preventDefault();
+      var form = $(this);
+      //no thread
+      if(!form.find('.msg-dv-th').length){
+          if(form.find('#thread_message_recipients').val()!== ''){
+              var newModalThreadForm = new FormData(this);    //new thread form handler
+                  newModalThreadForm.append('thread_id', '');
+              form.find('.msg-container').append(''+
+                  '<div class="msg-dv-th self-msg">'+
+                      '<span class="thr-msg-lft">'+
+                          '<a href='+ form.find('.thr-idtf').attr('data-cur-username') +' class="a-msg-sdr">'+
+                              '<img src='+ form.find('.thr-idtf').attr('data-cur-pic')  +' style="width:40px; height: 40px;" />'+
+                          '</a>'+
+                      '</span>'+
+                      '<span class="thr-msg-rght">'+
+                          '<span class="sp-msg-sdr">'+
+                              '<a href='+ form.find('.thr-idtf').attr('data-cur-username')  +' class="a-msg-sdr">'+form.find('.thr-idtf').attr('data-cur-first')+' '+form.find('.thr-idtf').attr('data-cur-last') +'</a>'+
+                              '<span href="#" class="msg-tp-rght">'+
+                                  '<span href="#" class="msg-date">instant</span>'+
+                                  '<a href="#" class="msg-config"><i class="fa fa-cog" aria-hidden="true"></i></a>'+
+                              '</span>'+
+                          '</span>'+
+                          '<span class="sp-msg-bdy ">'+ form.find('.nw-msg-bod').val() +'</span>'+
+                          '<span class="sp-msg-img"></span>'+
+                          '<span class="sp-msg-doc"></span>'+
+                      '</span>'+
+                  '</div>'+
+                  '');
+
+              jQuery.ajax({
+                  url: 'http://127.0.0.1/opinion/web/app_dev.php/messages/create?id=create',
+                  type: 'POST',
+                  data: newModalThreadForm,
+                  async: true,
+                  contentType:false,
+                  processData: false,
+                  beforeSend: function(){
+                      //manage scrolling massage container
+                     var height = 0;
+                     $('.ibx-pg-nw-bd .msg-dv-th').each(function(i, value){
+                         height +=parseInt($(this).height());  //add all height value for each message div
+                     });
+                     height +='';
+                     $('.ibx-pg-nw-bd').animate({scrollTop : height});
+                      //if not image to upload
+                      $('.qq-thumbnail-selector').each(function(index, element){
+                          if( typeof $(element).attr('src') === 'undefined'){
+                              //append data without the loading gif
+                          }else{
+                             //image existing
+                            if(!form.find('.loading-note').length){
+                                form.find('.sp-msg-img').last().append('<span class="loading-note img-up"></span>');
+                            }
+                          }
+                      });
+                        //reset all form
+                        ajaxNewThreadUploader.reset();
+                        form.find('#thread_message_subject').val('');
+                        form.find('#thread_message_body').val('');
+                  },
+                  success: function(data){
+                     if(data.response.status === true){
+                        form.find('.nw-thr-recip-b').css("display", "none");		//remove recipients
+                        //set threadId value to message_container
+                        form.find('#_msg_container').attr('data-thr-id', data.response.threadId);
+                        form.find('#_thr_idtf').attr('data-thr-id', data.response.threadId);
+                        form.find('#thread_message__token').val(data.response.token);	//new token value for threadForm
+                        if(data.response.images.length){
+                            form.find('.sp-msg-img').last().html('');					//remove loading gig
+                            data.response.images.forEach(function(element, index){
+                            form.find('.sp-msg-img').last().append(''+
+                                        '<a href='+element.id+' class="lk-msg-img" id='+index+'>'+
+                                            '<img src='+element.webPath+' class="img-msg-vw"/>'+
+                                        '</a>'+
+                                    '');
+                           });
+                        }
+                        // scrolling massage container to bottom
+                        var height = 0;
+                        $('.ibx-pg-nw-bd .msg-dv-th').each(function(i, value){
+                             height +=parseInt($(this).height());  //add all height value for each message div
+                        });
+                        height +='';
+                        $('.ibx-pg-nw-bd').animate({scrollTop : height});
+                    }
+                }
+            });
+          }else{
+              //
+              console.log('selectionner le destinateur');
+         }
+      }else{
+          //thread exist
+          if(form.find('.thr-idtf').attr('data-thr-id') === form.find('.msg-container').attr('data-thr-id')){
+              //reply form handler
+              var body = form.find('.nw-msg-bod').val(),
+                  thread_id = form.find('.msg-container').attr('data-thr-id'),
+                  newModalThreadForm = new FormData(this);
+                  newModalThreadForm.append('thread_id', thread_id);
+
+                  form.find('.msg-container').append(''+
+                     '<div class="msg-dv-th self-msg">'+
+                          '<span class="thr-msg-lft">'+
+                              '<a href='+ form.find('.thr-idtf').attr('data-cur-username') +' class="a-msg-sdr">'+
+                                  '<img src='+ form.find('.thr-idtf').attr('data-cur-pic')  +' style="width:40px; height: 40px;" />'+
+                              '</a>'+
+                          '</span>'+
+                          '<span class="thr-msg-rght">'+
+                              '<span class="sp-msg-sdr">'+
+                                  '<a href='+ form.find('.thr-idtf').attr('data-cur-username')  +' class="a-msg-sdr">'+form.find('.thr-idtf').attr('data-cur-first') +' '+ form.find('.thr-idtf').attr('data-cur-last') +'</a>'+
+                                  '<span href="#" class="msg-tp-rght">'+
+                                      '<span href="#" class="msg-date">instant</span>'+
+                                      '<a href="#" class="msg-config"><i class="fa fa-cog" aria-hidden="true"></i></a>'+
+                                  '</span>'+
+                              '</span>'+
+                              '<span class="sp-msg-bdy ">'+ form.find('.nw-msg-bod').val() +'</span>'+
+                              '<span class="sp-msg-img"></span>'+
+                              '<span class="sp-msg-doc"></span>'+
+                          '</span>'+
+                      '</div>'+
+                      '');
+
+              $.ajax({
+                url: 'http://127.0.0.1/opinion/web/app_dev.php/messages/create?id=create',
+                type: 'POST',
+                data: newModalThreadForm,
+                async: true,
+                contentType:false,
+                processData: false,
+                beforeSend: function(){
+                      //manage scrolling massage container
+                     var height = 0;
+                     $('.ibx-pg-nw-bd .msg-dv-th').each(function(i, value){
+                         //add all height value for each message div
+                         height +=parseInt($(this).height());
+                     });
+                     height +='';
+                     $('.ibx-pg-nw-bd').animate({scrollTop : height});
+                      //if not image to upload
+                      $('.qq-thumbnail-selector').each(function(index, element){
+                            if( typeof $(element).attr('src') === 'undefined'){
+                              //append data without the loading gif
+                            }else{
+                               if(!form.find('.loading-note').length){
+                                    form.find('.sp-msg-img').last().append('<span class="loading-note img-up"></span>');
+                                }
+                            }
+                      });
+                    //reset all about the form
+                    ajaxNewThreadUploader.reset();		//reset uploader
+                    form.find('#thread_message_subject').val('');
+                    form.find('#thread_message_body').val('');
+                 },
+                success: function(data){
+                    console.log(data);
+                     if(data.response.status === true){
+                        // form.find('.nw-thr-recip-b').css("display", "none");		//remove recipients
+                       form.find('#thread_message__token').val(data.response.token);
+
+                       if(data.response.images.length){
+                            form.find('.sp-msg-img').last().html('');
+                            data.response.images.forEach(function(element, index){
+                            form.find('.sp-msg-img').last().append(''+
+                                           '<a href='+element.id+' class="lk-msg-img" id='+index+'>'+
+                                               '<img src='+element.webPath+' class="img-msg-vw"/>'+
+                                           '</a>'+
+                                   '');
+                            });
+                        }
+                        //manage scrolling massage container
+                       var height = 0;
+                       $('.ibx-pg-nw-bd .msg-dv-th').each(function(i, value){
+                            height +=parseInt($(this).height());  //add all height value for each message div
+                       });
+                       height +='';
+                       $('.ibx-pg-nw-bd').animate({scrollTop : height});
+                    }
+                }
+            });
+          }else{
+              alert('error');
+          }
+      }
+      return false;
+  });
+</script>
+<script type="text/javascript">
+    var modal = $('.modal_thread'),
+        closeBt = $('.thread-modal-close');
+
+    closeBt.click(function (e) {
+        e.preventDefault();
+        $('body, html').css({'overflow':'auto'});
+        //options.beforeClose(); //beforeClose
+        // $(".opinion_share_form").remove();
+        if (modal.hasClass('thread-modal'+'-on')) {
+            modal.removeClass('thread-modal'+'-on');
+            modal.addClass('thread-modal'+'-off');
+        }
+
+        if (modal.hasClass('thread-modal'+'-off')) {
+            modal.removeClass('zoomIn');
+            modal.addClass('zoomOut');
+            modal.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', afterClose);
+        };
+        function afterClose(){
+            modal.css({'z-index':'-9999'});
+            modal.html('');                           //to be empty the modal element
+        }
+        function beforeClose(){
+
+        }
+        return false;
+    });
+
+</script>
+<script type="text/javascript">
+$(function () {
+    'use strict';
+   var path = "/opinion/web/app_dev.php/_uploader/gallerymsgdoc/upload";
+    // Change this to the location of your server-side upload handler:
+    $('#document').fileupload({
+        url: path,
+        dataType: 'json',
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        done: function (e, data) {
+            var attach = $('.documents-container').find('.doc-item').last().find('.doc-nm');
+            $.each(data.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(attach);
+            });
+        },
+        progress: function (e, data) {
+            $('.documents-container').append(''+
+                    '<div class="doc-item">'+
+                        '<div class="doc-nm"></div>'+
+                        '<div id="progress" class="progress">'+
+                            '<div class="progress-bar progress-bar-success"></div>'+
+                        '</div>'+
+                    '</div>'+
+                    '');
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            var attachBar = $('.documents-container').find('.doc-item').last().find('.doc-nm');
+            $('#progress .progress-bar').last().css(
+                'width',
+                progress + '%'
+            );
+            if(progress==100){
+                console.log('deja rempli');
+            }else{
+                console.log('toujour en evolution...');
+            }
+        }
+    });
+});
+</script>

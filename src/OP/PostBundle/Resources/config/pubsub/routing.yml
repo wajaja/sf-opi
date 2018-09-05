@@ -1,0 +1,55 @@
+post_topic:
+    channel: post/channel/{user_id}
+    handler:
+        callback: 'share.topic'
+    requirements:
+        user_id:
+            pattern: '[a-z0-9]+'
+comment_topic:
+    channel: comment/channel/{post_id}/{refer}
+    handler:
+        callback: 'comment.topic' #related to the getName() of your topic
+    requirements:
+        post_id:
+            pattern: '[a-z0-9]+'
+        refer:
+            pattern: "[a-z]+"
+like_topic:
+    channel: like/channel/{post_id}/{refer}
+    handler:
+        callback: 'like.topic'
+    requirements:
+        post_id:
+            pattern: '[a-z0-9]+'
+        refer:
+            pattern: "[a-z]+"
+share_topic:
+    channel: share/channel/{post_id}/{refer}
+    handler:
+        callback: 'share.topic'
+    requirements:
+        post_id:
+            pattern: '[a-z0-9]+'
+        refer:
+            pattern: "[a-z]+"
+left_topic:
+    channel: left/channel/{allie_id}
+    handler: 
+        callback: 'left.topic'
+    requirements: 
+        allie_id: 
+            pattern: "[a-z0-9]"
+right_topic:
+    channel: right/channel/{allie_id}
+    handler: 
+        callback: 'right.topic'
+    requirements: 
+        allie_id: 
+            pattern: "[a-z0-9]"
+rate_topic:
+    channel: rate/channel/{post_id}
+    handler: 
+        callback: 'rate.topic'
+    requirements: 
+        allie_id: 
+            pattern: "[a-z0-9]"

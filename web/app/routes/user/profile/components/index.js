@@ -1,0 +1,13 @@
+export Head 		from './Head'
+export Foot 		from './Foot'
+export IntroPrev 	from './IntroPrev'
+export Intro	 	from './Intro'
+export StickyMenu 	from './StickyMenu'
+export PhotosPrev 	from './PhotosPrev'
+export RelationShip from './RelationShip'
+export RelationShipPrev from './RelationShipPrev'
+export StickyNavLinks 	from './StickyNavLinks'
+
+export { PhotosLeft, PhotosCenter, PhotosMenu } from './Photos'
+export { AboutLeft, AboutCenter } from './about'
+export { RelationShipLeft, RelationShipCenter } 	from './_relation'

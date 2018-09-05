@@ -1,0 +1,35 @@
+''+
+'<div id="show_usr_plus_pics_ctnr" class="show-usr-plus-pic-ctnr">'+
+    '<span class="pics-hdr">'+
+        '<a href="" class="pics-hdr-lk">'+
+            '<i class="fa fa-picture-o" aria-hidden="true"></i>'+
+            '<span class="">Photos</span>'+
+        '</a>'+
+    '</span>'+
+    '<div id="usr-sml-pics-ctnr" class="usr-sml-pics-ctnr">'+
+        {% if photos %}
+            '<div class="usr-sml-pics-ctnr-a">'+
+                {% for photo in photos %}
+                    '<div class="sml-pic-ctnr">'+
+                        '<div class="sml-pic-ctnr-a">'+
+                            '<a href="" class="sml-pic-lk" data-img-id="{{photo.id}}">'+
+                                '<img src="{{photo.webPath}}" class="sml-pic-img" data-img-id="{{photo.id}}">'+
+                            '</a>'+
+                        '</div>'+
+                    '</div>'+
+                {% endfor %}
+            '</div>'+
+        {% else %}
+            '<div class="sml-no-imgs">'+
+                '<div class="no-img-ctnr">'+
+                    {% if app.user == thisUser %}
+                        '<button class="btn-create-gal">New Gallery</button>'+
+                    {% else %}
+                        '<span >Empty</span>'+
+                    {% endif %}
+                '</div>'+               
+            '</div>'+
+        {% endif %}
+    '</div>'+
+'</div>'+
+''

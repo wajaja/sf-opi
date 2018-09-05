@@ -1,0 +1,37 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<div class="frm-lgn-dv-ctnr">
+    {% if app.request.hasPreviousSession %}
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="flash-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <div class="frm-msg-ttl">Login</div>
+        <form action="{{ path("api_check_user") }}" method="post" class="frm-lgn-tag">
+            {% if csrf_token %}
+                <input type="hidden" name="_csrfToken" value="{{ csrf_token }}" />
+            {% endif %}
+            <div class="form-group">
+                <input type="text" id="username" name="username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans }}" />
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" name="password" required="required" placeholder="{{ 'security.login.password'|trans }}" />
+            </div>
+            <div class="frm-lgn-dv-ctnr-btm">
+                <div class="lgn-dv-sbm-btn-ctnr">
+                    <input type="submit" id="_submit" name="submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-default" />
+                </div>
+                <div class="f-lgin-btm-r">
+                    <a href="{{path('fos_user_resetting_request')}}" class="forg-pssw-lk">forgot password ?</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

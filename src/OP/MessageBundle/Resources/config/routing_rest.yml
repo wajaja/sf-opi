@@ -1,0 +1,9 @@
+thread:
+    type: rest
+    resource: OP\MessageBundle\Controller\Api\ApiThreadController
+message:
+    type: rest
+    resource: OP\MessageBundle\Controller\Api\ApiMessageController
+question:
+    type: rest
+    resource: OP\MessageBundle\Controller\Api\ApiQuestionController

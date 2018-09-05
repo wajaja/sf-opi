@@ -1,0 +1,41 @@
+'<div class="div-responseForm" id="" style="" >'+
+    '{{ form_start(responseForm, {'attr':{'class':'form-o-q'}, 'method':'post', 'action':path('onopinion_create', { 'opinionId': '57d07a4daa95aa9c11000029'}) }) }}'+
+    '{{ form_errors(responseForm) }}'+
+    '{{ form_widget(responseForm.documentValid, {'attr': {'class': 'hdn-o-q-valid'} }) }}'+
+        '<div class ="center-responseForm" data-c-name="{{app.user.firstname}} {{app.user.lastname}}" data-c-username="{{ path('fos_user_profile_show', {'username': app.user.username})}}" style="">'+
+            '<div class ="left-responseForm" style="">'+
+                '<a href="{{ path('fos_user_profile_show', {'username': app.user.username})}}" class="cmt-frm-pr-pic-lk" hover="" >'+
+                    '<img src="{{asset(app.user.profilePic.webPath|default("/images/favicon.ico"))}}" class="und-cmt-frm-pr-pic" alt="" style="" />'+
+                '</a>'+
+            '</div>'+
+            '<div class ="sCenter-responseForm-a">'+
+                '<div class ="dv-ttrea-o-q">'+
+                    '<div class="expandingArea">'+
+                        '<pre><span></span><br></pre>'+
+                        '{{ form_widget(responseForm.content, {'attr': {'class': 'under-form-textarea autoExpand-comment', 'placeholder':'Ask '} }) }}'+
+                    '</div>'+
+                '</div>'+
+                '<div class="responseFormImageHolder"></div>'+
+            '</div>'+
+        '</div>'+
+        '<div class="popover-footer">'+
+            '<div class="left-popover-footer">'+
+                '<div class ="divUploadComment">'+
+                    '<span class="">'+
+                        '<a href="#" class="linkUploadComment on-q-o">'+
+                            '<i class="fa fa-camera responseForm-camera">'+
+                                 '{{ form_widget(responseForm.file, {'attr': {'class': 'uploadComment', 'id': 'pictureLoader', 'name':'pictureLoader'} }) }}'+
+                            '</i>'+
+                        '</a>'+
+                    '</span>'+
+                    '<span class="">'+
+                        '<a href="#" class="lk-autocol on-q-o"><i class="fa fa-smile-o smile-ic-q" aria-hidden="true"></i></a>'+
+                    '</span>'+
+                '</div>'+
+            '</div>'+
+            '<div class="right-popover-footer">'+
+                '<button type="submit" class="btn btn-primary btn-xs opinion-question-submit">Ask</button>&nbsp;'+                                        '</div>'+
+        '</div>'+
+        '{{ form_rest(responseForm) }}'+
+    '{{ form_end(responseForm) }}'+
+'</div>'+

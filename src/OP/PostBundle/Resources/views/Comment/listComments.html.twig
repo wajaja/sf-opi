@@ -1,0 +1,83 @@
+{% for comment in comments %}
+'<div class ="com-div-a">'+
+    '<div class ="com-div-b">'+
+        '<div class ="com-div-left" data-auth-id="{{comment.author.id}}">'+
+            '<div class ="com-div-profile-a" >'+
+                '<a class ="com-profile-link-img">'+
+                    '<img class="com-profile-img" src="{{asset(comment.author.profilePic.picPath|default("/images/favicon.ico"))}}"  id="user-profile" class =""  />'+
+                '</a>'+
+            '</div>'+
+        '</div>'+
+        '<div class ="com-div-right-a" data-cmt-id="{{comment.id}}">'+
+            '<div class ="com-div-right-b" >'+
+                '<div class ="com-head-a" >'+
+                    '<div class ="com-head-name">'+
+                        '<span class="com-sp-nm-ct">'+
+                            '<a href="{{ path('fos_user_profile_show', {'username': comment.author.username})}}" class ="com-link-name" style="">'+
+                                '<span> {{comment.author.name}}<span>'+
+                            '</a>'+
+                        '</span>'+                        
+                        {% set contents = comment.content|split('\r\n') %}
+                        '<span class ="contentComment" style="">'+
+                            {% for content in contents %}
+                                '<span> {{content}} </span><br/>'+
+                            {% endfor %}
+                       '</span>'+
+                    '</div>'+
+                    '<div class ="com-head-opt">'+
+                        '<div class="com-head-opt-a">'+
+                            '<a href="#" class="cmt-opt-lk com-out" data-auth-id="{{comment.author.id}}" data-cmt-id="{{comment.id}}"><i class="fa fa-chevron-down" aria-hidden="true"></i></a>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+                '<div class ="com-img-container" >'+
+                    '<ul class="com-img-ul">'+
+                    {% for key, image in comment.images %}
+                        {% if image is null%}{% else %}
+                        '<li class="li-cmt-img" id="{{key}}" data-img-id="{{image.id}}">'+
+                            '<a href="{{image.id}}" class="lk-cmt-img" id="{{key}}">'+
+                                '<img src="{{asset(image.WebPath)}}" class="imageComment"  id="_img_cmt" />'+
+                            '</a>'+
+                        '</li>'+
+                        {% endif %}
+                    {% endfor %}
+                    '</ul>'+
+                '</div>'+
+                '<div class ="com-foo" id="com_foo">'+
+                    '<div class ="com-foo-left" data-cmt-id="{{comment.id}}">'+
+                        '<span class="com-dv-dte">'+
+                            {% set date = comment.updated ? comment.updatedAt : comment.createdAt %}
+                            '<span class ="com-head-time" >'+                                    
+                                '<span class="op-dte {{comment.updated ? 'dte-mdf' : ''}}" >'+
+                                    '{% if date.date.month %}{{ date.date.month }} month'+
+                                    '{% elseif date.date.day %} {{ date.date.day }} day'+
+                                    '{% elseif date.time.hour %}{{ date.time.hour }} h'+
+                                    '{% elseif date.time.minute %} {{ date.time.minute }} min'+
+                                    '{% endif %}'+
+                                    ' .'+
+                                '</span>'+
+                            '</span>'+
+                        '</span>'+
+                        '<span class="com-like-ctnr" data-like-val="" data-cmt-id="{{comment.id}}">'+
+                            '<a href="#" class ="{{comment.is_liker(user.id)? 'com-nb-like-btn checked' : 'com-nb-like-btn'}}" ><i class="fa fa-thumbs-o-up"></i></a>'+
+                            '<span class="ftr-sprtr"> . </span>'+
+                            '<span class="com-like-rge-frm-ctnr" data-cmt-id="{{comment.id}}"></span>'+
+                            '<span class="hide-rat com-like-rat-ctnr"></span>'+
+                        '</span>'+
+                        '<span class="com-reply-ctnr" data-cmt-id="{{comment.id}}" >'+
+                            '<a href="#" class ="com-reply" style="" name="graphic">'+
+                                '<i class="fa fa-reply"></i>'+
+                                '<span class="nb-rplyr">'+
+                                    '{% if comment.nbUnder %}{{comment.nbUnder}}{% endif %}'+
+                                '</span>'+
+                            '</a>'+
+                            '<div class="com-und-cmt-ctnr" data-cmt-id="{{comment.id}}"></div>'+
+                            '<div class="com-reply-frm-ctnr" data-cmt-id="{{comment.id}}"></div>'+
+                        '</span>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+        '</div>'+
+    '</div>'+
+'</div>'+
+{% endfor %}

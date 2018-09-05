@@ -1,0 +1,36 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path("api_check_user") }}" method="post" class="nav-fS-in">
+    {% if csrf_token %}
+        <input type="hidden" name="_csrfToken" value="{{ csrf_token }}" />
+    {% endif %}
+    <div class="f-lgin-ctnr">
+        <div class="f-lgin-inpts">
+            <div class="f-lgin-tp">
+                <div class="nav-sign-in-ip-d">
+                    <input type="text" id="username" name="username" value="{{ last_username }}" required="required" class="nav-inp-control" placeholder="username or email"/>
+                </div>
+                <div class="nav-sign-in-ip-d">
+                    <input type="password" id="password" name="password" required="required" class="nav-inp-control" placeholder="{{ 'security.login.password'|trans }}" />
+                </div>
+            </div>
+            <div class="f-lgin-btm">
+                <div class="f-lgin-btm-l">
+                    <input type="checkbox" id="remember_me" name="remember_me" value="on" />
+                    <label for="remember_me" class="nav-sign-in-r">{{ 'security.login.remember_me'|trans }}</label>
+                </div>
+                <div class="f-lgin-btm-r">
+                    <a href="{{path('fos_user_resetting_request')}}" class="forg-pssw-lk">forgot password ?</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-sign-in-sbm-ctnr">
+            <input type="submit" id="_submit" name="submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-primary sbmit-login"/>
+        </div>
+    </div>
+</form>

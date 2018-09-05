@@ -1,0 +1,55 @@
+
+<h1>Image</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ document.id }}</td>
+        </tr>
+        <tr>
+            <th>Path</th>        
+                <img src="{{asset(document.webPath)}}" alt="" style="" />
+        </tr>
+        <tr>
+            <th>Size</th>
+            <td>{{ document.size }}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{{ document.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updateat</th>
+            <td>{{ document.updateAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ document.name }}</td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>{{ document.author }}</td>
+        </tr>
+        
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('image') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('image_edit', { 'id': document.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('image_delete', { 'id': document.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

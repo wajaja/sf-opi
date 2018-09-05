@@ -1,0 +1,21 @@
+''+
+'<div class="in-detail-about-ctnr">'+
+	'<div class="in-detail-hd">'+
+	    '<i class="fa fa-info-circle"></i> '+
+	    '<span class="">About</span>'+
+	    {% if thisUser == app.user %}
+	    	'<a href="" class="edit-about-info"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>'+
+	    {% endif %}
+	'</div>'+
+	'<div class="in-detail-cont" id="details_about">'+
+	    '<ul class="in-detail-ul">'+
+	    	{% for key, info in infos %}
+			'<li class="in-detail-ul-chd">'+
+				'<span class="usr-abt-ky-txt">{{key}}</span>'+
+				'<span class="usr-abt-info-txt">{{info}}</span>'+
+			'</li>'+
+			{% endfor %}
+		'</ul>'+
+	'</div>'+
+'</div>'+	
+''

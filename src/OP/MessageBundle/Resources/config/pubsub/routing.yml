@@ -1,0 +1,28 @@
+thread_create_topic:
+    channel: thread/create/channel/{thread_id}
+    handler:
+        callback: 'thread.create.topic'
+    requirements:
+        thread_id:
+            pattern: '[a-z0-9]+'
+message_send_topic:
+    channel: message/send/channel/{thread_id}
+    handler:
+        callback: 'message.send.topic'
+    requirements:
+        thread_id:
+            pattern: '[a-z0-9]+'
+message_read_topic:
+    channel: message/read/channel/{thread_id}
+    handler:
+        callback: 'message.read.topic'
+    requirements:
+        thread_id:
+            pattern: '[a-z0-9]+'
+message_writing_topic:
+    channel: message/writing/channel/{thread_id}
+    handler:
+        callback: 'message.writing.topic'
+    requirements:
+        thread_id:
+            pattern: '[a-z0-9]+'

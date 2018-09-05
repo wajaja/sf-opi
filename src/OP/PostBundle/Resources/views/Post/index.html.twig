@@ -1,0 +1,53 @@
+<h1>Post list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Content</th>
+            <th>Createdat</th>
+            <th>Updateat</th>
+            <th>Visible</th>
+            <th>Images</th>
+            <th>Author</th>
+            <th>Liker</th>
+            <th>Nbliker</th>
+            <th>Lcomments</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for document in documents %}
+        <tr>
+            <td><a href="{{ path('post_show', { 'id': document.id }) }}">{{ document.id }}</a></td>
+            <td>{{ document.content }}</td>
+            <td>{% if document.createdAt %}{{ document.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if document.updateAt %}{{ document.updateAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ document.visible }}</td>
+            <td>{{ document.images }}</td>
+            <td>{{ document.author }}</td>
+            <td>{{ document.liker }}</td>
+            <td>{{ document.nbLiker }}</td>
+            <td>{{ document.lcomments }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('post_show', { 'id': document.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('post_edit', { 'id': document.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('post_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

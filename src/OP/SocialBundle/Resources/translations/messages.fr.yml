@@ -1,0 +1,110 @@
+notification:
+    flash: |
+        vous avez une nouvelle notification |
+        vous avez %nbnotifs% nouvelles notifications
+    post:
+        comment:
+            to_author: |
+                un nouveau commentaire de %lastUser% sur votre publication. |
+                %unreaded% nouveaux commentaires dont celui de %lastUser% est
+                le plus recent sur votre publication.
+            to_user: |
+                un nouveau commentaire de %lastUser% sur la publication de %author%. |
+                %unreaded% nouveaux commentaires dont celui de %lastUser% est
+                le plus recent sur la publication de %author%.
+            from_author: |
+                un nouveau commentaire de %lastUser% sur sa publication |
+                %unreaded% nouveaux commentaires dont celui de %lastUser% est
+                le plus recent sur sa publication.
+        main:
+            create: |
+                new post de %author%.
+        allie: 
+            create: |
+                La contribution de %allieAuthor% a été ajouté à votre post. |
+                Les contributions de %allieAuthor% et %other% membres ont été ajoutées à votre post.
+        share:
+            create: |
+                %shareAuthor% a partagé le post de %author%
+    opinion:
+        main:
+            create: |
+                une nouvelle opinion créée par %author% ayant pour sujet: %title%, dont vous étes dans %sidename% cote
+        allie:
+            create: |
+                %author% a ajouté la %postOrder% ème partie de son post titré %title%
+        share:
+            create: |
+                %shareAuthor% a partagé la publication de %author%
+    side:
+        to_author: |
+            %lastSider% de %sideName%  a donné son opinion à propos de votre post . |
+            %unreaded% nouveaux commentaires dont celui de %lastUser% est 
+            le plus recent sur votre post.
+        to_user: |
+            Dans %sideName% de la post de %author% nommé %title%, %lastSider% a donné son opinion à la %postOrder% partie.|
+        comment:
+            to_author: |
+                Un nouveau commentaire de %lastUser% à propos de votre opinion à la %postOrder% partie de %title% créé par %author%.
+            to_user: |
+                Un nouveau commentaire de %lastUser% à propos de l' opinion de %sideAuthor% à la %postOrder% partie de  %title% créé par %author%.|
+                %unreaded% nouveaux commentaires dont celui de %lastUser% est
+                le plus recent à propos de l'opinion de %sideAuthor% à la %postOrder% ème partie de %title% créé par %author%.
+            from_author: |
+                Un nouveau commentaire de %lastUser% à propos de son opinion à la %postOrder% ème partie de %title% créé par %author%. |
+                %unreaded% nouveaux commentaires dont celui de %lastUser% est 
+                le plus recent à propos de son opinion à la %postOrder% ème de %title% créé par %author%.
+    photo:
+        comment:
+            to_user: |
+                un nouveau commentaire de %lastUser% sur la photo de %author%. |
+                %unreaded% nouveaux commentaires dont celui de %lastUser% est
+                le plus recent sur la photo de %author%.
+            from_author: |
+                un nouveau commentaire de %lastUser% sur sa  photo |
+                %unreaded% nouveaux commentaires dont celui de %lastUser% est
+                le plus recent sur sa photo.
+            to_author: |
+                un nouveau commentaire de %lastUser% sur votre photo |
+                %unreaded% nouveaux commentaires dont celui de %lastUser% est
+                le plus recent sur votre photo.
+    reply:
+        to_user: |
+            %lastUser% a repondu au commentaire de %author%. |
+            des nouvelles reponses de %lastUser% and %other% sur le commentaire de %author%.
+        from_author: |
+            %author% a repondu à son commentaire |
+            des nouvelles reponses de %author% et %other% sur son commentaire.
+        to_author: |
+            %author% a repondu à votre commentaire |
+            des nouvelles reponses de %author% et %other% sur votre commentaire.
+    rate:
+        to_author: |
+            %lastUser% vous a attribué une côte sur votre %post%. |
+            %lastUser% et  %other% vous ont attribué une côte sur votre %post%.
+        to_user: |
+            %lastUser% a attribué un côte sur le  %post% de %author%. |
+            %lastUser% et  %other% ont attribué une côte sur le %post% de %author%.
+        from_author: |
+            %lastUser% a attribué un côte sur son %post%. |
+            %lastUser% et  %other% ont attribué une côte sur son %post%.
+    like:
+        to_author: |
+            %lastUser% aime votre %post%. |
+            %lastUser% et %other% aiment votre %post%.
+        to_user: |
+            %lastUser% aime le %post% de %author%. |
+            %lastUser% et  %other% aiment le %post% de %author%.
+        from_author: |
+            %lastUser% aime son %post%. |
+            %lastUser% et  %other% aiment son %post%.
+    legal:
+        to_author: |
+            %lastUser% a legalisé votre position. |
+            %lastUser% et  %other% ont legalisé votre position.
+        to_user: |
+            %lastUser% a legalisé la position de %author%. |
+            %lastUser% et  %other% ont legalisé la position de %author%.
+        from_author: |
+            %lastUser% a legalisé sa position. |
+            %lastUser% et  %other% ont legalisé sa position.

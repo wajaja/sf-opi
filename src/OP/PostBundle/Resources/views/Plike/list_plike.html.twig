@@ -1,0 +1,137 @@
+<div class="all-modal" id="all_modal">
+    <div class="lks-modal" id="lks_modal">
+        <div class="lst-lks-hd">
+            <span class="lst-lks-hd-ttl"></span>
+            <a href="" id="opinion-modal-close" class="opinion-modal-close"><i class="fa fa-times "></i></a>
+        </div> 
+        <div class="lst-lks-bd">
+            <div class="lst-lks-bd-a">
+                <div class="lst-lks-bd-tp">
+                    <div class="lst-lks-bd-tp-a">
+                    {% for key, plike in plikes %}
+                        <div class="lst-lkr-dv">
+                            <div class="lst-lkr-dv-lft">
+                                <div class="lst-lkr-dv-lft-a">
+                                    <a href="{{ path('fos_user_profile_show', {'username': plike.author.username})}}" class ="lkr-prf-lk-img">
+                                        <img class="lkr-prf-img" src="{{asset(plike.author.profilePic.webPath|default("/images/favicon.ico"))}}"  id="user-profile" class =""  />
+                                    </a>	
+                                </div>				
+                            </div>
+                            <div class="lst-lkr-dv-rght">
+                                <div class="lst-lkr-dv-rght-a">
+                                    <span class="lkr-sp-nm-ct">
+                                        <a href="{{ path('fos_user_profile_show', {'username': plike.author.username})}}" class ="lkr-link-name" style="">
+                                            <span> {{plike.author.firstname}} {{plike.author.lastname}}<span>
+                                        </a>
+                                    </span>
+                                    <span class="lst-lkr-dv-rght-a-rt">                                        
+                                        <span class="lst-sp-graph-lke" data-rat="{{ plike.rate }}" data-ttl-rat=" 50" data-lke-id="{{plike.id}}"></span>                                       
+                                    </span>
+                                     <span class="lst-sp-like-dtl"> {{ plike.rate * 100 / 50 }} % </span>
+                                </div>
+                                <div class="lst-lkr-dv-rght-b">
+                                    <span class="lst-lkr-rght-i">                            		
+                                    </span>
+                                </div>
+                            </div>					
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="lst-lks-bd-btm">
+                    <div class="lst-lks-bd-btm-l">
+                        <span class="lst-lks-bd-btm-l-sp"> All : 
+                        	{{post.NbPlikers == 0 ? '0' : post.NbPlikers}}
+                        	{{post.NbPlikers == 0 ? '' : post.NbPlikers == 1 ? ' personne ...' : " personnes..."}}
+                        </span>
+                        <span class="lst-lks-bd-prct">
+                        	{{ (post.TotalRate * 100) / (post.NbPlikers ? post.NbPlikers * 50 : 1) }} %
+                        </span>
+                    </div>
+                    <div class="lst-lks-bd-btm-r">
+                        <span class="lst-lks-bd-btm-r-sp">
+                            <span class="lst-lks-bd-btm-r-tp"></span>
+                            <span class="lst-cl-graph-lke" data-rat="{{ post.TotalRate }}" data-ttl-rat="{{post.NbPlikers * 50}}" data-pst-id="{{post.id}}"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var listLikeGraphArr = document.getElementsByClassName("lst-sp-graph-lke");
+    $(listLikeGraphArr).each(function (index, element) {
+        'use strict';
+        //canvas element exist, return
+        if ($(element).find('canvas').length){
+            return;
+        }
+
+        var canvas = document.createElement("canvas");
+            canvas.setAttribute('id', $(element).attr('data-lke-id'));      //set id to postId value
+            canvas.setAttribute('class', 'rate-bar');
+        var ctx = canvas.getContext('2d');
+
+        //rateBar instance
+        var rateBar = new RateBar(ctx);
+            rateBar.totalRate = $(element).attr('data-ttl-rat');
+            rateBar.rate = $(element).attr('data-rat');
+            rateBar.width = $(element).width();
+            rateBar.height = $(element).height();
+            rateBar.update();
+            $(element).append(canvas);
+    });    
+</script>
+<script type="text/javascript">
+    var glLikeGraphArr = document.getElementsByClassName("lst-cl-graph-lke");
+    $(glLikeGraphArr).each(function (index, element) {
+        'use strict';
+        //canvas element exist, return
+        if ($(element).find('canvas').length){
+            return;
+        }
+
+        var canvas = document.createElement("canvas");
+            canvas.setAttribute('id', $(element).attr('data-pst-id'));      //set id to postId value
+            canvas.setAttribute('class', 'rate-bar');
+        var ctx = canvas.getContext('2d');
+
+        //rateBar instance
+        var rateBar = new RateBar(ctx);
+            rateBar.totalRate = $(element).attr('data-ttl-rat');
+            rateBar.rate = $(element).attr('data-rat');
+            rateBar.width = $(element).width();
+            rateBar.height = $(element).height();
+            rateBar.update();
+            $(element).append(canvas);
+    });
+</script>
+<script type="text/javascript">
+    var modal = $('.opinion_modal'),
+        closeBt = $('.opinion-modal-close, .opinion-modal-cancel');
+
+    closeBt.click(function (e) {
+        e.preventDefault();
+        $('body, html').css({'overflow':'auto'});
+        //options.beforeClose(); //beforeClose
+        // $(".opinion_share_form").remove();
+        if (modal.hasClass('opinion-modal'+'-on')) {
+            modal.removeClass('opinion-modal'+'-on');
+            modal.addClass('opinion-modal'+'-off');
+        }
+
+        if (modal.hasClass('opinion-modal'+'-off')) {
+            modal.removeClass('zoomIn');
+            modal.addClass('zoomOut');
+            modal.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', afterClose);
+        };
+        function afterClose(){
+            modal.css({'z-index':'-9999'});
+            modal.html('');                           //to be empty the modal element
+        }
+        function beforeClose(){ }
+        return false;
+    });
+
+</script>

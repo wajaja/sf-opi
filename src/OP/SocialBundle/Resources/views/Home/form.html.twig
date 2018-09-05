@@ -1,0 +1,217 @@
+''+
+'<div class="gl-frm-a" id="gl_frm_a" style="">'+
+    '<div class="triangle-up-form postform" id="postform">'+
+        '{{ form_start(pform, {'attr':{'class':'post-form', 'id':'post_type'}, 'method':'post', 'action':path('post_create', { 'id': 'create'}) }) }}'+
+            '<div class="home-form "><div class="start-list-form-rgt"></div>'+
+                '<div class="start-list-form-lft">'+
+                    '<div class="dv-type-pst">'+
+                        <!-- [if !IE ] > -->
+                            '<div class="notIE">'+
+                                <!-- <! [endif] -->
+                                '<span class="fancyArrow"></span>'+
+                                '{{form_widget(pform.type, {'attr':{'class': 'pst-frm-type'}})}}'+
+                                '<a href="#" class="lk-type-frm" id="lk_type_frm">'+
+                                    '<i class="fa fa-cog" aria-hidden="true"></i>'+                    
+                                '</a>'+
+                                <!--  [if !IE] > -->
+                            '</div>'+
+                        <!-- < ! [endif] -->
+                    '</div>'+                
+                '</div>'+
+            '</div>'+
+            '<div id="post_form_body" class="tab-pane active post-form-body">'+
+                '{{ form_errors(pform) }}'+
+                    '<div class="form-body form-triangle ">'+
+                        '<div class="gl-frm-bd-usr-lk" id="_gl_frm_bd_usr_lk">'+
+                            '<div class="basic-dv-usrs in">'+
+                                '<div class="pst-dv-usr-crtor">'+
+                                    '<li class="gl-frm-bd-usr-li">'+
+                                        '<a href="{{ path('fos_user_profile_show', {'username': user.username})}}" class="lk-pic-thb-pfrm" hover="" >'+
+                                            '<img src="{{asset (user.profilePic.webPath|default("/images/favicon.ico"))}}" class="pic-thb-pfrm" alt="" style="" />'+
+                                        '</a>'+
+                                    '</li>'+
+                                '</div>'+
+                                '<ul class="gl-frm-bd-usr-ul" id="gl_frm_bd_usr_ul"></ul>'+
+                                '<span class="gl-frm-bd-usr-li">'+
+                                    '<a href="" class="lk-add-editor">'+
+                                        '<i class="fa fa-user-plus" aria-hidden="true"></i>'+
+                                    '</a>'+
+                                '</span>'+
+                                '{{ form_widget(pform.editorTexts, {'attr': {'class': 'inp-frm-editor', 'value':''} }) }}'+
+                            '</div>'+
+                            '<div class="opinion-dv-usrs out">'+
+                                '<div class="opinion-dv-usrs-lft">'+
+                                    '<ul class="gl-frm-bd-usr-ul" id="gl_frm_bd_usr_lft_ul"></ul>'+
+                                    '<span class="gl-frm-bd-usr-li-lft">'+
+                                        '<a href="" class="lk-add-lft-editor">'+
+                                            '<i class="fa fa-user-plus" aria-hidden="true"></i>'+
+                                        '</a>'+
+                                    '</span>'+
+                                '</div>'+
+                                '<div class="opinion-dv-usr-ntr">'+
+                                    '<a href="{{ path('fos_user_profile_show', {'username': user.username})}}" class="lk-pic-thb-pfrm" hover="" >'+
+                                        '<img src="{{asset (user.profilePic.webPath|default("/images/favicon.ico"))}}" class="pic-thb-pfrm" alt="" style="" />'+
+                                    '</a>'+
+                                '</div>'+
+                                '<div class="opinion-dv-usrs-rgt">'+
+                                    '<span class="gl-frm-bd-usr-li-rgt">'+
+                                        '<a href="" class="lk-add-rgt-editor">'+
+                                            '<i class="fa fa-user-plus" aria-hidden="true"></i>'+
+                                        '</a>'+
+                                    '</span>'+
+                                    '<ul class="gl-frm-bd-usr-ul" id="gl_frm_bd_usr_rgt_ul"></ul>'+
+                                '</div>'+                                
+                            '</div>'+
+                            '{{ form_widget(pform.leftEditorTexts, {'attr': {'class': 'inp-frm-lft-editor', 'value':''} }) }}'+
+                            '{{ form_widget(pform.rightEditorTexts, {'attr': {'class': 'inp-frm-rgt-editor', 'value':''} }) }}'+
+                        '</div>'+
+                        '<div class="frm-contrib-ctnr" id="pst_form_editors"></div>'+
+                        '<div class="frm-contrib-ctnr" id="pst_form_lft_editors"></div>'+
+                        '<div class="frm-contrib-ctnr" id="pst_form_rgt_editors"></div>'+
+                        '<div class="post-support-textarea" id="_pst_sp_ttr" style="">'+
+                            '<div class="expandingArea">'+
+                                '<pre><span></span><br></pre>'+
+                                '{{ form_widget(pform.content, {'attr': {'class': 'post-form-textarea autoExpand-post','data-min-rows-post':'3', 'rows':'3', 'placeholder':'your opinion'} }) }}'+
+                            '</div>'+
+                        '</div>'+                    
+                    '</div>'+
+                    '{{ form_widget(pform.files, {'attr': {'class': 'post-form-files'} }) }}'+ 
+                    '<div type="text/template" style="display:none" id="qq-template-post">'+
+                        '<div class="qq-gallery">'+
+                            '<div class="qq-uploader-selector qq-uploader " qq-drop-area-text="Drop files here"></div>'+
+                            '<div class="zone-upload-form" id="image" name="">'+
+                                '<ul class="qq-upload-list-selector qq-upload-list" role="region" aria-live="polite" aria-relevant="additions removals">'+
+                                    '<li>'+
+                                        '<div class="qq-progress-bar-container-selector">'+
+                                            '<div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>'+
+                                        '</div>'+
+                                        '<span class="qq-upload-spinner-selector qq-upload-spinner"></span>'+
+                                        '<div class="qq-thumbnail-wrapper">'+
+                                            '<img class="qq-thumbnail-selector" qq-max-size="120" qq-server-scale>'+
+                                        '</div>'+
+                                        '<span class="qq-upload-file-selector qq-upload-file"></span>'+
+                                        '<span class="qq-edit-filename-icon-selector qq-edit-filename-icon" aria-label="Edit filename"></span>'+
+                                        '<input class="qq-edit-filename-selector qq-edit-filename" tabindex="0" type="text">'+
+                                        '<span class="qq-upload-size-selector qq-upload-size"></span>'+
+                                        '<button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel"><i class="fa fa-times" aria-hidden="true"></i></button>'+
+                                        '<button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>'+
+                                        '<button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete"><span></span><i class="fa fa-times" aria-hidden="true"></i></button>'+
+                                        '<span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>'+
+                                    '</li>'+
+                                '</ul>'+
+                            '</div>'+
+                            '<dialog class="qq-alert-dialog-selector">'+
+                                '<div class="qq-dialog-message-selector"></div>'+
+                                '<div class="qq-dialog-buttons">'+
+                                    '<button type="button" class="qq-cancel-button-selector">Close</button>'+
+                                '</div>'+
+                            '</dialog>'+
+                            '<dialog class="qq-confirm-dialog-selector">'+
+                                '<div class="qq-dialog-message-selector"></div>'+
+                                '<div class="qq-dialog-buttons">'+
+                                    '<button type="button" class="qq-cancel-button-selector">No</button>'+
+                                    '<button type="button" class="qq-ok-button-selector">Yes</button>'+
+                                '</div>'+
+                            '</dialog>'+
+                            '<dialog class="qq-prompt-dialog-selector">'+
+                                '<div class="qq-dialog-message-selector"></div>'+
+                                '<input type="text">'+
+                                '<div class="qq-dialog-buttons">'+
+                                    '<button type="button" class="qq-cancel-button-selector">Cancel</button>'+
+                                    '<button type="button" class="qq-ok-button-selector">Ok</button>'+
+                                '</div>'+
+                            '</dialog>'+
+                            '<div class="qq-pst-dv-cam">'+
+                                '<span class="glyphicon glyphicon-camera qq-upload-button-selector" style=""></span>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+    
+                    '<div id="fine-uploader-post"></div>'+
+                    '<div class="gap-tm-cont pst-select-hide">'+
+                        '<div class="gap-tm-bd">'+
+                            '<span class="gap-txt">After</span>'+                            
+                            '<span class="frm-gapHours-content pst-select-hide" data-toggle="tooltip" data-placement="top" title="Hours">'+
+                                '{{ form_widget(pform.gapHours, {'attr':{'class': 'frm-gapHours frm-gap'} }) }}'+
+                            '</span>'+
+                            '<span class="frm-gapMinutes-content" data-toggle="tooltip" data-placement="top" title="Minutes">'+
+                                '{{ form_widget(pform.gapMinutes, {'attr':{'class': 'frm-gapMinutes frm-gap'} }) }}'+
+                            '</span>'+
+                            '<a href="" class="frm-add-time"><i class="fa fa-plus"></i></a>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div id="videoBox" class="videoBox out">'+ 
+                        '<div id="progressContainer"></div>'+ 
+                        '<div class="videoBox-container">'+
+                            '<div class="videoBox-a">'+                        
+                                '<a href="" id="rmv_CclVideo" class="remove-video">'+
+                                    '<i class="fa fa-times" aria-hidden="true"></i>'+
+                                '</a>'+
+                                '<div id="videoArea" class="video-area">'+
+                                    '<a href="" target="_blank" class="video-preview" data-frames="33" data-source=""></a>'+
+                                '</div>'+                                               
+                            '</div>'+
+                            '<div id="videoText" class="video-text"></div>'+
+                        '</div>'+
+                        '<div id="videoOpt" class="video-opt">'+
+                            '<span id="videoOptNmCtnr" class="video-opt-nm-ctnr">'+
+                                '{{ form_widget(pform.videoName, {'attr':{'class': 'pst-nme-vid'} }) }}'+
+                            '</span>'+
+                            '<span class="video-opt-str-btn-ctnr">'+
+                                '<button type="button" id="upload_pst_video" class="upload-video">'+
+                                    '<i class="fa fa-upload" aria-hidden="true"></i> Upload'+
+                                '</button>'+
+                            '</span>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="pst-select-recip pst-select-hide">'+
+                        '<span class="pst-select-recip-bf-text">With : </span>'+
+                        '<span class="pst-select-recip-a">'+
+                            '{{ form_widget(pform.recipients, {'attr': {'class': 'inp-frm-recip selectized', 'value':''} }) }}'+
+                        '</span>'+
+                    '</div>'+
+                    '<div class="gl-frm-foo">'+
+                        '<div class="gl-frm-foo-ct" id="_gl_frm_foo_ct">'+
+                            '<div class="gl-frm-btm-li-post-l opt-lft">'+
+                                '<button type="button" class="frm-group-btn-vdeo">'+
+                                    '<i class="fa fa-film" aria-hidden="true">'+
+                                        '<input type="file" id="post_type_vid" class="pst-inp-vid">'+
+                                    '</i>'+
+                                '</button>'+
+                                '<button type="button" class="frm-group-btn-partic"><i class="fa fa-users" aria-hidden="true"></i></button>'+
+                                '<button type="button" class="lk-gl-gp-t" id=""><span class="glyphicon glyphicon-time form-buttons" style=""></span></button>'+
+                                '<div class="frm-confid-ctnr">'+
+                                    '<div class="confid-opt-ctnr-a displ-not">'+
+                                        '<div class="confid-rel-ctnr">'+                                            
+                                            '<span class="confid-opt-ctnr-b">'+
+                                                '<a href="" class="confid-opt-a confid-opt-public" data-value="Public">'+
+                                                    '<span class="confid-opt-public-ico"><!--i class="fa fa-pencil" aria-hidden="true"></i--></span>'+
+                                                    '<span class="confid-opt-public-txt"> Public</span>'+
+                                                '</a>'+
+                                                '<a href="" class="confid-opt-a confid-opt-friends" data-value="Friends">'+
+                                                    '<span class="confid-opt-friends-ico"><!--i class="fa fa-pencil" aria-hidden="true"></i--></span>'+
+                                                    '<span class="confid-opt-friends-txt"> Friends</span>'+
+                                                '</a>'+
+                                                '<a href="" class="confid-opt-a confid-opt-private" data-value="Private">'+
+                                                    '<span class="confid-opt-private-ico"><!--i class="fa fa-times" aria-hidden="true"></i--></span>'+
+                                                    '<span class="confid-opt-private-txt"> Private</span>'+
+                                                '</a>'+
+                                            '</span>'+
+                                            '<i class="confid-arraw"><i></i></i>'+
+                                       '</div>'+
+                                    '</div>'+
+                                    '<button class="frm-confid-btn">Public</button>'+ 
+                                    '{{form_widget(pform.confidence, {'attr':{'class': 'pst-frm-confid'}})}}'+
+                                '</div>'+                                
+                            '</div>'+                         
+                            '<div class="gl-frm-btm-li-post-r opt-rgt">'+
+                                '<span class="gl-ldr-pst"></span>'+
+                                '<button type="submit" id="submit-post" name="_submit" value="Post"  class="btn btn-primary btn-sm">Post</button>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '{{ form_rest(pform) }}'+
+            '</div>'+
+        '{{ form_end(pform)}}'+
+    '</div>'+
+'</div>'+
+''

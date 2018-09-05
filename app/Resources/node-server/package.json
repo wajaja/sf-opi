@@ -1,0 +1,12 @@
+{
+    "name": "react_on_rails_node",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./server.js -s webpack-bundle.js"
+    },
+    "dependencies": {
+        "path": "^0.12.7",
+        "safe-eval": "^0.4.1"
+    }
+}

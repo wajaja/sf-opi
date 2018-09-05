@@ -1,0 +1,7 @@
+export AdressForm 		from './AdressForm'
+export LangForm 		from './LangForm'
+export NameForm 		from './NameForm'
+export NotificationForm from './NotificationForm'
+export PasswordResetForm from './PasswordResetForm'
+export PhoneForm 		from './PhoneForm'
+export StatusForm 			from './StatusForm'

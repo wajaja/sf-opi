@@ -1,0 +1,53 @@
+<h1>Diary list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Createdat</th>
+            <th>Meetat</th>
+            <th>Description</th>
+            <th>Title</th>
+            <th>Privacy</th>
+            <th>Subcriber_ids</th>
+            <th>Started</th>
+            <th>Createdby</th>
+            <th>Timezone_diff</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for document in documents %}
+        <tr>
+            <td><a href="{{ path('diary_show', { 'id': document.id }) }}">{{ document.id }}</a></td>
+            <td>{% if document.createdAt %}{{ document.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if document.meetAt %}{{ document.meetAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ document.description }}</td>
+            <td>{{ document.title }}</td>
+            <td>{{ document.privacy }}</td>
+            <td>{{ document.subcriberids }}</td>
+            <td>{{ document.started }}</td>
+            <td>{{ document.createdBy }}</td>
+            <td>{{ document.timezonediff }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('diary_show', { 'id': document.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('diary_edit', { 'id': document.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('diary_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

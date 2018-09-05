@@ -1,0 +1,83 @@
+# app/config/legacy_aliases.yml
+services:
+    _defaults:
+        public: true
+    # aliases so that the old service ids can still be accessed
+    # remove these if/when you are not fetching these directly
+    # from the container via $container->get()
+    op_media.image_constructor: '@OP\MediaBundle\Construct\ImageConstructor'
+    op_media.file_storage: '@OP\MediaBundle\Uploader\Storage\FilesystemStorage'
+    op_media.video_orphanage: '@OP\MediaBundle\Uploader\Storage\FilesystemOrphanageStorage'
+    op_media.picture_manager: '@OP\MediaBundle\DocumentManager\PictureManager'
+    op_media.document.class: '@OP\MediaBundle\Document\Document'
+    op_media.image.class: '@OP\MediaBundle\Document\Image'
+    op_media.picture.class: '@OP\MediaBundle\Document\Picture'
+    op_message.thread_reader: '@OP\MessageBundle\Reader\Reader'
+    op_message.authorizer: '@OP\MessageBundle\Security\Authorizer'
+    op_message.message_manager: '@OP\MessageBundle\DocumentManager\MessageManager'
+    op_message.thread_manager: '@OP\MessageBundle\DocumentManager\ThreadManager'
+    op_message.sender: '@OP\MessageBundle\Sender\Sender'
+    op_message.composer: '@OP\MessageBundle\Composer\Composer'
+    op_message.participant_provider: '@OP\MessageBundle\Security\ParticipantProvider'
+    op_message.form.handler: '@OP\MessageBundle\FormHandler\MessageFormHandler'
+    op_message.provider: '@OP\MessageBundle\Provider\Provider'
+    op_message.thread_constructor: '@OP\MessageBundle\NewComposer\ThreadConstructor'
+    op_message.question_manager: '@OP\MessageBundle\DocumentManager\QuestionManager'
+    op_message.object_to_array.transformer: '@OP\MessageBundle\DataTransformer\ObjectToArrayTransformer'
+    op_post.handler: '@OP\PostBundle\FormHandler\NewPostFormHandler'
+    op_post.post.class: '@OP\PostBundle\Document\Post'
+    op_post.comment.class: '@OP\PostBundle\Document\Comment'
+    op_post.undercomment.class: '@OP\PostBundle\Document\UnderComment'
+    op_post.oshare.class: '@OP\PostBundle\Document\Share'
+    op_post.composer: '@OP\PostBundle\Composer\Composer'
+    op_post.post_manager: '@OP\PostBundle\DocumentManager\PostManager'
+    op_post.comment_manager: '@OP\PostBundle\DocumentManager\CommentManager'
+    op_post.left_manager: '@OP\PostBundle\DocumentManager\LeftManager'
+    op_post.right_manager: '@OP\PostBundle\DocumentManager\RightManager'
+    op_post.undercomment_manager: '@OP\PostBundle\DocumentManager\UnderCommentManager'
+    op_post.share_manager: '@OP\PostBundle\DocumentManager\ShareManager'
+    op_post.like_manager: '@OP\PostBundle\DocumentManager\LikeManager'
+    op_post.rate_manager: '@OP\PostBundle\DocumentManager\RateManager'
+    op_post.object_to_array.transformer: '@OP\PostBundle\DataTransformer\ToArrayTransformer'
+    op_post.post_provider: '@OP\PostBundle\Provider\PostProvider'
+    op_post.realtime_post: '@OP\PostBundle\Notification\RealTimePost'
+    op_post.post_listener: '@OP\PostBundle\Listener\PostListener'
+    op_social.object_to_array.transformer: '@OP\SocialBundle\DataTransformer\ObjectToArrayTransformer'
+    op_social.notification_manager: '@OP\SocialBundle\DocumentManager\NotificationManager'
+    op_social.date_transformer: '@OP\SocialBundle\SeveralClass\DateTransformer'
+    op_user.jwt_token_authenticator: '@OP\UserBundle\Security\JwtTokenAuthenticator'
+    op_user.user_manager: '@OP\UserBundle\Repository\OpinionUserManager'
+    op_user.group_manager: '@OP\UserBundle\DocumentManager\GroupManager'
+    username_to_user_transformer: '@OP\UserBundle\DataTransformer\UsernameToUserTransformer'
+    op_user.jwtrefreshtoken.refresh_token_manager: '@OP\UserBundle\DocumentManager\RefreshTokenManager'
+    op_user.jwtrefreshtoken: '@OP\UserBundle\Service\RefreshToken'
+    op_user.jwtrefreshtoken.user_provider: '@OP\UserBundle\Security\RefreshTokenProvider'
+    op_user.jwtrefreshtoken.authenticator: '@OP\UserBundle\Security\RefreshTokenAuthenticator'
+    #gos_web_socket.websocket_authentification.provider: '@OP\UserBundle\Security\WebsocketAuthenticationProvider'
+    fos_user.security.interactive_login_listener: '@OP\UserBundle\EventSubscriber\LocaleSubscriber'
+    op_user.jwt.handler.authentication_success: '@OP\UserBundle\Security\Http\Authentication\AuthenticationSuccessHandler'
+    op_user.jwt.handler.authentication_failure: '@OP\UserBundle\Security\Http\Authentication\AuthenticationFailureHandler'
+    op_user.registration_listener: '@OP\UserBundle\EventListener\RegistrationListener'
+    op_user.profile_listener: '@OP\UserBundle\EventListener\ProfileListener'
+    op_user.resetting_listener: '@OP\UserBundle\EventListener\ResettingListener'
+    op_user.setting_listener: '@OP\UserBundle\EventListener\SettingListener'
+    op_user.group_listener: '@OP\UserBundle\EventListener\GroupListener'
+    op_user.invitation_manager: '@OP\UserBundle\DocumentManager\InvitationManager'
+    op_user.setting_manager: '@OP\UserBundle\DocumentManager\SettingManager'
+    op_user.user_serializer_subscriber: '@OP\UserBundle\Serializer\UserSerializerSubscriber'
+    op_user.group_serializer_subscriber: '@OP\UserBundle\Serializer\GroupSerializerSubscriber'
+    op_user.elastica.query_search: '@OP\UserBundle\Elastica\QuerySearch'
+
+    # fos_user.user_manager.public:
+    #     alias: fos_user.user_manager
+
+    # doctrine_mongodb.odm.default_document_manager
+
+    doctrine.odm.mongodb.document_manager.public:
+        alias: doctrine.odm.mongodb.document_manager
+    doctrine_mongodb.public:
+        alias: doctrine_mongodb
+    Doctrine\ODM\MongoDB\DocumentManager:
+        alias: doctrine_mongodb.odm.default_document_manager
+    FOS\UserBundle\Form\Factory\FormFactory:
+        alias: fos_user.registration.form.factory

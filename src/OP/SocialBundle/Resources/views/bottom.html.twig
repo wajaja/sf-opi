@@ -1,0 +1,213 @@
+{# end of page #}
+
+<!-- the following line is just for setting the web socket bundle in the projet  -->
+  {{ ws_client() }}
+<script type="text/javascript">
+  function loadMoreNews(news_per_pages, username, lastPost, lastOpinion, lastmedia){
+    jQuery.Ajax({
+      type:'get',
+      url: 'http://127.0.0.1/opinion/web/app_dev.php/rendernews',
+      data:{"news_per_pages": news_per_pages, "last_news_id" : last_news_ts},
+      dataType:'json',
+      beforeSend:function(){
+        console.log('loading news ');
+
+      },
+      complete: function(){
+        // jQuery('.loading_news').remove();
+        console.log('complete');
+      },
+      success: function(data){
+        // console.log(data);
+
+      }
+    })
+  }
+
+  //   var last_news_ts = news[news.length-1]['ts']['sec'];
+    jQuery(window).scroll(function(){
+      if(jQuery(window).scrollTop() == jQuery(document).height() - jQuery(window).height()){
+        // var news_per_pages = 6, username = '',
+        // lastPost = jQuery(document).find('.post-c').lenght, lastOpinion = jQuery('.opinion-c'),
+        //  lastmedia = jQuery('.mediastream-c');
+        //
+        // // last_news_ts = news[news.length-1]['ts']['sec'];
+        // // renderNews(news_per_pages, last_news_ts, current_username, );
+        // console.log(lastPost+' '+lastOpinion+' '+lastmedia);
+      }
+    });
+  //
+
+</script>
+
+{# termes copyright ...#}
+<script type="text/javascript">
+$(document).on('click', '#nt_nv_a_lk', function(e){
+
+});
+</script>
+<script type="text/javascript">
+    jQuery('.notifLi').click(function(e){
+      e.preventDefault();
+      var noteDataId = jQuery(this).attr('notedataid');
+      console.log(dataUsername);
+      return false;
+    })
+</script>
+
+<script type="text/javascript" name='All about fineUploader Instance POST'>
+    /** * function to render list of users from server    */
+    function renderUsers(data){
+        var out = document.getElementById('result-in-nav');
+            var users = data.users,
+                ul = document.createElement('ul');
+                ul.className="ul-users";
+                ul.style.cssText="display: block; min-height: 60px; position: absolute; top: 41px;"+
+                                  "width: 450px;  border-radius: 3px;   max-height: 500px; background-color: #fff;"+
+                                  "border: 1px solid #dcdcdc";
+            if(!data.users){
+                var content = ul ;
+                out.appendChild(ul);
+            }else{
+                if(users.length===0){
+                    var content = ul ;
+                    out.appendChild(ul);
+                }else{
+                    users.forEach(function(user){
+                        var li = document.createElement('li'),
+                            divFrag = document.createDocumentFragment(),
+                            divGl = document.createElement('div'),
+                            divL = document.createElement('div'),
+                            divR = document.createElement('div'),
+                            spanProf = document.createElement('span'),
+                            spanNm = document.createElement('span'),
+                            img = document.createElement('img'),
+                            aNm = document.createElement('a'),
+                            aPic = document.createElement('a'),
+                            btnAdd = document.createElement('button');
+                        img.src=user.pic_path;
+                        var userUrl = '{{ path("fos_user_profile_show", {'username':'username'})}}';    //set username as parameter for route
+                        userUrl = userUrl.replace("username", user.username);
+                        spanNm.appendChild(document.createTextNode(user.firstname+' '+user.lastname));
+                        divL.style.cssText="display:inline-block; width:15% margin:5px";
+                        divR.style.cssText="display:inline-block; width:78%; margin-left: 5px; vertical-align: top;";
+                        spanNm.style.cssText="vertical-align: top;"
+                        li.style.cssText="display:block; height:50px; background:#fff; position:relative;"+
+                                        "width: 108%;right: 10%;margin:4px; border-top: 1px solid rgba(224, 220, 220, 0.32);";
+                        img.style.cssText="width:45px; height:45px; margin:2px";
+                        aNm.href=userUrl;
+                        aPic.href=userUrl;
+                        aNm.appendChild(spanNm);
+                        aPic.appendChild(img);
+                        divR.appendChild(aNm);
+                        divL.appendChild(aPic);
+                        divFrag.appendChild(divL);
+                        divFrag.appendChild(divR);
+                        divGl.appendChild(divFrag);
+                        li.appendChild(divGl);
+                        ul.appendChild(li);
+                    });
+                    out.appendChild(ul);
+                }
+            }
+    }
+    jQuery(".gb-input-search").keyup(function(){
+        jQuery.ajax({
+            type:'get',
+            url:'http://127.0.0.1/opinion/web/app_dev.php/search/'+jQuery(".gb-input-search").val(),
+            beforeSend:function(data){
+                // if(jQuery('.loadingUser').lenght == 0){
+                if(jQuery('#result-in-nav').find('ul')){
+                    console.log('rien');
+                }else{
+                    console.log('pas encore');
+                    renderUsers(data)
+                }                    // }
+            },
+            contentType:false,
+            processData: false,
+            success:function(data){
+                if(jQuery('#result-in-nav').find('ul')){
+                    console.log('rien');
+                    jQuery('#result-in-nav').find('ul').remove();
+                }else{
+                    console.log('pas encore');
+                }
+                renderUsers(data);
+                var users = data.users;
+                console.log(users);
+            }
+            //   document.getElementById('result-in-nav')
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript" name="opinionQuestion">
+    var _WS_URI = "ws://127.0.0.1:8080";
+     var webSocket = WS.connect(_WS_URI);             //get connexion to websocket
+     webSocket.on("socket/connect", function(session){
+         //session is an Autobahn JS WAMP session.
+         var soc = session._websocket;
+         console.log(soc);
+         soc.onopen = function(){ console.log('open')};
+         soc.onmessage = function(evt){ console.log("message"+ evt+"rien")};
+         soc.onclose = function(){ console.log('close')};
+         function onevent(args) {
+            console.log("Someone published this to 'com.example.hello': ", args);
+        }
+
+         var val = 'question to ';
+         //A topic is the server side representation of a pubsub channel.
+        session.subscribe("media/channel/{{app.user.username}}", function(uri, payload){
+            console.log(val, payload.msg);
+        });
+     })
+     webSocket.on("socket/disconnect", function(error){
+         //error provides us with some insight into the disconnection: error.reason and error.code
+         console.log("Disconnected for " + error.reason + " with code " + error.code);
+     })
+</script>
+<script type="text/javascript">
+jQuery(document).on("click", ".popover .opinion-question-form-close" , function(e){
+    e.preventDefault();
+    jQuery(this).parents(".popover").remove();
+    return false;
+});
+</script>
+
+<script type="text/javascript" name="b-onclick-event FOR CHECKBOX">
+    jQuery(':checkbox').click(function(){
+        if(jQuery(this).not('checked').length){
+            jQuery(this).prop('checked', true);
+        }else if(jQuery(this).is('checked')) {
+            jQuery(this).prop('checked', false);
+        }
+    });
+</script>
+
+</script>
+      <script type="text/javascript">
+        var _WS_URI = "ws://127.0.0.1:8080";
+        var webSocket = WS.connect(_WS_URI);             //get connexion to websocket
+         webSocket.on("socket/connect", function(session){
+             //session is an Autobahn JS WAMP session.
+            //  console.debug(session._websocket);
+             //the callback function in "subscribe" is called everytime an event is published in that channel.
+             //to  handle this see the topic handler Setup
+             var val = 'subscribe to ';
+             //A topic is the server side representation of a pubsub channel.
+            session.subscribe("media/channel/{{app.user.username}}", function(uri, payload){
+                console.log(val, payload.msg);
+            });
+         })
+         webSocket.on("socket/disconnect", function(error){
+             //error provides us with some insight into the disconnection: error.reason and error.code
+             console.log("Disconnected for " + error.reason + " with code " + error.code);
+         })
+        </script>
+
+    </body>
+</html>

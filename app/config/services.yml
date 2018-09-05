@@ -1,0 +1,64 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+imports:
+    - { resource: legacy_aliases.yml }
+parameters:
+#    parameter_name: value
+    container.autowiring.strict_mode: true
+
+services:
+    # this makes public all the services defined in this file
+    _defaults: 
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    OP\MediaBundle\Controller\:
+        resource: '../../src/OP/MediaBundle/Controller/*'
+        arguments: ['@OP\UserBundle\Security\UserProvider']
+        # exclude: '../../src/OP/MediaBundle/Controller/{Api}'
+
+    OP\MessageBundle\Controller\:
+        resource: '../../src/OP/MessageBundle/Controller/*'
+        arguments: ['@OP\UserBundle\Security\UserProvider']
+        # exclude: '../../src/OP/MessageBundle/Controller/Mobile/'
+
+    OP\UserBundle\Controller\:
+        resource: '../../src/OP/UserBundle/Controller/*'
+        arguments: ['@OP\UserBundle\Security\UserProvider']
+    # OP\UserBundle\Controller\Api\:
+    #     resource: '../../src/OP/UserBundle/Controller/Api/*'
+        # exclude: '../../src/OP/UserBundle/Controller/{Api}'
+    # OP\UserBundle\Serializer\:
+    #     resource: '../../src/OP/UserBundle/Serializer/*'
+
+    OP\SocialBundle\Controller\:
+        resource: '../../src/OP/SocialBundle/Controller/*'
+        # exclude: '../../src/OP/SocialBundle/{Document,Repository,Tests,Test,Twig}'
+        arguments: ['@OP\UserBundle\Security\UserProvider']
+    OP\SocialBundle\Controller\HomeController\:
+        resource: '../../src/OP/SocialBundle/Controller/HomeController.php'
+        # exclude: '../../src/OP/SocialBundle/{Document,Repository,Tests,Test,Twig}'
+        arguments: ['@OP\UserBundle\Security\UserProvider', '@op_user.user_provider', '@fos_user.registration.form.factory']
+
+
+    # OP\MessageBundle\Controller\Api\:
+    #     resource: '../../src/OP/MessageBundle/Controller/Api/*'
+        # exclude: '../../src/OP/MessageBundle/{Document,Repository,Tests,Test,Twig}'
+#if i want to use session handler with mongo
+#services:
+#    mongo:
+#        class: Mongo
+#        factory_service: mongo.connection
+#        factory_method: getMongo
+#
+#    mongo.connection:
+#        class: MongoDoctrine\MongoDB\Connection
+#        factory_service: doctrine.odm.mongodb.document_manager
+#        factory_method: getConnection
+#        calls:
+#            - [initialize, []]
+#
+#    mongo.session.handler:
+#        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
+#        arguments: ["@mongo", "%mongo.session.options%"]

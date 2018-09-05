@@ -1,0 +1,65 @@
+<h1>Diary</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ document.id }}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{{ document.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Meetat</th>
+            <td>{{ document.meetAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ document.description }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ document.title }}</td>
+        </tr>
+        <tr>
+            <th>Privacy</th>
+            <td>{{ document.privacy }}</td>
+        </tr>
+        <tr>
+            <th>Subcriber_ids</th>
+            <td>{{ document.subcriberids }}</td>
+        </tr>
+        <tr>
+            <th>Started</th>
+            <td>{{ document.started }}</td>
+        </tr>
+        <tr>
+            <th>Createdby</th>
+            <td>{{ document.createdBy }}</td>
+        </tr>
+        <tr>
+            <th>Timezone_diff</th>
+            <td>{{ document.timezonediff }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('diary') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('diary_edit', { 'id': document.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('diary_delete', { 'id': document.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

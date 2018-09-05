@@ -1,0 +1,51 @@
+services:
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    OP\SocialBundle\Controller\HomeController:
+        public: true
+        tags: ['controller.service_arguments']
+    OP\SocialBundle\DataTransformer\ObjectToArrayTransformer:
+        arguments: 
+            - "@service_container"
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@op_user.user_manager"
+            - "@op_media.image_constructor"
+            - '@OP\UserBundle\Security\UserProvider'
+#    op_social.example:
+#        class: OP\SocialBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    # OP\SocialBundle\Twig\Extension\SocialExtension:
+    #     tags:
+    #         - {name: "twig.extension"}
+    op_social.search.class:
+        class: OP\SocialBundle\Document\Search
+    op_social.notification.class:
+        class: OP\SocialBundle\Document\Notification
+    OP\SocialBundle\DocumentManager\NotificationManager:
+        arguments: ["@doctrine.odm.mongodb.document_manager.public", "@op_social.notification.class", "@service_container", '@OP\SocialBundle\Stream\Stream', '@OP\SocialBundle\DataTransformer\ObjectToArrayTransformer']
+    op_social.search_manager:
+        class: OP\SocialBundle\DocumentManager\SearchManager
+        arguments: 
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@op_social.search.class'
+            - '@service_container'
+    OP\SocialBundle\SeveralClass\DateTransformer: ~
+    op_social.notification_constructor:
+        class: OP\SocialBundle\SeveralClass\NoteConstructor
+        arguments: ["@op_social.date_transformer", "@security.token_storage"]
+    OP\SocialBundle\Document\News: ~
+    OP\SocialBundle\Provider\NewsProvider:
+        arguments: ["@service_container", "@request_stack", "@op_post.post_provider"]
+    Symfony\Component\HttpKernel\Controller\ControllerResolver: ~
+        # arguments: 
+        #     - null
+    OP\SocialBundle\Firebase\Firebase: ~
+    OP\SocialBundle\DocumentManager\MailManager:
+        arguments: ["@mailer", "@twig"]
+    #not used 
+    OP\SocialBundle\JmsSerializer\DateTimeInterfaceHandler:
+        tags:
+            - { name: jms_serializer.handler, type: DateTime, format: json, method: serializeToJson }
+    OP\SocialBundle\Stream\Stream:
+        arguments: ["@service_container", "@request_stack"]

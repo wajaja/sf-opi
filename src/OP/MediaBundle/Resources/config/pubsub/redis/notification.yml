@@ -1,0 +1,35 @@
+video_notification:
+    channel: notification:{video_id}
+    handler:
+        callback: op_media.video_notification
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        video_id:
+            pattern: '[a-z0-9]+'
+
+image_notification:
+    channel: notification:{image_id}
+    handler:
+        callback: op_media.image_notification
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        image_id:
+            pattern: '[a-z0-9]+'
+
+picture_notification:
+    channel: notification:{picture_id}
+    handler:
+        callback: op_media.picture_notification
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        picture_id:
+            pattern: '[a-z0-9]+'
+
+mediastream_notification:
+    channel: notification:{stream_id}
+    handler:
+        callback: op_media.mediastream_notification
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        stream_id:
+            pattern: '[a-z0-9]+'

@@ -1,0 +1,6 @@
+export Body from './Body'
+export Foot from './Foot'
+export Head from './Head'
+export Opinion from './Opinion'
+export LeftForm from './LeftForm'
+export RightForm from './RightForm'

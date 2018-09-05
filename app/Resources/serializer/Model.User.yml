@@ -1,0 +1,18 @@
+FOS\UserBundle\Model\User:
+    exclusion_policy: ALL
+    properties : 
+        username : 
+            expose : true
+            groups : [Default, Detail, Profile, elastica]
+            type: string
+        salt : 
+            expose : true
+            groups : [Details]
+            type: string
+        email :
+            expose  : true
+            type: string
+            groups  : [Default, Me, Profile, Detail, elastica]
+        enabled : 
+            expose  : true
+            type: boolean

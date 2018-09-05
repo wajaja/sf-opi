@@ -1,0 +1,3 @@
+op_message_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: OPMessageBundle:Default:index }

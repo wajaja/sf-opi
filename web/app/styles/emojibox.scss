@@ -1,0 +1,316 @@
+/*part of emojione-picker module*/
+.emoji-dialog {
+  width: 276px;
+  height: 280px;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 2px;
+  z-index: 2;
+  overflow: hidden;
+  position: absolute;
+  /*box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 15px rgba(0,0,0,0.1);*/
+}
+
+.emoji-dialog .emojione {
+  margin: 0;
+}
+
+.emoji-dialog .emoji-dialog-header {
+  background: #e0e9ea;
+}
+
+.emoji-dialog .emoji-dialog-header ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.emoji-dialog .emoji-dialog-header li {
+  display: inline-block;
+  box-sizing: border-box;
+  height: 42px;
+  padding: 9px 5px;
+}
+
+.emoji-dialog .emoji-dialog-header li img,
+.emoji-dialog .emoji-dialog-header li svg {
+  width: 22px;
+  height: 22px;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.emoji-dialog .emoji-dialog-header li.active {
+  background: #fff;
+}
+
+.emoji-dialog .emoji-dialog-header li.active img,
+.emoji-dialog .emoji-dialog-header li.active svg {
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
+}
+
+.emoji-dialog .emoji-row {
+  box-sizing: border-box;
+  overflow-y: hidden;
+  padding-left: 10px
+}
+
+.emoji-dialog .emoji-row .emoji {
+  display: inline-block;
+  /*padding: 5px;*/
+  border-radius: 4px;
+  margin: 4px;
+  outline: none;
+  cursor: pointer;
+  img {
+    width: 22px;
+    outline: none;
+  }
+}
+
+.emoji-dialog .emoji-category-header {
+  box-sizing: border-box;
+  overflow-y: hidden;
+  padding: 8px 16px 0;
+  display: table;
+}
+
+.emoji-dialog .emoji-category-header > * {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.emoji-dialog .emoji-category-title {
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: normal;
+  color: #444;
+}
+
+.emoji-dialog .emoji-category-heading-decoration {
+  text-align: right;
+}
+
+.emoji-dialog .modifiers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.emoji-dialog .modifiers li {
+  display: inline-block;
+  padding: 0 2px;
+}
+
+.emoji-dialog .modifiers li:last-of-type {
+  padding-right: 0;
+}
+
+.emoji-dialog .modifiers .modifier {
+  display: inline-block;
+  border-radius: 10px;
+  width: 15px;
+  height: 15px;
+  position: relative;
+}
+
+.emoji-dialog .modifiers .modifier.active::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  top: 2px;
+  left: 2px;
+}
+
+.emoji-dialog .modifiers li:hover {
+  -moz-transition-duration: 200ms;
+  -webkit-transition-duration: 200ms;
+  transition-duration: 200ms;
+
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+.emoji-dialog .emoji-search-wrapper {
+  padding: 6px 16px;
+}
+
+.emoji-dialog .emoji-search {
+  font-size: 12px;
+  padding: 6px 4px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.emoji-dialog .emoji-categories-wrapper {
+  position: absolute;
+  top: 42px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.emoji-dialog .emoji-search-wrapper +
+.emoji-categories-wrapper {
+  top: 83px;
+}
+
+.emoji-dialog .emoji-row .emoji:hover {
+  background: #F5F7F9;
+}
+
+.emoji-dialog .emoji {
+  width: 22px;
+  height: 22px;
+}
+/*end emojione-picker*/
+.divUploadComment {
+	.emoji-dv {
+	    margin-right: 10px;
+	    z-index: 2;
+	    .emoji-btn {
+	    	font-size: 17px;
+            position: relative;
+	    	font-weight: 700;
+            color: #959898;
+            top: -1px;
+	    }
+        .arraw{
+            position: absolute;
+            left: 218px !important;
+            bottom: -322px !important;
+            border-top-color: #b7c7ca !important;
+            border-bottom-color: transparent !important;
+            &:after{
+                border-top-color: #b7c7ca !important;
+                border-bottom-color: transparent !important;
+            }
+        }
+        .draftJsEmojiPlugin__emojiSelectButton__3sPol,
+        .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu{
+            background: transparent url(http://opinion.com/images/2713595-64-black.png) 50% 50% no-repeat;
+            background-size: cover;
+            opacity: .7;
+            width: 22px;
+            height: 22px;
+            border: none;
+            -webkit-appearance: none;
+            bottom: unset;
+            top: 0;
+      }
+        .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
+            bottom: 33px !important;
+        }
+	}
+}
+.emoji-dv {
+	display: inline-block;
+	position: relative;
+	&>div {
+	    position: relative;
+    	top: -5px;
+	}
+	.arraw {
+		  width: 13px;
+	    border-bottom-color: #ffffff;
+	    border-left-width: 10px;
+	    content: '';
+	    position: relative;
+	    border-top-width: 10px;
+	    border-width: 10px;
+	    border-style: solid;
+	    color: transparent;
+      &:before {
+        left: 3px;
+        top: 1px;
+        border-bottom-color: #444;
+        border-left-width: 10px;
+        content: '';
+        width: 12px;
+        position: relative;
+        height: 12px;
+        border-width: 10px;
+        z-index: -2;
+      }
+	    &:after {
+	    	left: 3px;
+		    border-bottom-color: #ffffff;
+		    border-left-width: 10px;
+		    content: '';
+		    width: 12px;
+		    position: relative;
+		    height: 12px;
+		    border-width: 10px;
+		    z-index: -2;
+	    }
+	}
+	.emoji-ctnr {
+	    display: block;
+	    position: absolute;
+	    left:3px;
+	    width: 400px;
+	    border-radius: 2px;
+	    border-bottom: 1px solid;
+	    border-color: #dee1e2;
+	    background-color: #fff;
+		.lks {
+		    border-bottom: 1px solid #dee1e2;
+		    padding: 3px 0;
+		    margin: 0 0px 10px 0;
+			span {
+			    margin: 1px 2px;
+			    img {
+			    	width: 30px
+			    }
+			}
+		}
+		.groups {
+			background-color: #fff;
+			div {
+				display: none;
+			    height: 250px;
+			    overflow-y: auto;
+			    overflow-x: hidden;
+			    padding: 3px 5px;
+			    span {
+
+				}
+			    &.active-grp {
+			    	display: inline-block !important;
+				}				
+			}
+		}
+	}
+	.emoji-btn{
+		cursor: pointer;
+    font-size: inherit;
+    font-weight: bold;
+    display: block;
+    padding: initial;
+	    img {
+	    	width: 20px;
+		    margin: auto;
+		    display: inline-block;
+	    }
+	}
+}
+
+.draftJsEmojiPlugin__emojiSelectButton__3sPol{
+    background: transparent url(http://opinion.com/images/2713604-32.png) 50% 50% no-repeat;
+    background-size: cover;
+    width: 32px;
+    height: 34px;
+    border: none;
+    -webkit-appearance: none;
+    top: -3px;
+    position: absolute;
+}

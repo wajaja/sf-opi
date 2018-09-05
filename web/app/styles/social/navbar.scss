@@ -1,0 +1,579 @@
+nav .container {
+    position: relative;
+    height: 50px;
+    .collapse.navbar-collapse{
+        height: 100% !important;
+    }
+    .flt-ctnr{
+        position: absolute;
+        width: 400px;
+        min-height: 60px;
+        top: 33px;
+        border-radius: 4px;
+        background: #f2f2f3;
+        border: 1px solid;
+        border-color: #dbe0eb;
+        border-top-color: #0294a5;
+        .no-results{
+            padding:3px;
+        }
+        .recent-term{
+            padding:3px;
+        }
+        .results{
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: .2px;
+        }
+        ul {
+            padding: 0px;
+            li{
+                min-height: 22x;
+                cursor: pointer;
+                list-style: none;
+                .pst-slct-usr-pic{
+                    width: 45px;
+                    height: 45px;
+                    display: inline-block;
+                    vertical-align: top;
+                    margin-right: 10px;
+                    a{
+                        display: inline-block;
+                    }
+                }
+                .pst-slct-usr-sp-nm{
+                    display: inline-block;
+                    vertical-align: top;
+                    span {
+                        text-transform: capitalize;
+                    }
+                    .pst-slct-usr-sp-usrnm{
+                        font-weight: 100;
+                        font-size: 13px;
+                        color: #929292;
+                        display: block !important;
+                    }
+                }
+            }
+            .li-result-a{
+                position: relative;
+            }
+        }
+    }
+}
+nav .default {
+    .nav-rght{
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 30px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+}
+.navbar-inverse {
+    background-color: #0294a5;
+    /*border-color: #cbdbf1;*/
+    margin-bottom: 0px;
+    border-bottom: unset !important;
+    height: 46px;
+    min-height: 46px;
+    &.modal-open {
+        border-color: none !important;
+    }
+}
+.gb-input-search{
+    width: 362px;
+    position: relative;
+    outline: none;
+    border: none;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+    height: 26px;
+    padding-left: 5px;
+    display: inline-block;
+}
+button a{
+    color:#FFFFFF;
+    font-size: 16px;
+}
+h1 {
+    margin-top:0px;
+    margin-bottom: 0px
+}
+ul{
+    margin-bottom: 0px;
+    margin-top:0px;
+}
+.global-content{
+    display: block;
+    position: relative;
+    width: 99%;
+    margin: 0 auto;
+    top: 9px;
+    height: 30px;
+}
+.global-brand{
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+    vertical-align: middle;
+}
+.op-gl-lk{
+    width: 30px;
+    border: 1px solid #8a8787;
+    display: block;
+    height: 30px;
+    background: #8a8787;
+    border-radius: 2px;
+    position: relative;
+}
+.op-gl-lk-ctnr{
+    width: 26px;
+    height: 26px;
+    background-color: #fff;
+    display: block;
+    position: absolute;
+    border-radius: 50%;
+    left: 1px;
+    top: 1px;
+}
+.global-nav-center{
+    display: inline-block;
+    width: 580px;
+    padding-top:6px;
+    position:relative;
+}
+.global-nav-right-in{
+    position: relative;
+    display: block;
+    padding: 2px;
+    height: 30px;
+    /*background: #bfcace;*/
+    border-radius: 2px;
+    /*border: 1px solid #b2b7c2;*/
+}
+.global-nav-right{
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin-left: 110px;
+    width: 355px;
+    height: 30px;
+}
+.form-search{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #0592a3;
+}
+.icon-search-ctnr{
+    display: inline-block;
+    border: none;
+    border-left: 1px solid #bdbfc3;
+    height: 28px;
+    width: 36px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background: #dee4e7;
+    float: right;
+}
+.div-form-nav{
+    width: 400px;
+    display: inline-block;
+    position: relative;
+    .frm-contrib-ctnr-b{
+        background-color: unset !important;
+    }
+}
+.center-in-nav{
+    display: inline-block;
+    margin-left: 100px;
+    position: relative;
+}
+.home-in-nav{
+    position: relative;
+    display: inline-block;
+    min-width: 40px;
+    height: 28px;
+    left: 5px;
+}
+.profile-in-nav, .config-in-nav{
+    margin: 0 15px;
+}
+
+.ld-prf-img{
+    position: relative;
+    width: 15px;
+    height: 15px;
+    top:7px;
+    left:7px;
+    display: inline-block;
+    background: url('http://opinion.com/images/loading-submit.gif');
+}
+.profile-div-in-nav{
+    display: inline-block;
+}
+.prf-dv-nv-lk{
+    display: block;
+    /*border: 1px solid #ccc;*/
+    border-radius: 50%;
+}
+.profilePic-in-nav{
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+}
+.rgth-in-nav{
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+}
+.profile-in-nav{
+    display: inline-block;
+    position: relative;
+}
+.inbox-in-nav{
+    display:inline-block;
+    margin: 1px 10px 1px 10px;
+}
+.notif-in-nav{
+    display:inline-block;
+    margin: 1px 10px 1px 10px;
+}
+.config-in-nav{
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+
+#nav li a{
+	color:#333333;
+	text-decoration:none;
+}
+#nav li a:hover{
+	color:#FFFFFF;
+	text-decoration:none;
+}
+
+.configArraw
+{
+    border: 10px solid #0294a5;
+    width: 0;
+    height: 0;
+}
+
+.config-in-nav .configArraw, .config-in-nav .configArraw:after {
+    left: -3px;
+    margin-top: -8px;
+    border-bottom-color: #ffffff;
+    border-left-width: 0;
+    content: '';
+    position: absolute;
+    border-width: 11px;
+    /* color: rgb(255, 255, 255); */
+    /* border-style: solid; */
+    /* border-color: rgb(203, 197, 197); */
+    z-index: -2;
+}
+
+
+.config-in-nav .nav-options-ctnr{
+    position: relative;
+    right: -5px;
+}
+.configLi{
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.configLi:hover{
+    background-color: #F1F7F5;
+}
+.divider{
+    border-bottom: 1px solid rgb(220, 220, 220);
+}
+.configLi>a{
+    padding: 5px;
+    color: #3D3D9C;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+}
+
+#navSettingContainer {
+    border-top: white !important;
+    -webkit-box-shadow: 0px 5px 10px #a3b4b9;
+    min-width: 170px;
+    padding: 5px 7px;
+    margin: 2px 0 0;
+    font-size: 13px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: 3px;
+    position: absolute;
+    line-height: 21px;
+    top: 10px;
+    right: 0px;
+}
+.nt-nv-ttl, .invit-nv-ttl, .msg-nv-ttl {
+    z-index: 1000;
+    font-weight: 600;
+    height: 28px;
+    padding: 5px 10px 4px 15px;
+    font-size: 13px;
+    /* background-color: rgba(57, 184, 220, 0.99); */
+    border-bottom: 1px solid #d5dad8;
+    color: #3e5a6b;
+}
+.nt-nv-bd:hover,
+.msg-nv-bd:hover,
+.invit-nv-bd:hover
+{
+
+}
+.nt-nv-bd, .msg-nv-bd, .invit-nv-bd {
+    overflow-x: hidden;
+    overflow-y: auto;
+	max-height:430px;
+    background: #fff;
+    border-left: 1px solid rgb(203, 197, 197);
+    border-right: 1px solid rgb(203, 197, 197);
+}
+/*scroll*/
+.nt-nv-bd::-webkit-scrollbar,
+.invit-nv-bd::-webkit-scrollbar,
+.msg-nv-bd::-webkit-scrollbar
+{
+    width: 8px;
+}
+.nt-nv-bd::-webkit-scrollbar-button:horizontal:decrement:hover,
+.invit-nv-bd::-webkit-scrollbar-button:horizontal:decrement:hover,
+.msg-nv-bd::-webkit-scrollbar-button:horizontal:decrement:hover
+{
+   /* Select the down or left scroll button when it's being hovered by the mouse */
+}
+.nt-nv-bd::-webkit-resizer,
+.invit-nv-bd::-webkit-resizer,
+.msg-nv-bd::-webkit-resizer
+{
+    display: none;
+}
+
+.nt-nv-bd::-webkit-scrollbar-track,
+.invit-nv-bd::-webkit-scrollbar-track,
+.msg-nv-bd::-webkit-scrollbar-track
+{
+    -webkit-box-shadow:none;
+    border-radius: 0px;
+    background-color:#aaa;
+}
+
+.nt-nv-bd::-webkit-scrollbar-thumb,
+.invit-nv-bd::-webkit-scrollbar-thumb,
+.msg-nv-bd::-webkit-scrollbar-thumb
+{
+    border-radius: 0px;
+    -webkit-box-shadow: inset 1px 1px 6px #333;
+    background-color:#666;
+}
+
+#notificationFooter {
+    background-color: rgb(58, 184, 220);
+    font-size: 12px;
+    height: 25px;
+    display: block;
+    border-top: 1px solid #9DA3A9;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-align: center;
+}
+.s-all-not{
+    z-index: 1000;
+    font-weight: bold;
+    top: 3px;
+    padding: 0px 10px 0px 15px;
+    position: relative;
+    font-size: 13px;
+    background-color: rgba(57, 184, 220, 0.99);
+    border-top-left-radius: 5px;
+    color: #fff;
+    border-top-right-radius: 5px;
+}
+
+/*SEARCH FORM IN NAVBAR
+----------------------------------------------------------------------------*/
+.search {
+  position: relative;
+  color: #aaa;
+  font-size: 16px;
+}
+
+/*.div-search input {
+  width: 300px;
+  height: 25px;
+  display: inline-block;
+  background: #fcfcfc;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+}*/
+
+.search {
+    input { 
+        text-indent: 24px;
+    }
+};
+
+.search {
+    .glyphocon-search {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+}
+.gb-nv-ho{
+    display: block;
+    top: 1px;
+    height: 26px;
+    position: relative;
+    /*background: #fff;*/
+    border-radius: 12px;
+}
+.gb-nv-ho>span.h-ico{
+    display: block;
+    width: 21px;
+    height: 21px;
+    top: 2px;
+    left: 3px;
+    position: absolute;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    background: transparent url(http://opinion.com/images/216240-32.png) 50% 50% no-repeat;
+    background-size: cover;
+}
+.test-ev{
+    font-size: 15px;
+    position: absolute;
+    top: -3px;
+}
+.link-message{
+    display: block;
+    width: 23px;
+    height: 25px;
+    top: 0px;
+    left: 3px;
+    position: absolute;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    background: transparent url(http://opinion.com/images/2628492-32.png) no-repeat;
+    background-size: cover;
+}
+.nt-nv-a-lk{
+    display: block;
+    width: 22px;
+    height: 22px;
+    top: 2px;
+    left: 3px;
+    position: absolute;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    background: transparent url(http://opinion.com/images/290107-32.png) 50% 50% no-repeat;
+    background-size: cover;
+}
+.invit-nv-lk{
+    display: block;
+    width: 23px;
+    height: 23px;
+    top: 2px;
+    left: 3px;
+    position: absolute;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    background: transparent url(http://opinion.com/images/172474-32.png) 50% 50% no-repeat;
+    background-size: cover;
+}
+
+.link-parameters{
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+    background: transparent url(http://opinion.com/images/1976051-32.png) 50% 50% no-repeat;
+}
+.link-parameters{
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+.link-message>span{
+    font-size: 17px;
+}
+.invit-nv-lk>i{
+    font-size: 16px;
+}
+.nt-nv-a-lk>i{
+    font-size: 16px;
+}
+.link-parameters>i{
+    font-size: 18px;
+}
+.linkNotif:hover{
+    background: #ccc;
+}
+.isRead{
+    background: #ccc;
+}
+.notif-li-read{
+    background: #fff;
+    display: initial; /*...!important*/
+}
+.note-content-a{
+    color: #4d6287;
+    font-size: 13px;
+    padding-top: 6px;
+}
+.invit-nv-ul, .nt-nv-ul, .msg-nv-ul{
+    padding: 0px;
+}
+.notif-left{
+    display: inline-block;
+    min-width: 300px;
+}
+.notif-right{
+    display: inline-block;
+    max-width: 80px;
+}
+
+.link-participant, .notif-type{
+    font-size: 12px;
+    font-family: inherit;
+    color: #1B4B50;
+    font-weight: 600;
+}
+.notif-msg{
+    font-size: 12px;
+    font-family: inherit;
+    color: #948B8B;
+    font-weight: 600;
+}
+.loading-note{
+    position: relative;
+    z-index: 21000;
+    display: block;
+    top: 47%;
+    border-radius: 3px;
+    left: 47%;
+    height: 20px;
+    width: 20px;
+    background: rgba( 255, 255, 255, 1 ) url('http://opinion.com/images/loading-submit.gif') 50% 50% no-repeat;
+}

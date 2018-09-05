@@ -1,0 +1,12 @@
+homepage:
+    type: rest
+    resource:  OP\SocialBundle\Controller\Api\ApiHomeController
+search:
+    type: rest
+    resource: OP\SocialBundle\Controller\Api\ApiSearchController
+notification:
+    type: rest
+    resource: OP\SocialBundle\Controller\Api\ApiNotificationController
+session:
+    type: rest
+    resource: OP\SocialBundle\Controller\Api\ApiSessionController

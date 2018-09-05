@@ -1,0 +1,37 @@
+{# src/OP/OpinionBundle/Resources/view/Opinion/view.html.twig #}
+
+{% extends "OPOpinionBundle::layout.html.twig" %}
+
+{% block title %}
+  view for - {{ parent() }}
+{% endblock %}
+
+{% block op_opinion_body %}
+
+  <h2></h2>
+  <i>Par</i>
+
+  <div class="well">
+    {{ opinion.content }}
+    <img 
+  src="{{ asset(opinion.image.webPath) }}"
+  alt="{{ opinion.image.alt }}"
+
+  </div>
+
+  <p>
+    <a href="{{ path('oc_social_home') }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'accueil
+    </a>
+    <a href="{{ path('oc_opinion_edit', {'id': opinion.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-edit"></i>
+      Modify
+    </a>
+    <a href="{{ path('oc_opinion_delete', {'id': opinion.id}) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+      delete
+    </a>
+  </p>
+
+{% endblock %}

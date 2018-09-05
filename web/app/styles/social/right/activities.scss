@@ -1,0 +1,510 @@
+  .u-sugg-el{
+        width: 100%;
+        display: inline-block;
+        border-top: none;
+        margin: 5px 0 20px 0;
+        position: relative;
+      .req-sugg-btn-ct{
+          position: relative;
+          margin-top: 8px !important;
+          .lft{
+              margin-right: 20px;
+          }
+          button {
+            border: 1px solid #07a0c2 !important;
+            padding: 2px 3px !important;
+            border-radius: 2px;
+            letter-spacing: .4px;
+            font-size: 12px !important;
+            text-transform: capitalize;
+            color: #f6f8fb !important;
+            outline: none;
+            font-weight: 600;
+            background: #07a0c2;
+          }
+      }
+      &:hover{
+          .rmv-sugg{
+              display: block;
+          }
+      }
+      .pic-u-sugg {
+          display: inline-block;
+          border-radius: 50%;
+          border: 1px solid #e7ecf7;
+          a {
+              display: block;
+          }
+      }
+      .nm-link-u-sugg{
+            color: #191a1b;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            font-variant: inherit;
+            font-family: Helvetica, Arial sans-serif;
+            text-transform: capitalize;
+      }
+      .u-sugg-lft{
+          display: inline-block;
+          vertical-align: top;
+          margin-right: 4px;
+      }
+      .u-sugg-rght{
+          display: inline-block;
+          vertical-align: top;
+          line-height: 15px;
+      }
+      .pic-dv-u-sugg{
+          margin-right: 3px;
+      }
+      .inf-u-sugg-ct{
+          display: inline-block;
+          .add-u-sugg{
+              cursor: pointer;
+          }
+          .btn{
+              padding: 1px 5px;
+          }
+      }
+  }
+.less-sugg-bd {
+    padding: 3px;
+}
+
+.rmv-sugg{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+    display: none;
+    background: transparent url(http://opinion.com/images/if_cancel_16.png) 50% 50% no-repeat;
+}
+.tv-chan-ctnr{
+    border: 1px solid #7a8588;
+    min-height: 175px;
+    background: #7a8588;
+    border-radius: 2px;
+    padding: 0;
+    margin-bottom: 10px;
+    color: #fff;
+}
+.bq-sugg{
+/*  display: inline-block;
+  min-height: 600px;
+  width: 69%;
+  padding: 0px 0px 0px 0px;*/
+}
+.h-r-dv-w{
+ /* display: block;
+  width: 100%;*/
+}
+.less-sugg-hd{
+    font-size: 12px;
+    /*font-weight: 600;*/
+    color: #12395a;
+    letter-spacing: 0.3px;
+}
+
+.u_sugg_co{
+    max-height: 220px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    padding: 0 4px;
+}
+.activities-ctnr{
+    border: 1px solid #c8d8e8;
+    min-height: 170px;
+    margin-bottom: 10px;
+    background: #f4f4f4;
+    border-radius: 2px;
+}
+.u-sugg, .pop-sugg, .frei-sugg{
+    min-height: 0px;
+    height: 230px;
+    overflow: hidden;
+    border-radius: 3px;
+    width: 100%;
+    border: 1px solid #d2d9dc;
+    margin-bottom: 12px;
+    background: #f7fcfd;
+}
+.pop-sugg-co{
+    
+}
+.less-sugg-ul{
+
+}
+.diary-ctnr{
+    height: 163px;
+    position: relative;
+    background: #f7fcfd;
+    border-radius: 4px;
+    padding: 20px;
+    width: 100%;
+    border: 1px solid #d2d9dc;
+    margin-bottom: 12px;
+    .q-stor-gph-dv-ct{
+        background: #d4dadc;
+        padding: 1px 0;
+        .q-stor-gph-dv-mth{
+            line-height: 10px;
+        }
+    }
+    &:hover{
+        .q-stor-gph-lst, .q-stor-gph-nxt{
+            display: block;
+        }
+    }
+    .q-stor-gph-lst, .q-stor-gph-nxt{
+        display: none; 
+        position: absolute;
+        height: 20px;
+        width: 50px;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: center;
+        background: #f6f8fb;
+        cursor: pointer;
+        text-transform: capitalize;
+    }
+    .q-stor-gph-nxt{
+        bottom: 50px;
+        right: -25px;
+        transform: rotate(-90deg);
+    }
+    .q-stor-gph-lst{
+        top: 50px;
+        left: -25px;
+        transform: rotate(90deg);
+    }
+    .dy-name{
+        display: inline-block;
+        width: 25px;
+        font-size: 11px;
+        color: #666666;
+        font-weight: 500;
+        text-align: center;
+        bottom: 2px;
+        margin: 0 3px;
+    }
+    .q-stor-gph-dv-week-day{
+        position: absolute;
+        top: -22px;
+    }
+}
+
+a.pop_sugg_ctry, a.pop_sugg_wld{
+  font-size: 12px;
+  font-weight: 600;
+  font-variant: inherit;
+  font-family: sans-serif;
+  margin: 5px;
+  position: relative;
+  margin-right: 15px;
+  top: 3px;
+}
+a.pop_sugg_ctry:hover, a.pop_sugg_wld:hover{
+  border-bottom: 3px solid #B8BBB2;
+}
+.pop-sugg-hdr{
+  display: block;
+  width: 100%;
+  height: 25px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+div#pop_sugg_ctry, div#pop_sugg_wld{
+  margin: 5px;
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+}
+.sp_qk_notif{
+  background-color: red;
+}
+.q-stor-gph-mth-txt{
+    left: 12px;
+}
+.q-stor-gph-year-txt{
+    right: 11px;
+}
+.q-stor-gph-mth-txt, .q-stor-gph-year-txt{
+    display: inline-block;
+    width: 25px;
+    font-size: 11px;
+    color: #666666;
+    font-weight: 500;
+    text-align: center;
+    position: absolute;
+    bottom: 2px;
+}
+.q-stor-gph-dv{
+    width: 230px;
+    padding: 2px 5px 1px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    /*border: 1px solid #f6f8fb;*/
+}
+.q-stor-gph-lk{
+    width: 25px;
+    display: inline-block;
+    height: 19px;
+    border-radius: 2px;
+    border: 1px solid #d6dde0;
+    margin: 2px 3px;
+    background: #f6f8fb
+}
+.q-stor-gph-lk-a{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.q-stor-gph-lk-a .tootip-hver-stor{
+  background: #000;
+  opacity: 0.7;
+  min-width: 160px;
+  z-index: 5;
+  display:block;
+  bottom:26px;
+  right: -11px;
+  position: absolute;
+  padding: 5px;
+  pointer-events: none;
+  -webkit-transform: translateY(10px);
+     -moz-transform: translateY(10px);
+      -ms-transform: translateY(10px);
+       -o-transform: translateY(10px);
+          transform: translateY(10px);
+  -webkit-transition: all .25s ease-out;
+     -moz-transition: all .25s ease-out;
+      -ms-transition: all .25s ease-out;
+       -o-transition: all .25s ease-out;
+          transition: all .25s ease-out;
+  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+     -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+      -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+       -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+}
+/* This bridges the gap so you can mouse into the tooltip without it disappearing */
+.q-stor-gph-lk-a .tootip-hver-stor:before {
+  bottom: -20px;
+  content: " ";
+  display: block;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+/* CSS Triangles - see Trevor's post */
+.q-stor-gph-lk-a .tootip-hver-stor:after {
+  border-left: solid transparent 10px;
+  border-right: solid transparent 10px;
+  border-top: solid #000 10px;
+  bottom: -10px;
+  content: " ";
+  height: 0;
+  right: 4px;
+  margin-left: -13px;
+  position: absolute;
+  width: 0;
+}
+.tootip-hver-stor{
+  background: #000;
+  opacity: 0.7;
+  color:#fff;
+  border-radius: 4px;
+  display:block;
+  min-height: 35px;
+  position: absolute;
+  text-align: center;
+}
+
+
+.q-stor-gph-lk-a .tootip-clk-stor-dv{
+  background: #000;
+  opacity: 0.8;
+  min-width: 300px;
+  z-index: 3;
+  display:block;
+  bottom:26px;
+  right: -11px;
+  position: absolute;
+  pointer-events: none;
+  padding: 5px;
+  -webkit-transform: translateY(10px);
+     -moz-transform: translateY(10px);
+      -ms-transform: translateY(10px);
+       -o-transform: translateY(10px);
+          transform: translateY(10px);
+  -webkit-transition: all .25s ease-out;
+     -moz-transition: all .25s ease-out;
+      -ms-transition: all .25s ease-out;
+       -o-transition: all .25s ease-out;
+          transition: all .25s ease-out;
+  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+     -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+      -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+       -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+}
+/* This bridges the gap so you can mouse into the tooltip without it disappearing */
+.q-stor-gph-lk-a .tootip-clk-stor-dv:before {
+  bottom: -20px;
+  content: " ";
+  display: block;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+/* CSS Triangles - see Trevor's post */
+.q-stor-gph-lk-a .tootip-clk-stor-dv:after {
+  border-left: solid transparent 10px;
+  border-right: solid transparent 10px;
+  border-top: solid #000 10px;
+  bottom: -10px;
+  content: " ";
+  height: 0;
+  right: 4px;
+  margin-left: -13px;
+  position: absolute;
+  width: 0;
+}
+
+
+.q-stor-gph-dta-notif{
+    position: relative;
+    font-size: 11.5px;
+    text-align:left;
+    padding: 1px 5px;
+}
+
+.tootip-clk-stor-dv{
+  position: relative;
+}
+.tootip-clk-stor-cls{
+    display: inline-block;
+    font-weight: 900;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+    background: transparent url(http://opinion.com/images/if_cancel_white_16.png) 50% 50% no-repeat;
+}
+.tootip-clk-stor-dte{
+  display: inline;
+  font-size: 13px;
+}
+.tootip-clk-stor-nb-not{
+  display: inline;
+  font-size: 13px;
+  position: relative;
+  left: 30px;
+}
+
+.tootip-clk-stor-bd{
+  display: block;
+}
+
+.q-stor-dta{
+  display: none;
+}
+.q-stor-gph-dta-lk-part{
+  font-size: 12px;
+font-family: inherit;
+color: #097FE4;
+font-weight: 600;
+}
+
+.tootip-stor-ctnr{
+    background: #000;
+    opacity: 0.8;
+    color: #cdd5df;
+    border-radius: 4px;
+    min-height: 400px;
+    max-height: 400px;
+    position: absolute;
+    text-align: center;
+    width: 370px;
+    left: -385px;
+    top: -20px;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    font-weight: 100;
+    z-index: 222;
+    .tootip-clk-stor-hdr{
+        height: 30px;
+        display: block;
+        position: relative;
+        border-bottom: 1px solid #375558;
+        .tootip-clk-stor-hdr-a{
+            position: relative;
+            top: 7px;
+        }
+    }
+    .diary-frm-ctnr{
+        min-height: 64px;
+        position: relative;
+    }
+    .q-stor-gph-own-d{
+        border-top: 1px solid #375558;
+    }
+    .q-stor-gph-dta-notif{
+        position: relative;
+    }
+    .note-content{
+        height: 60px;
+        line-height: 15px;
+        cursor: pointer;
+        border-bottom: 1px solid #5a5b5d;
+        overflow: hidden;
+        &:hover{
+            background: #222;
+            opacity: 0.8;
+        }
+    }
+    .notif-li-unread{
+        background: #0d0e0f;
+    }
+    .notif-li-read{
+        background: #1e1e21;
+    }
+    .note-content-a{
+        display: inline-block;
+        padding: 1px 1px;
+        margin: 3px 0;
+        .time-ago{
+            display: inline-block;
+        }
+    }
+    .note-flt-lft{
+        display: inline-block;
+        margin-right: 5px;
+        position: relative;
+        float: left;
+    }
+    .note-flt-rght{
+        display: inline-block;
+        float: right;
+        margin-left: 5px;
+    }
+    .note-flt-lft-img{
+        display: inline-block;
+        border: 1px solid #403f3f;
+    }
+    img.usr-avatar{
+        width: 45px;
+        height: 45px;
+    }
+}

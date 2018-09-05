@@ -1,0 +1,53 @@
+<h1>Image list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Path</th>
+            <th>Size</th>
+            <th>Createdat</th>
+            <th>Updateat</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Icomments</th>
+            <th>Ilike</th>
+            <th>Nbclikes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for document in documents %}
+        <tr>
+            <td><a href="{{ path('image_show', { 'id': document.id }) }}">{{ document.id }}</a></td>
+            <td>{{ document.path }}</td>
+            <td>{{ document.size }}</td>
+            <td>{% if document.createdAt %}{{ document.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if document.updateAt %}{{ document.updateAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ document.name }}</td>
+            <td>{{ document.author }}</td>
+            <td>{{ document.iComments }}</td>
+            <td>{{ document.iLike }}</td>
+            <td>{{ document.nbClikes }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('image_show', { 'id': document.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('image_edit', { 'id': document.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('image_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

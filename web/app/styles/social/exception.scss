@@ -1,0 +1,70 @@
+.stat-excep-ctnr{
+    position: fixed;
+    z-index: 999999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.excep-ctnr{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	.excep-overlay-ctnr{
+        position: absolute;
+	    width: 100%;
+	    height: 100%;
+	    background: #000;
+	    opacity: 0.6;
+	}
+	.excep-box-ctnr{
+		position: relative;
+	    width: 100%;
+	    height: 100%;
+	    z-index: 12;
+	    .excep-box-ctnr-a{
+	    	position: absolute;
+		    width: 400px;
+		    left: 0;
+		    right: 0;
+		    margin-left: auto;
+		    margin-right: auto;
+		    height: 240px;
+		    top: 150px;
+		    background: #fff;
+		    border-radius: 3px;
+		    border: 1px solid #565c83;
+	    }
+		.excep-box-ft{
+			position: absolute;
+		    bottom: 8px;
+		    width: 100%;
+		    height: 35px;
+		    text-align: center;
+		    border-top: 1px solid #fcfcff;
+		    .excep-box-ft-a{
+		    	position: relative;
+		    	padding: 2px;
+		    	a {
+		    		padding: 3px 24px;
+				    width: 148px;
+				    border-radius: 2px;
+				    border: 1px solid #337ab7;
+			    	font-size: 14px;
+		    	}
+		    }
+		}
+		.excep-box-bd{
+			position: relative;
+		    width: 100%;
+		    height: 200px;
+		    padding: 20px 5px 5px;
+		    word-wrap: break-word;
+		    font-size: 12px;
+		    text-align: center;
+		    font-family: sans-serif;
+		    font-weight: 600;
+		}
+	}
+}

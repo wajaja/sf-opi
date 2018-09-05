@@ -1,0 +1,182 @@
+/* Created on : 20 févr. 2016, 15:38:27
+    Author     : CEDRICK */
+.lComment-form-textarea, .rComment-form-textarea{
+    padding-right: 5px;
+    padding-left: 5px;
+    overflow: hidden;
+    outline:none;
+    width: 100%;
+    background: white;
+    display: block;
+    resize: none;
+    border-style: none;
+    min-height: 30px;
+    font-size: 12px
+}
+.opinion-commentForm-content{
+    padding: 8px 8px 8px 8px;
+    background: rgba(220, 220, 220, 0.24); 
+    width: 100%
+}
+/* Hide input type file*/
+.rCommentForm-camera input.uploadRcomment{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+input.uploadLcomment{
+    position: absolute;
+    visibility: hidden;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.rCommentForm-camera{
+    position: relative;
+    overflow: hidden;
+    margin: 5px 0 0 0px;
+}
+
+.divUploadRcomment, .divUploadLcomment{
+    position:relative; 
+    display:inline-block;
+}
+.divSubmitRcomment, .divSubmitLcomment{
+    position:relative; 
+    display:inline-block;
+    float:right;
+    padding-bottom: 12px;
+}
+.pictureInRcommentForm{
+    float: right;
+    width: 50px; 
+    display:inline-block;
+}
+.left-rCommentForm, .left-rCommentForm{
+    float: left;
+    display:inline-block;
+    width: 13%;    
+}
+.center-rCommentForm, .center-lCommentForm{
+    display:inline-block;
+    width: 99%;  
+}
+.sCenter-rCommentForm, .sCenter-lCommentForm{
+    border: 1px solid #DCDCDC;
+    background: #fff;
+    display: block;
+    min-height: 42px;
+}
+.right-rCommentForm, .right-rCommentForm{
+    float: right;
+    width: 4%;
+    background-color:#FFFFFE
+}
+.div-textareaComment, .div-textareaComment{
+    position:relative; 
+    width: 100%; 
+    display:block
+}
+.r-comment-visible-part, .l-comment-visible-part{
+    width: 100%;
+}
+
+.profilePic-commentform{
+    position:relative; 
+    width: 32px;
+    height: 32px;
+    display:block;
+    margin-right:5px;
+    border: 1px solid #D8CCB3;
+    margin:3px 0 0 8px;
+    
+}
+.dynamic-partInRcommentForm, .dynamic-partInLcommentForm{
+    display:none;
+    background-color:#FFF;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-top: 1px solid #DCDCDC;
+}
+.dynamic-partInRcommentForm label, .dynamic-partInLcommentForm label {
+    display: none;
+}
+.thumb-commentImage {
+    /*float:left;*/
+    width:130px;
+    position:relative;
+    padding:5px;
+}
+.profilePic-thumbnail-in-comment-form{
+    position:relative; 
+    width: 32px;
+    height: 32px;
+    display:block;
+    margin-right:5px;
+}
+.submit-rComment, .submit-lComment{
+    background: rgb(51, 122, 183);
+    font-size: 13px;
+    position: relative;
+    border: 1px solid #1D23DE;
+    color: white;
+    border-radius:2px;
+}
+.inline-right-comment-form{
+    width:49%;
+    position: relative;
+    vertical-align: top;
+}
+.inline-left-comment-form{
+    width: 49%;
+    position: relative;
+    right: -2%;
+    vertical-align: top;
+}
+.div-lCommentForm{
+}
+.opinion-rCommentForm-left, .opinion-lCommentForm-left{
+    display: inline-block;
+    width: 13%;
+    position: relative;
+    vertical-align: top;
+    top: 4px;
+    left: 4px;
+}
+.lCommentContent, .rCommentContent{
+    display: inline-block;
+    position: relative;
+    width: 82%;
+    padding-left: 5px;
+    top: 4px;
+}
+.div-textareaRcomment, .div-textareaLcomment{
+    min-height: 32px;
+    position: relative;
+}
+.right-choice, .left-choice{
+    display: inline;
+    color:#dcdcdc;
+}
+.left-choice{
+    float: right;
+}
+.opinion-comments-content{
+    display: block;
+    overflow-x: scroll;    
+}
+.div-rComment, .div-lComment{
+    display: inline-block;
+    width:100%;
+}

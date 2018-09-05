@@ -1,0 +1,23 @@
+{% extends "OPSocialBundle:Mail:template.html.twig" %}
+ 
+{% block subject %}
+    YourApp Contact Message
+{% endblock %}
+ 
+{% block body_text %}
+    {% autoescape false %}
+        Name: {{ firstName }} {{ lastName }}
+        Message: {{ message }}
+        Phone Number: {{ phoneNumber }}
+        Email address: {{ email }}
+    {% endautoescape %}
+{% endblock %}
+ 
+{% block body_html %}
+    {% autoescape false %}
+        <p>Name: {{ firstName }} {{ lastName }}</p>
+        <p>Message: {{ message }}</p>
+        <p>Phone Number: {{ phoneNumber }}</p>
+        <p>Email address: {{ email }}</p>
+    {% endautoescape %}
+{% endblock %}

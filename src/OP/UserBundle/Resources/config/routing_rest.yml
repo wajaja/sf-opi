@@ -1,0 +1,30 @@
+login :
+    type: rest
+    resource:     OP\UserBundle\Controller\Api\ApiSecurityController
+registration:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiRegistrationController
+change_password:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiChangePasswordController
+# reset_password:
+#     type: rest
+#     resource: OP\UserBundle\Controller\Api\ApiResetPasswordController
+group:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiGroupController
+profile:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiProfileController
+invitations:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiInvitationController
+search:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiSearchController
+diary:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiDiaryController
+settings:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiSettingsController

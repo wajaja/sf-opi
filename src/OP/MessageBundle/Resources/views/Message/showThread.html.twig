@@ -1,0 +1,31 @@
+'<h1>Message</h1>'+
+'<table class="record_properties">'+
+    '<tbody>'+
+        '<tr>'+
+            '<th>Id</th>'+
+            '<td>{{ document.id }}</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<th>createdBy</th>'+
+            '<td>{{ document.createdBy }}</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<th>Body</th>'+
+            {% for message in document.messages %}
+                '<span>{{message.sender}}</span>'+
+                '<td>{{ message.body }}</td>'+
+            {% endfor %}
+        '</tr>'+
+        '<tr>'+
+            '<th>Createdat</th>'+
+            '<td>{{ document.createdAt|date('Y-m-d H:i:s') }}</td>'+
+        '</tr>'+
+        '<tr>'+
+            '<th>Metadata</th>'+
+            {% for metadata in document.metadata %}
+                '<td>{{ metadata.participant }}</td>'+
+            {% endfor %}
+        '</tr>'+
+    '</tbody>'+
+'</table>'+
+''

@@ -1,0 +1,37 @@
+<div class="home-ctnr">
+    <div class="home-ctnr-a">
+        <div class="home-ctnr-tp">
+            <div class="alert-ctnr">
+                <div class="alert-ctnr-a">
+                    {#
+                        {% block post_form %}
+                            {{ include('@OPPost/Mobile/form.html.twig') }}
+                        {% endblock post_form %}
+                    #}
+                </div>
+            </div>
+            <div class="post-form-ctnr">
+                <div class="post-form-a">
+                    {#
+                        {% block post_form %}
+                            {{ include('@OPPost/Mobile/form.html.twig') }}
+                        {% endblock post_form %}
+                    #}
+                </div>
+            </div>
+        </div>
+        <div class="home-ctnr-bd">
+            <div class="home-ctnr-bd-a">
+                <div class="regist-f-ctnr">
+                    <div class="regist-f-ctnr-a">
+                        {#
+                            {% block home %}
+                                {{ include('@OPSocial/Mobile/news.html.twig') }}
+                            {% endblock home %}
+                        #}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div>

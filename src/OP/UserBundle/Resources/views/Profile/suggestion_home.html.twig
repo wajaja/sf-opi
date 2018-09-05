@@ -1,0 +1,46 @@
+''+
+{% if users is null %}no suggest
+{% else  %}
+    '<ul class="less-sugg-ul">'+
+        '<span class="sugg-txt"> Suggestion </span>'+
+        {% for user in users %} 
+        '<li class="u-sugg-el" data-user-sugg="{{user.username}}" data-sugg-id="{{user.userId}}">'+
+            '<div class="u-sugg-l">'+
+                '<a class="pic-link-u-sugg" style="" href="{{ path("fos_user_profile_show", {'username':user.username})}}"><img class="pic-u-sugg" style="" src="{{user.pic_path}}" alt="" /></a>'+
+                '<span class="inf-u-sugg">'+
+                    '<a class="nm-link-u-sugg" style="" href="{{ path("fos_user_profile_show", {'username':user.username})}}"><span class="nm-u-sugg">{{user.firstname}} {{user.lastname}} </span></a>'+
+                    '<span class="inf-u-sugg-ct" data-sugg-invit="{{user.invitation.id}}" data-trgt="{{app.user.id}}">'+   
+                        {% if user.invitation.exist %}   
+                            {% if user.invitation.receiver_id == app.user.id %}
+                            '<span data-trgt="{{app.user.id}}" class="sugg-cfm-sp" data-sugg-invit="{{user.invitation.id}}">'+
+                                '<button  data-btn-invit="{{user.invitation.id}}" class="sugg-btn-cfm-fri">Confirme</button>'+
+                                '<button data-btn-invit="{{user.invitation.id}}" class="sugg-btn-cfm-flw">Follow</button>'+
+                            '</span>'+
+                            {% elseif user.invitation.sender_id == app.user.id %}
+                            '<span data-trgt="{{app.user.id}}" class="sugg-add-sp" data-sugg-invit="{{user.invitation.id}}">'+
+                                '<span class="u-sugg-scs-sp">Sending<i class="fa fa-check" style="color:green" aria-hidden="true"></i></span>'+
+                                '<a href="#" class="delete-invitation" data-invit-dlt="{{user.invitation.id}}">abord</a>'+
+                            '</span>'+
+                            {% else %}
+                            '<span data-trgt="{{app.user.id}}" class="sugg-add-sp">'+
+                                '<button data-sugg-usrid="{{user.userId}}" data-username="{{user.username}}" class="add-u-sugg">'+
+                                    'Add <i class="fa fa-user-plus"></i>'+
+                                '</button>'+
+                            '</span>'+
+                            {% endif %}   
+                        {% else %}
+                        '<span data-trgt="{{app.user.id}}" class="sugg-add-sp">'+
+                            '<button data-sugg-usrid="{{user.userId}}" data-username="{{user.username}}" class="add-u-sugg">'+
+                                'Add <i class="fa fa-user-plus"></i>'+
+                            '</button>'+
+                        '</span>'+
+                    '</span>'+
+                    {% endif %}                                
+                '</span>'+
+                '<a href="" class="h-sugg-remove"><i class="fa fa-times "></i></a>'+
+            '</div>'+
+        '</li>'+
+        {% endfor %}
+    '</ul>'+
+{% endif %}
+''

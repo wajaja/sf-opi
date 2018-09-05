@@ -1,0 +1,19 @@
+post_notification:
+    channel: notification:{post_id}
+    handler:
+        callback: op_post.post_notification
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        post_id:
+            pattern: '[a-z0-9]+'
+post_realtime:
+    channel: notification:post:{user_id}:{post_id}
+    handler:
+        callback: op_post.realtime_post
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        user_id:
+            pattern: '[a-z0-9]+'
+            wildcard: true
+        post_id:
+            pattern: '[a-z0-9]+'

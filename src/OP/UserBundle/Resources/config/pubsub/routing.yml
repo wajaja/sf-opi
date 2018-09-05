@@ -1,0 +1,9 @@
+addfreind_topic:
+    channel: addfreind/channel/{user_id}
+    handler:
+        callback: 'addfreind.topic' #related to the getName() of your topic
+    requirements:
+        # room:
+        #     pattern: "[a-z]+" #accept all valid regex, don't put delimiters !
+        user_id:
+            pattern: '[a-z0-9]+'

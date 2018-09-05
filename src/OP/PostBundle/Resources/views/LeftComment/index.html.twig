@@ -1,0 +1,51 @@
+<h1>LeftComment list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Content</th>
+            <th>Createdat</th>
+            <th>Updateat</th>
+            <th>Publishedat</th>
+            <th>Images</th>
+            <th>Author</th>
+            <th>Liker</th>
+            <th>Nbliker</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for document in documents %}
+        <tr>
+            <td><a href="{{ path('leftcomment_show', { 'id': document.id }) }}">{{ document.id }}</a></td>
+            <td>{{ document.content }}</td>
+            <td>{% if document.createdAt %}{{ document.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if document.updateAt %}{{ document.updateAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if document.publishedAt %}{{ document.publishedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ document.images }}</td>
+            <td>{{ document.author }}</td>
+            <td>{{ document.liker }}</td>
+            <td>{{ document.nbLiker }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('leftcomment_show', { 'id': document.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('leftcomment_edit', { 'id': document.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('leftcomment_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>

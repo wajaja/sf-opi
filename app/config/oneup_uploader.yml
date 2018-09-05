@@ -1,0 +1,165 @@
+#Cofiguration Reference
+oneup_uploader:
+    orphanage:
+        maxage:               86400
+        directory:            '%kernel.cache_dir%/uploader/orphanage'
+    twig:                 true
+    mappings:             # Required
+        # Prototype
+        gallerypost:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        # Prototype
+        gallerypostedit:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        # Prototype
+        galleryaddpost:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        # Prototype
+        galleryaddpostedit:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        # Prototype
+        galleryquestion:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        galleryimage:
+            frontend:             fineuploader
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        gallerymessage:
+            frontend:             fineuploader
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        gallerymsgdoc:
+            frontend:             fineuploader
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.media
+            route_prefix:         /api
+        galleryopidoc:
+            frontend: blueimp
+            max_size:             9223372036854775807
+            use_orphanage:        false
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.media
+            route_prefix:         /api
+        # Prototype
+        gallerycomment:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        galleryleft:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        galleryleftedit:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        galleryright:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        galleryrightedit:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        # Prototype
+        gallerycommentedit:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+         # Prototype
+        galleryundercomment:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api
+        # Prototype
+        galleryundercommentedit:
+            frontend:             fineuploader
+            # Set max_size to -1 for gracefully downgrade this number to the systems max upload size.
+            max_size:             9223372036854775807
+            use_orphanage:        true
+            enable_progress:      true
+            enable_cancelation:   true
+            namer:                op_media.namer.uniqid
+            route_prefix:         /api

@@ -1,0 +1,24 @@
+post:
+    type: rest
+    resource:  OP\PostBundle\Controller\Api\ApiPostController
+share:
+    type: rest
+    resource: OP\PostBundle\Controller\Api\ApiShareController
+like:
+    type: rest
+    resource: OP\PostBundle\Controller\Api\ApiLikeController
+comment:
+    type: rest
+    resource: OP\PostBundle\Controller\Api\ApiCommentController
+rate:
+    type: rest
+    resource: OP\PostBundle\Controller\Api\ApiRateController
+leftcomment:
+    type: rest
+    resource: OP\PostBundle\Controller\Api\ApiLeftController
+rightcomment:
+    type: rest
+    resource: OP\PostBundle\Controller\Api\ApiRightController
+undercomment:
+    type: rest
+    resource: OP\PostBundle\Controller\Api\ApiUnderCommentController

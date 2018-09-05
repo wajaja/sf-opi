@@ -1,0 +1,507 @@
+/*
+    Created on : Dec 17, 2015, 4:05:31 PM
+    Author     : Cedrick
+*/
+.comment-form-textarea{
+    overflow: hidden;
+    min-height: 25px;
+    outline:none;
+    width: 100%;
+    background: white;
+    display: block;
+    padding: 0 0 3px 0;
+    resize: none;
+    border-style: none;
+    font-size: 12px
+}
+.div-commentForm {
+    padding: 5px 8px;
+    min-height: 48px;
+    width: 100%;
+    background: #f2f3f3;
+    border-radius: 0px 0px 5px 5px;
+}
+/* Hide input type file*/
+.commentForm-camera input.cmt-file-selector{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.pst-lr-cmts-frm-b{
+    .op-descript{
+        font-style: italic;
+        border-top: 1px solid #dadfe7;
+        color: #55586c;
+        font-size: 14px;
+        letter-spacing: 0.3px;
+        line-height: 18px;
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        padding: 2px 15px 4px;
+    }
+}
+.formComment{
+    position: relative;
+    .react-fine-uploader-file-input-container{
+        display: inline-block;
+        position: relative;
+        opacity: .5;
+        width: 25px;
+        height: 25px;
+        margin-right: 6px !important;
+        background: transparent url(http://opinion.com/images/1976059-32.png) 50% 50% no-repeat;
+        background-size: cover;
+    }
+    .left-commentForm{
+        vertical-align: top;
+        display: inline-block;
+        width: 42px;
+        .cmt-frm-pr-pic{    
+            position: relative;
+            top: 2px;
+            width: 31px;
+            height: 31px;
+            display: block;
+            border-radius: 50%;
+        }
+    }
+    .emoji-dv {
+        vertical-align: top !important;
+        & > div{
+            display: block !important;
+            top: 2px !important;
+        }
+    }
+    .center-commentForm{
+        width: -webkit-calc(100% - 42px);
+        width: -moz-calc(100% - 42px);
+        width: -o-calc(100% - 42px);
+        width: calc(100% - 42px);
+        display:inline-block;
+        position: relative;
+        vertical-align: top;
+        .sCenter-commentForm{
+            padding-left: 2px;
+            .cmt-ctnr {
+                background: #fff;
+                min-height: 36px;
+                margin-bottom: 4px;
+                .upl-list-ul{
+                    display: block !important;
+                    padding:0 !important;
+                    .qq-upload-file{
+                        margin-bottom: 0 !important;
+                        .thumb-cmt-img-container{
+                            margin: 4px 4px 0 0;
+                        }
+                    }
+                }
+            }
+        }
+        .cmt-frm-btm-dv {
+            /*padding: 4px 0 0 0;*/
+            position: relative;
+            .divUploadComment{
+                top: 0 !important;
+                display: inline-block;
+            }
+            .divSubmitComment{
+                top: 3px !important;
+            }
+            &.in{
+                display:block;
+                -webkit-animation-name: slideInUp;
+                -moz-animation-name: slideInUp;
+                animation-name: slideInUp;
+                -webkit-animation-timing-function: ease-in;
+                -moz-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+                -webkit-animation-duration: 300ms;
+                -moz-animation-duration: 300ms;
+                animation-duration: 300ms;
+            }
+            &.out{
+                display:none;
+                -webkit-animation-name: slideInUp;
+                -moz-animation-name: slideInUp;
+                animation-name: slideInUp;
+                -webkit-animation-timing-function: ease-out;
+                -moz-animation-timing-function: ease-out;
+                animation-timing-function: ease-out;
+                -webkit-animation-duration: 300ms;
+                -moz-animation-duration: 300ms;
+                animation-duration: 300ms;
+            }
+        }
+        .comment-form-textarea{
+            font-size: 13px !important;
+        }
+    }
+    }
+    .pst-rght-frm-ctnr{
+
+    }
+    .pst-rght-frm-ctnr{
+        
+    }
+    
+
+.commentForm-camera{
+    position: relative;
+    overflow: hidden;
+}
+#comment_type_files{
+    display: none !important;
+}
+.divUploadComment{
+    position: relative;
+    display: inline;
+    top: 2px;
+}
+
+.divSubmitComment{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    .ctrl-dv {
+        position: relative;
+        display: inline-block;
+        margin-right: 5px;
+        font-size: 11px;
+        color: #8c9494;
+        top: 4px;
+        input {
+            margin: 0!important;
+        }
+        span {
+            position: relative;
+            display: inline-block;
+            top: -2px;
+        }
+    }
+    .sbm-dv {
+        display: inline-block;
+    }
+}
+
+.pictureInCommentForm{
+    float: right;
+    width: 50px;
+    display:inline-block;
+}
+.pst-cmt-frm-b{
+    .left-commentForm{
+        vertical-align: top;
+        display: inline-block;
+        width: 37px;
+    }
+    .center-commentForm{
+        width: -webkit-calc(100% - 37px);
+        width: -moz-calc(100% - 37px);
+        width: -o-calc(100% - 37px);
+        width: calc(100% - 37px);
+        display:inline-block;
+        position: relative;
+        vertical-align: top;
+        .sCenter-commentForm{
+            .cmt-ctnr {
+                border: 1px solid #d3d7d8;
+                background: #fff;
+                min-height: 34px;
+                border-radius: 2px;
+                padding: 4px 5px;
+                .upl-list-ul{
+                    padding:0 !important;
+                    display: block !important;
+                    .qq-upload-file{
+                        margin-bottom: 0 !important;
+                        .thumb-cmt-img-container{
+                            margin: 4px 4px 0 0;
+                        }
+                    }
+                }
+            } 
+        }
+    }
+}
+.right-commentForm{
+    float: right;
+    width: 4%;
+    background-color:#FFFFFE
+}
+
+.div-textareaComment{
+    position:relative;
+    width: 100%;
+    display:block
+}
+.visible-part{
+    width: 100%;
+}
+
+.profilePic-commentform{
+    position:relative;
+    width: 32px;
+    height: 32px;
+    display:block;
+    margin-right:5px;
+    border: 1px solid #D8CCB3;
+    margin:3px 0 0 8px;
+
+}
+
+.dynamic-partInCommentForm {
+    padding: 4px;
+    position: relative;
+    &.in{
+        display:block;
+        -webkit-animation-name: slideInUp;
+        -moz-animation-name: slideInUp;
+        animation-name: slideInUp;
+        -webkit-animation-timing-function: ease-in;
+        -moz-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+        -webkit-animation-duration: 300ms;
+        -moz-animation-duration: 300ms;
+        animation-duration: 300ms;
+    }
+    &.out{
+        display:none;
+        -webkit-animation-name: slideInUp;
+        -moz-animation-name: slideInUp;
+        animation-name: slideInUp;
+        -webkit-animation-timing-function: ease-out;
+        -moz-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+        -webkit-animation-duration: 300ms;
+        -moz-animation-duration: 300ms;
+        animation-duration: 300ms;
+    }
+}
+
+.com-img-li>input.cmt-file-selector{
+    display: none !important;
+}
+.com-img-li,
+.und-img-li{
+    display: inline-block;
+    max-width: 120px;
+    padding:4px;
+    position: relative;
+}
+.upl-list-ul{
+/*    padding: 2px 0 0 7px !important;*/
+    .qq-upload-file {
+        display: inline-block !important;
+        .react-fine-uploader-thumbnail{
+            &.thumb-cmt-img{
+                
+            }
+        }
+    }
+    .thumb-cmt-img-container {
+        width: 100px !important;
+        height: 100px !important;
+    }
+    .thumb-und-img-container {
+        margin: 5px 4px 0px 0 !important;
+        width: 85px !important;
+        height: 85px !important;
+    }
+}
+.und-dlt-thumb-btn{
+    width:23px;
+    height: 23px;
+}
+.com-dlt-thumb-btn,
+.und-dlt-thumb-btn{
+    border: none;
+    top: 0;
+    position: absolute;
+    border-radius: 50%;
+    color: #1f65e2;
+    font-weight: 800;
+    background: #c1caca;
+    right: 0;
+    outline:none;
+}
+.cmt-frm-btm-dv{
+    position:relative;
+}
+.imageContainer{
+    background: #f1f7f5;
+    border-top: 1px solid #eeeeee;
+    padding: 5px;
+}
+
+.submit-comment{
+    background: #337ab7;
+    font-weight: 600;
+    font-size: 12px;
+    position: relative;
+    padding: 3px 5px;
+    border: none;
+    color: white;
+    border-radius: 2px;
+}
+.load-com-img{
+    position: relative;
+    display: block;
+    height: 8px;
+    width: 24px;
+    background: transparent url('http://opinion.com/images/loading-question.gif') 50% 50% no-repeat;
+}
+.div-underForm{
+    padding: 3px 4px 3px 0px;
+    width: 100%;
+}
+.left-underForm{
+    display: none;
+    padding-right: 5px;
+    vertical-align: top;
+}
+.center-underForm{
+    display: inline-block;
+    width: 100%;
+    padding-right: 40px;
+    position: relative;
+}
+.cmt-frm-pr-pic-lk{
+    display: inline-block;
+    border-radius: 50%;
+    /*background-color: #fff;*/
+}
+.sCenter-underForm{
+    background: #fff;
+}
+.under-form-textarea{
+    overflow: hidden;
+    outline: none;
+    width: 100%;
+    background: white;
+    display: block;
+    border-style: none;
+    min-height: 18px;
+    font-size: 12px;
+}
+.und-cmt-frm-pr-pic {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    display: block;
+}
+form.form-und-cmt{
+    border: 1px solid #e0e3e8;
+    border-radius: 4px;
+    background: #fff;
+    padding: 4px;
+}
+.und-cmt-rght-mr{
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+    top: -3px;
+    .react-fine-uploader-file-input-container{
+        display: inline-block;
+        position: relative;
+        opacity: .5;
+        width: 23px;
+        margin-right: 5px !important;
+        height: 23px;
+        background: transparent url(http://opinion.com/images/1976059-32.png) 50% 50% no-repeat;
+        background-size: cover;
+    }
+    .und-cmt-rght-mr-ctnr{
+        display: inline-block;
+        position: relative;
+        right: 0;
+        bottom: 0;
+        .upl-btn {
+            
+        }
+        .divUploadComment{
+            display: inline-block;
+            right: 17px;
+            top: 3px;
+        }
+        .emoji-dv {
+            display: inline-block;
+            vertical-align: top;
+            position: absolute;
+            bottom: 1px;
+            right: 0;
+            & > div{
+                top: 0 !important;
+            }
+            .draftJsEmojiPlugin__emojiSelectButton__3sPol,
+            .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu{
+                background: transparent url(http://opinion.com/images/2713595-64-black.png) 50% 50% no-repeat;
+                background-size: cover;
+                opacity: .6;
+                width: 21px;
+                height: 21px;
+                border: none;
+                -webkit-appearance: none;
+                top: 3px;
+                position: relative;
+            }
+            .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
+                bottom: 33px !important;
+            }
+            .arraw {
+                border-bottom-color: #f1f5f9;
+            }
+            .emoji-dialog {
+                border: 1px solid !important;
+                border-color: #f2f4f7 #d5d7da #dfe4e6 #edf1f5 !important;
+            }
+        }
+    }
+}
+
+.smile-ic{
+    font-size: 20px;
+}
+.underForm-camera{
+    position: relative;
+    overflow: hidden;
+}
+input.uploadComment{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    cursor: pointer;
+    opacity: 0;
+}
+.dv-sbmt-und-cmt{
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+.linkUploadComment{
+    color: #969c9c;
+}
+
+#gl_reply_frm_ctnr{
+    display: none;
+}
+.gl-reply-frm-ctnr{
+    display: none;
+}
+.und-like-ctnr{
+    padding-right: 5px;
+}
+.vis-part{
+    position: relative;
+    width:100%;
+}

@@ -1,0 +1,188 @@
+.hm-container.invitation{
+    .home-center-div{
+        background: #ffffff;
+        width: 570px;
+        .hm-frst-blk{
+            .hm-frst-blk-tp, .hm-frst-blk-btm{
+                margin-bottom: 13px;
+                background: #e7ecef;
+                padding: 5px;
+                border: 1px solid;
+                border-color: #d4d7d8;
+                border-radius: 3px;
+            }
+        }
+    }
+    #hm_main_blk{
+        margin-top: 0px !important;
+    }
+
+    .u-invit-el{
+        margin-bottom: 15px;
+        letter-spacing: .6px;
+        line-height: 19px;
+        .u-invit-lft, .u-invit-rght{
+            display: inline-block;
+            vertical-align: top;
+        }
+        .pic-dv-u-invit{
+            img{
+                width: 80px;
+                height: 80px !important;
+                border-radius: 50% !important;
+                /*border: 1px solid #333842;*/
+            }
+        }
+        .u-invit-lft{
+            margin-right: 10px;
+        }
+        .nm-link-u-invit{
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e588a;
+        }
+        .mutuals-users{
+            font-size: 12px;
+            color: #7d8189;
+        }
+        .req-invit-btn-ct{
+            position: relative;
+            margin-top: 10px;
+            .lft, .rght{
+                display: inline-block;
+                vertical-align: top;
+            }
+            .lft{
+                margin-right: 50px;
+            }
+            button{
+                border: 1px solid #c6d2e5;
+                padding: 4px 7px;
+                border-radius: 2px;
+                font-size: 12px;
+                letter-spacing: .6px;
+                text-transform: capitalize;
+                color: #219def;
+                outline: none;
+            }
+        }
+    }
+    .u-invit-el-a{
+        padding: 4px 0;
+    }
+
+    .u-sugg-el{
+        letter-spacing: .5px;
+        background: none!important;
+        .u-sugg-lft{
+            margin-right: 8px;
+            img{
+                width: 80px;
+                height: 80px;
+            } 
+            .nm-link-u-sugg{
+                color: #1e588a;
+            }
+        }
+        .u-sugg-rght{
+            .intro-dv-u-sugg{
+                font-size: 11px;
+                color: #7b7e81;
+            }
+        }
+    }
+    .req-sugg-btn-ct{
+        button{
+            background: #fff !important;
+        }
+    }
+}
+
+.invit-sdr-pic{
+    width: 50px;
+    height: 50px;
+    border: 1px solid #dcdcdc;
+    display: block;
+}
+.invit-sdr-lk-nm, .invit-sdr-lk-pic{
+    display: inline-block;
+    vertical-align: text-top;
+}
+.invit-sdr-lk-nm{
+    margin-left: 5px;
+    font-size: 14px;
+    vertical-align: top;
+    position: relative;
+    font-family: inherit;
+    font-weight: 600;
+    text-transform: capitalize;
+    top: -3px;
+}
+.invit-dv{
+    position: relative;
+    padding: 2px;
+    cursor:pointer;
+    font-size: 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-bottom: 1px solid #eae7e7;
+    height: 65px;
+}
+.invit-dv::hover{
+    background: #eaeaea;
+    color:red;
+}
+.invit-r-c{
+    display: inline-block;
+    position: relative;
+    float: right;
+    top: 2px;
+}
+.invit-r-c-ct{
+    /*position: relative;*/
+}
+.invit-l-i{
+    display: inline-block;
+    position: relative;
+    top: 3px;
+}
+.invit-lk-dlt-iv, .invit-lk-msk-iv{
+    display: inline-block;
+    text-align: right;
+    position: absolute;
+    font-weight: 600;
+    right: 5px;
+}
+ .invit-cfm-sp{
+    display: block;
+    text-align: right;
+    margin-top: 14px;
+ }
+.invit-btn-cfm-fri{
+    background: #3ab8dc;
+    border: none;
+    border-radius: 2px;
+    color: #fdfbfb;
+    font-size: 15px;
+    font-family: sans-serif;
+    margin: 3px;
+}
+.invit-btn-cfm-flw{
+    background: #04d992;
+    border: none;
+    border-radius: 2px;
+    color: #fdfbfb;
+    font-size: 15px;
+    font-family: sans-serif;
+    margin: 2px;
+}
+.note-hover{
+    background-color: #F1F7E8;
+}
+.load-nv-ivt-act{
+    top: -3px;
+    right: 0;
+}
+.nv-invit-scss{
+    font-size: 15px;
+}

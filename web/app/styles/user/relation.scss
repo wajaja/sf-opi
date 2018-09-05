@@ -1,0 +1,163 @@
+.pnl-relat-ctnr {
+    position: absolute;
+    display: inline-block;
+    top: 10px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    .pnl-relat-ctnr-a{
+        position: relative;
+    }
+
+    .db-cfmd-ln{
+        position: relative !important;
+        border-top: 1px solid #e3e5e7 !important;
+    }
+
+    .db-cfmd-ign-lk{
+        position: relative;
+        top: 3px;
+        left: 688px;
+    }
+
+    .pnl-relat-ctnr-b{
+        background: #ffffff;
+        border: 1px solid #c9d0da;
+    }
+    .db-cfmd-tp{
+        border-bottom: 1px solid #e2e4e7;
+    }
+    .pnl-relat-bdy {
+        position: relative;
+        .pnl-relat-bdy-a{
+            padding: 5px 0;
+        }
+        .u-sugg-el{
+            display: inline-block;
+            width: 368px;
+            padding: 8px 6px;
+            margin-left: 20px;
+            height: 116px;
+            /*border-radius: 3px;*/
+            background: #ffffff;
+            /*border: 1px solid #edeef1;*/
+            position: relative;
+            margin-bottom: 18px;
+            .intro-dv-u-sugg {
+                min-height: 8px;
+                font-size: 12px;
+                color: #848696;
+                letter-spacing: .6px;
+                .intro-dv{
+                    min-height: 5px;
+                }
+            }
+            &:hover{
+                .rmv-sugg{
+                    display: block;
+                }
+            }
+            .pic-u-sugg {
+                display: inline-block;
+                /*border: 1px solid #e7ecf7;*/
+                a {
+                    display: block;
+                }
+            }
+            .nm-link-u-sugg{
+                color: #12395a;
+                font-size: 15px;
+                font-weight: 600;
+                display: inline-block;
+                letter-spacing: 0.8px;
+                font-variant: inherit;
+                font-family: Helvetica, Arial sans-serif;
+                text-transform: capitalize;
+            }
+            .u-sugg-lft{
+                display: inline-block;
+                vertical-align: top;
+                width: 100px;
+                height: 100%;
+                margin-right: 5px;
+            }
+            .u-sugg-rght{
+                display: inline-block;
+                vertical-align: top;
+                position: relative;
+                width: 248px;
+                height: 100px;
+                top: -5px;
+                .nm-dv-u-sugg{
+                    font-size: 14px;
+                    font-weight: 600;
+                    letter-spacing: .5px;
+                    text-transform: capitalize;
+                    color: #111;
+                    a {
+                        color: #696363;
+                    }
+                }
+            }
+            .pic-dv-u-sugg{
+                margin-right: 3px;
+            }
+            .inf-u-sugg-ct{
+                display: inline-block;
+                .add-u-sugg{
+                    cursor: pointer;
+                }
+                .btn{
+                    padding: 1px 5px;
+                }
+            }
+        }
+    }
+}
+
+.req-sugg-btn-ct{
+    position: relative;
+    top: 3px;
+    .lft {
+        display: inline-block;
+        position: relative;
+        margin-right: 10px
+    }
+    .rght {
+        display: inline-block;
+        position: relative;
+    }
+
+    button{
+        border: 1px solid #c6d2e5 !important;
+        padding: 4px 7px !important;
+        border-radius: 2px;
+        font-size: 13px;
+        text-transform: capitalize;
+        color: #219def !important;
+        outline: none;
+        font-weight: 500 !important;
+    }
+    .fri-b-o-ctnr,
+    .fol-b-o-ctnr{
+        position: absolute;
+        bottom: 32px;
+        width: 170px;
+        height: 73px;
+        background: #e6eaf1;
+        border: 1px solid #c6d2e5;
+        border-radius: 2px;
+        z-index: 10;
+        left: 0;
+        text-align: center;
+    }
+
+    .fri-b-o-ctnr-a{
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+    }
+}

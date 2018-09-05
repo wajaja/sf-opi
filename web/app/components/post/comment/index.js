@@ -1,0 +1,5 @@
+export Photos 				from './Photos'
+export Comment 				from './Comment'
+export Comments 			from './Comments'
+export CommentForm 			from './CommentForm'
+export EditCommentForm 		from './EditCommentForm'

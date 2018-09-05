@@ -1,0 +1,113 @@
+{
+    "name": "symfony/framework-standard-edition",
+    "license": "MIT",
+    "type": "project",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-4": { "": "src/" },
+        "files": [ "app/AppKernel.php" ]
+    },
+    "autoload-dev": {
+        "psr-4": { "Tests\\": "tests/" }
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "symfony/symfony": "3.4",
+        "symfony/yaml":"v4.0.0",
+        "symfony/translation":"v4.0.0",
+        "doctrine/orm": "^2.6.2",
+        "doctrine/doctrine-bundle": "dev-master", 
+        "doctrine/doctrine-cache-bundle": "dev-master",
+        "symfony/swiftmailer-bundle": "v3.2.3",
+        "alcaeus/mongo-php-adapter": "1.1.5",
+        "symfony/monolog-bundle": "v3.3.0",
+        "sensio/distribution-bundle": "^5.0",
+        "sensio/framework-extra-bundle": "v5.2.0",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "React/zmq": "^0.4.0",
+        "beberlei/DoctrineExtensions": "v1.1.4",
+        "cboden/ratchet": "^0.4.1",
+        "doctrine/mongodb": "^1.4",
+        "doctrine/mongodb-odm": "1.1.6",
+        "doctrine/mongodb-odm-bundle": "3.4.4",
+        "doctrine/annotations": "1.4.*",
+        "friendsofsymfony/elastica-bundle": "v5.*",
+        "friendsofsymfony/jsrouting-bundle": "2.2.0",
+        "friendsofsymfony/rest-bundle": "2.4.0",
+        "friendsofsymfony/user-bundle": "v2.1.2",
+        "gesdinet/jwt-refresh-token-bundle": "^0.4.0",
+        "get-stream/stream": "^2.2",
+        "gos/web-socket-bundle": "1.9.0-rc1",
+        "guzzlehttp/guzzle": "^6.3",
+        "ismaambrosi/generator-bundle": "^2.4",
+        "jms/serializer-bundle": "2.4.2",
+        "knplabs/gaufrette": "0.1.*",
+        "knplabs/knp-gaufrette-bundle": "v0.5.3",
+        "leaseweb/memcache-bundle": "*",
+        "lexik/jwt-authentication-bundle": "^2.5.4",
+        "liip/imagine-bundle": "2.0.0",
+        "nc/faye-client": "~1.0",
+        "nelmio/api-doc-bundle": "v3.2.1",
+        "nelmio/cors-bundle": "2.1.0",
+        "nesbot/carbon": "dev-master",
+        "oneup/uploader-bundle": "2.0.7",
+        "oyejorge/less.php": "v1.7.0.5",
+        "pimple/pimple": "~3.0",
+        "predis/predis": "1.*",
+        "predis/predis-async": "dev-master",
+        "rase/socket.io-emitter": "^0.7.0",
+        "react/react": "0.5.x-dev",
+        "silex/silex": "@dev",
+        "snc/redis-bundle": "2.1.6",
+        "stof/doctrine-extensions-bundle": "~1.1",
+        "symfony/polyfill-apcu": "^1.0",
+        "twig/twig": "^1.0",
+        "voryx/thruway": "~0.5",
+        "react/socket": "^0.8.8",
+        "thruway/pawl-transport": "0.5.0",
+        "voryx/thruway-bundle": "dev-master",
+        "bjeavons/zxcvbn-php": "^0.3",
+        "limenius/react-bundle": "v2.1.0",
+        "firebase/php-jwt": "4.0",
+        "kreait/firebase-php": "^4.2",
+        "emojione/emojione": "^3.1",
+        "white-october/pagerfanta-bundle": "v1.2.1",
+        "egeloen/google-map": "^2.0"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^2.7"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ]
+    },
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
+        "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        },
+        "branch-alias": {
+            "dev-master": "3.0-dev"
+        }
+    }
+}

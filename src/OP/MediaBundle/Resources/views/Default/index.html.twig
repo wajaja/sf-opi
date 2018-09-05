@@ -1,0 +1,63 @@
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    
+    <body>
+ 
+        {{ form_start(form, {'attr': {'class': 'form'}}) }}
+            {{ form_widget(form) }}
+            <input type="submit" />
+        {{ form_end(form) }}
+	
+	<br />
+	
+	<div class="client">
+	</div>
+	
+	<br />
+ 
+	<div class="server">
+	</div>
+ 
+        {% block javascripts %}
+            <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+            <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+            <script>
+                $(document).ready(function() {
+    
+                    // Getting socket
+                    var socket = io('http://127.0.0.1:8081');
+ 
+                    // Listening on notification from server
+                    socket.on('notification', function (data) {
+                        $('.server').append(data);
+                    });
+ 
+                    // Listener on form submit event
+                    $(document).on('submit', '.form', function(e) {
+                        e.preventDefault();
+ 
+                        $.ajax({
+                            type: 'POST',
+                            url: '/',
+                            data: $(this).serialize(),
+                            success : function(response){
+                                $('.client').append('A message has been sent to server from this client!<br />');
+                            },
+                            error : function(response){
+                                console.log('Something went wrong.');
+                            },
+                            cache: false
+                        });
+ 
+                        return false;
+                    });
+ 
+                });
+            </script>
+        {% endblock %}
+    </body>
+ 
+</html>

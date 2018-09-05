@@ -1,0 +1,40 @@
+.searchDiv{
+	display: block;
+	min-height: 60px;
+	position: absolute;
+	top: 49px;
+	width: 450px;
+	border-radius: 5px;
+	max-height: 500px;
+	background-color: #fff;
+	border: 1px solid #dcdcdc;
+}
+/*ul{
+    list-style: none;
+    display: inline-block;
+    width: 420px;
+    text-align: left;
+}
+
+ul li{
+    display: block;
+    padding: 15px 20px;
+    background-color: #F8F8F8;
+    color: #7B8585;
+    margin-bottom: 3px;
+    position: relative;
+
+    transition: 0.3s;
+}
+
+ul li a{
+    position: absolute;
+    left: 160px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #969d9d;
+}
+
+ul li:hover{
+    background-color:#d8f2f1;
+}*/

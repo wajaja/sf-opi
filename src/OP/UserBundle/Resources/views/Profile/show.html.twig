@@ -1,0 +1,102 @@
+{% extends "OPUserBundle::layoutUser.html.twig" %}
+
+    {% block title %} {{showUser.firstname}} {% endblock %}
+        {% block stylesheets %} {{ parent() }} {% endblock %}
+            {% block socialLeft %}
+                    <div class ="" style="">
+                        <div id="_1" class ="userInfo" style=""></div>
+                    </div>
+                    <div class ="" style="margin-top: 10px;">
+                        <div id="home-right-div" class="home-right-div col-xs-4 col-sm-4 col-md-4">
+                            <div id="sticky-online" class="sticky-online"></div>                            
+                            <div id="_2" class="online_2"></div>
+                        </div>
+                        <div id="home-center-div" class="home-center-div central-border col-xs-10 col-sm-8 col-md-8">
+                            <div class="row wide-gutter">
+                                <div id="op-center-authenticated" class="op-center-authenticated">
+                                    <div id="sticky-menu" class="sticky-menu"></div>
+                                    <div id="_3" class="menu_3"></div>
+                                    <div id="_4" class="form_4"></div>
+                                    <div id="_5" class="news_5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            {% endblock %}
+
+            {% block socialRight %}
+                {{ parent() }}
+            {% endblock %}
+
+
+            {% block javascipt %}
+                {{parent()}}
+            {% endblock %}
+
+                {% block documentReady %}
+                    {{ parent() }}
+                    $('#microphone-icon-form').animatedModal({
+                        modalTarget:'audioAnimatedModal',
+                        position:'fixed',
+                        width:'100%',
+                        height:'100%',
+                        top:'0px',
+                        left:'0px',
+                        zIndexIn: '9999',
+                        zIndexOut: '-9999',
+                        color: '#39BEB9',
+                        opacityIn:'1',
+                        opacityOut:'0',
+                        animatedIn:'zoomIn',
+                        animatedOut:'zoomOut',
+                        animationDuration:'.6s',
+                        overflow:'auto',
+                        // Callbacks
+                        beforeOpen: function() {
+                            console.log("The animation was called");
+                        },
+                        afterOpen: function() {
+                            console.log("The animation is completed");
+                        },
+                        beforeClose: function() {
+                            console.log("The animation was called");
+                        },
+                        afterClose: function() {
+                            console.log("The animation is completed");
+                        }
+                    });
+
+                    $('#camera-icon-form').animatedModal({
+                        modalTarget:'videoAnimatedModal',
+                        position:'fixed',
+                        width:'100%',
+                        height:'100%',
+                        top:'0px',
+                        left:'0px',
+                        zIndexIn: '9999',
+                        zIndexOut: '-9999',
+                        color: '#39BEB9',
+                        opacityIn:'1',
+                        opacityOut:'0',
+                        animatedIn:'zoomIn',
+                        animatedOut:'zoomOut',
+                        animationDuration:'.6s',
+                        overflow:'auto',
+                        // Callbacks
+                        beforeOpen: function() {
+                            console.log("The animation was called");
+                        },
+                        afterOpen: function() {
+                            console.log("The animation is completed");
+                        },
+                        beforeClose: function() {
+                            console.log("The animation was called");
+                        },
+                        afterClose: function() {
+                            console.log("The animation is completed");
+                        }
+                    });
+                {% endblock documentReady %}
+                {% block modal %}
+                    {{parent () }}
+                {% endblock %}

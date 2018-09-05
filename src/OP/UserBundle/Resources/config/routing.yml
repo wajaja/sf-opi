@@ -1,0 +1,27 @@
+op_user_setting:
+    path:     /settings/
+    defaults: { _controller: OPUserBundle:Settings:index }
+op_user_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: OPUserBundle:Default:index }
+op_user_show:
+    path:     /account
+    defaults: { _controller: OPUserBundle:Settings:show }
+op_user_settings_name:
+    path:     /name
+    defaults: { _controller: OPUserBundle:Settings:name }
+op_user_setting_profilepic:
+    path:     /profilepic
+    defaults: { _controller: OPUserBundle:Settings:profilepic }
+op_user_settings_cover:
+    path:     /converpic
+    defaults: { _controller: OPUserBundle:Settings:coverpic }
+op_user_settings_username:
+    path:     /username
+    defaults: { _controller: OPUserBundle:Settings:username }
+op_user_settings_email:
+    path:     /email
+    defaults: { _controller: OPUserBundle:Settings:email }
+op_user_search:
+    path:     /search/{name}
+    defaults: { _controller: OPUserBundle:Search:loadUsers }

@@ -1,0 +1,8 @@
+online_user_notification:
+    channel: notification:users:{user_id}
+    handler:
+        callback: op_user.online_notification
+        args: [ 'redis', 'websocket' ]
+    requirements:
+        user_id:
+            pattern: '[a-z0-9]+'

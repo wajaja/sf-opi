@@ -1,0 +1,39 @@
+.fr-sugg-dv, .pbc-sugg-dv{
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+}
+.fr-sugg-ctent, .pbc-sugg-ctent{
+	border: 1px solid #dcdcdc;
+    width: 100%;
+    height: 50px;
+    border-radius: 3px;
+    padding-left: 3px;
+    font-size: 13px;
+    padding-right: 3px;
+	margin-bottom: 3px;
+}
+.fr-sugg-sp-usr, .pbc-sugg-sp-usr{
+    font-weight: 600;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+.pop-sugg-ctry{
+    background: rgba(248, 248, 248, 0.36);
+    height: 150px;
+    position: relative;
+    overflow: hidden
+}
+.q-stor-gph-dv-mth{
+    height: 50px;
+    margin-top: 2px;
+}
+.q-stor-gph-lk{
+    width: 8px;
+    height: 8px;
+    border: 1px solid #DDD;
+    display: inline-block;
+    position: relative;
+    margin: 1px;
+    float: left;
+}

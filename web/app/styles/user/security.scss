@@ -1,0 +1,184 @@
+.nav-sign-in-d{
+	display: inline-block;
+	position: relative;
+    left: 20%;
+}
+.nav-sign-in-ip-d{
+	display: inline-block;
+    margin: 0 8px 0 0;
+}
+.nav-sign-in-ip-d::last-child {
+    display: inline-block;
+    margin: 0;
+}
+.nav-inp-control{
+    padding: 4px 5px;
+    font-size: 13px;
+    letter-spacing: .3px;
+    width: 170px;
+    line-height: 1.42857143;
+    height: 28px;
+    color: #1d1919;
+    background-color: #fff;
+    background-image: none;
+    border: none;
+    border-radius: 2px;
+}
+.nav-sign-in-sbm-ctnr{
+    display: inline-block;
+    vertical-align: top;
+    float: right;
+}
+.nav-sign-in-r{
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    right: 0px;
+    font-weight: 500;
+    font-size: 12px;
+    color: #4a5e76;
+}
+.nav-sign-in-ip-d #remember_me{
+    position: relative;
+    margin-right: 3px;
+    top: 2px;
+}
+.nav-fS-in{
+    position: relative;
+    margin-top: 10px;
+}
+.f-lgin-inpts{
+    display: inline-block;
+}
+.f-lgin-btm{
+    position: relative;
+    top: 3px;
+    input[type=checkbox] {
+        display: inline-block;
+    }
+}
+.f-lgin-btm-l{
+    display: inline-block;
+}
+.f-lgin-btm-r{
+    display: inline-block;
+    position: absolute;
+    right: 8px;
+    font-size: 12px;
+}
+.out-lock{
+    top: 32px;
+    position: relative;
+}
+div.registration-birthdate{
+    display: inline-block;
+    margin: 5px 10px 5px 10px;
+}
+label.form-registration-gender, label.registration-birthdate{
+    color: #8B8484;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: inherit;
+}
+.form-registration-gender-lab{
+    display: none;
+}
+#_submit_login{
+    margin-left: 10px;
+    color: #fff;
+    border: 1px solid #1c98ea;
+    background: #1c98ea;
+    font-weight: 600;
+    padding: 2px 5px 4px;
+    border-radius: 2px
+}
+
+.sect-frm-ctnr{
+    background-color: #fff;
+    padding: 10px;
+    position: absolute;
+    left: 37%;
+    width: 26%;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+}
+.sect-frm-ctnr > form {
+    position: relative;
+}
+.frm-lgn-dv-ctnr{
+    width: 88%;
+    position: relative;
+    left: 6%;
+    font-family: sans-serif;
+}
+.frm-lgn-dv-ctnr #username,
+.frm-lgn-dv-ctnr #password
+{
+    display: block;
+    width: 100%;
+    height: 35px;
+    padding: 4px 6px;
+    font-size: 14px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #bccace;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    /*-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;*/
+}
+
+.lgn-dv-g-rgstr-ctnr{
+    display: inline-block;
+    position: absolute;
+    left: 130px;
+    font-size: 16px;
+    font-weight: 600;
+    top: 5px;
+}
+.lgn-dv-sbm-btn-ctnr{
+    display: inline-block;
+    position: absolute;
+    left: 1px;
+}
+.lgn-dv-sbm-btn-ctnr > input {
+    display: inline-block;
+    color: #fff;
+    letter-spacing: .5px;
+    border: 1px solid #0f6faf;
+    background: #1078be;
+    padding: 4px 4px;
+    border-radius: 1px;
+    min-width: 70px;
+    font-size: 13px;
+}
+.frm-lgn-dv-ctnr-btm{
+    position: relative;
+    height: 40px;
+}
+.frm-lgn-tag{
+    width: 250px;
+    .f-lgin-btm-r{
+        display: inline-block;
+        position: absolute;
+        top: 5px;
+        right: 1px;
+        font-size: 13px;
+    }
+}
+.frm-msg-ttl{
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #32698e;
+}
+.sbmit-login {
+    height: 28px;
+    padding: 0;
+    position: relative;
+    min-width: 58px;
+    border-radius: 2px;
+    font-size: 13px;
+}

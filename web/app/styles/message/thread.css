@@ -1,0 +1,212 @@
+/*
+    Created on : 7 juil. 2016, 12:42:30
+    Author     : CEDRICK
+*/
+.thr-hd{
+
+}
+.ibx-pg-nw-tp{
+    height: 30px;
+    border-bottom: 1px solid #e3dede;
+    position: relative;
+    border-left: 1px solid #e3dede;
+    border-top: 1px solid #e3dede;
+    border-top-left-radius: 3px;
+}
+.ibx-thr-select-out{
+    background: #eaf3f0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    border-top-left-radius: 3px;
+}
+.ibx-thr-select-hd{
+    position: relative;
+    color: #337ab7;
+    font-size: 13px;
+    z-index: 6;
+    top: 3px;
+    left: 10px;
+    vertical-align: middle;
+    font-family: sans-serif;
+    font-weight: 600;
+}
+.ibx-pg-nw-msg-bd{
+    border: 1px solid #bbb;
+    background: #fff;
+    border-radius: 3px;
+    position: relative;
+    font-size: 13px;
+}
+.nw-thr-ttl-b{
+    width: 100%;
+    margin-bottom: 3px;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    padding: 1px;
+    background: #fff;
+}
+.is-closed{
+    display: none;
+}
+.nw-msg-subj{
+    display: inline-block;
+    width: 100%;
+    border: none;
+    height: 27px;
+    outline: none;
+    padding-left: 3px;
+}
+.ibx-pg-nw-msg-ct{
+    padding: 10px;
+}
+.ibx-pg-nw-bd{
+    position: relative;
+    height: 270px;
+    padding-right: 5px;
+    padding-left: 5px;
+    border-left: 1px solid #e3dede;
+    border-bottom-left-radius: 4px;
+    border-bottom: 1px solid #e3dede;
+    overflow-y: auto;
+    background: #f9fbf8;
+}
+.nw-thr-bd-a{
+    padding: 2px;
+}
+.thr-rght-opt{
+    z-index: 3;
+    position: relative;
+    right: 10px;
+    float: right;
+    display: inline-block;
+    font-size: 14px;
+}
+.nw-thr-foo {
+    position: relative;
+    height: 30px;
+    border-top: 1px solid #d7d3d3;
+    background: #e4e5e8;
+    border-radius: 0px 0px 3px 3px;
+}
+.msg-opt-plus-ct{
+    cursor: pointer;
+    font-size: 16px;
+    top: 4px;
+    color: #6e7ca6;
+}
+.msg-opt-plus{
+    display: inline-block;
+    text-align: -webkit-center;
+    text-align: center;
+    width: 80px;
+    padding: 1px;
+    height: 29px;
+    border-right: 1px solid #d7d3d3;
+}
+.msg-opt-plus:hover{
+    background: #cdf;
+}
+.recip-img{
+    width: 25px;
+    height: 25px;
+    position:relative;
+    bottom: 2px;
+    border-radius: 1px;
+    border:1px solid #e8e8e8;
+    margin-right:5px;
+}
+.link-doc-upload{
+    position: relative;
+    overflow: hidden;
+    margin: 5px 0 0 0px;
+}
+.doc-sp{
+    position: absolute;
+    display: block;
+    left: 160px;
+    z-index: 1;
+    bottom: 1px;
+}
+.in-doc-uplo{
+
+}
+.in-doc-upload{
+    position: absolute;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 30px;
+    font-size: 9px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.msg-container{
+    margin-top: 4px;
+    border-top: 1px solid #ddd;
+}
+/*scroll*/
+.nw-thr-bd-b-modal::-webkit-scrollbar,
+.qq-upload-list-modal::-webkit-scrollbar,
+.ibx-pg-nw-bd::-webkit-scrollbar,
+.ibx-pg-msgs-cont::-webkit-scrollbar
+{
+    border-radius:1px;
+    width: 8px;
+}
+.nw-thr-bd-b-modal::-webkit-scrollbar-button:horizontal:decrement:hover,
+.qq-upload-list-modal::-webkit-scrollbar-button:horizontal:decrement:hover,
+.ibx-pg-nw-bd::-webkit-scrollbar-button:horizontal:decrement:hover,
+.ibx-pg-msgs-cont::-webkit-scrollbar-button:horizontal:decrement:hover
+{
+   /* Select the down or left scroll button when it's being hovered by the mouse */
+}
+.nw-thr-bd-b-modal::-webkit-resizer,
+.qq-upload-list-modal::-webkit-resizer,
+.ibx-pg-nw-bd::-webkit-resizer,
+.ibx-pg-msgs-cont::-webkit-resizer
+{
+    display: none;
+}
+
+.nw-thr-bd-b-modal::-webkit-scrollbar-track,
+.qq-upload-list-modal::-webkit-scrollbar-track,
+.ibx-pg-nw-bd::-webkit-scrollbar-track,
+.ibx-pg-msgs-cont::-webkit-scrollbar-track
+{
+    -webkit-box-shadow:none;
+    border-radius: 0px;
+    background-color:#aaa;
+}
+
+.nw-thr-bd-b-modal::-webkit-scrollbar-thumb,
+.qq-upload-list-modal::-webkit-scrollbar-thumb,
+.ibx-pg-nw-bd::-webkit-scrollbar-thumb,
+.ibx-pg-msgs-cont::-webkit-scrollbar-thumb
+{
+    border-radius: 0px;
+    -webkit-box-shadow: inset 1px 1px 6px #333;
+    background-color:#666;
+}
+.pp-msg-modify, .pp-msg-delete
+{
+    display: block;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+    color: #4a4c4a;
+    font-family: sans-serif;
+}
+.qq-upload-list-modal{
+    margin: 0;
+    padding: 0px 0 0;
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+    clear: both;
+    box-shadow: none;
+}
+.ibx-thr-select-nm{
+    display: inline-block;
+}

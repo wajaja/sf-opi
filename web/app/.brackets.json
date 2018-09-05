@@ -1,0 +1,17 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/wamp/www/opinion/web/js/user/online.js",
+        "C:/wamp/www/opinion/web/js/6eb8fb0.js",
+        "C:/wamp/www/opinion/web/js/6eb8fb0_autobahn.min_1.js",
+        "C:/wamp/www/opinion/web/js/social/readMeetingAnimatedModal.js",
+        "C:/wamp/www/opinion/web/js/social/rateBar.js",
+        "C:/wamp/www/opinion/web/js/social/realtime-chat.js",
+        "C:/wamp/www/opinion/web/js/social/readRecordAnimatedModal.js",
+        "C:/wamp/www/opinion/web/js/social/stickyMenu.js",
+        "C:/wamp/www/opinion/web/js/user/addFreind.js",
+        "C:/wamp/www/opinion/web/js/user/cfmd-adress.js",
+        "C:/wamp/www/opinion/web/js/user/home-user-suggest.js",
+        "C:/wamp/www/opinion/web/js/social/stickyOnline.js",
+        "C:/wamp/www/opinion/web/js/fos_js_routes.js"
+    ]
+}

@@ -1,0 +1,109 @@
+'<div class="ibx-pg-msgs-bd" id="_ibx_pg_msgs_bd">'+
+    '<div class="ibx-pg-msgs-mn" id="_ibx_pg_msgs_mn">'+
+        '<div class="ibx-msgs-key-dv">'+
+            '<span class="ibx-msgs-key-ct">'+
+                '<input type="text" id="msg_key_sch" class="msg-key-sch" />'+
+                    '<span class="key-sch-area">'+
+                        '<i style="" class="fa fa-search sch-msg-key" aria-hidden="true"></i>'+
+                    '</span>'+
+            '</span>'+
+        '</div>'+
+        '<div class="ibx-msgs-tri-ct">'+
+            '<span class="ibx-msgs-tri ibx-msgs-div"><a href="#" id="msgs_divi_nw">last_message</a></span>'+
+            '<span class="ibx-msgs-tri ibx-msgs-div"><a href="#" id="msgs_divi_unread">Unread</a></span>'+
+            '<span class="ibx-msgs-tri ibx-msgs-div-ans"><a href="#" id="msgs_divi_answ">Answering</a></span>'+
+            '<span class="ibx-msgs-divi-act"><a href="#" id="msgs_divi_answ">actions <i class="fa fa-sort-desc" aria-hidden="true"></i></a></span>'+
+        '</div>'+
+    '</div>'+
+    '<div class="ibx-pg-msgs-cont">'+
+        {% if threads %}
+            {% for key, thread in threads %}
+                '<div class="thr-elem" data-thr-id="{{thread.id}}">'+
+                {% if user.id == thread.lastMessage.sender.id %}
+                    '<div tabindex="{{key}}" class="thr-b-part rd" data-url="{{ url('op_message_thread', {'threadId': thread.id}) }}" data-thr-id="{{thread.id}}">'+
+                        '<span class="thr-lst-msg-hd">'+
+                            '<span class="thr-lst-msg-sdr" >'+
+                                '<a class="thr-lst-msg-nm">{{thread.lastMessage.sender.firstname}} {{thread.lastMessage.sender.lastname}}</a>'+
+                            '</span>'+
+                            '<span class="thr-lst-msg-dte" >'+
+                                '<span class="op-dte dte-msg">{{thread.lastMessage.createdAt|date("m/d")}}</span>'+
+                                '<a href="#" data-toggle="modal" data-id="thr_deleter" title="" class="dlt-thr-fr-lst">'+
+                                    '<i class="fa fa-times" aria-hidden="true"></i>'+
+                                '</a>'+
+                            '</span>'+
+                        '</span>'+
+                        '<span class="thr-lst-msg-btm">'+
+                            '<span class="thr-lst-msg-bdy" >{{thread.lastMessage.body|length>90 ? thread.lastMessage.body|slice(0, 90)~'...':thread.lastMessage.body}}</span>'+
+                            '<span class="thr-lst-msg-opt">'+
+                                '<a href="#" class="mrk-is-rd">ow</a>'+
+                            '</span>'+
+                        '</span>'+
+                    '</div>'+
+                {% else %}
+                    {% if op_message_is_read(thread) %}
+                        '<div tabindex="{{key}}" class="thr-b-part rd" data-url="{{ url('op_message_thread', {'threadId': thread.id}) }}" data-thr-id="{{thread.id}}">'+
+                            '<span class="thr-lst-msg-hd">'+
+                                '<span class="thr-lst-msg-sdr" >'+
+                                    '<a class="thr-lst-msg-nm">{{thread.lastMessage.sender.firstname}} {{thread.lastMessage.sender.lastname}}</a>'+
+                                '</span>'+
+                                '<span class="thr-lst-msg-dte" >'+
+                                    '<span class="op-dte dte-msg">{{thread.lastMessage.createdAt|date("m/d")}}</span>'+
+                                    '<a href="#" data-toggle="modal" data-id="thr_deleter" title="" class="dlt-thr-fr-lst">'+
+                                        '<i class="fa fa-times" aria-hidden="true"></i>'+
+                                    '</a>'+
+                                '</span>'+
+                            '</span>'+
+                            '<span class="thr-lst-msg-btm">'+
+                                '<span class="thr-lst-msg-bdy" >{{thread.lastMessage.body|length>90 ? thread.lastMessage.body|slice(0, 90)~'...':thread.lastMessage.body}}</span>'+
+                                '<span class="thr-lst-msg-opt">'+
+                                    '<a href="#" class="mrk-is-rd">'+
+                                        '<i class="fa fa-square-o read-mark" aria-hidden="true"></i>'+
+                                    '</a>'+
+                                '</span>'+
+                            '</span>'+
+                        '</div>'+
+                    {% else %}
+                        '<div tabindex="{{key}}" class="thr-b-part unrd" href="#" data-url="{{ url('op_message_thread', {'threadId': thread.id}) }}" data-thr-id="{{thread.id}}">'+
+                            '<span class="thr-lst-msg-hd">'+
+                                '<span class="thr-lst-msg-sdr" >'+
+                                    '<a class="thr-lst-msg-nm">{{thread.lastMessage.sender.firstname}} {{thread.lastMessage.sender.lastname}}</a>'+
+                                '</span>'+
+                                '<span class="thr-lst-msg-dte" >'+
+                                    '<span class="op-dte dte-msg">{{thread.lastMessage.createdAt|date("m/d")}}</span>'+
+                                    '<a href="" class="dlt-thr-fr-lst" data-toggle="modal" data-id="thr_deleter" title="Add this item">'+
+                                        '<i class="fa fa-times" aria-hidden="true"></i>'+
+                                    '</a>'+
+                                '</span>'+
+                            '</span>'+
+                            '<span class="thr-lst-msg-btm">'+
+                                '<span class="thr-lst-msg-bdy" >{{thread.lastMessage.body|length>90 ? thread.lastMessage.body|slice(0, 90)~'...':thread.lastMessage.body}}</span>'+
+                                '<span class="thr-lst-msg-opt">'+
+                                    '<a href="#" class="mrk-is-rd">'+
+                                        '<i class="fa fa-square read-mark" aria-hidden="true"></i>'+
+                                    '</a>'+
+                                '</span>'+
+                            '</span>'+
+                        '</div>'+
+                    {% endif %}
+                {% endif %}
+                '</div>'+
+            {% endfor %}
+        {% else %}
+            '<div>'+
+                '<div colspan="6">'+
+                    'no messages'+
+                '</div>'+
+            '</div>'+
+        {% endif %}
+    '</div>'+
+'</div>'+
+'<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="thr_del_dialog">'+
+    '<div class="modal-dialog modal-sm dlt-modal-cont" role="document" data-thr-id="">'+
+        '<button type="button" class="msg-modal-inf abr-del-thr btn btn-default" data-thr-id="" data-dismiss="modal">Abord</button>'+
+        '<span class="confir-del-thr-sp">'+
+            '<button type="button" class="confir-del-thr msg-modal-inf btn btn-danger" data-thr-id="">Delete</button>'+
+            '<span class="modal-load-thr-sp"></span>'+
+        '</span>'+
+    '</div>'+
+'</div>'+
+''

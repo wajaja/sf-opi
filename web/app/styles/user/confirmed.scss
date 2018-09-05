@@ -1,0 +1,354 @@
+
+/*
+    Created on : Nov 23, 2015, 1:25:50 PM
+    Author     : Cedrick
+*/
+.cfmd-ctnr{
+    .container{
+        position: absolute;
+        display: inline-block;
+        top: 45px;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 620px;
+    }
+}
+.bd-cfmd-cont{
+    width: 100%;
+    display: inline-block;
+    height: 334px;
+    position: relative;
+    border: 1px solid #bec2c3;
+    border-radius: 4px;
+    background: #ffffff;
+    box-shadow: 0 0 1em #aeb1b7;
+    -webkit-box-shadow: 0 0 1em #aeb1b7;
+}
+.fileUploadProfile {
+    background-color: transparent;
+    position: relative;
+    margin-top: 5px;
+    left: -8px;
+    outline: none;
+    overflow: hidden;
+}
+.fileUploadProfile input.uploadProfile {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+}
+input.uploadProfile{
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+.thumb-imageCanvas{
+    width: 120px;
+    position:absolute;
+    left:-16%;
+    top:20%;
+}
+.defaultCanvas{
+    position:relative;
+}
+.defaultCanvas:before{
+    content:"\f007";
+    font-family: FontAwesome;
+    position: relative;
+    font-size: 18em;
+    color:white;
+}
+.confirmedForm{
+    background-color: rgb(212, 218, 220);
+    position: relative;
+    min-height: 240px;
+    border-radius: 50%;
+}
+.nameUploadProfile{
+    display:none;
+}
+.db-cfmd-dv{
+    position: relative;
+    height: 332px;
+}
+.db-cfmd-tp{
+    position: relative;
+    min-height: 35px;
+    background: #edf2fa;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    padding: 9px 12px;
+    border-bottom: 1px solid #cccfd1;
+
+    .tp-rght-ctnr{
+        position: absolute;
+        right: 0;
+        top: -2px;
+    }
+    .dfault-ico{
+        cursor: pointer;
+        font-size: 16px;
+    }
+}
+.db-cfmd-sp-ttl{
+    background-color: #fff;
+    position: relative;
+    left: 43%;
+    padding: 8px;
+    text-align: center;
+    display: inline;
+
+}
+.db-cfmd-dv-ttl:before{
+    border-top: 1px solid #dcdddd;
+    content: '';
+    margin: 0 auto;
+    position: absolute;
+    top:10px;
+    width: 100%;
+    z-index: -1;
+}
+.db-cfmd-dv-ttl{
+    font:15px sans-serif;
+    position: relative;
+    z-index: 1;
+    color: #aaa;
+}
+.wlc-nw-usr-dv{
+    font-size: 12px;
+    font-weight: 600;
+    position: relative;
+    .wlc-nw-usr-sp{
+        color: #181c83;
+    }
+}
+.wlc-nw-usr-sp{
+    }
+.db-cfmd-ign-dv{
+    position: relative;
+    background-color: blue;
+}
+.db-cfmd-mr-adr{
+    display: inline-block;
+    position: relative;
+    float: right;
+    width: 350px;
+    right: 15px;
+}
+.db-cfmd-fm{
+    width: 240px;
+    height: 240px;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 50%;
+    bottom: 46px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.db-cfmd-ln{
+    display: block;
+    position: absolute;
+    background: #edf2fa;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    width: 100%;
+    bottom: 0;
+    padding: 3px;
+    padding-bottom: 6px;
+    border-top: 1px solid #cccfd1;
+}
+.cropArea{
+    background: #E4E4E4;
+    overflow: hidden;
+    max-width: 400px;
+    max-height: 250px;
+}
+.vw-crop, .sv-t-svr{
+    border-radius: 2px;
+    font-size: 12px;
+    padding: 3px 8px;
+    background: transparent;
+    font-weight: 800;
+    color: darkslateblue;
+    border: 1px solid #D2D9D9;
+}
+.lst-crop{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.cfmd-ldg-upld{
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 65px;
+    height: 65px;
+    display: inline-block;
+    background: transparent url(http://opinion.com/images/ajaxLoading.gif) 50% 50% no-repeat;
+    
+}
+.cfrm-adr-fld{
+    height: 30px;
+    width: 310px;
+    border-radius: 3px;
+    border: 1px solid #dcd;
+    margin: 0px 8px 10px 10px;
+}
+.cfrm-adr-fld-lb{
+    margin-left: 10px;
+    color: grey;
+}
+.vw-crop-sp{
+    position: relative;
+    display: block;
+}
+.sd-adr{
+    color: #fff;
+    background-color: #2F8BC2;
+    border-color: #247FB5;
+    position: relative;
+    left: 251px;
+    font-size: 13px;
+    border-radius: 2px;
+    width: 70px;
+    top: 80px;
+}
+.crop-area .changed:before{
+    content: "\f007";
+    font-family: FontAwesome;
+    text-align: center;
+    font-size: 16em;
+    color: #d4dadc;
+    margin: 0;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+}
+.cfmd-btm-dv{
+    display:inline-block;
+    position: relative;
+    top: -7px;
+    z-index: 5;
+}
+.crop-area{
+    position: absolute;
+    margin: 0;
+    right: 0;
+    left: 0;
+}
+.crop-btn-ctnr{
+    margin-top: 10px;
+    display: inline-block;
+    position: relative;
+    .crop-result{
+        margin: 0 5px;
+        padding: 4px 15px 7px;
+        border: 1px solid #337ab7;
+    }
+    .rotate-btn{
+        margin: 0 5px;
+        padding: 4px 15px 7px;
+        border: 1px solid #ffffff;
+    }
+}
+.adr-area-p{
+    font-size: 12px;
+    text-transform: inherit;
+    font-family: sans-serif;
+    font-style: italic;
+    color: #899191;
+    font-variant: initial;
+}
+.db-cfmd-ign-lk{
+    display: inline-block;
+    position: relative;
+    left: 410px;
+    div {
+        display: inline-block;
+    }
+
+    button {
+        padding: 4px 6px;
+        text-align: center;
+        min-width: 70px;
+        border-radius: 2px;
+        font-size: 12px;
+        min-height: 27px;
+        font-weight: 600;
+        &.cfmd-ign{
+            color: #e12447;
+            border-color: #cccfd1;
+        }
+        &.cfrm_sv_pic{
+            border-color: #337ab7;
+        }
+    }
+}
+.db-cfmd-ign-lk > p,
+#cfrm_sv_pic {
+    display: inline-block;
+    margin: 0 0 0 15px;
+}
+#cfrm_sv_pic{
+    
+}
+
+
+.pnl-infos-ctnr{
+    .confirmedForm-ctnr{
+        position: relative;
+        height: 260px;
+        margin: 10px;
+        .confirmed-ctnr-a{
+            position: absolute;
+            height: 100%;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            align-content: center;
+        }
+    }
+    .adr-area,
+    .abt-area,
+    .ct-area{
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        width: 165px;
+        margin: 0 10px;
+
+        .adr-area-a,
+        .abt-area-a,
+        .ct-area-a{
+            position: absolute;
+            top: 80px;
+        }
+
+        input{
+            width: 165px;
+            border: 1px solid #abb4c3c4;
+            height: 27px;
+            border-radius: 3px;
+            font-size: 13px;
+            padding: 0 2px;
+            font-family: sans-serif;
+        }
+    }
+}

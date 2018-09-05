@@ -1,0 +1,7 @@
+'{{ form_start(clikeForm, {'attr':{'class':'formClike'}, 'method':'post', 'action':path('create_clike', { 'id': '57d069'}) }) }}'+
+'{{ form_errors(clikeForm) }}'+
+'<span class="clike-rate-nbr"></span>'+
+'{{ form_widget(clikeForm.rate, {'attr': {'class': 'cmt-rate-rge'} }) }}'+
+'{{ form_widget(clikeForm.commentValid, {'attr': {'class': 'hiddenClike'} }) }}'+
+'{{ form_rest(clikeForm) }}'+ 
+'{{ form_end(clikeForm) }}'+

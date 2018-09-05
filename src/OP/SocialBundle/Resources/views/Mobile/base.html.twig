@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="author" content="Opinion">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="description" content="{{description}}">
+        <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+        <link href="http://opinion.com/app/styles/animate.min.css" type="text/css" rel="stylesheet" />
+        <link href="http://opinion.com/builds/css/global.css" type="text/css" rel="stylesheet" />
+        <title>{% block title %} {{title}} {% endblock %}</title>
+    </head>
+    <body id="app" class="global_body">
+        <div id="root">
+                {% block navbar %}
+                    {{ include('@OPSocial/Mobile/navbar.html.twig') }}
+                {% endblock navbar %}
+            <div class="wel-bd-ctnr">
+                <div class="wel-bd-ctnr-a">
+                    <div class="regist-f-ctnr">
+                        <div class="regist-f-ctnr-a">
+                            {% block content %}
+                                {{ include('@OPSocial/Mobile/home.html.twig') }}
+                            {% endblock content %}
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    {% block footer %}
+                        {{ include('@OPSocial/Mobile/footer.html.twig') }}
+                    {% endblock footer %}
+                </div>
+            </div>
+        <div>
+    </body>
+</html>

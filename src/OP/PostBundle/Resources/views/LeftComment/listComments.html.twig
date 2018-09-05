@@ -1,0 +1,48 @@
+{% for comment in listComments %}
+<div class ="com-div-a">
+    <div class ="com-div-b">     
+        <div class ="com-div-left">   
+            <div class ="com-div-profile-a" >         
+                {% if comment.author.profilePic is null %}
+                {% else %}
+                  <a class ="com-profile-link-img">   
+                      <img class="com-profile-img" src="{{asset(comment.author.profilePic.webPath)}}"  id="user-profile" class =""  />   
+                  </a>   
+                {% endif %}
+            </div>            
+        </div> 
+        <div class ="com-div-right-a" >       
+            <div class ="com-head-a" >      
+                <div class ="com-head-name">   
+                    <a href="{{ path('fos_user_profile_show', {'username': comment.author.username})}}" class ="com-link-name" style="">           
+                        <span> {{comment.author.firstname}} {{comment.author.lastname}}<span>                                     
+                    </a> 
+                    <span class ="contentComment" style=""> {{comment.content}}</span>
+                </div>                              
+            </div>
+            <div class ="" >    
+                {% for image in comment.images %}
+                    {% if image is null%}                        
+                    {% else %}
+                     <img class="imageComment" src="{{asset(image.WebPath)}}"  id="" class ="" /> 
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class ="com-foo-left" >      
+                <span class ="com-nb-like-btn" >   
+                    <i class="fa fa-thumbs-o-up"></i>   
+                </span>                                       
+                <span class ="com-reply" style="" name="graphic">   
+                    <i class="fa fa-reply"></i>   
+                </span>  
+                <span class ="com-head-time" >   
+                    <span class="">   
+                    </span>   
+                    <span class="">                                                
+                    </span>   
+                </span> 
+            </div>     
+        </div>                      
+    </div>      
+</div>   
+{% endfor %}

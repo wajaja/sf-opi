@@ -1,0 +1,57 @@
+<h1>Notification</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ document.id }}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{{ document.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Isread</th>
+            <td>{{ document.isRead }}</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>{{ document.type }}</td>
+        </tr>
+        <tr>
+            <th>Url</th>
+            <td>{{ document.url }}</td>
+        </tr>
+        <tr>
+            <th>Content</th>
+            <td>{{ document.content }}</td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>{{ document.author }}</td>
+        </tr>
+        <tr>
+            <th>Participants</th>
+            <td>{{ document.participants }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('notification') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('notification_edit', { 'id': document.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('notification_delete', { 'id': document.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

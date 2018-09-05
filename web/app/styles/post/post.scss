@@ -1,0 +1,49 @@
+.hm-container.post{
+	display: block;
+	width: 100%;
+	position: relative;
+	.cter-dv{
+		width: 480px;
+		display: inline-block;
+		.center-bd{
+			display: block;
+			.center-bd-a{
+			    background: #fff;
+			    border: 1px solid;
+			    border-color: #bfc6d4;
+			    position: relative;
+			    border-radius: 5px;
+			}
+		}
+	}
+	.pst-aut-nm{
+		color: #0f5b9c;
+    	font-size: 14px;
+	}
+	.postContent{
+		color: rgba(84, 93, 109, 0.8);
+    	font-size: 13px;
+    	font-family: Helvetica, Arial, sans-serif;
+    	font-weight: 600;
+    	text-shadow: 1px 1px 2px #f9f9f9;
+	}
+	.react-fine-uploader-file-input-container{
+		margin-right: 5px;
+	}
+	.draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
+	    right: 0 !important;
+    	top: 13px;
+    	bottom: unset !important;
+	}
+
+	.rght-dv-abs{
+	    position: absolute;
+	    right: 69px;
+	    top: -13px;
+	    width: 400px;
+	    min-height: 100vh;
+	    background: #f7f7f7;
+	    padding: 4px;
+	    border: 1px solid #bfc6d4;
+	}
+}

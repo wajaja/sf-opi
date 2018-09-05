@@ -1,0 +1,13 @@
+'<div class="db-cfmd-adr" style="">'+
+	'<form action="{{path('fos_user_confirm_address')}}" method="post" enctype="multipart/form-data" class="confirmedForm">'+
+		'{{ form_start(aform, {'attr': {'class': ''}}) }}'+
+		'{{ form_errors(aform) }}'+
+		'<div class="" style="">'+
+			'<div id="adr-area" class="adr-area"><p class="adr-area-p"> Add more information for helping other persons to find you</p></div>'+
+				'{{ form_rest(aform) }}'+
+				'<button class="btn btn-primary sd-adr" type="submit" id="" name="_submit" value="Post" style=""> save </button>'+
+			'{{ form_end(aform) }}'+
+		'</div>'+
+	'</form>'+
+'</div>'+
+''

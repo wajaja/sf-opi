@@ -1,0 +1,54 @@
+.hm-container.notification{
+	.nt-pg-box{
+		.lk-to-notif{
+		    font-size: 13px;
+		    height: 65px;
+		    padding: 6px;
+		    background: #fff;
+		    border-radius: 3px;
+		    border: 1px solid #c7ccd2;
+		    margin-bottom: 10px;
+		    font-family: sans-serif;
+		}
+	}
+
+	.tri-note-dv{
+		position: relative;
+		.tri-note-lk-ctnr{
+		    position: relative;
+		    padding: 5px 0;
+		    text-transform: capitalize;
+		}
+		.tri-note-lk{
+		    color: #596b7e;
+		    padding: 2px;
+		    letter-spacing: .6px;
+		    display: block;
+		    width: inherit;
+		    font-size: 12px;
+		    font-weight: 600;
+		}
+	}
+}
+
+.note-content{
+	display: block;
+	letter-spacing: .5px;
+	.lk-to-notif{
+	    display: inline-block;
+	    color: #46474c;
+	    font-size: 12px;
+	}
+	.note-flt-lft{
+		display: inline-block;
+		vertical-align: top;
+	}
+	&>span{
+		display: inline-block;
+		vertical-align: top;
+	}
+	.note-flt-rght{
+		display: inline-block;
+		vertical-align: top;
+	}
+}

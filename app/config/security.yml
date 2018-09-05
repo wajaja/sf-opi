@@ -1,0 +1,35 @@
+imports:
+    - { resource: "@OPUserBundle/Resources/config/security.yml" }
+# you can read more about security in the related section of the documentation
+# http://symfony.com/doc/current/book/security.html
+security:
+    # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+    # on supprime l'encoder pour utiliser celui fourni dans notre FOS
+
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    #Le role_hierarchy vient à partir de celui fourni dans l'exemple du FOSUserBundle
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    # ainsi l'access control est celui fourni dans l'exemple du FOSUserBundle
+    #l'acces au login; register; resetting est public car, il ne faut pas que cette route soit proteger
+    #tandisque le path admin require d'un ROLE_ADMIN,... 
+    access_control:
+        - { path: ^/login$,     host: m.opinion.com,    role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/signup$,    host: m.opinion.com,    role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/.*,         host: m.opinion.com,    role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/,          host: opinion.com,            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/.*,         host: opinion.com,            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$,     host: opinion.com,            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/signup$,    host: opinion.com,            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/initialize$,   host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/check_email$,  host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting,         host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/,            host: opinion.com,     role: ROLE_ADMIN }
+        - { path: ^/api/login$,        host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/signup$,       host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/,              host: opinion.com,     role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/token/refresh, host: opinion.com,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/password/reset,    host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/.*,              role: IS_AUTHENTICATED_ANONYMOUSLY }

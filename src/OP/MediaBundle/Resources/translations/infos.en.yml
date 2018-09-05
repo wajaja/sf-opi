@@ -1,0 +1,18 @@
+media_infos:
+    photo:
+        posted: '   .'
+        identified: 'Please enter a username.'
+        commented: 'The username is too short.'
+        deleted: 'The username is too long.'
+    video:
+        posted: '   .'
+        commented: 'The username is too short.'
+        deleted: 'The username is too long.'
+        views: ''
+    gallery:
+        created: 'Please enter a password.'
+        added: 'The password is too short.'
+        blank: 'Please enter a new password.'
+    recorder:
+        blank: 'Please enter a new password.'
+        error: 'The new password is too short.'

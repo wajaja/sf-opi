@@ -1,0 +1,117 @@
+notification:
+    flash: |
+        you have one new notification |
+        you have %nbnotifs% new notifications
+    post:
+        comment:
+            to_author: |
+                one new comment of %lastUser% on your post. |
+                %unreaded% new comments including that of %lastUser% is 
+                the most recent on your post.
+            to_user: |
+                one new comment of %lastUser% on the post of %author%. |
+                %unreaded% new comments including that of %lastUser% is 
+                the most recent on the post of %author%.
+            from_author: |
+                one new comment of %lastUser% on the his post |
+                %unreaded% new comments including that of %lastUser% is 
+                the most recent on his post.
+        main:
+            create: |
+                new post of %author%.
+        allie: 
+            create: |
+                The contribution of %allieAuthor% have been added to your post. |
+                The contributions of %allieAuthor% and %other% members have been added to your post.
+        share:
+            create: |
+                %shareAuthor% share the post of %author%
+    opinion:
+        main:
+            create: |
+                new opinion created by %author% with %title% as subject, within you are at %sidename% side
+        allie:
+            create: |
+                %author% start the %postOrder% th part of his post named %title%
+        share:
+            create: |
+                %shareAuthor% share the post of %author%
+
+    side:
+        to_author: |
+            %lastSider% of %sideName%  gives his opinion about your post. |
+            %unreaded% new comments including that of %lastUser% is 
+            the most recent on your post.
+        to_user: |
+            From %sideName% of last created post of %author% named %title%, 
+            %lastSider% gives his opinion at the %postOrder% th part.
+        comment:
+            to_author: |
+                One new comment of %lastUser% about your opinion at the %postOrder% th 
+                of %title% created By %author%.
+            to_user: |
+                One new comment of %lastUser% about the opinion of %sideAuthor% at 
+                the %postOrder% th part of %title% created By %author%.|
+                %unreaded% new comments including that of %lastUser% is 
+                the most recent about the opinion of %sideAuthor% at the %postOrder% th 
+                part of %title% created By %author%.
+            from_author: |
+                One new comment of %lastUser% on his opinion at the %postOrder% 
+                th part of %title% created By %author%. |
+                %unreaded% new comments including that of %lastUser% is 
+                the most recent on his opinion at the %postOrder% th part of %title% 
+                created By %author%.
+    photo:
+        comment:
+            to_user: |
+                one new comment of %lastUser% on the photo of %author%. |
+                %unreaded% new comments including that of %lastUser% is 
+                the most recent on the photo of %author%.
+            from_author: |
+                one new comment of %lastUser% on the his photo |
+                %unreaded% new comments including that of %lastUser% is 
+                the most recent on his photo.
+            to_author: |
+                one new comment of %lastUser% on your photo |
+                %unreaded% new comments including that of %lastUser% is 
+                the most recent on your photo.
+    reply:
+        to_user: |
+            %lastUser% replied to a comment of %author%. |
+            New replies of %lastUser% and %other% on %author% 's comment.
+        from_author: |
+            %author% replied on his comment |
+            New replies of %author% and %other% on his comment.
+        to_author: |
+            %author% replied to your comment |
+            New replies of %author% and %other% replied to your comment.
+    rate:
+        to_author: |
+            %lastUser% give a rate to your %post%. |
+            %lastUser% and  %other% gives a rates to your %post%.
+        to_user: |
+            %lastUser% give a rate to the %post% of %author%. |
+            %lastUser% and  %other% gives to the the %post% of %author%.
+        from_author: |
+            %lastUser% give a rate to  his %post%. |
+            %lastUser% and  %other% gives a rates to his %post%.
+    like:
+        to_author: |
+            %lastUser% like your %post%. |
+            %lastUser% and  %other% likes your %post%.
+        to_user: |
+            %lastUser% like the %post% of %author%. |
+            %lastUser% and  %other% likes the %post% of %author%.
+        from_author: |
+            %lastUser% like his %post%. |
+            %lastUser% and  %other% likes his %post%.
+    legal:
+        to_author: |
+            %lastUser% has legalized your position. |
+            %lastUser% and  %other% have legalized your position.
+        to_user: |
+            %lastUser% has legalized the %post% of %author%. |
+            %lastUser% and  %other% have legalized the %post% of %author%.
+        from_author: |
+            %lastUser% has legaled his position. |
+            %lastUser% and  %other% have legalized his position.

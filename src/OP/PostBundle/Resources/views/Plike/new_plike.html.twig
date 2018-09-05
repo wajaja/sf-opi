@@ -1,0 +1,7 @@
+'{{ form_start(plikeForm, {'attr':{'class':'formPlike'}, 'method':'post', 'action':path('plike_create', { 'id': '57c8daffaa95aa8410000042'}) }) }}'+
+'{{ form_errors(plikeForm) }}'+
+'<span class="plike-rate-nbr"></span>'+
+'{{ form_widget(plikeForm.rate, {'attr': {'class': 'pst-rate-rge'} }) }}'+   
+'{{ form_widget(plikeForm.postValid, {'attr': {'class': 'hiddenPlike'} }) }}'+   
+'{{ form_rest(plikeForm) }}'+
+'{{ form_end(plikeForm) }}'+

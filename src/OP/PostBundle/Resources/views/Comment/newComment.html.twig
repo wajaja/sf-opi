@@ -1,0 +1,44 @@
+'<div class="div-commentForm" id="" style="" >'+
+        '{{ form_start(commentForm, {'attr':{'class':'formComment'}, 'method':'post', 'action':path('comment_create', { 'id': postValid}) }) }}'+
+        '{{ form_errors(commentForm) }}'+
+        '{{ form_widget(commentForm.postValid, {'attr': {'class': ''} }) }}'+
+        '<div class="vis-part" data-c-name="{{app.user.firstname}} {{app.user.lastname}}" data-c-username="{{ path('fos_user_profile_show', {'username': app.user.username})}}">'+
+            '<div class ="left-commentForm" style="">'+
+                '<a href="{{ path('fos_user_profile_show', {'username': app.user.username})}}" class="cmt-frm-pr-pic-lk" hover="" >'+
+                    '<img src="{{asset(app.user.profilePic.webPath|default("/images/favicon.ico"))}}" class="cmt-frm-pr-pic" alt="" style="" />'+
+                '</a>'+
+            '</div>'+
+            '<div class ="center-commentForm" style="">'+
+                '<div class ="sCenter-commentForm" style="">'+
+                    '<div class ="" style="display: block">'+
+                        '<div class ="div-textareaComment" style="">'+
+                            '<div class="expandingArea">'+
+                                '<pre><span></span><br></pre>'+
+                                    '{{ form_widget(commentForm.content, {'attr': {'class': 'comment-form-textarea autoExpand-comment', 'placeholder':'Comment'} }) }}'+
+                            '</div>'+
+                        '</div>'+
+                        '<div class="commentFormImageHolder">'+
+                            '<ul class="upl-list-ul" data-input-nb="1"></ul>'+
+                        '</div>'+
+                        '{{ form_widget(commentForm.rmv_arr, {'attr': {'class': 'com-frm-rmv_arr'} }) }}'+
+                    '</div>'+
+                    '<div class="cmt-frm-btm-dv">'+
+                        '<div class ="dynamic-partInCommentForm" style="">'+
+                            '<div class ="divUploadComment" style="">'+
+                                '<a href="#" class="linkUploadComment">'+
+                                    '<i class="fa fa-camera commentForm-camera">'+
+                                        '<input type="file" id="comment_type_files_0" name="comment_type[files][0]" class="cmt-file-selector" />'+
+                                    '</i>'+
+                                '</a>'+
+                            '</div>'+
+                            '<div class ="divSubmitComment" style="">'+
+                                '<button type="submit" id="submit-comment" name="_submit" value="Post"  class="submit-comment">comment</button>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '{{ form_rest(commentForm) }}'+
+            '</div>'+
+        '</div>'+
+    '{{ form_end(commentForm) }}'+
+'</div>'+

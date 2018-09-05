@@ -1,0 +1,203 @@
+#la securité du UserBundle
+#last Modif  30th 12 2015
+
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    #dans cette section on a retiré le role_hierarchy
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        api_doc:
+            pattern: ^/api/doc
+            security: false
+            stateless: true
+            anonymous: true
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/  #access to assets protected
+            security: false
+        api_register:
+            pattern: ^/api/signup
+            stateless: true
+            anonymous: true
+        api_initialize:
+            pattern: ^/api/initialize
+            security: false
+            stateless: true
+            anonymous: true
+        api_check_email:
+            pattern: ^/api/check_email
+            security: false
+            stateless: true
+            anonymous: true
+        api_password_reset:
+            pattern: ^/api/password/reset
+            stateless: true
+            anonymous: true
+        api_logout:
+            logout_on_user_change: true  #SF4
+            pattern:        ^/api/logout
+            anonymous:        true
+            # success_handler:  op_user.jwt.handler.logout_success
+        api_login:
+            pattern:  ^/api/login
+            stateless: true
+            anonymous: true
+            form_login:
+                check_path: /api/login_check
+                require_previous_session: false
+                csrf_parameter: _csrfToken    # See ArrayNormalizer with login forms <body_listener>
+                # if true, forward the user to the login form instead of redirecting
+                use_forward: false
+
+                # login success redirecting options (read further below)
+                always_use_default_target_path: false
+                default_target_path:            /api/
+                target_path_parameter:          _target_path
+                use_referer:                    true         #used to redirect user after login
+
+                # login failure redirecting options (read further below)
+                failure_path:    /api/foo
+                failure_forward: false
+                failure_path_parameter: _failure_path
+                username_parameter:       username
+                password_parameter:       password
+                success_handler:          op_user.jwt.handler.authentication_success
+                failure_handler:          op_user.jwt.handler.authentication_failure
+            guard:
+                authenticators:
+                    - op_user.jwt_token_authenticator
+                #entry_point: form_login_authenticator       # which “start” method should be called
+        api:
+            pattern:   ^/api/           # All URLs are protected
+            stateless: true             # Do no set session cookies
+            provider:  fos_userbundle
+            lexik_jwt: ~
+            guard:
+                authenticator:
+                    - op_user.jwt_token_authenticator
+            anonymous : true
+        refresh:
+            pattern:  ^/api/token/refresh
+            stateless: true
+            anonymous: true
+        main:
+            logout_on_user_change: true  #SF4
+            pattern: ^/
+            security: false   # disable security, allowing access to route like <<http://opinion.com/cedrickngeja>>
+            # stateless: true
+            # anonymous: true
+            # guard:
+            #     authenticator:
+            #         - op_user.jwt_token_authenticator
+            form_login:
+                provider:        fos_userbundle
+                #security.csrf.token_manager for Symfony2.8
+                # submit the login form here
+                check_path: /login_check
+                # the user is redirected here when they need to log in
+                login_path: /login
+
+                # if true, forward the user to the login form instead of redirecting
+                use_forward: false
+
+                # login success redirecting options (read further below)
+                always_use_default_target_path: false
+                default_target_path:            /
+                target_path_parameter:          _target_path
+                use_referer:                    true         #TODO
+
+                # login failure redirecting options (read further below)
+                failure_path:    /foo
+                failure_forward: false
+                failure_path_parameter: _failure_path
+                # failure_handler: some.service.id
+                # success_handler: some.service.id
+
+                # field names for the username and password fields
+                username_parameter: _username
+                password_parameter: _password
+
+                # csrf token options
+                csrf_parameter: _csrf_token
+                csrf_token_id:      authenticate
+
+                # by default, the login form *must* be a POST, not a GET
+                post_only:      true
+                # by default, a session must exist before submitting an authentication request
+                # if false, then Request::hasPreviousSession is not called during authentication
+                # new in Symfony 2.3
+                require_previous_session: true
+                csrf_token_generator:   security.csrf.token_manager
+                remember_me:            true
+            remember_me:
+                #secret for Symfony2.8
+                secret:          "%secret%"
+                lifetime:        30000000
+                path:            /
+                domain:          ~
+            logout:
+                path:            fos_user_security_logout
+                target:          /
+            anonymous:           true
+            #pour d'autre mode de connexion
+        mobile:
+            logout_on_user_change: true  #SF4
+            host: m.opinion.com
+            pattern: ^/
+            http_basic: true
+            form_login:
+                provider:        fos_userbundle
+                #security.csrf.token_manager for Symfony2.8
+                # submit the login form here
+                check_path: /login_check
+                # the user is redirected here when they need to log in
+                login_path: /login
+
+                # if true, forward the user to the login form instead of redirecting
+                use_forward: false
+
+                # login success redirecting options (read further below)
+                always_use_default_target_path: false
+                default_target_path:            /
+                target_path_parameter:          _target_path
+                use_referer:                    true         #TODO
+
+                # login failure redirecting options (read further below)
+                failure_path:    /foo
+                failure_forward: false
+                failure_path_parameter: _failure_path
+                # failure_handler: some.service.id
+                # success_handler: some.service.id
+
+                # field names for the username and password fields
+                username_parameter: _username
+                password_parameter: _password
+
+                # csrf token options
+                csrf_parameter: _csrf_token
+                csrf_token_id:      authenticate
+
+                # by default, the login form *must* be a POST, not a GET
+                post_only:      true
+                # by default, a session must exist before submitting an authentication request
+                # if false, then Request::hasPreviousSession is not called during authentication
+                # new in Symfony 2.3
+                require_previous_session: true
+                csrf_token_generator:   security.csrf.token_manager
+                remember_me:            true
+            remember_me:
+                #secret for Symfony2.8
+                secret:          "%secret%"
+                lifetime:        30000000
+                path:            /
+                domain:          m.opinion.com
+            logout:
+                path:            fos_user_security_logout
+                target:          /
+            anonymous:           true
+            #pour d'autre mode de connexion

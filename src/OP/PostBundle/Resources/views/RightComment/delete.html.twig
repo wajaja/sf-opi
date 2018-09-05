@@ -1,0 +1,33 @@
+{# src/OP/OpinionBundle/Resources/views/Opinion/delete.html.twig #}
+
+{% extends "OPOpinionBundle::layout.html.twig" %}
+
+{% block title %}
+  delete this - {{ parent() }}
+{% endblock %}
+
+{% block op_opinion_body %}
+
+  <h2>delete this</h2>
+
+  <p>
+    ...Etes-vous certain de vouloir supprimer l'annonce "{{ opinion.title }}" ?
+  </p>
+
+  {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+
+  <form action="{{ path('op_opinion_delete', {'id': opinion.id}) }}" method="post">
+    <a href="{{ path('op_opinion_view', {'id': opinion.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Return to post
+    </a>
+    {# Ici j'ai écrit le bouton de soumission à la main #}
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {# Ceci va générer le champ CSRF #}
+
+    {# boutstrap à ajouter plus tard #}
+    {{ form_rest(form) }}
+
+  </form>
+
+{% endblock %}

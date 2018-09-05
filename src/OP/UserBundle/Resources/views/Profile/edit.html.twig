@@ -1,0 +1,119 @@
+{% extends "OPSocialBundle::layout.html.twig" %}
+
+    {% block title %} settings {% endblock %}     
+        {% block stylesheets %} {{ parent() }} {% endblock %}                    
+            {% block socialLeft %}
+                <div class ="" style=""> 
+                    <div class ="" style=""> 
+                        <div class ="" style=""> 
+                            {#{% include ("OPUserBundle:Profile:coverPic.html.twig") %}#}
+                        </div
+                    </div> 
+                    <div class ="" style=""> 
+                        <div class="col-sm-4" style="" > 
+                            <div class ="" style=""> 
+                                {% include ("OPUserBundle:Profile:show_content.html.twig") %}
+                            </div> 
+                            <div class ="" style=""> 
+                                {% include ("OPUserBundle:Resetting:ge.html.twig") %}
+                            </div> 
+                            <div class ="" style=""> 
+                                {% include ("OPUserBundle:Resetting:activity.html.twig") %}
+                            </div> 
+                            <div class ="" style=""> 
+                                {% include ("OPUserBundle:Resetting:interesed.html.twig") %}
+                            </div> 
+                            <div class ="" style=""> 
+                                {% include ("OPUserBundle:Resetting:popOpinion.html.twig") %}
+                            </div> 
+                        </div> 
+                        <div class="col-sm-8" style=""> 
+                            {% include ("OPUserBundle:Resetting:name.html.twig") %}
+                        </div> 
+                    </div> 
+                </div> 
+            </div>
+            {% endblock %}
+
+            {% block socialRight %}
+                {{ parent() }}
+            {% endblock %}
+                
+
+
+            {% block javascipt %}
+                {{parent()}}
+            {% endblock %}
+
+                {% block documentReady %}
+                    {{ parent() }}
+                    $('#microphone-icon-form').animatedModal({
+                        modalTarget:'audioAnimatedModal',
+                        position:'fixed', 
+                        width:'100%', 
+                        height:'100%', 
+                        top:'0px', 
+                        left:'0px', 
+                        zIndexIn: '9999',  
+                        zIndexOut: '-9999',  
+                        color: '#39BEB9', 
+                        opacityIn:'1',  
+                        opacityOut:'0', 
+                        animatedIn:'zoomIn',
+                        animatedOut:'zoomOut',
+                        animationDuration:'.6s', 
+                        overflow:'auto', 
+                        // Callbacks
+                        beforeOpen: function() {
+                            console.log("The animation was called");
+                        },           
+                        afterOpen: function() {
+                            console.log("The animation is completed");
+                        }, 
+                        beforeClose: function() {
+                            console.log("The animation was called");
+                        }, 
+                        afterClose: function() {
+                            console.log("The animation is completed");
+                        }
+                    });
+
+                    $('#camera-icon-form').animatedModal({
+                        modalTarget:'videoAnimatedModal',
+                        position:'fixed', 
+                        width:'100%', 
+                        height:'100%', 
+                        top:'0px', 
+                        left:'0px', 
+                        zIndexIn: '9999',  
+                        zIndexOut: '-9999',  
+                        color: '#39BEB9', 
+                        opacityIn:'1',  
+                        opacityOut:'0', 
+                        animatedIn:'zoomIn',
+                        animatedOut:'zoomOut',
+                        animationDuration:'.6s', 
+                        overflow:'auto', 
+                        // Callbacks
+                        beforeOpen: function() {
+                            console.log("The animation was called");
+                        },           
+                        afterOpen: function() {
+                            console.log("The animation is completed");
+                        }, 
+                        beforeClose: function() {
+                            console.log("The animation was called");
+                        }, 
+                        afterClose: function() {
+                            console.log("The animation is completed");
+                        }
+                    });
+                {% endblock documentReady %}
+                {% block modal %}
+                    {{parent () }}
+                {% endblock %}
+{% block body %}
+{% block fos_user_content %}
+{% include "OPUserBundle:Profile:edit_content.html.twig" %}
+{% endblock fos_user_content %}
+{% endblock body %}

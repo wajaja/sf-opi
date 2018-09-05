@@ -1,0 +1,121 @@
+<?php
+
+namespace OP\SocialBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
+/**
+ * OP\SocialBundle\Document\Object
+ *
+ * @ODM\Document(
+ *     repositoryClass="OP\SocialBundle\Document\ObjectRepository"
+ * )
+ * @ODM\ChangeTrackingPolicy("DEFERRED_IMPLICIT")
+ */
+class Object
+{
+    /**
+     * @var MongoId $id
+     *
+     * @ODM\Id(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var timestamp $ts
+     *
+     * @ODM\Field(name="ts", type="timestamp")
+     */
+    protected $ts;
+
+    /**
+     * @var string $type
+     *
+     * @ODM\Field(name="type", type="string")
+     */
+    protected $type;
+
+    /**
+     * @var int_id $customId
+     *
+     * @ODM\Field(name="customId", type="int_id")
+     */
+    protected $customId;
+
+
+    /**
+     * Get id
+     *
+     * @return id $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set ts
+     *
+     * @param timestamp $ts
+     * @return $this
+     */
+    public function setTs($ts)
+    {
+        $this->ts = $ts;
+        return $this;
+    }
+
+    /**
+     * Get ts
+     *
+     * @return timestamp $ts
+     */
+    public function getTs()
+    {
+        return $this->ts;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string $type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set customId
+     *
+     * @param int_id $customId
+     * @return $this
+     */
+    public function setCustomId($customId)
+    {
+        $this->customId = $customId;
+        return $this;
+    }
+
+    /**
+     * Get customId
+     *
+     * @return int_id $customId
+     */
+    public function getCustomId()
+    {
+        return $this->customId;
+    }
+}

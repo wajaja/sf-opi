@@ -1,0 +1,210 @@
+services:
+    # this makes public all the services defined in this file
+    _defaults: 
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    OP\PostBundle\FormHandler\NewPostFormHandler:
+        arguments: 
+            - "@request_stack"
+            - "@op_post.post_manager"
+            - "@op_post.comment_manager"
+            - "@op_post.composer"
+            - "@op_post.undercomment_manager"
+            - "@op_post.like_manager"
+            - "@op_post.share_manager"
+            - "@op_post.rate_manager"
+            - "@op_message.participant_provider"
+            - '@OP\UserBundle\DataTransformer\UsernameToUserTransformer'
+            - "@service_container"
+            - "@op_post.left_manager"
+            - "@op_post.right_manager"
+    OP\PostBundle\Document\Post: ~
+    #
+    OP\PostBundle\Document\Comment: ~
+    #
+    OP\PostBundle\Document\UnderComment: ~
+    #
+    OP\PostBundle\Document\Share: ~
+    #
+    OP\PostBundle\Composer\Composer:
+        arguments: ["@op_post.post_manager"]
+    #
+    OP\PostBundle\DocumentManager\PostManager:
+        arguments: 
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@oneup_uploader.orphanage_manager"
+            - "@op_media.image.class"
+            - "@op_media.video_orphanage"
+            - '@OP\UserBundle\Security\UserProvider'
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+    OP\PostBundle\DocumentManager\CommentManager:
+        arguments: 
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@oneup_uploader.orphanage_manager"
+            - "@op_media.image.class"
+            - "@op_media.video_orphanage"
+            - '@OP\UserBundle\Security\UserProvider'
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+    OP\PostBundle\DocumentManager\LeftManager:
+        arguments: 
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@oneup_uploader.orphanage_manager"
+            - "@op_media.image.class"
+            - "@op_media.video_orphanage"
+            - '@OP\UserBundle\Security\UserProvider'
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+    OP\PostBundle\DocumentManager\RightManager:
+        arguments: 
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@oneup_uploader.orphanage_manager"
+            - "@op_media.image.class"
+            - "@op_media.video_orphanage"
+            - '@OP\UserBundle\Security\UserProvider'
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+    #
+    OP\PostBundle\DocumentManager\UnderCommentManager:
+        arguments: 
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@oneup_uploader.orphanage_manager"
+            - "@op_media.image.class"
+            - "@op_media.video_orphanage"
+            - '@OP\UserBundle\Security\UserProvider'
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+    #
+    OP\PostBundle\DocumentManager\ShareManager:
+        arguments: 
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@oneup_uploader.orphanage_manager"
+            - "@op_media.image.class"
+            - "@op_media.video_orphanage"
+            - '@OP\UserBundle\Security\UserProvider'
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+        
+    OP\PostBundle\DocumentManager\LikeManager:
+        arguments: 
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@oneup_uploader.orphanage_manager"
+            - "@op_media.image.class"
+            - "@op_media.video_orphanage"
+            - '@OP\UserBundle\Security\UserProvider'
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+    OP\PostBundle\DocumentManager\RateManager:
+        arguments: 
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@oneup_uploader.orphanage_manager"
+            - "@op_media.image.class"
+            - "@op_media.video_orphanage"
+            - '@OP\UserBundle\Security\UserProvider'
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+    OP\PostBundle\DataTransformer\ToArrayTransformer:
+        arguments: 
+            - "@service_container"
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@op_user.user_manager"
+            - "@op_media.image_constructor"
+            - '@OP\SocialBundle\SeveralClass\DateTransformer'
+            - '@OP\UserBundle\Security\UserProvider'
+    OP\PostBundle\Provider\PostProvider:
+        arguments: 
+            - "@request_stack"
+            - "@service_container"
+            - "@op_post.post_manager"
+            - '@OP\SocialBundle\Document\News'
+            - "@doctrine.odm.mongodb.document_manager.public"
+    OP\PostBundle\Notification\RealTimePost:
+        arguments: 
+            - "@snc_redis.client_storage.driver"
+    OP\PostBundle\Listener\PostListener:
+        arguments: 
+            - "@request_stack" 
+            - "@service_container"
+            - "@op_post.object_to_array.transformer"
+            - '@OP\SocialBundle\Stream\Stream'
+        tags:
+            - { name: kernel.event_listener, event: op_post.like, method: onLike }
+            - { name: kernel.event_listener, event: op_post.unlike, method: onUnLike }
+            - { name: kernel.event_listener, event: op_post.rate_create, method: onRateCreate }
+            - { name: kernel.event_listener, event: op_post.rate_delete, method: onRateDelete }
+            - { name: kernel.event_listener, event: op_post.rate_update, method: onRateUpdate }
+            - { name: kernel.event_listener, event: op_post.post_create, method: onPostCreate }
+            - { name: kernel.event_listener, event: op_post.post_delete, method: onPostDelete }
+            - { name: kernel.event_listener, event: op_message.post_update, method: onPostUpdate }
+            - { name: kernel.event_listener, event: op_post.comment_create, method: onCommentCreate }
+            - { name: kernel.event_listener, event: op_post.comment_update, method: onCommentUpdate }
+            - { name: kernel.event_listener, event: op_post.left_comment_create, method: onLeftCreate }
+            - { name: kernel.event_listener, event: op_post.left_comment_update, method: onLeftUpdate }
+            - { name: kernel.event_listener, event: op_post.undercomment_create, method: onUnderCreate }
+            - { name: kernel.event_listener, event: op_post.undercomment_update, method: onUnderUpdate }
+            - { name: kernel.event_listener, event: op_post.right_comment_create, method: onRightCreate }
+            - { name: kernel.event_listener, event: op_post.right_comment_update, method: onRightUpdate }
+            - { name: kernel.event_listener, event: op_post.post_allie_create, method: onPostAllieCreate }
+    OP\PostBundle\Topic\CommentTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    OP\PostBundle\Topic\LeftTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    OP\PostBundle\Topic\RightTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    OP\PostBundle\Topic\LikeTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    OP\PostBundle\Topic\ShareTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    OP\PostBundle\Topic\RateTopic:
+        tags:
+            - { name: gos_web_socket.topic }
+    # op_post.model_to_elastica.transformer.post:
+    #     # parent: fos_elastica.model_to_elastica_transformer
+    #     class: OP\PostBundle\DataTransformer\PostToElasticaTransformer
+    #     arguments:
+    #         - '@service_container'
+    # op_post.elastica_to_model.transformer.post:
+    #     class: OP\PostBundle\DataTransformer\ElasticaToPostTransformer
+    #     arguments:
+    #         - '@doctrine_mongodb.public'
+    #         - 'OP\PostBundle\Document\Post'
+    #         - '@doctrine.odm.mongodb.document_manager.public'
+    #         - '@OP\UserBundle\Security\UserProvider'
+    #         - '@op_post.object_to_array.transformer'
+    #     calls:
+    #         - [ setPropertyAccessor, ["@fos_elastica.property_accessor"] ]
+    #     tags:
+    #         - { name: fos_elastica.elastica_to_model_transformer.app.post }
+    OP\PostBundle\Elastica\QuerySearch: ~
+    OP\PostBundle\Serializer\PostSerializerSubscriber:
+        arguments:
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@OP\UserBundle\Security\UserProvider'
+            - '@op_post.object_to_array.transformer'
+        tags:
+            - { name: jms_serializer.event_subscriber }

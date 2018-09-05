@@ -1,0 +1,49 @@
+services:
+    op_media.topic_media_service:
+        class: OP\MediaBundle\Topic\MediaTopic
+        tags:
+            - { name: gos_web_socket.topic }
+    op_media.namer.media:
+        class: OP\MediaBundle\FileUploader\MediaNamer
+    #
+    OP\MediaBundle\FileUploader\UniqidNamer:
+        arguments: 
+            - '@request_stack'
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@OP\UserBundle\Security\UserProvider'
+    #
+    OP\MediaBundle\Document\Document: ~
+    #
+    OP\MediaBundle\Document\Image: ~
+    #
+    OP\MediaBundle\Document\Picture: ~
+    
+    OP\MediaBundle\Construct\ImageConstructor:
+        arguments: ["@service_container", "@request_stack"]
+    
+    OP\MediaBundle\Uploader\Storage\FilesystemStorage:
+        arguments: ["%kernel.root_dir%"]
+
+    OP\MediaBundle\Uploader\Storage\FilesystemOrphanageStorage:
+        arguments: ["@op_media.file_storage", "@session", "%kernel.root_dir%"]
+    # OP\MediaBundle\Manager\ImageManager
+    #     arguments: ["@doctrine.odm.mongodb.document_manager.public", 'OP\MediaBundle\Document\Image']
+    OP\MediaBundle\EventListener\UploadListener:
+        arguments: ["@doctrine.odm.mongodb.document_manager.public"]
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.pre_upload, method: onPreUpload }
+            - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onPostUpload }
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onPostPersist }
+            - { name: kernel.event_listener, event: oneup_uploader.validation, method: onValidate }
+    # op_media.form_handler:
+    #     class: OP\MediaBundle\FormHandler\GalleryFormHandler
+    #     arguments: ["@request_stack", "@op_post.post_manager", "@op_post.composer", "@op_message.participant_provider"]
+    # op_media.to_array.transformer:
+    #     class: OP\MediaBundle\DataTransformer\ToArrayTransformer
+    #     arguments: ["@service_container", "@request_stack", "@doctrine.odm.mongodb.document_manager.public", "@op_user.user_manager", '@OP\UserBundle\Security\UserProvider']
+    OP\MediaBundle\DocumentManager\PictureManager:
+        arguments: 
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@service_container'
+            - '@request_stack'
+            - '@op_user.user_manager'

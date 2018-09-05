@@ -1,0 +1,191 @@
+/* Created on : 2 mars 2016, 16:18:17 Author     : CEDRICK */
+.qq-upload-button-selector{
+    color: rgba(100, 106, 129, 0.73);
+}
+
+/*
+*for opinionShare message of the shared User
+*content all about style in the message over the opinion
+*/
+.opinionShare-message{
+    background: #ffffff;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    position: relative; 
+}
+.opinionShare-message-a{
+    display: block;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    /*border-bottom: 1px solid #dcdcdc;*/
+}
+.opinionShare-textarea{
+    width: 100%;
+    border: none;
+    resize: none;
+    padding-right: 6%;
+    outline:none;
+    overflow: hidden;
+    font-size: 12px
+}
+.opinionShare-content-user-a{
+    position: relative;
+    left: 67%;
+    width: 32%
+}
+.opinionShare-content-user-b {
+    position: relative;
+    font-size: 12px;
+    right: 50px;
+}
+.opinionShare-createdAt{
+    font-size: 12px;
+    font-family: -webkit-pictograph;
+    position: relative;
+    left: 40px;
+}
+/*Customize from jquery-ui*/
+.ui-dialog .ui-dialog-content {
+    position: relative;
+    border: 0;
+    padding: .5em 1em;
+    background: white;
+    overflow: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    border-bottom-right-radius: 0px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+    border-bottom-left-radius: 0px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr {
+    border-top-right-radius: 0px;
+}
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl {
+    border-top-left-radius: 0px;
+}
+
+.ui-widget-content {
+    /*border: 1px solid #fff;*/
+    background: #fff;
+    color: #333;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding: .4em 1em;
+    position: relative;
+    border-radius: 1px;
+}
+.ui-widget-header {
+    border: 1px solid #8FAEB1;
+    background: #48F628 url("../../../css/images/ui-bg_gloss-wave_35_f6a828_500x100.png") 50% 50% repeat-x;
+    color: #fff;
+    font-weight: bold;
+}
+
+/*
+* global div on the share Modal
+* all about div 
+*/
+.opinionShare-a{
+    display:inline-block;
+    width:100%;
+}
+.opinionShare-b{
+    display:block;
+    width: 100%;
+}
+.opinionShare-c{
+    display: block;
+}
+.opinionShare-d{
+    display:block;
+    width: 100%;
+}
+/*all about content*/
+.opinionShare-content{
+    margin-top:10px;
+}
+.opinionShare-content-a{
+    background: rgba(191, 205, 209, 0.1);
+    border: 1px solid #D8E6D3;
+    border-radius:0%;   
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 3px;
+}
+.opinionShare-content-content-b{
+    font-size: 12px;
+    font-style: italic;
+    font-family: cursive;
+    padding: 5px 5px 5px 5px;
+}
+.opinionShare-author{
+    font-size: 16px;
+    font-style: normal;
+    font-family: initial;
+    padding: 5px 5px 5px 5px;
+    font-stretch: expanded;
+    color: #1C8AEA;
+}
+.opinionShare-content-by{
+    font-size: 12px;
+    font-style: italic;
+    font-family: cursive;
+}
+.opinionShareAnimatedModal{
+    border:1px solid #EFFFFF;
+    border-radius: 5px;
+    background:#FFFFFF;    
+}
+.opinionShareRightIcons{
+    position: absolute;
+    left: 95.5%;
+    top: 8px;
+}
+.opinionImageShare{
+    width:24%;
+    position: inherit;    
+}
+.opinionShare-nbImages{
+    position:absolute;    
+}
+.hiddenOshare{
+    display: none;
+}
+.opinion_share_flash_message{
+    -webkit-box-shadow: 0px 0px 15px #333;
+    -moz-box-shadow: 0px 0px 15px #333;
+    position:fixed;
+    top: 53px;
+    left: 42%;
+    width: 10%;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 5px;
+    border: 5px solid #fefefe;
+    background: #dce2e8;
+}
+.share-link-profilePic{
+    position: relative;
+}
+.profilePic-in-oShare{
+    width: 40px;
+    height: 40px;
+}
+.opinionShare-foo{
+    height: 35px;
+    position:initial;
+}
+.opinionShare-foo-right{
+    position: relative;
+    display: inline-block;
+    float: right;
+    top: 4px;
+}

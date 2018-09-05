@@ -1,0 +1,9 @@
+gallery_uploader:
+    type: rest
+    resource:  OP\MediaBundle\Controller\Api\ApiUploaderController
+photo:
+    type: rest
+    resource:  OP\MediaBundle\Controller\Api\ApiPhotoController
+everywhere:
+    type: rest
+    resource:  OP\MediaBundle\Controller\Api\ApiEveryWhereController

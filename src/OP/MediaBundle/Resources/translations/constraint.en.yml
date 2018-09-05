@@ -1,0 +1,20 @@
+media_constraints:
+    photo:
+        invalid: 'The username is already used.'
+        big: 'Please enter a username.'
+        small: 'The username is too short.'
+        number: 'The username is too long.'
+        error: ''
+    video:
+        name: 'The email is already used.'
+        invalid: 'Please enter an email.'
+        big: 'The email is too short.'
+        small: 'The email is too long.'
+        number: 'The email is not valid.'
+        error: ''
+    gallery:
+        number: 'Please enter a password.'
+        name: 'The password is too short.'
+    recorder:
+        blank: 'Please enter a new password.'
+        error: 'The new password is too short.'

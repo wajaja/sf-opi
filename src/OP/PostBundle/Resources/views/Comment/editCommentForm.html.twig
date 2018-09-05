@@ -1,0 +1,39 @@
+<div class="div-commentForm" id="" style="" >
+        {{ form_start(commentForm, {'attr':{'class':'editFormComment'}, 'method':'post', 'action':path('edit_comment', { 'commentId': commentId}) }) }}
+        {{ form_errors(commentForm) }}
+        {{ form_widget(commentForm.postValid, {'attr': {'class': ''} }) }}
+        <div class="vis-part" data-c-name="{{app.user.firstname}} {{app.user.lastname}}" data-c-username="{{ path('fos_user_profile_show', {'username': app.user.username})}}">
+            <div class ="left-commentForm" style="">
+                <a href="{{ path('fos_user_profile_show', {'username': app.user.username})}}" class="cmt-frm-pr-pic-lk" hover="" >
+                    <img src="{{asset(app.user.profilePic.webPath|default("/images/favicon.ico"))}}" class="cmt-frm-pr-pic" alt="" style="" />
+                </a>
+            </div>
+            <div class ="center-commentForm" style="">
+                <div class ="sCenter-commentForm" style="">
+                    <div class ="" style="display: block">
+                        <div class ="div-textareaComment" style="">
+                            {{ form_widget(commentForm.content, {'attr': {'class': 'comment-form-textarea autoExpand-comment', 'id': 'content', 'data-min-rows-comment':'1', 'rows':'1', 'placeholder':'comment'} }) }}
+                        </div>
+                        <div class="commentFormImageHolder"></div>
+                    </div>
+                    <div style="display: block; padding-left: 8px; padding-right:8px;">
+                        <div class ="dynamic-partInCommentForm" style="">
+                            <div class ="divUploadComment" style="">
+                                <a href="#" class="linkUploadComment">
+                                    <i class="fa fa-camera commentForm-camera">
+                                        <input type="file" id="comment_type_files_0" name="comment_type[files][0]" class="comment-file-selector" />
+                                        <input type="file" id="comment_type_files_1" name="comment_type[files][1]" class="comment-file-selector" />
+                                    </i>
+                                </a>
+                            </div>
+                            <div class ="divSubmitComment" style="">
+                                <button type="submit" id="submit-comment" name="_submit" value="Post"  class="submit-comment">comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{ form_rest(commentForm) }}
+            </div>
+        </div>
+    {{ form_end(commentForm) }}
+</div>

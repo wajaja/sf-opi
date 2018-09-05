@@ -1,0 +1,37 @@
+media_messages:
+    photo:
+        show: 
+            button: 'show'
+            flash: ''
+        delete:
+            button: 'delete'
+            success: 'photo was deleted'
+            faillure: 'error occure'
+        update: 
+            button: 'upload'
+            success: 'updated'
+            faillure: 'faillure to update'
+        add: 
+            button: 'add'
+            faillure: 'error'
+        mask: 
+            button: 'mask photo'
+            success: 'masked'
+            faillure: 'error'
+        edit:
+            button: 'edit photo'
+            success: 'edited'
+            faillure: ''
+    video:
+        name: 'The email is already used.'
+        invalid: 'Please enter an email.'
+        big: 'The email is too short.'
+        small: 'The email is too long.'
+        number: 'The email is not valid.'
+        error: ''
+    gallery:
+        number: 'Please enter a password.'
+        name: 'The password is too short.'
+    recorder:
+        blank: 'Please enter a new password.'
+        error: 'The new password is too short.'

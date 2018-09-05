@@ -1,0 +1,2145 @@
+/*STYLE FOR LIST-TRIANGLE
+
+/*HOME FORM*/
+.post-form-body .qq-uploader-selector{
+    display: none;
+}
+.home-form {
+    display: block;
+    position: relative;
+    height: 32px;
+    padding: 6px;
+    background-color: #f1f7f5; 
+    border-bottom: 1px solid #e4eaec;
+    border-radius: 4px 4px 0 0;
+
+}
+.post-form-body{
+    background-color: #fff;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding: 5px 10px;
+}
+.start-list-form-lft{
+    display: inline-block;
+    right: 11px;
+    position: absolute;
+}
+textarea,
+pre{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+}
+.post-support-textarea > .expandingArea{
+    min-height: 30px;
+}
+.custom-form-editor {
+    &.normal{
+        font-size: 19px;
+        line-height: 18px;
+        color: #4c4c4e;
+    }
+    &.middle{
+        font-size: 20px;
+        line-height: 19px;
+        color: #4c4c4e;
+    }
+    &.big{
+        font-size: 23px;
+        line-height: 22px;
+        color: #4c4c4e;
+    }
+    &.small{
+        font-size: 15px;
+        line-height: 16px;
+        color: #111111;
+    }
+}
+.expandingArea{
+    position: relative;
+    background: #fff;
+}
+.expandingArea {
+    .post-form-textarea{
+        /* The border-box model is used to allow padding whilst still 
+         * keeping the overall width at exatly of the containig element*/
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+                box-sizing: border-box;
+        line-height: 20px;
+        padding-bottom: 2px;
+        width: 100%;
+        resize: none;
+        /*height used if javascript desabled*/
+        background: transparent;
+        font: 400 15px/16px helvetica, arial, sans-serif;
+        /*Make the text soft-wrap */
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        outline:none;
+        letter-spacing: .5px;
+    }
+    pre {
+        display: none
+    }
+    &.active {
+        .post-form-textarea {
+            overflow: hidden;
+            resize: none;
+        }
+    }
+}
+/*SELECT ELEMENT IN LIST
+------------------------------------------------------------------------------------------------*/
+.form-selected{
+    background: white;
+    font-weight: bold;
+}
+.gl-frm-bd-usr-lk{
+    display: block;
+    /*border-bottom: 1px solid #f2f2f3;*/
+    padding: 3px 0 5px;
+}
+/*.gl-frm-bd-usr-li:first-child{
+    margin: 0 0 10px 0;
+}*/
+.gl-frm-bd-usr-li{
+    display: inline-block;
+    position: relative;
+    margin: 0 10px 0 0;
+    vertical-align: top;
+    &:hover{
+        .rmv-pst-edtor{
+            opacity: 1;
+        }
+    }
+}
+.gl-frm-bd-usr-li-lft{
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin: 0 0 10px 8px;
+}
+.gl-frm-bd-usr-li-rgt{
+    display: inline-block;
+    position: relative;
+    margin: 0px 10px 0 0;
+    vertical-align: top;
+}
+.lk-add-rgt-editor.in,
+.lk-add-lft-editor.in,
+.lk-add-editor.in{
+    display: inline-block;
+}
+.lk-add-rgt-editor.out,
+.lk-add-lft-editor.out,
+.lk-add-editor.out{
+    display: inline-block;
+}
+.lk-add-editor>i{
+    font-size: 20px;
+    color: #ccc;
+}
+.lk-add-editor{
+    width: 42px;
+    padding: 9px 3px;
+    height: 42px;
+    text-align: center;
+    border-radius: 50%;
+    display: inherit;
+    border: 1px dashed #ddd;
+}
+.lk-gl-gp-t{
+    position: relative;
+    display: inline-block;
+    bottom: 0px;
+}
+.frm-group-btn-partic{
+    display: inline-block;
+    position: relative;
+    margin-right: 12px;
+    top: -6px;
+
+    .ico{
+        overflow: hidden;
+        display: block;
+        width: 27px;
+        height: 27px;
+        background: transparent url(http://opinion.com/images/add_user_64.png) 50% 50% no-repeat
+    }
+}
+.frm-group-btn-place{
+    display: inline-block;
+    position: relative;
+    margin-right: 12px;
+    top: -1px;
+
+    .ico{
+        overflow: hidden;
+        display: block;
+        width: 30px;
+        height: 30px;
+        background: transparent url(http://opinion.com/images/place-ico.png) 50% 50% no-repeat
+    }
+}
+.lk-gl-gp-t>i{
+    font-size: 21px;
+}
+.qq-pst-dv-cam {
+    display: inline-block;
+    cursor: pointer;
+}
+.qq-pst-dv-cam>.glyphicon-camera{
+    color: #8b91a1;
+    font-size: 16px;
+}
+.frm-group-btn-vdeo>i:hover,
+.frm-group-btn-partic>i:hover,
+.lk-gl-gp-t>span:hover,
+.lk-add-editor>i:hover,
+.gl-frm-btm-li-post-l>.glyphicon-camera:hover{
+    color: #0a7eaf;
+}
+.gl-frm-btm-li-post-l>.glyphicon-camera{
+    font-size: 16px !important;
+}
+
+/*FORM LIST PADDING
+-----------------------------------------------------------------------------------------------------*/
+.end-list-form{
+    padding-left:8px;
+    padding-right:8px;
+}
+/*FORM BODY
+-----------------------------------------------------------------------------------------------------*/
+.form-body{
+    width: 100%;
+    padding: 0 0 5px 0px;
+    background-color: #fff;
+}
+
+.gl-frm-btm-li-post-l{
+    /*width: 300px;
+    height: 36px;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;*/
+}
+.gl-frm-bd-usr-ul{
+    padding: 0;
+    display: inline-block;
+    max-width: 92%;
+    &.r{
+        .gl-frm-bd-usr-li{
+            margin: 0 0 0 10px !important;
+        }
+    }
+}
+.length-list{
+    background: white;
+    width: 100%;
+}
+#submit-post{
+    letter-spacing: .5px;
+    border-radius: 2px;
+    font-size: 13px;
+    min-width: 90px;
+    padding: 3px 18px;
+    border-color: #05a4c7;
+    background: #0b99b9;
+}
+/*DIVIDER VERTICAL
+-----------------------------------------------------------------------------------------------------*/
+.meeting-icon-form, .record-icon-form{
+    border-radius: 3px;
+    padding: 3px 8px 3px 8px;
+}
+.record-icon-form{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.qq-gallery .qq-progress-bar{
+    display: block !important;
+    background: #6b9fce !important;
+    height: 5px !important;
+    border-radius: 0 !important;
+    margin-top: 3px !important;
+}
+/*FOR CONTENT IN FORM-POST
+------------------------------------------------------------------------------------------------------*/
+.form-buttons{
+}
+#fine-uploader-s3 .preview-link {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+/*********/
+.react-fine-uploader-file-input-container{
+    position: relative;
+    margin-right: 15px;
+    padding: 2px 2px 2px 0;
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    span {
+        display: none;
+    }
+}
+/*
+----------------------------------------------------------------------------------------------------*/
+#qq-upload-zone{
+
+}
+.post-support-textarea{
+    width: 100%;
+    display: block;
+}
+/*Textarea in both home-form
+----------------------------------------------------------------------------------------------------*/
+.post-form-textarea, 
+.edit-post-form-textarea{
+/*
+    overflow: hidden;
+    outline:none;
+    width: 100%;
+    background: white;
+    display: block;
+    border-style: none;
+    resize:none;
+    font-family: sans-serif;
+*/
+}
+.post-form{
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 5px;
+    .emoji-dv {
+        display: inline-block;
+        vertical-align: top;
+        /*bottom: 1px;*/
+        position: relative;
+        margin-right: 12px;
+        .emoji-btn {
+            cursor: pointer;
+            font-size: 21px !important;
+            display: block !important;
+            width: 30px;
+            height: 30px;
+            background: transparent url(http://opinion/images/emoji_32.png) 50% 50% no-repeat;
+        }
+        &>div {
+            position: relative;
+            top: 0px;
+        }
+    }
+    &.minOpac{
+        opacity: 0.8 !important;
+    }
+
+    .draftJsEmojiPlugin__emojiSelectButton__3sPol,
+    .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu{
+        background: #ffffff url(http://opinion.com/images/2713595-64.png) 50% 50% no-repeat;
+        background-size: cover;
+        width: 31px;
+        height: 31px;
+        border: none;
+        -webkit-appearance: none;
+        top: -1px;
+        position: relative;
+    }
+    .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
+        margin-top: 0px !important;
+    }
+    .frm-confid-name{
+        position: relative;
+        font-size: 12px;
+        font-family: sans-serif;
+        padding: 4px 2px 0;
+        vertical-align: top;
+        color: #07aaf4;
+        display: inline-block;
+    }
+
+    .upl-list-ul{
+        display: block !important;
+    }
+}
+.gl-frm-out.out-active{
+    top: 0;
+    left: 0;
+    z-index: 1133;
+    background: #1a1d1c;
+    opacity: 0.8;
+    width: 100%;
+    height: 100vh;
+    -webkit-transition: background 0.4s;
+       -moz-transition: background 0.4s;
+         -o-transition: background 0.4s;
+            transition: background 0.4s;
+}
+.gl-frm-out{
+    position: fixed;
+}
+.hide-btn-dv.hide-active{
+    bottom: 6px;
+    right: 6px;
+    z-index: 1;
+    height: 42px;
+    width: 140px;
+    background: #ffffff;
+    display: block !important;
+    -webkit-transition: width 0.4s;
+    -moz-transition: width 0.4s;
+    -o-transition: width 0.4s;
+    transition: width 0.4s;
+}
+.hide-btn-dv{
+    position: absolute;
+    display: none;
+    width: 0px;
+}
+.post-form-files{
+    display: none !important;
+}
+/*---------------------------------------------------------------------------------------------------*/
+.thumbnails-in-global-form{
+    width: 50px;
+    height: 50px;
+    border: 1px solid #4F6065;
+    content:"\f007";
+    font-family: FontAwesome;
+    position: relative;
+    font-size: 12em;
+    color:white;
+    background-color: #4F6062;
+}
+.pic-thb-pfrm{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.lk-pic-thb-pfrm{
+    /*border: 1px solid #d8dada;*/
+    background-color: #fff;
+    display: inline-block;
+    border-radius: 50%;
+}
+.text-and-thumbnails{
+    padding-top: 5px;
+}
+
+/*
+---------------------------------------------------------------------------------------------------*/
+.gl-frm-foo{
+    height: 39px;
+    border-top: 1px solid #dee1e2;
+    background: #f1f7f5;
+    position: relative;
+    border-radius: 0 0 4px 4px;
+    &.pst-foo-opt-space{
+        margin-top: 100px;
+    }
+    .react-fine-uploader-file-input-container{
+        display: inline-block;
+        position: relative;
+        bottom: 2px;
+        width: 30px;
+        height: 26px;
+        background: #ffffff url(http://opinion.com/images/if_Camera_32.png) 50% 50% no-repeat;
+        background-size: cover;
+    }
+}
+.gl-frm-foo-ct{
+    padding: 0 10px;
+}
+.zone-upload-form{
+    /*padding-left: 10px;*/
+    /*border-top: 1px solid #F0F0F0;*/
+    /*background: #f6f6f6;*/
+}
+.record-icon{
+    padding-top: 10px;
+}
+.opt-rgt{
+    display: inline-block;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.postform{
+    /*border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;*/
+}
+/*--------------------------------------------------------------------------*/
+.dv-type-pst{
+    position: relative;
+    font-family: sans-serif;
+    display: inline-block;
+    vertical-align: top;
+    top: 0px;
+    margin-right: 65px;
+    z-index: 2;
+}
+.pst-frm-type option {
+    border: 1px solid red;
+}
+.pst-frm-type{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: 1px solid #f1f7f5;
+    background: transparent;
+    font-family: sans-serif;
+    position: relative;
+    z-index: 2;
+    padding: 0 0 6px 0;
+    width: 81px;
+    border: none;
+    color: #727784;
+    font-size: 15px;
+    /*font-weight: 600;*/
+}
+.gl-frm-a{
+    z-index: 5;
+    position: relative;
+    border: 1px solid #d2d9dc;
+    border-radius: 2px;
+    &.out-active{
+        border: none !important;
+        border-radius: 2px;
+        z-index: 1140;        
+        .post-form-body{
+            min-height: 115px;  /*when form focus expand textarea*/
+        }
+    }
+    .pst-select-recip{
+        width: 100%;
+        position: relative;
+        padding: 0px !important;
+        margin: 0 0px 5px 0px;
+
+        .react-selectize-control{
+            border-color: #d9d9d9 #dedddd #d8d9dc !important;
+        }
+    }
+    .pst-select-recip-a{
+        display: inline-block;
+        width: calc(100% - 50px) !important;
+        vertical-align: top;
+        padding: unset !important;
+    }
+}
+.lk-gl-gp-t{
+    .ico {
+        position: relative;
+        opacity: .7;
+        overflow: hidden;
+        display: block;
+        width: 21px;
+        height: 21px;
+        background: transparent url(http://opinion.com/images/185092-64.png) 50% 50% no-repeat;
+        background-size: cover;
+    }
+}
+.gl-frm-btm-li-post-l>.glyphicon-camera{
+    top:2px;
+}
+.ajax-loader-form{
+    position: relative;
+    z-index: 3;
+    height: 32px;
+    width: 45px;
+    background: transparent url(http://opinion.com/images/ajax-loader-form.gif) 50% 50% no-repeat;
+    background-size: contain;
+}
+.gl-ldr-pst{
+    display: inline-block;
+    position: absolute;
+    /*top: -2px;*/
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    width: 46px;
+}
+.frm-contrib-ctnr{
+    position: absolute;
+    right: -280px;
+    top: 0;
+    background: #fff;
+    width: 264px;
+    display: none;
+    border: 1px solid #ffe;
+    border-radius: 2px;
+    max-height: 350px;
+    -webkit-animation-name: fadeOutRight;
+    -moz-animation-name: fadeOutRight;
+    animation-name: fadeOutRight;
+    -webkit-animation-timing-function: ease-out;
+    -moz-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 600ms;
+    -moz-animation-duration: 600ms;
+    animation-duration: 600ms;
+}
+.frm-contrib-ctnr.view{
+    display: block;
+    -webkit-animation-name: fadeInRight;
+    -moz-animation-name: fadeInRight;
+    animation-name: fadeInRight;
+    -webkit-animation-timing-function: ease-out;
+    -moz-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 600ms;
+    -moz-animation-duration: 600ms;
+    animation-duration: 600ms;
+}
+.frm-select-hd-ttl{
+    margin: 0 0 4px;
+    text-align: center;
+}
+.frm-select-hd-ttl-sp{
+    font-size: 14px;
+    /*font-weight: 600;*/
+    color: #2369af;
+}
+.frm-group-btn-vdeo{
+    position: relative;
+    overflow: hidden;
+    display: block;
+    width: 36px;
+    height: 30px;
+    background: #fff url(http://opinion.com/images/173123-64.png) 50% 50% no-repeat;
+    background-size: cover;
+}
+.videoBox{
+    position: relative;
+    background: #fdfdfd;
+    margin: 5px 10px;
+    /*border: 1px solid #d3d8da;*/
+}
+.remove-upl-video{
+    position: absolute;
+    cursor: pointer;
+    right: 4px;
+    font-size: 13px;
+    color: #f1f3f3;
+    letter-spacing: .5px;
+    z-index: 2;
+    text-transform: capitalize;
+    .ico{
+        display: inline-block;
+        width: 17px;
+        margin-right: 3px;
+        height: 20px;
+        background: transparent url('http://opinion.com/images/if_cancel_16.png') 50% 50% no-repeat;
+    }
+    span{
+        display: inline-block !important;
+        vertical-align: top;
+        position: relative;
+        top: 1px;
+    }
+}
+.remove-rname-box{
+    position: absolute;
+    cursor: pointer;
+    right: 4px;
+    font-size: 12px;
+    color: #2e2e2e;
+    font-weight: 600;
+    z-index: 2;
+    .ico{
+        display: inline-block;
+        width: 17px;
+        margin-right: 3px;
+        height: 20px;
+        background: transparent url('http://opinion.com/images/if_cancel_16.png') 50% 50% no-repeat;
+    }
+    span{
+        display: inline-block !important;
+        vertical-align: top;
+        position: relative;
+        top: 1px;
+    }
+}
+
+.camera-rec-ico{
+    display: inline-block;
+    cursor: pointer;
+    margin: 2px 10px 2px 0;
+    vertical-align: middle;
+    width: 25px;
+    height: 25px;
+    background: transparent url('http://opinion.com/images/video_camera_35.png') 50% 50% no-repeat;
+    background-size: cover;
+}
+.more-dv{
+    z-index: 2;
+    position: relative !important;
+    border: dashed 1px #d3dade !important;
+    border-radius: 50% !important;
+    margin: 0 auto 0 !important;
+    width: 25px;
+    height: 25px;
+    background: transparent url('http://opinion.com/images/476329-128.png') 50% 50% no-repeat;
+    background-size: cover;  
+    &.hide-active{
+        display: none !important;
+    } 
+}
+.camera-rec-txt{
+    display: inline-block;
+    vertical-align: middle;
+}
+.video-opt-a{
+    position: relative;
+    width: 100%;
+    padding: 5px;
+    span{
+        display: block;
+        margin-top: 30px;
+    }
+}
+.video-opt-nm-ctnr{
+    display: inline-block;
+    position: absolute;
+    bottom: 33px;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    color: #fff;
+    right: 7px;
+    background: #000;
+}
+#progressContainer>canvas{
+    position: absolute;
+}
+.pst-nme-vid{
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #626a6b;
+    padding-right: 5%;
+    padding-left: 3px;
+    padding-bottom: 5px;
+    outline: none;
+    font-weight: 600;
+    font-size: 12px;
+}
+#vidNameArea, #uploaded{
+    font-size: 12px;
+    position: absolute;
+    display: block;
+    bottom: 0;
+    right: 0;
+}
+#vidNameArea>span{
+    display: block;
+    text-decoration: underline;
+}
+.frm-group-video-dv{
+    position: relative;
+    display: inline-block;
+    margin-right: 15px;
+    /*vertical-align: top;*/
+    bottom: 0;
+}
+.camera-rec-zone, .upl-vid-zone{
+    cursor: pointer;
+    padding: 4px;
+    margin-bottom: 4px;
+}
+.camera-rec-zone:hover, .upl-vid-zone:hover{
+    background-color: #e2e8e6;
+}
+.video-opt-str-btn-ctnr {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    overflow: hidden;
+    cursor: pointer;
+    .ico{
+        width: 25px;
+        height: 25px;
+        margin: 2px 10px 2px 0;
+        background: transparent url(http://opinion.com/images/upload_cloud_32.png) 50% 50% no-repeat;
+        background-size: cover;
+    }
+    /*.upload-video {
+        font-size: 12px;
+        font-weight: 600;
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid #f3f8fd;
+        height: 28px;
+        background: #f3f8fd;
+        color: #3e5e8a;
+        i {
+            font-size: 16px !important;
+            margin-right: 3px;
+        }
+    }*/
+    input{
+        visibility: hidden;
+    }
+    .pst-inp-vid{
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+        cursor: pointer;
+        opacity: 0;
+    }
+}
+.video-area{
+    height: 100%;
+    width: 100%;
+    /*position: absolute;*/
+}
+
+#videoThumb{
+    width: inherit;
+}
+.video-preview {
+    display: inline-block;
+    position: relative;
+    background: #1a1c1d;
+    overflow: hidden;
+    /* This is temporary width and height, these'll be overriden when the source img is loaded.*/
+    /* If you already know size of a preview frame you can hardcode it here. */
+    min-width: 210px;
+    height: 150px;
+    box-shadow: 0 0 6px #bbb;
+}
+
+.video-upl-option {
+    position: absolute;
+    bottom: 130px;
+    left: -40px;
+    width: 200px;
+    height: 100px;
+    border: 1px solid #dfdfe8;
+    padding: 4px 5px;
+    background: #f1f7f5;
+    font-weight: 600;
+    font-size: 12px;
+    &.in {
+        display:block;
+        -webkit-animation-name: slideUp;
+        -moz-animation-name: slideUp;
+        animation-name: slideUp;
+        -webkit-animation-timing-function: ease-out;
+        -moz-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+        -webkit-animation-duration: 600ms;
+        -moz-animation-duration: 600ms;
+        animation-duration: 600ms;
+    }
+
+    &.out{
+        display: none;
+        -webkit-animation-name: slideDown;
+        -moz-animation-name: slideDown;
+        animation-name: slideDown;
+        -webkit-animation-timing-function: ease-in;
+        -moz-animation-timing-function: ease-in;
+        animation-timing-function: ease-in;
+        -webkit-animation-duration: 500ms;
+        -moz-animation-duration: 500ms;
+        animation-duration: 500ms;
+    }
+    #progressContainer{
+        display: inline-block;
+    }
+}
+.video-upl-box{
+    display: none;
+    min-height: 100px;
+    margin: 0px 0px 15px 0px;
+    border: 0.1px solid #e9edef;
+    position: relative;
+    &.in{
+        display: block;        
+    }
+}
+.video-lding-dv {
+    position: relative;
+    width: 210px;
+
+}
+.videoBox-container{
+    width: 100%;
+    padding: 5px;
+    position: relative;
+    .video-lding-ctnr{
+        border: 1px solid #131315;
+        background: #171719;
+        border-radius: 2px;
+        height: 70px;
+        width: 100%;
+        font-size: 12px;
+        color: #fff;
+        position: relative;
+        .ico{
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            top: 15px;
+            left: 0;
+            right: 0;
+            margin: 0 87px;
+            background: transparent url(http://opinion.com/images/processing.gif) 50% 50% no-repeat;
+        }
+    }
+    .video-lding-dv{
+       
+    }
+    &:hover{
+        .remove-upl-video {
+            opacity: 1;
+        }
+    }
+    .video-opt{
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        border: 1px solid #f4f4f4;
+        min-height: 100px;
+        top: 25px;
+        border-radius: 2px;
+        width: 50%;
+        background: #ffffff;
+    }
+    .videoBox-a{
+        display: inline-block;
+        position: relative;
+        width: 50%;
+    }
+    #progressContainer{
+        margin: 0 0 10px 0;
+        position: relative;
+        border: 1px solid #c0cece;
+        color: #fff;
+        width: 210px;
+        height: 7px;
+        background: #fff;
+    }
+    .video-text{
+        width: 100%;
+        vertical-align: top;
+        font-size: 12px;
+        color: #4599cc;
+        word-break: break-word;
+        &:first-letter{
+            text-transform: capitalize;
+        }
+    }
+}
+.videoBox {
+    
+}
+.pst-slct-usr-dv{
+    padding: 3px;
+    height: 44px;
+    cursor: pointer;
+    position: relative;
+}
+.pst-slct-usr-dv:hover{
+    background: #e7e9f1;
+}
+.pst-slct-usr-pic{
+    width: 33px;
+    height: 33px;
+    position: relative;
+    margin-right: 6px;
+    border-radius: 50%;
+    /*border: 1px solid #c0c2ca;*/
+}
+.pst-slct-usr-lk-nm{
+    font-size: 12px;
+    text-transform: capitalize;
+    position: relative;
+    top: -9px;
+    /*font-weight: 600;*/
+    span {
+        display: inline-block;
+        margin-right: 6px;
+    }
+}
+.pst-slct-usr-sp-usrnm{
+    font-size: 11px;
+    position: absolute;
+    bottom: 12px;
+    color: #606363;
+    left: 42px;
+}
+.frm-contrib-ctnr-b{
+    background: #fff;
+}
+.pst-frm-select-bd{
+    overflow-y: auto;
+    height: 200px;
+}
+.pst-frm-select-btm{
+    border-top: 1px solid #ddd;
+    padding: 3px;
+    position: relative;
+}
+.pst-frm-select-fnsh-btn{
+    border: none;
+    position: relative;
+    border-radius: 2px;
+    font-size: 13px;
+    color: #ffffff;
+    padding: 3px 11px;
+    left: 190px;
+    background: #f50b0b;
+    outline: none;
+}
+.pst-select-hide{
+    display: none;
+}
+.frm-select-hd{
+    background: #f1f5f7;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 3px;
+    position: relative;
+}
+.frm-select-ctnr{
+    display: inline-block;
+    width: 100%;
+}
+.edtor-rct-srh{
+    padding-left: 3px;
+    outline: none;
+    width: 100%;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+.inp-frm-editor,
+.inp-frm-leftEditorTexts,
+.inp-frm-rightEditorTexts{
+    display: none;
+}
+.opinion-dv-usrs{
+    height: 42px;
+    position: relative;
+    margin-bottom: 5px;
+}
+.opinion-dv-usrs.in {
+    display:block;
+    -webkit-animation-name: slideDown;
+    -moz-animation-name: slideDown;
+    animation-name:  slideDown;
+    -webkit-animation-timing-function: ease-out;
+    -moz-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 400ms;
+    -moz-animation-duration: 400ms;
+    animation-duration: 400ms;
+}
+.opinion-dv-usrs.out {
+    display: none;
+    -webkit-animation-name: slideUp;
+    -moz-animation-name: slideUp;
+    animation-name: slideUp;
+    -webkit-animation-timing-function: ease-in;
+    -moz-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    -webkit-animation-duration: 400ms;
+    -moz-animation-duration: 400ms;
+    animation-duration: 400ms;
+}
+.basic-dv-usrs.in {
+    display:block;
+    -webkit-animation-name: slideDown;
+    -moz-animation-name: slideDown;
+    animation-name:  slideDown;
+    -webkit-animation-timing-function: ease-out;
+    -moz-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 400ms;
+    -moz-animation-duration: 400ms;
+    animation-duration: 400ms;
+}
+.basic-dv-usrs.out {
+    display: none;
+    -webkit-animation-name: slideUp;
+    -moz-animation-name: slideUp;
+    animation-name: slideUp;
+    -webkit-animation-timing-function: ease-in;
+    -moz-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    -webkit-animation-duration: 400ms;
+    -moz-animation-duration: 400ms;
+    animation-duration: 400ms;
+}
+.opinion-dv-usrs-lft{
+    display: inline-block;
+    width: 130px;
+}
+.opinion-dv-usr-ntr{
+    display: inline-block;
+    position: absolute;
+    left: 47%;
+}
+.pst-dv-usr-crtor{
+    display: inline-block;
+    vertical-align: top;
+}
+.opinion-dv-usrs-rgt{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+.frm-confid-ctnr{
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    top: -1px;
+}
+.frm-confid-btn{
+    position: relative;
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 0px 5px 0;
+    font-weight: 600;
+    display: inline-block;
+    vertical-align: top;
+    .ico{
+        position: relative;
+        overflow: hidden;
+        display: block;
+        width: 23px;
+        height: 23px;
+        background: transparent url(http://opinion.com/images/2542008-64-blue.png) 50% 50% no-repeat;
+        background-size: cover;
+    }
+}
+.confid-opt-ctnr-a.displ-not{
+    display: none;
+}
+.confid-opt-ctnr-a{
+    position: absolute;
+    right: 0;
+    z-index: 5;
+    bottom: 20px;
+    width: 155px;
+}
+.pst-frm-confid{
+    display: none;
+}
+.type-dsply {
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 5px 5px 0 0;
+    padding: 2px 4px 3px;
+    text-align: center;
+    min-width: 70px;
+    position: relative;
+    margin-right: 15px;
+    line-height: 12px;
+    background: none;
+    &.active{
+        background: white;
+        border-top: 1px solid #cdd2d4;
+        z-index: 5;
+        padding: 6px 4px 6px;
+        border-bottom: none;
+        border-color: #e4eaec #e4eaec #ffffff #e4eaec;
+    }
+    .dsply-name {
+        font-size: 12px;
+        color: #003059;
+        letter-spacing: 1px;
+    }
+}
+.pst-frm-type-lk{
+    position: absolute;
+    width: 160px;
+    padding: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 17px;
+    letter-spacing: .7px;
+    top: 30px;
+    border-radius: 0px;
+    right: 0;
+    min-height: 150px;
+    background: rgba(61, 68, 78, 0.72);
+    &.opinion{
+        right: unset !important;
+        left: 0 !important;
+    }
+    .type-name{
+        margin-left: 5px;
+    }
+    .type-opt-ctnr{
+        display: block;
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    .txt-ctnr{
+        display: block;
+        text-align: justify;
+    }
+}
+.type-opt-dv {
+    position: absolute;
+    right: 0;
+    display: inline-block;
+    .lk-type-frm {
+        position: absolute;
+        right: 0;
+        top: 4px;
+        i {
+            font-size: 17px;
+        }
+    }
+
+    .pst-frm-type-ctnr {
+        position: absolute;
+        right: -10px;
+        top: 27px;
+        z-index: 55;
+        width: 240px;
+        font-family: sans-serif;
+
+        .arraw {
+            z-index: 55;
+            display: block;
+            position: absolute;
+            right: 5px;
+            width: 10px;
+            height: 10px;
+            border-bottom-width: 10px;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #8a8787;
+
+            i {
+                display: inline;
+                position: absolute;
+                right: -10px;
+                border-bottom-width: 10px;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid #edf1f0;
+            }
+        }
+
+        .opt-type-ctnr {
+            display: block;
+            position: relative;
+            color: #6e777d;
+            top: 9px;
+            right: 1px;
+            background-color: #edf0ef;
+            border-radius: 2px;
+            border: 1px solid #dee1e2;
+        }
+
+        div.pst-frm-type-lk {
+            height: 65px;
+            overflow: hidden;
+            display: block;
+            line-height: 16px;
+            padding: 2px 4px 0;
+
+            &:first-child { 
+                border-bottom: 1px solid #dee1e2
+            }
+            &:hover {
+                cursor: pointer;
+                background-color: #fff;
+            }
+
+            .type-opt-ctnr {
+                display: block;
+                color: #535369;
+                margin-bottom: 2px;
+            }
+
+            .type-icon {
+                margin: 1px 4px 0 0;
+
+                i {
+                    font-size: 16px;
+                }
+            }
+
+            .type-name {
+                font-size: 14px;
+                font-family: sans-serif;
+                position: relative;
+                top: -1px;
+            }
+        }
+
+        .txt-ctnr {
+            font-size: 12px;
+            line-height: 8px;
+            font-family: sans-serif;
+        }
+    }
+}
+
+.confid-arraw {
+    z-index: 6;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    width: 10px;
+    height: 10px;
+    border-bottom-width: 10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #8a8787;
+
+    i {
+        display: inline;
+        position: absolute;
+        bottom: 0px;
+        right: -10px;
+        border-bottom-width: 10px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #edf1f0;
+    }
+}
+
+.confid-opt-ctnr-b{
+    background: #edf1f0;
+    padding: 1px;
+    display: block;
+    margin-bottom: 9px;
+    border: 1px solid #d8dad9;
+    border-radius: 3px;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+.confid-opt-a{
+    display: block;
+    min-height: 24px;
+    border-bottom: 1px solid #ccc;
+    padding: 2px 3px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1645fb;
+}
+.confid-opt-a:hover{
+    background-color: #d3dad8;
+}
+.confid-opt-a:last-child{
+    border-bottom: none;
+}
+select::-ms-expand{
+    display: none;
+}
+.gap-tm-cont{
+    position: absolute;
+    right: -155px;
+    z-index: 2;
+    text-align: center;
+    top: -6px;
+    width: 135px;
+    padding: 8px 1px 6px 6px;
+    background: #fff;
+    border-radius: 3px;
+}
+.gap-tm-bd{
+    color: #564c9c;
+    font-size: 13px;
+    font-weight: 600;
+}
+.pst-select-recip-bf-text{
+    display: inline-block;
+    vertical-align: top;
+    width: 8%;
+    font-size: 12px;
+    font-weight: 600;
+    color: #687d88;
+}
+
+.selectize-control.inp-frm-recip>div.selectize-input{
+    border-radius: 0;
+    min-height: 21px;
+    padding: 1px;
+    overflow: hidden;
+    border: none;
+}
+.pst-select-recip{
+    width: 100%;
+    position: relative;
+    padding : 0 10px;
+    /*margin: 0 0 3px 0;*/
+    .react-selectize-control{
+        border: none !important;
+        border-bottom: 1px solid !important;
+        margin-bottom: 3px !important;
+    }
+    .pst-select-recip-lft{
+        display: inline-block;
+        position: relative;
+        width: 50px;
+        top: 6px;
+        vertical-align: top;
+        .txt {
+            position: relative;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4c5a8c;
+        }
+    }
+    .pst-select-recip-a{
+        display: inline-block;
+        padding: 60px;
+        width: 100%;
+    }
+    .dropdown-menu {
+        width: 250px !important;
+        max-height: 250px !important;
+        border-color: #c0c2c5 #c4c9d2 #d9d9d9;
+        padding: 2px;
+        border-radius: 2px !important;
+        overflow-x: hidden;
+        .option-wrapper {
+            padding: 2px;
+        }
+    }
+}
+.selec-sugg.active{
+    background-color: #f2f7fb !important;
+}
+.selec-sugg{
+    position: relative;
+    overflow: hidden;
+    padding: 2px;
+    margin-bottom: 5px;
+    .selec-sugg-pic{
+        width: 35px;
+        height: 35px;
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 6px;
+        border-radius: 50%;
+        border: 1px solid #ddd;
+    }
+    .selec-sugg-label{
+        display: inline-block;
+        vertical-align: top;
+        color: #a1a3a7;
+        line-height: 14px;
+        .selec-sugg-name{
+            text-transform: capitalize;
+            font-size: 11px;
+            font-weight: 600;
+            display: block;
+            color: #3c437d;
+        }
+        .selec-sugg-usrnm {
+            display: block;
+            font-size: 11px;
+        }
+    }
+}
+.selec-field{
+    background: #f2f7fb !important;
+    border: #cdd !important;
+    color: #8b97ab !important;
+    font-weight: 300 !important;
+    font-family: sans-serif !important;
+    font-size: 12px !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+.op-sltz-label{
+    display: none;
+}
+.frm-gapDays, .frm-gapHours, .frm-gapMinutes{
+    border: none;
+    width: 30px;
+    background: #f1f7f5;
+    -webkit-appearance: none;
+    -moz-appearance:none;
+    appearance:none;
+    outline: none;
+}
+.frm-gapDays{
+    width: 25px;
+}
+.frm-add-time{
+    margin-right: 10px;
+}
+.gap-txt{
+    margin-right: 10px;
+}
+.gap-tm-bd>span{
+}
+.gap-tm-bd>span:last-child{
+    margin-right: 0px;
+}
+.rmv-pst-edtor{
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    display: inline-block;
+    width: 16px;
+    height: 15px;
+    background: #bac0b6;
+    opacity: 0;
+    border-radius: 50px;
+}
+.dpl-rmv-pst-edtor{
+    opacity: 0.8 !important;
+}
+.rmv-pst-edtor>i{
+    position: relative !important;
+    left: 2px !important;
+    bottom: 2px !important;
+}
+/*part of dialog message */
+.pst-dialog-overlay {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    opacity: 0.65;
+    z-index: 110;
+    &.active {
+        display: block !important;
+        z-index: 1145;
+    }
+}
+
+
+.pst-dialog-box {
+    display: none;
+    position: fixed;
+    min-height: 40px;
+    background-color: #fff;
+    width: 300px;
+    z-index: 111;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 4px 4px 3px 3px rgba(0, 0, 0, 0.35);
+    box-shadow: 4px 4px 3px 3px rgba(0, 0, 0, 0.35);
+    -webkit-animation-name: fadeOutRight;
+    -moz-animation-name: fadeOutRight;
+    animation-name: fadeOutRight;
+    -webkit-animation-timing-function: ease-out;
+    -moz-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 300ms;
+    -moz-animation-duration: 300ms;
+    animation-duration: 300ms;
+    &.active {
+        display: block !important;
+        z-index: 1150;
+        top: 80px;
+        -webkit-animation-name: fadeInRight;
+        -moz-animation-name: fadeInRight;
+        animation-name: fadeInRight;
+        -webkit-animation-timing-function: ease-out;
+        -moz-animation-timing-function: ease-out;
+        animation-timing-function: ease-out;
+        -webkit-animation-duration: 300ms;
+        -moz-animation-duration: 300ms;
+        animation-duration: 300ms;
+    }
+}
+#pst_dialog_box>div {
+    background-color: #fff;
+    margin: 5px;
+    position: relative;
+}
+.pst-dialog-box-foot{
+    border-top: 1px solid #cdd1d4;
+    min-height: 25px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    color: #206aab;
+}
+.pst-dialog-box-body{
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 25px;
+    padding: 1px 5px;
+    color: #206aab;
+}
+.pst-dialog-box-head{
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    color: #206aab;
+}
+.pst-dialog-box-foot button{
+    margin: 2px 10px;
+    color: #fff;
+    border-radius: 2px;
+    padding: 4px 10px;
+    margin: 4px 15px 0;
+}
+.pst-dialog-box-foot button.confirm-action{
+    border: 1px solid #2468bb;
+    background: #2468bb;
+}
+.pst-dialog-box-foot button.confirm-cancel{
+    border: 1px solid #c31d1d;
+    background: #c31d1d;
+}
+[hidden] {
+    display: none !important;
+}
+
+.react-fine-uploader-gallery-nodrop-container,
+.react-fine-uploader-gallery-dropzone {
+    border-radius: 6px;
+    background-color: #FAFAFA;
+    max-height: 490px;
+    min-height: 310px;
+    overflow-y: hidden;
+    padding: 15px 15px 15px 5px;
+    position: relative;
+}
+
+.react-fine-uploader-gallery-dropzone {
+    border: 2px dashed #00ABC7;
+}
+.react-fine-uploader-gallery-dropzone-upload-icon {
+    height: 36px;
+    margin-bottom: -6px;
+    margin-right: 10px;
+    width: 36px;
+}
+
+.react-fine-uploader-gallery-nodrop-container {
+    border: 2px solid #00ABC7;
+}
+
+.react-fine-uploader-gallery-dropzone-active  {
+    background: #FDFDFD;
+    border: 2px solid #00ABC7;
+}
+
+.react-fine-uploader-gallery-dropzone-content,
+.react-fine-uploader-gallery-nodrop-content {
+    font-size: 36px;
+    left: 0;
+    opacity: 0.25;
+    position: absolute;
+    text-align: center;
+    top: 38%;
+    width: 100%;
+}
+
+.react-fine-uploader-gallery-file-input-container {
+    background: #00ABC7;
+    border: 1px solid #37B7CC;
+    border-radius: 3px;
+    color: #FFFFFF;
+    display: inline;
+    float: left;
+    margin-left: 10px;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 7px;
+    text-align: center;
+    width: 105px;
+}
+.react-fine-uploader-gallery-file-input-container:hover {
+    background: #33B6CC;
+}
+.react-fine-uploader-gallery-file-input-container:focus {
+    outline: 1px dotted #000000;
+}
+.react-fine-uploader-gallery-file-input-content {
+    display: inline-block;
+    margin-top: -2px;
+}
+.react-fine-uploader-gallery-file-input-upload-icon {
+    fill: white;
+    height: 24px;
+    margin-bottom: -6px;
+    margin-right: 5px;
+    width: 24px;
+}
+
+.react-fine-uploader-gallery-progress-bar,
+.react-fine-uploader-gallery-total-progress-bar {
+    border-radius: 3px;
+}
+.react-fine-uploader-gallery-progress-bar-container,
+.react-fine-uploader-gallery-total-progress-bar-container {
+    background: #F2F2F2;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset;
+    position: absolute;
+}
+.react-fine-uploader-gallery-total-progress-bar-container {
+    display: inline-block;
+    height: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 4px;
+    width: 70%;
+}
+.react-fine-uploader-gallery-progress-bar,
+.react-fine-uploader-gallery-total-progress-bar {
+    background: #00ABC7;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) inset;
+    height: inherit;
+}
+.react-fine-uploader-gallery-progress-bar-container {
+    height: 15px;
+    left: 50%;
+    opacity: 0.9;
+    top: 60px;
+    transform: translateX(-50%);
+    width: 90%;
+    z-index: 1;
+}
+
+.react-fine-uploader-gallery-files {
+    clear: both;
+    list-style: none;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-left: 0;
+    padding-top: 15px;
+}
+.react-fine-uploader-gallery-files-enter {
+    opacity: 0.01;
+}
+.react-fine-uploader-gallery-files-enter.react-fine-uploader-gallery-files-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+.react-fine-uploader-gallery-files-leave {
+    opacity: 1;
+}
+.react-fine-uploader-gallery-files-leave.react-fine-uploader-gallery-files-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+}
+
+.react-fine-uploader-gallery-file {
+    background-color: #FFFFFF;
+    border-radius: 9px;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.22);
+    display: inline-block;
+    font-size: 13px;
+    height: 165px;
+    line-height: 16px;
+    margin: 0 25px 25px 10px;
+    position: relative;
+    vertical-align: top;
+    width: 130px;
+}
+
+.react-fine-uploader-gallery-thumbnail-container {
+    display: block;
+    height: 130px;
+    text-align: center;
+}
+.react-fine-uploader-gallery-thumbnail {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.react-fine-uploader-gallery-thumbnail-icon-backdrop,
+.react-fine-uploader-gallery-upload-failed-icon,
+.react-fine-uploader-gallery-upload-success-icon {
+    left: 50%;
+    opacity: 0.5;
+    position: absolute;
+    top: 39%;
+    transform: translate(-50%, -50%);
+}
+.react-fine-uploader-gallery-upload-failed-icon,
+.react-fine-uploader-gallery-upload-success-icon {
+    height: 60px;
+    width: 60px;
+    z-index: 1;
+}
+.react-fine-uploader-gallery-upload-success-icon {
+    fill: green;
+}
+.react-fine-uploader-gallery-upload-failed-icon {
+    fill: red;
+}
+.react-fine-uploader-gallery-thumbnail-icon-backdrop {
+    background-color: white;
+    border-radius: 30px;
+    height: 50px;
+    width: 50px;
+}
+
+.react-fine-uploader-gallery-file-footer {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.react-fine-uploader-gallery-filename {
+    display: block;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.react-fine-uploader-gallery-filesize {
+    display: block;
+    float: right;
+}
+
+.react-fine-uploader-gallery-status {
+    font-style: italic;
+}
+
+.react-fine-uploader-gallery-cancel-button:hover svg,
+.react-fine-uploader-gallery-delete-button:hover svg,
+.react-fine-uploader-gallery-pause-resume-button:hover svg,
+.react-fine-uploader-gallery-retry-button:hover svg {
+    fill: grey;
+}
+.react-fine-uploader-gallery-cancel-button:focus,
+.react-fine-uploader-gallery-delete-button:focus,
+.react-fine-uploader-gallery-pause-resume-button:focus,
+.react-fine-uploader-gallery-retry-button:focus {
+    outline: none;
+}
+.react-fine-uploader-gallery-cancel-button:focus svg,
+.react-fine-uploader-gallery-delete-button:focus svg,
+.react-fine-uploader-gallery-pause-resume-button:focus svg,
+.react-fine-uploader-gallery-retry-button:focus svg {
+    fill: grey;
+}
+.react-fine-uploader-gallery-cancel-button,
+.react-fine-uploader-gallery-delete-button,
+.react-fine-uploader-gallery-pause-resume-button,
+.react-fine-uploader-gallery-retry-button {
+    background: transparent;
+    border: 0;
+    position: absolute;
+}
+.react-fine-uploader-gallery-cancel-button,
+.react-fine-uploader-gallery-delete-button {
+    right: -18px;
+    top: -12px;
+}
+.react-fine-uploader-gallery-pause-resume-button,
+.react-fine-uploader-gallery-retry-button {
+    left: -18px;
+    top: -12px
+}
+
+.nxt-frm-ctnr{
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid #ccc;
+    border-radius: 2px;
+    box-shadow: 0px 0px 15px 0px #c8cacc;
+    background-color: #fff;
+    .nxt-frm-ctnr-a{
+        position: relative;
+    }
+    .nxt-abord{
+        position: absolute;
+        height: 20px;
+        top: -25px;
+        font-size: 21px;
+        color: #fff;
+        right: 0;
+        cursor: pointer;
+    }
+    .add-frm-pst{
+        position: relative;
+        .add-frm-pst-a{
+            
+        }
+    }
+    .lft-addForm-dv{
+        display: inline-block;
+        .pic-ctnr{
+            border: 1px solid #dfe4e6;
+            img{
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+    .expandingArea{
+        display: inline-block;
+        vertical-align: top;
+        padding-left: 4px;
+        min-height: 42px;
+        width: -webkit-calc(100% - 42px);
+        width: -moz-calc(100% - 42px);
+        width: -o-calc(100% - 42px);
+        width: calc(100% - 42px);
+    }
+    .fn-upl-add-pst{
+        position: relative;
+        margin-top: 3px;
+    }
+    .post-support-textarea{
+        padding: 4px;
+        min-height: 75px;
+        .post-form-textarea{
+            font-size: 13px;
+        }
+    }
+    .qq-gallery{
+        padding: 0 5px;
+        .thumb-pst-img-container{
+            margin: 0 5px 5px 0 !important;
+        }
+    }
+    .gl-frm-foo{
+        height: 32px;
+        .gl-frm-foo-ct{
+            padding: 2px 4px;
+            .emoji-dv{
+                top: -2px;
+
+                .draftJsEmojiPlugin__emojiSelectButton__3sPol,
+                .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu{
+                    background: transparent url(http://opinion.com/images/2713595-64.png) 50% 50% no-repeat;
+                    background-size: cover;
+                    width: 32px;
+                    height: 34px;
+                    border: none;
+                    -webkit-appearance: none;
+                    top: -3px;
+                    position: absolute;
+                }
+                .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
+                    /*bottom: 33px !important;*/
+                }
+            }
+            .opt-rgt{
+                right: 4px;
+                top:3px;
+                button{
+                    padding: 2px 5px;
+                    border-radius: 2px;
+                }
+            }
+        }
+        .gl-ldr-pst{
+            right: 11px;
+            bottom: 4px;
+        }
+    }
+}
+
+.set-pst-form{
+    position: absolute !important;
+    top: -305px !important;
+    left: -234px;
+    .emoji-dialog{
+        border: 1px solid #c6cbcc !important;
+    }
+    .arraw{
+        top: 299px !important;
+        left: 232px !important;
+        border-top-color: #5d5757 !important;
+        border-bottom-color: transparent !important;
+        /*&:before {
+            bottom: -300px;
+            position: absolute;
+            left: 232px;
+            border-top-color: #444;
+            border-bottom-color: transparent;
+            border-left-width: 10px;
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-width: 10px;
+            z-index: -2;
+          }*/
+        &:after {
+            border-bottom-color: transparent !important;
+            border-top-color: #ffffff;
+            border-left-width: 10px;
+            border-top-width: 10px;
+            border-style: solid;
+            border-width: 10px;
+            color: transparent;
+            position: absolute;
+            bottom: -10px;
+            height: 12px;
+            left: -10px;
+            width: 16px;
+            content: '';
+            z-index: 3;
+        }
+        
+    }
+}
+
+/* style for video preview */
+.video-preview-dv{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    .pster-ctnr{
+        position: relative;
+        display: block !important;
+        width: 100%;
+        height: 100%;
+        .pster-img{
+            position: absolute;
+            display: block !important;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+.await-vdeo {
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 100%; /* Need a specific value to work */
+    height: 100%;
+    background: transparent url('http://opinion.com/images/big-snake-transparent.gif') 50% 50% no-repeat;
+}
+
+.preview-vid-dv {
+    height: 100%;
+    background: #ddd;
+    right: 29px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    bottom: 0; 
+    opacity: 0.9;
+    cursor: pointer;
+}
+.preview-vid-img{
+    position: relative;
+    cursor: pointer;
+    height: 60px;
+}
+.preview-vid-wrap{
+    left: 0px;
+    position: absolute;
+    bottom: 30px;
+    width: 106px;
+    border: 2px solid;
+    border-radius: 1px;
+    overflow: hidden;
+}
+.pst-places-suggest{
+    display: block;
+    position: absolute;
+    width: 340px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    &.pst-places-hide{
+        display: none;
+    }
+    input{
+        display: inline-block;
+        width: 100%;
+        height: 30px;
+        border: 1px solid #dcdee2;
+        border-radius: 2px;
+    }
+    .pst-places-m-loader{
+        font-size: 13px;
+        display: inline-block;
+        width: 300px;
+    }
+    .hjXGpB{
+        font-size: 12px !important;
+        color: #5d626d !important;
+        height: 35px !important;
+    }
+}
+.gl-frm-btm-li-post-l-a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border: dashed 1px #d3dade;
+    background: #ffffff;
+    border-radius: 50%;
+}
+/*experimental circular on form*/
+.gl-frm-btm-li-post-l{
+    z-index: 2; /**/
+    display: none;
+    background: #e5eded;
+    position: relative !important;
+    /*left: 145px !important;*/
+    /*right: 0 !important;*/
+    width: 140px !important;
+    height: 140px !important;
+    padding: 20px !important;
+    border: dashed 1px #d3dade !important;
+    border-radius: 50% !important;
+    margin: 0 auto 0 !important;
+    &.show-dv{
+        display: block !important;
+    }
+    .item:not(.center){
+        display: inline-block;
+        position: absolute !important;
+        /*background-color: #8fadb0;*/
+        /* border-radius: 50%; */
+        cursor: pointer;
+        top: 50%;
+        left: 50%;
+        /* width: 32px; */
+         height: 31px; 
+        margin: -15px -16px;
+    }
+
+    /*&img { display: block; width: 100%; }*/
+    .deg0 { transform: translate(60px); } /* 12em = half the width of the wrapper */
+    .deg45 { transform: rotate(225deg) translate(60px) rotate(-225deg); }
+    .deg135 { transform: rotate(135deg) translate(60px) rotate(-135deg); }
+    .deg180 { transform: translate(-120px); }
+    .deg225 { transform: rotate(225deg) translate(-60px) rotate(-225deg); }
+    .deg315 { transform: rotate(315deg) translate(60px) rotate(-315deg); }
+
+    .center{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 33px;
+        height: 33px;
+        margin: -13px;
+    }
+}
+.gl-frm-foo{
+    height: unset !important;
+    border-top: 1px solid transparent;
+    background: #fff;
+    padding: 3px;
+}
