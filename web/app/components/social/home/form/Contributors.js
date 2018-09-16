@@ -48,6 +48,7 @@ const Contributors  = createReactClass({
 						<div  className={this.props.currentEditor == 'editor' ? `frm-contrib-ctnr view` : `frm-contrib-ctnr`} id="pst_form_editors">
 							<EditorsBox 
 								{...this.props}
+								addEditor={this.props.addEditor}
 								/>
 						</div>  
 	                }
@@ -57,11 +58,13 @@ const Contributors  = createReactClass({
 		            	<div className={this.props.currentEditor == 'leftEditor' ? `frm-contrib-ctnr view` : `frm-contrib-ctnr`} id="pst_form_lft_editors">
 	    	            	<LeftEditorsBox 
 	    	            		{...this.props}
+	    	            		addLeftEditor={this.props.addLeftEditor}
 	    	            		/>
 	    	            </div>
 	    	            <div className={this.props.currentEditor == 'rightEditor' ? `frm-contrib-ctnr view` : `frm-contrib-ctnr`} id="pst_form_rgt_editors">
 	    	            	<RightEditorsBox 
 	    	            		{...this.props}
+	    	            		addRightEditor={this.props.addRightEditor}
 	    	            		/>
 	    	            </div>
 	    	        </div>

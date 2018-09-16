@@ -3,18 +3,22 @@
 namespace OP\PostBundle\Controller;
 
 use OP\PostBundle\Document\Post,
+    OP\UserBundle\Document\User,
     OP\PostBundle\Form\PostType,
     OP\PostBundle\Event\PostEvent,
     OP\PostBundle\Document\Comment,
     OP\PostBundle\Form\CommentType,
     OP\UserBundle\Document\Favorite,
     OP\PostBundle\Event\OPPostEvents,
+    JMS\Serializer\SerializerInterface,
     OP\UserBundle\Security\UserProvider,
+    OP\PostBundle\DocumentManager\PostManager,
     Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\MessageBundle\DocumentManager\ThreadManager,
     OP\MessageBundle\DocumentManager\MessageManager,
     OP\PostBundle\FormHandler\NewPostFormHandler,
+    OP\UserBundle\DocumentManager\InvitationManager,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
@@ -25,11 +29,6 @@ use OP\PostBundle\Document\Post,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 
-/**
- * Post controller.
- * default from routing.yml is "/posts/"
- * @Route("/")
- */
 class PostController extends Controller
 {
 
@@ -43,34 +42,68 @@ class PostController extends Controller
     /**
      * Lists all Post posts.
      *
-     * @Route("/", name="post")
+     * @Route("/", name="post_index")
      * @Template()
      *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request, ThreadManager $threadMan, MessageManager $msgMan, InvitationManager $invitMan, EventDispatcherInterface $dispatcher, SerializerInterface $serializer, ToArrayTransformer $transformer, NotificationManager $notifMan, PostManager $pMan)
     {
-        echo "something work just fine";
-        die();
+        $session  = $request->getSession();
+        if($token = $session->get('access_token')) {
+            $post = $postIds  = [];
+            $utcDate = new \Datetime(null, new \DateTimeZone("UTC"));
+            $user = $this->_getUser();
+            $dm   = $this->getDocumentManager();
+
+
+            $postsData    = $this->loadInitialPosts($user, 1, $utcDate, $pMan); //TODO replace by getStream api
         
-        $dm = $this->getDocumentManager();
-
-        $post = $dm->getRepository('OPPostBundle:Post')->findSimplePostById("58834ce5aa95aa040f000042");
-        if(!$post){
-            throw new \Exception("Error Processing Request", 1);    
+            return $this->render('OPPostBundle:Post:show.html.twig', [
+                // We pass an array as props
+                'initialState' => [
+                    'App'         => [
+                        'sessionId'    => $session->getId()
+                    ],
+                    'User'        => [
+                        'user'      => $serializer->toArray($user)
+                    ],
+                    'Auth'         => [
+                        'token'    => $token,
+                        'data'      => $session->get('_authData')
+                    ],
+                    'Posts' => [
+                        'posts'   => $postsData['posts']
+                    ],
+                    'Stream'         => [
+                        'lastStreamId'=> $postsData['lastStreamId'],
+                    ],
+                    'Notification' => [
+                        'nbAlerts'  => $notifMan->countAlerts($user),
+                    ],
+                    'Invitation'   => [
+                        'nbAlerts'  =>  $invitMan->countAlerts($user),
+                    ],
+                    'Message'      => [
+                        'nbAlerts'  =>  $msgMan->countAlerts($user),
+                        'threadsIds' => $threadMan->findParticipantInboxThreadsIds($user)
+                    ],
+                    'Users'        => [
+                        'defaults'  => $invitMan->loadDefaultUsers($user, []),
+                        'onlines'   => []
+                    ],
+                    'NewsFeed'     => [
+                        'news'      => []
+                    ],
+                    'Invitation'    => [],
+                ],
+                'title'         => "Public Post",
+                'description'   => 'list of public opinions', 
+                'locale'        => $request->getLocale(),
+            ]);
+        } else {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        $post = new \DateTime();
-        $post = $post->getTimestamp();
-        // $postTransformer = $this->get('op_post.object_to_array.transformer');
-
-        // $post = $postTransformer->postToArray($post);
-        // foreach ($posts as $post){
-        //     $post = $postTransformer->postObjectToArray($post);
-        // }
-
-        $response = new JsonResponse();
-        return $this->render('OPPostBundle:Post:new.html.twig', array('post'=>$post));
-        // return $response->setData(array('post' => $post));
     }
 
     /**
@@ -141,7 +174,7 @@ class PostController extends Controller
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If post doesn't exists
      */
-    public function showAction(Request $request, $id, ThreadManager $threadMan, MessageManager $msgMan, InvitationManager $invitMan, EventDispatcherInterface $serializer, ToArrayTransformer $transformer, NotificationManager $notifMan)
+    public function showAction(Request $request, $id, ThreadManager $threadMan, MessageManager $msgMan, InvitationManager $invitMan, EventDispatcherInterface $dispatcher, ToArrayTransformer $transformer, NotificationManager $notifMan, SerializerInterface $serializer)
     {
         $session  = $request->getSession();
         if($token = $session->get('access_token')) {
@@ -349,6 +382,26 @@ class PostController extends Controller
         $dm->persist($favor);
         $dm->flush();
         return $response->setData(array('response'=>array('status'=>true, 'post'=>'post')));
+    }
+
+    protected function loadInitialPosts(User $user, $page, $date, $manager) {
+        $timeline  = $manager->loadPublic($user, $page, $date);
+        $posts     = $timeline['posts'];
+        $authors   = $newsRefs = [];
+        foreach ($posts as $p) {
+            $authors[]  = $p['author'];
+            $newsRefs[] = [
+                'id' => $p['id'],
+                'type' => $p['type']
+            ];
+        }
+
+        return [
+            'posts' => $posts,
+            'authors' => $authors,
+            'newsRefs'  => $newsRefs,
+            'lastStreamId' => $timeline['lastStreamId']
+        ];
     }
 
     public function _getUser()

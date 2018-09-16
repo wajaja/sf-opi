@@ -5,6 +5,7 @@ namespace OP\UserBundle\Controller;
 use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Event\FormEvent,
     FOS\UserBundle\Model\UserInterface,
+    JMS\Serializer\SerializerInterface,
     OP\UserBundle\Security\UserProvider,
     Symfony\Component\HttpFoundation\Request,
     FOS\UserBundle\Event\FilterUserResponseEvent,
@@ -16,6 +17,7 @@ use FOS\UserBundle\FOSUserEvents,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\RedirectResponse,
     OP\UserBundle\DocumentManager\InvitationManager,
+    OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /** Controller managing the user profile */
@@ -29,12 +31,11 @@ class InvitationController extends Controller
         $this->user_provider = $uProvider;
     }
     
-    public function indexAction(Request $request, MessageManager $msgMan, ThreadManager $threadMan, InvitationManager $invitMan)
+    public function indexAction(Request $request, MessageManager $msgMan, ThreadManager $threadMan, InvitationManager $invitMan, NotificationManager $notiMan, SerializerInterface $serializer)
     {
         $session  = $request->getSession();
         if($token = $session->get('access_token') /* && $session->get('refresh_token)*/) {
             $description    = 'Opinion Home page, news list';
-            $serializer     = $this->get('jms_serializer');
             $user           = $this->_getUser();
 
             return $this->render('OPUserBundle:Invitation:index.html.twig', [

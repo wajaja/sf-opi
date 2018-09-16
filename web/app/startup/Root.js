@@ -1,64 +1,48 @@
-import { Route, Switch } from 'react-router-dom'
-import React 			from 'react'
+import { Route, Switch }    from 'react-router-dom'
+import React, { Component } from 'react'
 const Post  = require('./../routes/post/posts/Post').default,
-ModalPicture = require('./../routes/media/pictures/ModalPicture').default,
-Video       = require('./../routes/media/videos/Video').default,
+Video       = require('./../routes/media/videos/components/Video').default,
 Sound       = require('./../routes/media/sounds/Sound').default, 
 Home        = require('./../routes/social/Home/Home').default,
+Welcome     = require('./../routes/social/Welcome/Welcome').default,
 Group       = require('./../routes/user/group/Group').default,
 Place       = require('./../routes/social/place/Place').default,
 Search      = require('./../routes/social/search/Search').default,
+NotMatched  = require('./../routes/social/Welcome/NotMatched').default,
 Profile     = require('./../routes/user/profile/Profile').default,
 Inbox       = require('./../routes/message/message/Inbox').default,
-Setting     = require('./../routes/user/settings/Setting').default,
 Hashtag     = require('./../routes/social/hashtag/Hashtag').default,
+Login       = require('./../routes/user/security/Login').default,
+Signup      = require('./../routes/user/registration/Signup').default,
 Confirmed   = require('./../routes/user/confirmed/Confirmed').default,
 Invitation  = require('./../routes/user/invitations/Invitation').default,
 Notification = require('./../routes/social/notification/Notification').default
 
 import 'react-virtualized/styles.css'; // only needs to be imported once
-// import SearchRoute       from './../routes/social/search'
-// import ExploreRoute      from './../routes/social/explore'
-// import PublicityRoute    from './../routes/social/publicity'
-// import LocationRoute     from './../routes/social/location'
-// import PostRoute         from './../routes/post/post'
-// import OpinionRoute      from './../routes/post/opinion'
-// import PollRoute         from './../routes/post/poll'
-// import PictureRoute      from './../routes/media/picture'
-// import VideoRoute        from './../routes/media/video'
-// import DocumentRoute     from './../routes/media/document'
-// import RecordRoute       from './../routes/media/mediastream'
-// import MessageRoute      from './../routes/message/message'
-// import QuestionRoute     from './../routes/message/question'
-// import GroupRoute        from './../routes/user/group'
-// import DiaryRoute        from './../routes/user/diary'
 
+import MyLoadable    from './../components/MyLoadable'
+
+const Setting = MyLoadable({loader: () => import('./../routes/user/settings/Setting')}),
+Resetting     = MyLoadable({loader: () => import('./../routes/user/resettings/Resetting')})
 
 /** Auth Wrapper **/
 // Applying to a function component for simplicity but could be Class or createClass component
 // const AdminOnlyLink = VisibleOnlyAdmin(() => <Link to='/admin'>Admin Section</Link>)
-// Show Admin dashboard to admins and user dashboard to regular users
-// <Route path='/dashboard' component={AdminOrElse(AdminDashboard, UserDashboard)} />
+class ProtectedRoute extends Component {
+    render() {
+        const { component: Component, ...props } = this.props
 
-
-// <SearchRoute        path="/search"      component={require('./../routes/social/search/Search').default} {...props} />
-// <ExploreRoute       path="/explore"     component={require('./../routes/social/explore/Expore').default} {...props} />
-// <PublicityRoute     path="/publicity"   component={require('./../routes/social/publicity/Publicity').default} {...props} />
-// <LocationRoute      path="/location"    component={require('./../routes/social/location/Location').default} {...props} />
-// <NotificationRoute  path="/notification" component={require('./../routes/social/notification/Notification').default} {...props} />
-// <PostRoute          path="/posts"       component={require('./../routes/post/post/Post').default} {...props} />
-// <OpinionRoute       path="/opinions"    component={require('./../routes/post/opinion/Opinion').default} {...props} />
-// <PollRoute          path="/polls"       component={require('./../routes/post/poll/Poll').default} {...props} />
-// <PictureRoute       path="/pictures"    component={require('./../routes/media/picture/Picture').default} {...props} />
-// <VideoRoute         path="/videos"      component={require('./../routes/media/video/Video').default} {...props} />
-// <DocumentRoute      path="/documents"   component={require('./../routes/media/document/Document').default} {...props} />
-// <RecordRoute        path="/record"      component={require('./../routes/media/mediastream/Record').default} {...props} />
-// <MessageRoute       path="/messages"    component={require('./../routes/message/message/Message').default} {...props} />
-// <QuestionRoute      path="/questions"   component={require('./../routes/message/question/Question').default} {...props} />
-// <GroupRoute         path="/groups"      component={require('./../routes/user/group/Group').default} {...props} />
-// <ProfileRoute       path="/:username"   component={require('./../routes/user/profile/Profile').default} {...props} />
-// <DiaryRoute         path="/diaries"     component={require('./../routes/user/diary/Diary').default} {...props} />
-            // <Route path="/pictures/:id" children={() => <ModalPicture {...props} />} />
+        return (
+            <Route 
+                {...props} 
+                children={props => (
+                    this.props.access_token ?
+                    <Component {...this.props} /> : <Welcome {...this.props} />
+                )} 
+            />
+        )
+    }
+}
 
 class Root extends React.PureComponent {
     //location={props.customLocation} see https://reacttraining.com/react-router/web/example/modal-gallery
@@ -71,11 +55,13 @@ class Root extends React.PureComponent {
         const props = this.props;
         return (
             <Switch location={props.customLocation}>
-                <Route exact path="/" children={() => 
-                    <Home 
+                <ProtectedRoute {...props} exact path="/" component={Home} />
+                <Route path="/login" children={() => <Login {...props} />} />
+                <Route path="/signup" children={() => 
+                    <Signup 
                         {...props} 
                     />} 
-                /> 
+                />
                 <Route path="/confirmed" children={() => 
                     <Confirmed 
                         {...props} 
@@ -86,12 +72,12 @@ class Root extends React.PureComponent {
                         {...props} 
                     />} 
                 />
-                <Route path="/videos" children={() => 
+                <Route path="/videos/:id" children={() => 
                     <Video 
                         {...props} 
                     />} 
                 />
-                <Route path="/sound" children={() => 
+                <Route path="/streams" children={() => 
                     <Sound 
                         {...props}  
                     />} 
@@ -106,13 +92,18 @@ class Root extends React.PureComponent {
                         {...props} 
                     />} 
                 />
+                <Route path="/resetting" children={() => 
+                    <Resetting 
+                        {...props} 
+                    />} 
+                />
                 <Route path="/groups" children={() => 
                     <Group 
                         {...props} 
                     />} 
                 />
                 <Route path="/places" children={() => 
-                    <Places 
+                    <Place 
                         {...props} 
                     />} 
                 />
@@ -141,6 +132,7 @@ class Root extends React.PureComponent {
                         {...props} 
                     />} 
                 />
+                {typeof window !== 'undefined' && <Route  children={(rest) => <NotMatched {...props} {...rest} />} />}
             </Switch>
         )
     }

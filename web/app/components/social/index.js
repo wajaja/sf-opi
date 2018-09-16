@@ -1,4 +1,6 @@
-export { TimeAgo, TimeOut, BuildContent, FlashMessage, BuildHtmlString } from './commons'
+export { TimeAgo, TimeOut, BuildContent, 
+	FlashMessage, BuildHtmlString,
+	ErrorStack } from './commons'
 export { Center, NewsFeed, PostForm,
 		 PostGallery, SelectType, Contributors,
 		 ContentEditable, SelectRecipient, 
@@ -19,3 +21,4 @@ export Modal 											from './Modal'
 export Loading 											from './Loading'
 export StaticModal 										from './StaticModal'
 export Exception 										from './Exception'
+export WelcomeFoot 						from './WelcomeFoot'

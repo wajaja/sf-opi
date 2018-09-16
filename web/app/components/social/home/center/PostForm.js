@@ -27,22 +27,22 @@ import {
 	Posts as PostsActions,
 	PostForm as PostFormActions
 } 									from '../../../../actions'
-import { BuildHtmlString } 			from '../../../../components'
+import { BuildHtmlString, ErrorStack } 			from '../../../../components'
 import * as DraftFuncs 				from '../form/DraftFuncs'
 import { canUseDOM } 				from '../../../../utils/executionEnvironment'
 
-import 'draft-js-emoji-plugin/lib/plugin.css';
-import 'draft-js-mention-plugin/lib/plugin.css';
-import 'draft-js-hashtag-plugin/lib/plugin.css';
+import '../../../../styles/lib/draft-js-emoji-plugin/plugin.css';
+import '../../../../styles/lib/draft-js-mention-plugin/plugin.css';
+import '../../../../styles/lib/draft-js-hashtag-plugin/plugin.css';
 import '../../../../styles/social/form/post-form.scss'
 import '../../../../styles/fine-uploader-gallery.scss'
 import '../../../../styles/social/content-editable.scss'
+import { VideoUploader } 		from '../form/PostFootElement'
 
 
 import MyLoadable    from '../../../../components/MyLoadable'
 const ModalTagFriend = MyLoadable({loader: () => import('../../../../components/media/ModalTagFriend')}),
 PostHeadContainer 	= MyLoadable({loader: () => import('../form/PostHeadContainer')}),
-VideoUploader 		= MyLoadable({loader: () => import('../form/VideoUploader')}),
 PostFootElement 	= MyLoadable({loader: () => import('../form/PostFootElement')}),
 PlacesSuggest 		= MyLoadable({loader: () => import('../form/PlacesSuggest')}),
 Contributors 		= MyLoadable({loader: () => import('../form/Contributors')}),
@@ -53,8 +53,6 @@ Dropzone 		= MyLoadable({loader: () => import('react-fine-uploader/dropzone')}),
 Thumbnail 		= MyLoadable({loader: () => import('react-fine-uploader/thumbnail')}),
 RetryButton 	= MyLoadable({loader: () => import('react-fine-uploader/retry-button')}),
 ProgressBar 	= MyLoadable({loader: () => import('react-fine-uploader/progress-bar')}),
-DeleteButton 	= MyLoadable({loader: () => import('react-fine-uploader/delete-button')}),
-CancelButton 	= MyLoadable({loader: () => import('react-fine-uploader/cancel-button')}),
 PauseResumeButton = MyLoadable({loader: () => import('react-fine-uploader/pause-resume-button')}),
 FileInput 		= MyLoadable({loader: () => import('react-fine-uploader/file-input')})
 
@@ -139,6 +137,7 @@ const PostForm  = onClickOutside(
 				place: {},
 				fileInput: null,
 				initialized: false,
+				placeInput: false,
 				submittedFiles: [],
 	            successFiles: [],
 	            completedFiles: [],
@@ -362,6 +361,11 @@ const PostForm  = onClickOutside(
 				})
 	    },
 
+	    cancelFile(id, e) {
+	    	e.preventDefault();
+	    	this.uploader.methods.cancel(id);
+	    },
+
 	    getImageFromCache(id, e) {
 	    	e.preventDefault();
 	    	const filename 		= this.state.completedFiles[id]['filename'];
@@ -546,10 +550,8 @@ const PostForm  = onClickOutside(
 			this.togglePlaceInput();
 		},
 
-		togglePlaceInput() {
-	        const pBtn = e.target;
-	        const selectRecip = $(pBtn).parents('.postform').find('.pst-places-suggest');
-	        selectRecip.toggleClass('pst-places-hide');
+		togglePlaceInput(e) {
+			this.setState({placeInput: !this.state.placeInput})
 	    },
 
 	    componentDidMount() {
@@ -611,11 +613,11 @@ const PostForm  = onClickOutside(
 			{ 
 				MentionSuggestions 
 			} 				= mentionPlugin,
-			plugins 		= [mentionPlugin, emojiPlugin, hashtagPlugin, linkifyPlugin],
+			disabled = false, //TODO
+			plugins  = [mentionPlugin, emojiPlugin, hashtagPlugin, linkifyPlugin],
 	    	timesIco = <i className="fa fa-times" aria-hidden="true"><span></span></i>,
 	    	retryIco = <span className="qq-retry-icon">Retry</span>;
 	    	////
-	    	///
 			return (
 				<div>
 					<div 
@@ -624,7 +626,7 @@ const PostForm  = onClickOutside(
 						onClick={this.handleFormClick}>
 					    <div className="triangle-up-form postform" id="postform">
 					    	<form className={this.state.submittingPost ? `post-form minOpac` : `post-form`} id="post_type" ref="_postForm" onFocus={this.handleFocus} onBlur={this.handleBlur}>		            
-					            <div className="home-form ">
+					            <div className="home-form">
 					            	<PostHeadContainer 
 					            		dispatch={this.props.dispatch}
 					            		home={this.props.home}
@@ -640,9 +642,14 @@ const PostForm  = onClickOutside(
 					            <div id="post_form_body" className="post-form-body">
 					                <div className="form-body">
 				                        <Contributors 
+				                        	form_focus={this.props.form_focus}
 				                        	dispatch={this.props.dispatch}
 				                        	home={this.props.home}
+				                        	toggleEditor={this.props.toggleEditor}
 				                            profile={this.props.profile}
+				                            addEditor={this.props.addEditor}
+				                            addLeftEditor={this.props.addLeftEditor}
+				                            addRightEditor={this.props.addRightEditor}
 				                        	/>
 				                        <div className="post-support-textarea">
 	                						<div className="expandingArea">
@@ -681,7 +688,7 @@ const PostForm  = onClickOutside(
 						            	<div className="qq-gallery">
 											<div className="qq-uploader-selector qq-uploader ">
 												{initialized && 
-													<Dropzone style={ { border: '1px dotted', height: 200, width: 200 } } 
+													<Dropzone style={{ border: '1px dotted', height: 200, width: 200 } } 
 														uploader={ this.uploader } >
 												        <span>Drop Files Here</span>
 												    </Dropzone>
@@ -696,7 +703,13 @@ const PostForm  = onClickOutside(
 									                    		<button className="react-fine-uploader-delete-button" onClick={this.deleteFile.bind(this, id)}>
 									                    			<i className="fa fa-times" aria-hidden="true"><span></span></i>
 									                    		</button>
-									                    		<CancelButton id={ id }  uploader={ this.uploader } children={timesIco} />
+									                    		<ErrorStack>
+											            			<button 
+											            				className="react-fine-uploader-cancel-button com-dlt-thumb-btn" 
+											            				onClick={this.cancelFile.bind(this, id)} type="submit">
+												            			{timesIco}
+												            		</button>
+											            		</ErrorStack>
 									                    		<RetryButton id={ id } uploader={ this.uploader } children={retryIco} />
 									                    		<button 
 									                    			className="fine-uploader-tag-button" 
@@ -722,19 +735,17 @@ const PostForm  = onClickOutside(
 					                		toggleVideoUploaderOption={this.toggleVideoUploaderOption}
 					                		/>
 				                	}
-					                {initialized && 
-					                	<SelectRecipient 
-						                	dispatch={this.props.dispatch}
-						                	submittingPost={this.state.submittingPost} 
-						                	/>
-					                }
-					                {initialized && 
-					                	<PlacesSuggest 
-						                	dispatch={this.props.dispatch} 
-						                	pushPlace={this.pushPlace}
-						                	submittingPost={this.state.submittingPost} 
-						                	/>
-					                }
+				                	<SelectRecipient 
+					                	dispatch={this.props.dispatch}
+					                	updateRecipients={this.props.updateRecipients}
+					                	submittingPost={this.state.submittingPost} 
+					                	/>
+				                	<PlacesSuggest 
+					                	dispatch={this.props.dispatch} 
+					                	pushPlace={this.pushPlace}
+				                		placeInput={this.state.placeInput}
+					                	submittingPost={this.state.submittingPost} 
+					                	/>
 					            </div>
 				                <div className={!videoUploaderOption ? `gl-frm-foo` : `gl-frm-foo pst-foo-opt-space`}>
 				                	<div 
@@ -771,7 +782,13 @@ const PostForm  = onClickOutside(
 			                                <div className="gl-ldr-pst">
 			                                	{this.state.submittingPost && <div className="ajax-loader-form" id=""></div>}
 			                                </div>
-			                                <button type="submit" id="submit-post" value="Post" onClick={this.handleSubmit} className="btn btn-primary btn-sm">Post</button>
+			                                <button 
+			                                	type="submit" 
+			                                	id="submit-post" 
+			                                	value="submit" 
+			                                	onClick={this.handleSubmit}
+			                                	disabled={disabled}
+			                                	className="btn btn-primary btn-sm">Post</button>
 			                            </div>
 			                        </div>
 			                    </div>

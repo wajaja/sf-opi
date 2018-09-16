@@ -28,11 +28,13 @@ import { BuildHtmlString } 			from '../../../components'
 import { 
 	UnderComments as CommentsActions,
 } 									from '../../../actions/post'
-
-// import '../../../../styles/fine-uploader-gallery.scss'
-// import '../../../../styles/fine-uploader-new.scss'
-
-
+import MyLoadable    from '../../../components/MyLoadable'
+const Dropzone  = MyLoadable({loader: () => import('react-fine-uploader/dropzone')}),
+Thumbnail 		= MyLoadable({loader: () => import('react-fine-uploader/thumbnail')}),
+RetryButton 	= MyLoadable({loader: () => import('react-fine-uploader/retry-button')}),
+ProgressBar 	= MyLoadable({loader: () => import('react-fine-uploader/progress-bar')}),
+PauseResumeButton = MyLoadable({loader: () => import('react-fine-uploader/pause-resume-button')}),
+FileInput 		= MyLoadable({loader: () => import('react-fine-uploader/file-input')})
 
 ///////
 //////
@@ -42,15 +44,6 @@ const isFileGone = status => {
         'deleted',
     ].indexOf(status) >= 0
 }
-
-let Dropzone = null,
-	Thumbnail = null, 
-	fileInput = null,
-	RetryButton = null,
-	ProgressBar = null,
-	DeleteButton = null,
-	CancelButton = null,
-	PauseResumeButton = null;
 
 const emojiPlugin 					= createEmojiPlugin({
 	selectButtonContent: ''
@@ -301,6 +294,11 @@ const EditReplyForm  = createReactClass({
 		})
     },
 
+    cancelFile(id, e) {
+    	e.preventDefault();
+    	this.uploader.methods.cancel(id);
+    },
+
 	onChange(editorState) {
         this.setState({editorState})
     },
@@ -309,25 +307,9 @@ const EditReplyForm  = createReactClass({
     	window.document.addEventListener('click', this.handleDocClick, false);
     	const self = this
 		Promise.all([
-			import('fine-uploader-wrappers/traditional'),
-			import('react-fine-uploader/dropzone'),
-			import('react-fine-uploader/thumbnail'),
-			import('react-fine-uploader/file-input'),
-			import('react-fine-uploader/retry-button'),
-			import('react-fine-uploader/progress-bar'),
-			import('react-fine-uploader/delete-button'),
-			import('react-fine-uploader/cancel-button'),
-			import('react-fine-uploader/pause-resume-button')
+			import('fine-uploader-wrappers/traditional')
 		]).then(function([
-				_traditional,
-				_dropzone,
-				_thumbnail,
-				_fileInput,
-				_retryButton,
-				_progressBar,
-				_deleteButton,
-				_cancelButton,
-				_pauseResumeButton
+				_traditional
 		]) {
 			const FineUploaderTraditional =	_traditional.default;
 			const uploader = new FineUploaderTraditional({
@@ -368,16 +350,7 @@ const EditReplyForm  = createReactClass({
 			}); //end uploader's init
 
 			self.uploader 	= uploader;
-			Dropzone 		= _dropzone.default
-			Thumbnail 		= _thumbnail.default
-			const FileInput = _fileInput.default
-			RetryButton 	= _retryButton.default
-			ProgressBar 	= _progressBar.default
-			DeleteButton 	= _deleteButton.default
-			CancelButton 	= _cancelButton.default
-			PauseResumeButton = _pauseResumeButton.default
-			fileInput 		= <FileInput multiple accept='image/*' uploader={ uploader } />
-
+			const fileInput = <FileInput multiple accept='image/*' uploader={ uploader } />
 
 			////
 	    	const { hasCommandModifier } 	= KeyBindingUtil
@@ -613,7 +586,11 @@ const EditReplyForm  = createReactClass({
 									            		<button className="react-fine-uploader-delete-button com-dlt-thumb-btn" onClick={this.deleteFile.bind(this, id)} type="submit">
 									            			<i className="fa fa-times" aria-hidden="true"><span></span></i>
 									            		</button>
-									            		<CancelButton id={ id }  uploader={ uploader } children={timesIco} />
+									            		<button 
+								            				className="react-fine-uploader-cancel-button com-dlt-thumb-btn" 
+								            				onClick={this.cancelFile.bind(this, id)} type="submit">
+									            			{timesIco}
+									            		</button>
 									            		<RetryButton id={ id } uploader={ uploader } children={retryIco} />
 									            	</li>
 									            )      

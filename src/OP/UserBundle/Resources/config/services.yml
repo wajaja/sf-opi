@@ -167,6 +167,7 @@ services:
             - '@lexik_jwt_authentication.jwt_manager'
             - '@service_container'
             - '@OP\SocialBundle\Firebase\Firebase'
+            - '@OP\MediaBundle\DocumentManager\PictureManager'
         tags:
             - { name: kernel.event_subscriber }
     OP\UserBundle\EventListener\ProfileListener:
@@ -177,6 +178,7 @@ services:
             - '@lexik_jwt_authentication.jwt_manager'
             - '@service_container'
             - '@OP\SocialBundle\Firebase\Firebase'
+            - '@OP\MediaBundle\DocumentManager\PictureManager'
         tags:
             - { name: kernel.event_subscriber }
     
@@ -188,6 +190,7 @@ services:
             - '@lexik_jwt_authentication.jwt_manager'
             - '@service_container'
             - '@OP\SocialBundle\Firebase\Firebase'
+            - '@OP\MediaBundle\DocumentManager\PictureManager'
         tags:
             - { name: kernel.event_subscriber }
     
@@ -199,6 +202,7 @@ services:
             - '@lexik_jwt_authentication.jwt_manager'
             - '@service_container'
             - '@OP\SocialBundle\Firebase\Firebase'
+            - '@OP\MediaBundle\DocumentManager\PictureManager'
         tags:
             - { name: kernel.event_subscriber }
     OP\UserBundle\EventListener\GroupListener:
@@ -216,6 +220,7 @@ services:
             - '@OP\UserBundle\DataTransformer\ObjectToArrayTransformer'
             - '@OP\UserBundle\Security\UserProvider'
             - '@OP\UserBundle\Repository\OpinionUserManager'
+            - '@OP\MediaBundle\DocumentManager\PictureManager'
     OP\UserBundle\DocumentManager\SettingManager:
         arguments: 
             - '@doctrine.odm.mongodb.document_manager.public'
@@ -223,6 +228,7 @@ services:
             - '@form.factory'
             - "@op_user.user_manager"
             - '@OP\UserBundle\Security\UserProvider'
+            - '@OP\MediaBundle\DocumentManager\PictureManager'
     OP\UserBundle\Serializer\UserSerializerSubscriber:
         arguments: 
             - '@service_container'

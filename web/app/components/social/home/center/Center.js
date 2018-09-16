@@ -131,6 +131,7 @@ const Center  = createReactClass( {
                             timelineType={this.props.timelineType}
                             onSideComment={this.onSideComment}
                             editPostFormFocus={this.editPostFormFocus}
+                            serverSide={this.props.serverSide}
                             />
                     </div>
                 </div>

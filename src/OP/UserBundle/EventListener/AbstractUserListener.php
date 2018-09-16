@@ -10,6 +10,7 @@ use FOS\UserBundle\FOSUserEvents,
     Symfony\Component\HttpFoundation\RequestStack,
     Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Component\HttpFoundation\JsonResponse,
+    OP\MediaBundle\DocumentManager\PictureManager,
     Symfony\Component\Routing\Generator\UrlGeneratorInterface,
     Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
@@ -22,11 +23,11 @@ use FOS\UserBundle\FOSUserEvents,
 abstract class AbstractUserListener
 {
 
-    private $router, $request, $firebase,
-            $dispatcher, $jwtManager, $container;
+    protected $router, $request, $firebase,
+            $dispatcher, $jwtManager, $container, $pic_man;
 
     public function __construct(UrlGeneratorInterface $router, RequestStack $request, EventDispatcherInterface $dispatcher, JWTManager $jwtManager,
-        Container $container, Firebase $fb)
+        Container $container, Firebase $fb, PictureManager $pic_man)
     {
         $this->router     = $router;
         $this->dispatcher = $dispatcher;
@@ -34,6 +35,7 @@ abstract class AbstractUserListener
         $this->request    = $request->getCurrentRequest();
         $this->container  = $container;
         $this->firebase   = $fb;
+        $this->pic_man    = $pic_man;
     }
 
     protected function createFirebaseUser($user, $password) {
@@ -45,10 +47,10 @@ abstract class AbstractUserListener
             'username' =>$user->getUsername(),
             'gender' => $user->getGender(),
             'emailVerified' => false,
-            'phoneNumber' => null,
+            // 'phoneNumber' => '',
             'password' => $password,
-            'displayName' => "{$user->getFirsname()} {$user->getLastname()}",
-            'photoUrl' => $user->getProfilePic->getWebPath(),
+            'displayName' => "{$user->getFirstname()} {$user->getLastname()}",
+            'photoUrl' => !$user->getProfilePic() ? '' : $user->getProfilePic()->getWebPath(),
             'disabled' => false,
         ];
 
@@ -65,10 +67,10 @@ abstract class AbstractUserListener
             'username' =>$user->getUsername(),
             'gender' => $user->getGender(),
             'emailVerified' => false,
-            'phoneNumber' => null,
+            // 'phoneNumber' => '',
             'password' => $password,
             'displayName' => "{$user->getFirsname()} {$user->getLastname()}",
-            'photoUrl' => $user->getProfilePic->getWebPath(),
+            'photoUrl' => !$user->getProfilePic() ? '' : $user->getProfilePic()->getWebPath(),
             'disabled' => false,
         ];
 

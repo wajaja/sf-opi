@@ -29,10 +29,11 @@ const PlacesSuggest = createReactClass({
     },
 
     render() {
-        const {search, value} = this.state
+        const {search, value } = this.state;
+        const { placeInput } = this.props;
         return (
-            <div className="pst-places-hide pst-places-suggest">
-                <div className="pst-places-hide pst-places-suggest">
+            <div className={(placeInput === true) ? `pst-places-suggest` : `pst-places-hide pst-places-suggest`}>
+                <div className="pst-places-suggest-b">
                     <ReactGoogleMapLoader
                         params={{
                             key: API_KEY,

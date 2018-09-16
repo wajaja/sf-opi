@@ -84,9 +84,9 @@ const EditorsBox  = createReactClass({
         let queryResult=[];                 //get query result
         
          this.props.defaults.forEach(function(user){
-            if (user.firstname.toLowerCase().indexOf(queryText)!=-1 || 
-                user.lastname.toLowerCase().indexOf(queryText)!=-1 || 
-                user.username.toLowerCase().indexOf(queryText)!=-1) {
+            if (user.firstname.toLowerCase().indexOf(queryText.toLowerCase())!=-1 || 
+                user.lastname.toLowerCase().indexOf(queryText.toLowerCase())!=-1 || 
+                user.username.toLowerCase().indexOf(queryText.toLowerCase())!=-1) {
                     queryResult.push(user);
             }            
         });

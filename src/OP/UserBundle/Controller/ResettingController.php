@@ -18,7 +18,10 @@ use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Model\UserInterface,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\Request,
+    OP\UserBundle\Security\UserProvider,
+    FOS\UserBundle\Form\Factory\FormFactory,
     Symfony\Component\HttpFoundation\RedirectResponse,
+    Symfony\Component\Translation\TranslatorInterface,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -29,17 +32,47 @@ use FOS\UserBundle\FOSUserEvents,
  */
 class ResettingController extends Controller
 {
+
+    protected $translator, $user_provider, $formFactory;
+
+    public function __construct(TranslatorInterface $trans, UserProvider $uProvider, FormFactory $formFactory) {
+        $this->translator  = $trans;
+        $this->user_provider = $uProvider;
+        $this->formFactory  = $formFactory;
+    }
+
+
     /**
      * Request reset user password: show form
      */
-    public function requestAction()
+    public function requestAction(Request $request)
     {
+        $session = $request->getSession();
         $description = 'reset your password';
-        return $this->render(
-                        'FOSUserBundle:Resetting:request.html.twig', 
-                        array('description'=>$description)
-                    );
+        return  $this->render(
+            'OPUserBundle:Resetting:index.html.twig', 
+            [
+                'initialState'  => [
+                    'App'         => [
+                        'sessionId' => $session->getId()
+                    ],
+                    'Resetting' => [
+                        'invalid_username' => false,
+                        'action' => 'api/resetting/send-email',
+                        'username_trans' => $this->translator->trans('resetting.request.username', array(), 'OPUserBundle'),
+                        'submit_trans' => $this->translator->trans('resetting.request.submit', array(), 'OPUserBundle')
+                    ],
+                ],
+                'title'       => 'Reset your password',
+                'description' => $description, 
+                'locale'      => $request->getLocale()
+            ]
+        );
     }
+                    // 'invalid_username_trans' => $this->translator->trans('resetting.request.invalid_username', array("username" => null), 'OPUserBundle');
+        // resetting.request.submit
+        // $Check_trans = $this->translator->trans('resetting.check_email', array(), 'OPUserBundle')
+        // resetting.reset.submit
 
     /**
      * Request reset user password: submit form and send email
@@ -144,6 +177,28 @@ class ResettingController extends Controller
             'token' => $token,
             'form' => $form->createView(),
         ));
+    }
+
+    private function getTrans() {
+        $tr = $this->translator;
+        return [
+            "firstname_blank" => $tr->trans('resetting.check_email', array(), 'validators'),
+            "firstname_short" => $tr->trans('fos_user.firstname.short', array(), 'validators'),
+            "firstname_long" => $tr->trans('fos_user.firstname.long', array(), 'validators'),
+
+            "lastname_blank" => $tr->trans('fos_user.lastname.blank', array(), 'validators'),
+            "lastname_short" => $tr->trans('fos_user.lastname.short', array(), 'validators'),
+            "lastname_long" => $tr->trans('fos_user.lastname.long', array(), 'validators'),
+
+            "email_blank" => $tr->trans('fos_user.email.blank', array(), 'validators'),
+            "email_short" => $tr->trans('fos_user.email.short', array(), 'validators'),
+            "email_long" => $tr->trans('fos_user.email.long', array(), 'validators'),
+            "email_already_used" => $tr->trans('fos_user.email.already_used', array(), 'validators'),
+
+            "password_blank" => $tr->trans('fos_user.password.blank', array(), 'validators'),
+            "password_short" => $tr->trans('fos_user.password.short', array(), 'validators'),
+            "password_mismatch" => $tr->trans('fos_user.password.mismatch', array(), 'validators')
+        ];
     }
 
     /**

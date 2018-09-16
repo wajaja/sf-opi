@@ -8,9 +8,6 @@ import { bindActionCreators }       from 'redux'
 import classnames                   from 'classnames'
 import * as axios                   from 'axios'
 import _                            from 'lodash'
-
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 // import Container from './Container'
 import { getUrlParameterByName }    from '../../../../utils/funcs'
 import { BASE_PATH }                from '../../../../config/api'
@@ -18,7 +15,7 @@ import * as DraftFuncs              from '../../../../components/social/home/for
 import { BuildContent, LikeButton, 
          Author, TimeAgo,
          Modal, EmojisContainer,
-        EveryWhereContainer, }                    from '../../../../components' 
+        EveryWhereContainer, }      from '../../../../components' 
 import { PictureComments,
          PictureSecrets,
          PictureLikes }             from '../components'
@@ -655,12 +652,12 @@ function mapDispatchToProps(dispatch) {
  * Connects React component to a Redux store
  * Documentation: https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options
  */
-export default DragDropContext(HTML5Backend)(withRouter(connect(state => ({ 
+export default withRouter(connect(state => ({ 
     user: state.User.user,
-    status: state.Video.status,
+    status: state.Videos.status,
     videosStore: state.Videos.videos,
     commentsStore: state.Comments.comments,
-}), mapDispatchToProps)(Video)))
+}), mapDispatchToProps)(Video))
 // <LikeButton 
 //     object={this.state.video} 
 //     refer="picture" 

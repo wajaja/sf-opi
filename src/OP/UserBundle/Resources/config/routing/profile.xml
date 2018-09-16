@@ -4,71 +4,60 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="fos_user_profile_show" path="/{username}" methods="GET">
-        <default key="_controller">FOSUserBundle:Profile:show</default>
-    </route>
 
-    <route id="fos_user_profile_edit" path="/edit" methods="GET POST">
-        <default key="_controller">FOSUserBundle:Profile:edit</default>
+    <route id="op_user_profile_edit" path="/edit" methods="GET POST">
+        <default key="_controller">OPUserBundle:Profile:edit</default>
     </route>
-    <route id="fos_user_profile_search" path="/search/{name}" methods="GET">
+    <route id="op_user_profile_search" path="/search/{name}" methods="GET">
         <default key="_controller">OPUserBundle:Search:loadUsers</default>
     </route>
-    <route id="fos_user_profile_add_friend" path="/add/{userId}" methods="POST">
+    <route id="op_user_profile_add_friend" path="/add/{userId}" methods="POST">
         <default key="_controller">OPUserBundle:Invitation:AddFriend</default>
     </route>
-    <route id="fos_user_profile_confirm_friend" path="/confirm/friend/{invitationId}" methods="POST">
+    <route id="op_user_profile_confirm_friend" path="/confirm/friend/{invitationId}" methods="POST">
         <default key="_controller">OPUserBundle:Invitation:confirmFriend</default>
     </route>
-     <route id="fos_user_profile_confirm_follower" path="/confirm/follower/{invitationId}" methods="POST">
+     <route id="op_user_profile_confirm_follower" path="/confirm/follower/{invitationId}" methods="POST">
         <default key="_controller">OPUserBundle:Invitation:confirmFollower</default>
     </route>
-    <route id="fos_user_profile_delete_invitation" path="/invitation/delete/{invitationId}" methods="POST">
+    <route id="op_user_profile_delete_invitation" path="/invitation/delete/{invitationId}" methods="POST">
         <default key="_controller">OPUserBundle:Invitation:deleteInvitation</default>
     </route>
-    <route id="op_user_all_invitations" path="/invitations/" methods="GET">
+    <route id="op_user_all_invitations" path="/invitations" methods="GET">
         <default key="_controller">OPUserBundle:Invitation:index</default>
     </route>
-    <route id="fos_user_profile_less_suggest" path="/suggest/user/less" methods="GET">
+    <route id="op_user_profile_less_suggest" path="/suggest/user/less" methods="GET">
         <default key="_controller">OPUserBundle:Search:lessUserSuggest</default>
     </route>
-    <route id="fos_user_profile_friends_or_followers" path="/ff/users" methods="GET">
+    <route id="op_user_profile_friends_or_followers" path="/ff/users" methods="GET">
         <default key="_controller">OPUserBundle:Search:getFriendsOrFollowers</default>
     </route>
-    <route id="fos_user_profile_online_user" path="/online/users" methods="GET">
+    <route id="op_user_profile_online_user" path="/online/users" methods="GET">
         <default key="_controller">OPUserBundle:Search:loadOnlineUsers</default>
     </route>
     
-    <route id="fos_user_registration_check_email" path="/check-email" methods="GET">
-        <default key="_controller">FOSUserBundle:Registration:checkEmail</default>
-    </route>
-
-    <route id="fos_user_registration_confirm" path="/confirm/{token}" methods="GET">
-        <default key="_controller">FOSUserBundle:Registration:confirm</default>
-    </route>
-
-    <route id="fos_user_registration_confirmed" path="/confirmed/{panel}" methods="GET">
-        <default key="_controller">FOSUserBundle:Registration:confirmed</default>
-    </route>
-    <route id="fos_user_profilepic" path="/complete/pic" methods="POST">
+    <route id="op_user_profilepic" path="/complete/pic" methods="POST">
         <default key="_controller">OPUserBundle:Settings:profilepic</default>
     </route>
-     <route id="fos_user_coverpic" path="/complete/cover" methods="POST">
+     <route id="op_user_coverpic" path="/complete/cover" methods="POST">
         <default key="_controller">OPUserBundle:Settings:coverpic</default>
     </route>
-    <route id="fos_user_confirm_address" path="/complete/addr" methods="POST">
+    <route id="op_user_confirm_address" path="/complete/addr" methods="POST">
         <default key="_controller">OPUserBundle:Settings:confirmadress</default>
     </route>
-    <route id="fos_user_get_profilepic" path="profile/pic" methods="GET">
+    <route id="op_user_get_profilepic" path="profile/pic" methods="GET">
         <default key="_controller">OPUserBundle:Profile:getProfileImage</default>
     </route>
-    <route id="fos_user_get_coverpic" path="profile/cover" methods="GET">
+    <route id="op_user_get_coverpic" path="profile/cover" methods="GET">
         <default key="_controller">OPUserBundle:Profile:getCoverImage</default>
     </route>
-    <route id="fos_user_get_images" path="profile/images" methods="GET">
+    <route id="op_user_get_images" path="profile/images" methods="GET">
         <default key="_controller">OPUserBundle:Profile:getImages</default>
     </route>
-    <route id="fos_user_get_user_infos" path="/{username}/about" methods="GET">
+    <route id="op_user_profile_show" path="/{username}" methods="GET">
+        <default key="_controller">FOSUserBundle:Profile:show</default>
+    </route>
+    <route id="op_user_get_user_infos" path="/{username}/about" methods="GET">
         <default key="_controller">OPUserBundle:Profile:getUserInfos</default>
     </route>
 </routes>

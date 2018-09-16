@@ -3,6 +3,7 @@
 namespace OP\MediaBundle\Construct;
 
 use Symfony\Component\HttpFoundation\RequestStack,
+    Liip\ImagineBundle\Imagine\Cache\CacheManager,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**
@@ -15,10 +16,11 @@ class ImageConstructor
      * services convert images object to array 
      * @var type 
      */
-    protected $container, $request;
+    protected $container, $request, $cacheManager;
 
-    public function __construct(Container $container, RequestStack $request) {
+    public function __construct(Container $container, RequestStack $request, CacheManager $cacheManager) {
         $this->container = $container;
+        $this->cacheManager = $cacheManager;
         $this->request   = $request->getCurrentRequest();
     }
 
@@ -84,10 +86,10 @@ class ImageConstructor
 
     protected function checkCache($path) {
          /** @var CacheManager */
-        $imagineCacheManager = $this->container->get('liip_imagine.cache.manager');
+        $imagineCacheManager = $this->cacheManager;
 
         /** @var string */
-        if(!$imagineCacheManager->getBrowserPath($path, 'photo_50percent')){
+        if(!$this->cacheManager->getBrowserPath($path, 'photo_50percent')){
             return false;
         }
 
@@ -97,8 +99,8 @@ class ImageConstructor
     public function getCachePath($path) {
          /** @var CacheManager */
         $u_path         = urldecode($path);
+        $cacheManager   = $this->cacheManager;
         $resolver       = $this->request->get('resolver');
-        $cacheManager   = $this->container->get('liip_imagine.cache.manager');
 
 
         try {

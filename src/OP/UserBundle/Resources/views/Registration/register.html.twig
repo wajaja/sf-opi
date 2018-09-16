@@ -1,9 +1,6 @@
-{% extends "OPSocialBundle::layout.html.twig" %}
+{% extends '::base.html.twig' %}
 
-{% block title %}
-    {{title}}
-{% endblock title %}
-
-{% block user_auth %}
-    {{ include('@OPUser/Registration/register_content.html.twig') }}
-{% endblock user_auth %}
+{% block body %}
+    {{ redux_store('opinionStore', initialState) }}
+    {{ react_component('mainNode', {'rendering': 'client_side', 'trace': true}) }}
+{% endblock %}

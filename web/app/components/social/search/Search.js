@@ -3,7 +3,7 @@ import createReactClass from 'create-react-class'
 import { connect }      from 'react-redux'
 import ReactDOM         from 'react-dom'
 import Filters          from './filter'
-
+import { BASE_PATH } from '../../../config/api'
 
 import { Search as SearchActions } from '../../../actions/social'
 
@@ -67,7 +67,7 @@ const Search  = createReactClass({
 
     //redirect user at site.com/search route
     handleSubmit(e) {
-        e.preventDefault();
+        // e.preventDefault();
         const self = this
          this.setState({
             active: self.state.value == '' ? false : true,
@@ -126,7 +126,7 @@ const Search  = createReactClass({
         
         return (
             <div className="frm-contrib-ctnr-b">
-                <form className="form-search" onSubmit={this.handleSubmit} id="form-search">
+                <form action={`/search?q=${encodeURIComponent(this.state.value)}&tag=all`} className="form-search" onSubmit={this.handleSubmit} id="form-search">
                     <input  type="text"
                         ref={el => this._searchField = el } 
                         name="query" 

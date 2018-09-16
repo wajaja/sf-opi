@@ -3,11 +3,76 @@
     Author     : Cedrick
 */
 /* animate modal when element was appended see::post form*/
-.nws-div-b{
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+
+@mixin place-holder-anim() {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #dbdfe6 8%, #d4dbdc 18%, #e2e8ea 33%);
+    background-size: 800px 104px;
+    // height: 96px;
+    position: relative;
+}
+
+.news-div-b{
     margin-bottom: 80px;
     outline: none;
     &.lighting {
         z-index: 111111;
+    }
+
+    /* animate post-placeholder */
+    .plc-hld{
+        &.fooPost-b, &.fooPost-c{
+            border: none !important;
+        }
+        &.pst-d{
+            margin: 0 auto;
+            max-width: 100%;
+            min-height: 330px;
+        }
+        &.pst-h{
+            min-height: 215px !important;
+        }
+        &.dv-pic{
+            border: 1px solid #d7dbdc;
+            width: 45px;
+            height: 45px;
+        }
+        &.anim-content{
+            border: 1px solid #e9eaea;
+            height: 18px;
+            width: 61%;
+            margin-top: 13px;
+            border-radius: 2px;
+        }
+        &.anim-content:first-child{
+            width: 80% !important;
+        }
+        &.dv-name{
+            border: 1px solid #e2e8ea;
+            height: 18px;
+            width: 182px;
+            top: 4px;
+            left: 8px;
+        }
+        &.fooPost-b, &.dv-name, &.anim-content, &.dv-pic {
+            @include place-holder-anim();
+        }
+        &.pst-c{
+            // margin-top: 12px;
+        }
     }
 }
 .new-pst{
@@ -482,6 +547,7 @@ a:focus, a:hover{
     background-color: #fff;
     display: inline-block;
     border: 1px solid #cbcece;
+    border: 1px solid #e0e0f3;
     img{
         border-radius: 50%;
     }
@@ -1422,5 +1488,5 @@ li>.edit-post-file-selector{
     }
 }
 .pst-sep-foo{
-    height: 10px;
+    height: 12px;
 }

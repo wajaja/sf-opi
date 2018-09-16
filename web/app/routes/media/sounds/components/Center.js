@@ -202,22 +202,17 @@ const Center  = createReactClass({
     },
 
     render() {
-        const { q, tag, posts } = this.props
+        const { streams } = this.props
         return (
         	<div className="wide-gutter">
                 <div id="op-center-authenticated" className="op-center-authenticated">
-                    <div id="_1" className="form_1">
-                    	<StickySorting
-                            {...this.props}
-                            />
-                    </div>
                     <div id="_5" className="news_5">
                         <div className="notif-pg-list-ctnr">
-                        	{notifications.map(function(n, i) {
+                        	{!!streams && streams.map(function(n, i) {
                                 return(
                                     <div key={i}  className="nt-pg-box">
                                         <div className="nt-pg-box-ctnr">
-                                            <NotifContentBox
+                                            <StreamContentBox
                                                 data={n} 
                                                 /> 
                                         </div>

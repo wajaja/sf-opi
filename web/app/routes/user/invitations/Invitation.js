@@ -148,22 +148,20 @@ const Invitation  = createReactClass({
                 <Helmet>
                     <title>Invitation</title>
                 </Helmet>
-                <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
+                <div id="hm_main_blk" className="hm-main-blk">
                     <div className="hm-main-blk-ctnr">
                         <div id="hm_lft_dv" className="hm-lft-dv">
-                            {screenWidth > 760 && 
-                                <div id="hm_frst_blk" className="hm-frst-blk">
-                                    <div className="hm-frst-blk-a">
-                                        <Left 
-                                            {...this.props}
-                                            q={q}
-                                            screenWidth={screenWidth}
-                                            />                                
-                                    </div>
+                            <div id="hm_frst_blk" className="hm-frst-blk">
+                                <div className="hm-frst-blk-a">
+                                    <Left 
+                                        {...this.props}
+                                        q={q}
+                                        screenWidth={screenWidth}
+                                        />                                
                                 </div>
-                            }
+                            </div>
                         </div>
-                        <div id="home-center-div" className="home-center-div central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
+                        <div id="home-center-div" className="home-center-div central-border">
                             <div className="hm-frst-blk">
                                 <div className="hm-frst-blk-tp">
                                     <div className="hm-frst-blk-tp-a">
@@ -211,8 +209,6 @@ const Invitation  = createReactClass({
                         </div>
                     </div>
                 </div>
-                <div className={this.props.postFormFocus ? `gl-frm-out out-active` : `gl-frm-out`}></div>
-                <div className={this.props.editPostFormFocus ? `edt-pst-out out-active` : `edt-pst-out`}></div>
             </div>
         )
     }

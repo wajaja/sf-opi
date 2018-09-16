@@ -2,13 +2,20 @@ import React                        from 'react'
 import createReactClass             from 'create-react-class'
 import { 
     Link, Route, withRouter,
-    Switch 
+    Switch, Redirect 
 }                                   from 'react-router-dom'
 import { connect }                  from 'react-redux'
 import classnames                   from 'classnames'
 import * as axios                   from 'axios'
 import { BASE_PATH }                from '../../../config/api'
+
+
 import { Video as VideoComponent, } from './components'
+import  VideosHome      from "./VideosHome";
+import MyLoadable       from '../../../components/MyLoadable'
+ 
+const VideoSuggestList = MyLoadable({loader: () => import('../../../components/media/VideoSuggestList')})
+
 
 import { 
     Questions as QuestionsActions,
@@ -49,25 +56,6 @@ const Video  = createReactClass({
     componentDidMount() {
         //next images in this post
         //perform ajax request for getting next video id on this one
-        const { dispatch, params, location: {query, pathname } } = this.props,
-        loading     = false,
-        postId      = params.id,
-        status      = { modal: true, returnTo: pathname },
-        winWidth    = window.innerWidth,
-        winHeight   = window.innerHeight,
-        width       = (winWidth - (60 * 2)) + 'px',
-        height      = (winHeight - (25 * 2)) + 'px',
-        videoCtnr   = ((winWidth - (60 * 2)) - 360) + 'px',
-        halfHeight  = ((winHeight - (25 * 2)) / 2) + 'px';
-
-        // dispatch(VideoActions.modalVideo(params, query, status, loading))
-
-        this.setState({
-            width: width,
-            height: height,
-            videoCtnr: videoCtnr,
-            halfHeight: halfHeight,
-        })
     },
 
     componentWillUpdate(nextProps, nextState) {
@@ -86,9 +74,10 @@ const Video  = createReactClass({
      * @returns markup
      */
     render() {
-        const { match, id }   = this.props
+        const { match, id, location }   = this.props
+        console.log(location);
         return(
-            <Switch>
+            <Switch location={location}>
                 <Route exact path="/:id"
                     children={() => 
                         <VideoComponent 
@@ -102,10 +91,10 @@ const Video  = createReactClass({
                         />
                     }
                 />
-                <Route exact path='/' children={() => <List {...this.props} />} />
-                <Redirect component={NoMatch} />
+                <Route path='/' children={() => <VideosHome {...this.props} />} />
+                <Redirect to="/" component={NoMatch} />
             </Switch>
-        )è
+        )
     }
 })
 ////////////

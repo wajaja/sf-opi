@@ -127,7 +127,7 @@ const MiniProfile = createReactClass({
 	},
 
 	render() {
-		const { user, invitation, relationShip, message } = this.props;
+		const { user, invitation, relationShip, message, serverSide } = this.props;
 
 		if(serverSide) {
 			return(
@@ -135,21 +135,13 @@ const MiniProfile = createReactClass({
 					<div className="min-prof-pic-a" >
 	                    <div className="min-prof-pic-b" >
 	                        <div className="min-conver-ctnr" >
-	                            <div className="hm-edt-cov-pic" onClick={this.setCoverPic}>
-	                            	<i className="fa fa-pencil" aria-hidden="true"></i>
-	                            </div>
-	                            <img src={user.cover_pic.web_path} className="min-conver" />
+	                            <div className="min-conver"></div>
 	                        </div>
 	                        <div className="mn-pic-ctnr"> 
-	                            <div className="min-pic-container" >
-		                            <div className="hm-edt-prof-pic" onClick={this.setProfilePic}>
-		                            	<i className="fa fa-pencil" aria-hidden="true"></i>
-		                            </div>                    
-	                                <img src={user.profile_pic.web_path} className="min-pic-img" />
+	                            <div className="min-pic-container" >        
+	                                <div className="min-pic-img"></div>
 	                            </div>
-		                        <Link to={`/${user.username}`} className="min-nm-lk">
-		                            <span className="min-prof-name" >{user.firstname}</span>                    
-		                        </Link>
+		                        <div className="min-nm-lk"></div>
 	                        </div>	                        
 	                        <div className="hm-prof-conf">
 	                            <i className="fa fa-cog" aria-hidden="true"></i>
@@ -159,15 +151,12 @@ const MiniProfile = createReactClass({
 					</div>
 					<div className="min-prof-not" >
 			            <div className="min-prof-not-a" >
-			                <Link to="/messages/" className="hm-g-inbox">
-			                    <i className="fa fa-envelope" aria-hidden="true"></i>
-			                    <span className="min-prof-not-child" >Inbox</span>
-			                </Link>
-			                <MoreOption 
-			                	toggleOption={this.toggleOption}
-			                	closeOption={this.closeOption}
-			                	active={this.state.option}
-			                	/>
+			                <div className="hm-g-inbox">
+			                    <span className="min-prof-not-child" ></span>
+			                </div>
+			                <div className="hm-g-inbox">
+			                    <span className="min-prof-not-child" ></span>
+			                </div>
 			            </div>
 					</div>
 				</div>

@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\{Exception\AuthenticationException, Security
 use OP\UserBundle\Document\User,
     JMS\Serializer\SerializerInterface,
     OP\UserBundle\Security\UserProvider,
-    FOS\UserBundle\Form\Factory\FormFactory,
+    OP\UserBundle\Controller\RegistrationController,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
     Symfony\Component\HttpFoundation\Request,
     OP\MessageBundle\DocumentManager\ThreadManager,
@@ -15,6 +15,7 @@ use OP\UserBundle\Document\User,
     OP\PostBundle\DocumentManager\PostManager,
     OP\UserBundle\Repository\OpinionUserManager,
     OP\UserBundle\DocumentManager\InvitationManager,
+    OP\UserBundle\Controller\SecurityController,
     OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -22,12 +23,13 @@ use OP\UserBundle\Document\User,
 class HomeController extends Controller
 {
 
-    protected $dm, $user_provider, $formFactory;
+    protected $dm, $user_provider, $formFactory, $secController;
 
-    public function __construct(UserProvider $uProvider, FormFactory $formFactory, \Doctrine\ODM\MongoDB\DocumentManager $dm) {
-        $this->dm           = $dm;
+    public function __construct(UserProvider $uProvider, \Doctrine\ODM\MongoDB\DocumentManager $dm, RegistrationController $regController, SecurityController $secController) {
+        $this->dm            = $dm;
         $this->user_provider = $uProvider;
-        $this->formFactory  = $formFactory;
+        $this->regController = $regController;
+        $this->secController = $secController;
     }
 
     
@@ -111,19 +113,35 @@ class HomeController extends Controller
             ]);
 
         } else {
-            $loginKeys      = $this->getLoginKeys($request);
+            $loginKeys      = $this->secController->getLoginKeys($request);
+            $registerForm   = $this->regController->getRegisterForm($request);
             $description    = 'Welcome to opinion';
             return  $this->render(
                             'OPSocialBundle:Welcome:welcome.html.twig', 
-                            array(
-                                'title'         => 'Welcome to Opinion', 
-                                'description'   => $description, 
-                                'locale'        => $request->getLocale(),
-                                'form'          => $this->getRegisterForm(),
-                                'error'         => $loginKeys['error'],
-                                'csrf_token'    => $loginKeys['csrf_token'],
-                                'last_username' => $loginKeys['last_username']
-                            )
+                            [
+                                'initialState'  => [
+                                    'App'         => [
+                                        'sessionId' => $session->getId()
+                                    ],
+                                    'Signup' => [
+                                        'trans'  => $registerForm['trans'],
+                                        // 'form'   => $registerForm['form']->createView(),
+                                        'flashBag'=> $registerForm['flashBag'],
+                                        'action' => 'api/signup'
+                                    ],
+                                    'Login'  => [
+                                        'trans'     => $loginKeys['trans'],
+                                        'action'    => 'api/login_check',
+                                        'flashBag'   => $loginKeys['flashBag'],
+                                        'csrf_token' => $loginKeys['csrf_token'],
+                                        'server_error'  => $loginKeys['error'],
+                                        'last_username' => $loginKeys['last_username']
+                                    ]
+                                ],
+                                'title'       => 'Welcome to Opinion',
+                                'description' => $description, 
+                                'locale'      => $request->getLocale()
+                            ]
                         );
         }
     }
@@ -146,53 +164,6 @@ class HomeController extends Controller
             'newsRefs'  => $newsRefs,
             'lastStreamId' => $timeline['lastStreamId']
         ];
-    }
-
-    
-
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
-    private function getLoginKeys(Request $request)
-    {
-        /** @var $session Session */
-        $session = $request->getSession();
-
-        $authErrorKey = Security::AUTHENTICATION_ERROR;
-        $lastUsernameKey = Security::LAST_USERNAME;
-
-        // get the error if any (works with forward and redirect -- see below)
-        if ($request->attributes->has($authErrorKey)) {
-            $error = $request->attributes->get($authErrorKey);
-        } elseif (null !== $session && $session->has($authErrorKey)) {
-            $error = $session->get($authErrorKey);
-            $session->remove($authErrorKey);
-        } else {
-            $error = null;
-        }
-
-        if (!$error instanceof AuthenticationException) {
-            $error = null; // The value does not come from the security component.
-        }
-
-        // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
-
-        $csrfToken = $this->has('security.csrf.token_manager')
-            ? $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue()
-            : null;
-
-        return  array (
-                    'last_username' => $lastUsername,
-                    'error' => $error,
-                    'csrf_token' => $csrfToken,
-                );
-    }
-
-    protected function getRegisterForm() {
-        return $this->formFactory->createForm()->createView();
     }
     
     private function goWelcomePage($helper, $request)

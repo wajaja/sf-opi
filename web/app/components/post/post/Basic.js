@@ -8,7 +8,6 @@ import bindFunctions from '../../../utils/bindFunctions'
 import Head from './Head'
 import Body from './Body'
 import Foot from './Foot'
-import PostHolder from './PostHolder'
 
 import MyLoadable    from '../../../components/MyLoadable'
 const EditPostForm = MyLoadable({loader: () => import('../post/form/EditPostForm')}),

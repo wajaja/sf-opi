@@ -14,11 +14,15 @@ namespace OP\UserBundle\Controller;
 use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Event\FormEvent,
     FOS\UserBundle\Model\UserInterface,
+    OP\UserBundle\Security\UserProvider,
+    FOS\UserBundle\Form\Factory\FormFactory,
     Symfony\Component\HttpFoundation\Request,
     FOS\UserBundle\Event\GetResponseUserEvent,
     FOS\UserBundle\Event\FilterUserResponseEvent,
+    Symfony\Component\Translation\TranslatorInterface,
     Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Symfony\Component\EventDispatcher\EventDispatcherInterface,
     Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -29,18 +33,26 @@ use FOS\UserBundle\FOSUserEvents,
  */
 class ChangePasswordController extends Controller
 {
+
+    protected $translator, $user_provider, $formFactory;
+
+    public function __construct(TranslatorInterface $trans, UserProvider $uProvider, FormFactory $formFactory) {
+        $this->translator  = $trans;
+        $this->user_provider = $uProvider;
+        $this->formFactory  = $formFactory;
+    }
+
     /**
      * Change user password
      */
-    public function changePasswordAction(Request $request)
+    public function changePasswordAction(Request $request, EventDispatcherInterface $dispatcher)
     {
         $user = $this->_getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
-
-        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-        $dispatcher = $this->get('event_dispatcher');
+        echo "string";
+        die();
 
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_INITIALIZE, $event);
@@ -50,7 +62,7 @@ class ChangePasswordController extends Controller
         }
 
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->get('fos_user.change_password.form.factory');
+        $formFactory = $this->formFactory;
 
         $form = $formFactory->createForm();
         $form->setData($user);
@@ -79,6 +91,12 @@ class ChangePasswordController extends Controller
         return $this->render('FOSUserBundle:ChangePassword:changePassword.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+
+    public function _getUser()
+    {
+        return $this->user_provider->getHydratedUser();
     }
 }
 

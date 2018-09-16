@@ -9,6 +9,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 
 var production  = process.env.NODE_ENV === 'production';
+var devMode = true;
 var lib_dir     = __dirname + '/public/libs',
     image_dir   = path.join(__dirname, '/public/images'),
     node_dir    = __dirname + '/node_modules';
@@ -25,7 +26,7 @@ module.exports = [
     {
         mode: 'development',
         target: 'node', //https://github.com/axios/axios/issues/456#issuecomment-285287911
-        externals: [nodeExternals()],
+        // externals: [nodeExternals()],
         // node: { 
         //     process: false,
         //     console: true, 
@@ -44,12 +45,45 @@ module.exports = [
         },
         output: {
             path: PATH.serverBuilds,
-            filename: 'server-bundle.js',
-            // publicPath: production ? '/' : 'http://opinion.com:8080/'
+            filename: '[name].bundle.js',
+            // publicPath: production ? '/' : 'http://opinion.com:8080/',
+            crossOriginLoading: "anonymous"
         },    
         module: {
             // noParse: /node_modules\/localforage\/dist\/localforage.js/, //Webpack will emit a warning about using a prebuilt javascript file which is fine; see doc
             rules: [
+                // {
+                //     test: /\.(sa|sc|c)ss$/,
+                //     use: [
+                //         //devMode ? 'style-loader' : MiniCssExtractPlugin.loader, //don't use style-loader in ssr
+                //         {
+                //             loader: 'css-loader',
+                //             options: {
+                //                 importLoaders: 1,
+                //                 modules: true,
+                //                 localIdentName: '[name]__[local]--[hash:base64:5]',
+                //                 sourceMap: true
+                //             }
+                //         },
+                //         'postcss-loader',
+                //         'resolve-url-loader', //resolve .eot's url in css file
+                //         {
+                //             loader: 'sass-loader',
+                //             options: {
+                //                 importLoaders: 1,
+                //                 modules: true,
+                //                 localIdentName: '[name]__[local]--[hash:base64:5]',
+                //                 sourceMap: true
+                //             }
+                //         }
+                //     ],
+                // },
+                { 
+                    test: /\.(woff|woff2|svg|ttf)([\?]?.*)$/, 
+                    use: [{
+                        loader: "file-loader"
+                    }]
+                },
                 {
                     test: /\.(s?)css$/,
                     use: 'ignore-loader'
@@ -66,7 +100,7 @@ module.exports = [
                     // }
                 },
                 {
-                    test: /\.(jpe?g|png|gif|svg)$/i,
+                    test: /\.(jpe?g|png|gif|svg|eot)$/i,
                     use: [
                       {
                         loader: 'file-loader',
@@ -84,15 +118,7 @@ module.exports = [
                 }
             ]
         },
-        plugins: [
-            // By using maxChunks: 0, the code-splitting was not affected. 
-            // However, when using maxChunks: 1, code-splitting was turned off 
-            // but a runtime error appears __webpack_require__.e is not a function.
-            // https://gist.github.com/jcenturion/892c718abce234243a156255f8f52468
-            // new webpack.optimize.LimitChunkCountPlugin({
-            //     maxChunks: 1
-            // }),
-            
+        plugins: [            
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
             }),
@@ -112,7 +138,7 @@ module.exports = [
         //     contentBase: './web/',
         //     headers: { "Access-Control-Allow-Origin": "*" }
         // },
-        // devtool: production ? false : '#inline-source-map'
+        devtool: 'cheap-module-source-map'
     },
 
     //client side config
@@ -126,7 +152,7 @@ module.exports = [
             }
         },
         entry: {
-            'babel-polyfill': ['babel-polyfill'],
+            // 'babel-polyfill': ['babel-polyfill'],
             index: './app/entryPoint.js',
             vendors: ['jquery']
         },
@@ -135,7 +161,8 @@ module.exports = [
             filename: '[name].bundle.js',
             chunkFilename: 'js/[name].bundle.js', 
             // publicPath: '/',
-            publicPath: production ? '/builds/' : '/builds/'
+            publicPath: production ? '/builds/' : '/builds/',
+            crossOriginLoading: "anonymous" //Only used when target is web, which uses JSONP for loading on-demand chunks, by adding script tags.
         },    
         module: {
             noParse: /node_modules\/localforage\/dist\/localforage.js/, //Webpack will emit a warning about using a prebuilt javascript file which is fine; see doc
@@ -161,6 +188,7 @@ module.exports = [
                                 }
                             },
                             { loader: 'css-loader' },
+                            { loader: 'postcss-loader'},
                             { loader: 'sass-loader' }
                         ]
                     }),
@@ -179,16 +207,6 @@ module.exports = [
                       }
                     ]
                 },
-
-                // {
-                //     test: /\.(sa|sc|c)ss$/,
-                //     use: [
-                //       devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-                //       'css-loader',
-                //       'postcss-loader',
-                //       'sass-loader',
-                //     ],
-                // },
                 // {
                 //     test: /\.css$/,
                 //     use: ExtractTextPlugin.extract("style-loader", "css-loader")
@@ -225,12 +243,6 @@ module.exports = [
                 disable: false, 
                 allChunks: true 
             }),
-            // new MiniCssExtractPlugin({
-            //   // Options similar to the same options in webpackOptions.output
-            //   // both options are optional
-            //   filename: 'css/global.css' /*devMode ? '[name].css' : '[name].[hash].css'*/,
-            //   //chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
-            // }),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
             }),
@@ -268,7 +280,7 @@ module.exports = [
             contentBase: './web/',
             headers: { "Access-Control-Allow-Origin": "*" }
         },
-        // devtool: production ? false : '#inline-source-map',
+        devtool: 'cheap-module-source-map',
         optimization: {
             splitChunks: {
                 cacheGroups: {
@@ -278,8 +290,20 @@ module.exports = [
                         name: "vendor",
                         chunks: "all"
                     },
+                    // styles: {
+                    //     name: 'styles',
+                    //     test: /\.s?css$/,
+                    //     chunks: 'all',
+                    //     // minChunks: 1,
+                    //     // reuseExistingChunk: true,
+                    //     enforce: true,
+                    // }
                 }
             }
         }
     }
 ]
+
+// loader: 'css-loader/locals?modules&localIdentName=[path][name]---[local]---[hash:base64:5]'
+// 'css/locals?module&localIdentName=[name]__[local]___[hash:base64:5]'
+// 'css-loader/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'

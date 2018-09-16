@@ -52,6 +52,13 @@
                 letter-spacing: .6px;
                 .intro-dv{
                     min-height: 5px;
+                    p{
+                        margin: 0px;
+                    }
+                    img{
+                        width: 18px;
+                        height: 18px //for emoji
+                    }
                 }
             }
             &:hover{

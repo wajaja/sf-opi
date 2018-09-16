@@ -3,7 +3,7 @@ var fs = require("fs");
 var path = require("path");
 
 var bundlePath = "../webpack/";
-var bundleFileName = "server-bundle.js";
+var bundleFileName = "index.bundle.js";
 
 var currentArg;
 

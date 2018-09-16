@@ -91,6 +91,7 @@ const Rect = createReactClass({
                     top : (img.offsetTop + rect.y) + 'px'
                 }}>
                 <div className="arrow"></div>
+                
                 <SimpleSelect
                     autofocus={true}
                     ref = "inp-tag-friend"

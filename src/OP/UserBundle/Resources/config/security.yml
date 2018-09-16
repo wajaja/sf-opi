@@ -22,6 +22,7 @@ security:
             security: false
         api_register:
             pattern: ^/api/signup
+            security: false
             stateless: true
             anonymous: true
         api_initialize:

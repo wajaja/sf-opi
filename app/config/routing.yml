@@ -7,24 +7,14 @@ op_user_refresh_token:
     defaults: { _controller: op_user.jwtrefreshtoken:refresh }
 
 OPMessage:
-    resource: "@OPMessageBundle/Controller"
-    prefix: /
+    resource: "@OPMessageBundle/Controller/"
+    prefix: /messages
     type: annotation
-OPMessageMobile:
-    resource: "@OPMessageBundle/Controller/Mobile/"
-    prefix:   /
-    type: annotation
-    host: m.opinion.com
 
-OPPost:
+op_post:
     resource: "@OPPostBundle/Controller/"
-    prefix: /posts
+    prefix: /posts/
     type: annotation
-OPPostMobile:
-    resource: "@OPPostBundle/Controller/Mobile"
-    prefix: /posts
-    type: annotation
-    host: m.opinion.com
 
 op_social_mobile:
     resource: "@OPSocialBundle/Controller/Mobile/"
@@ -36,28 +26,32 @@ op_social:
     prefix:   /
     type: annotation
 
-OPMedia:
+op_media:
     resource: "@OPMediaBundle/Controller/"
+    prefix: /
     type: annotation
-OPMediaMobile:
-    resource: "@OPMediaBundle/Controller/Mobile"
-    type: annotation
-    host: m.opinion.com
 
 #route de UserBundle
-op_user_mobile:
-    resource: "@OPUserBundle/Controller/Mobile/"
-    prefix:   /
-    type: annotation
-    host: m.opinion.com
-op_user:
-    resource: "@OPUserBundle/Resources/config/routing/all.xml"
-    prefix:    /
-
+# op_user_mobile:
+#     resource: "@OPUserBundle/Controller/Mobile/"
+#     prefix:   /
+#     type: annotation
+#     host: m.opinion.com
     #route pour acceder au groupe
 op_user_group:
     resource: "@OPUserBundle/Resources/config/routing/group.xml"
     prefix: /groups
+
+#REST 
+rest :
+    type : rest
+    resource : "routing_rest.yml"
+    prefix : /api
+    
+op_user:
+    resource: "@OPUserBundle/Resources/config/routing/all.xml"
+    prefix:    /
+
 
 #app:
 #    resource: "@AppBundle/Controller/"
@@ -77,11 +71,15 @@ _liip_imagine:
 oneup_uploader:
     resource: .
     type: uploader
-#REST 
-rest :
-    type : rest
-    resource : "routing_rest.yml"
-    prefix : /api
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
+
+# Make sure to include this route in your routing configuration at the very end 
+# of your route listing. Otherwise, you risk redirecting real routes 
+# (including Symfony core routes) that actually do have a trailing slash in their path.
+remove_trailing_slash:
+    path: /{url}
+    defaults: { _controller: OPSocialBundle:Redirecting:removeTrailingSlash }
+    requirements:
+        url: .*/$

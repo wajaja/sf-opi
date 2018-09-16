@@ -114,10 +114,10 @@ const Home  = createReactClass({
         const { user, lastStreamId, dispatch } = this.props;
         findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll);
 
-        import('./../utils/OpinionStream').then(OpinionStream => {
+        import('../../../utils/OpinionStream').then(OpinionStream => {
             this.stream = new OpinionStream(dispatch, user.id, lastStreamId);
         });
-        import('./../utils/StreamAnalytic').then(StreamAnalytic => {            
+        import('../../../utils/StreamAnalytic').then(StreamAnalytic => {            
             //this._streamAnalytic = new StreamAnalytic(this.props.user); //TODO 
         });
 
@@ -178,7 +178,7 @@ const Home  = createReactClass({
      * @returns {*|markup}
      */
     render() {
-        const { location, dispatch, user, serverSide } = this.props,
+        const { location, dispatch, user, serverSide, access_token } = this.props,
         // picRoute = ~location.pathname.indexOf('/pictures/') ? true : false,
         { hasOwnDiary, newsRefs }  = this.state,
         userId                        = user.id;
@@ -249,12 +249,6 @@ const Home  = createReactClass({
                             {this.props.screenWidth > 992 && 
                                 <div className="lft-dv">
                                     <div className="lft-dv-a">
-                                        {serverSide  && <DiaryHolder 
-                                            dispatch={dispatch}
-                                            forUserId={userId}
-                                            hasOwnDiary= {hasOwnDiary}
-                                            />
-                                        }
                                         <Diary 
                                             dispatch={dispatch}
                                             forUserId={userId}
@@ -274,7 +268,7 @@ const Home  = createReactClass({
                                             onUnFollowRequest={this.onUnFollowRequest}
                                             onDeleteInvitation={this.onDeleteInvitation}
                                             />
-                                        <Foot />                                
+                                        <Foot dispatch={this.props.dispatch} />                                
                                     </div>
                                 </div>
                             }                                  

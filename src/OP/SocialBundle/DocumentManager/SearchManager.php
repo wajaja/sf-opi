@@ -9,7 +9,8 @@ use Pagerfanta\Pagerfanta,
 	Pagerfanta\Adapter\ArrayAdapter,
     Doctrine\ODM\MongoDB\DocumentManager,
     Symfony\Component\HttpFoundation\Request,
-    OP\PostBundle\Elastica\QuerySearch,
+    OP\UserBundle\Elastica\QuerySearch,
+    JMS\Serializer\SerializerInterface,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
 	Symfony\Component\DependencyInjection\ContainerInterface as Container;
@@ -39,12 +40,9 @@ class SearchManager
 		$container = $this->container;
 
         $user->handleRequest($request);
+        $finder  = $container->get('fos_elastica.finder.app.user');
 
-        $serializer  = $container->get('jms_serializer');
-        $querySearch = $container->get('op_user.elastica.query_search');
-        $finder      = $container->get('fos_elastica.finder.app.user');
-
-        $query   = $querySearch->getQueryForUser($user);
+        $query   = $this->querySearch->getQueryForUser($user);
         $results = $finder->find($query);
 
         /** Alternatve*/
@@ -58,7 +56,7 @@ class SearchManager
         $pager->setCurrentPage($user->getPage());
 
         foreach ($pager->getCurrentPageResults() as $user) {
-            $users[] = $serializer->toArray($user);
+            $users[] = $this->serializer->toArray($user);
         }
 
         return $users;

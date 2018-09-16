@@ -3,9 +3,8 @@ import { connect }          from 'react-redux'
 import Phone                from 'react-phone-number-input'
 import createClassReact     from 'create-react-class'
 
-// import 'react-phone-number-input/rrui.css'
-import 'react-responsive-ui/style.css'
-import 'react-phone-number-input/style.css'
+import '../../../styles/lib/react-responsive-ui/style.css'
+import '../../../styles/lib/react-phone-number-input/style.css'
 
 const PhoneForm = createClassReact({
 

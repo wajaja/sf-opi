@@ -1,40 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{locale}}">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="author" content="Opinion">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-        <meta name="description" content="{{description}}">
-        <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
-        <link href="http://opinion.com/app/styles/animate.min.css" type="text/css" rel="stylesheet" />
-        <link href="http://opinion.com/builds/css/global.css" type="text/css" rel="stylesheet" />
-        <title>{% block title %} {{title}} {% endblock %}</title>
-    </head>
-    <body id="app" class="global_body">
-        <div id="root">
-                {% block navbar %}
-                    {{ include('@OPSocial/Welcome/navbar.html.twig') }}
-                {% endblock navbar %}
-            <div class="wel-bd-ctnr">
-                <div class="wel-bd-ctnr-a">
-                    <div class="regist-f-ctnr">
-                        <div class="regist-f-ctnr-a">
-                            {% block register_content %}
-                                {{ include('@OPUser/Registration/register_content.html.twig') }}
-                            {% endblock register_content %}
-                        </div>
-                    </div>
-                </div>
-                <div class="">
-                    other content
-                </div>
-            </div>
-        <div>
-        <script src="http://opinion.com/public/libs/jquery.min.js"></script>
-        <script src="http://opinion.com/public/libs/axios.js"></script>
-        <script src="http://opinion.com/public/libs/zxcvbn.js"></script>
-        <script src="http://opinion.com/public/js/registration.js"></script>
-    </body>
-</html>
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {{ redux_store('opinionStore', initialState) }}
+    {{ react_component('mainNode', {'rendering': 'server_side', 'trace': true}) }}
+{% endblock %}

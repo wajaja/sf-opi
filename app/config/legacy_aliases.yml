@@ -75,6 +75,8 @@ services:
 
     doctrine.odm.mongodb.document_manager.public:
         alias: doctrine.odm.mongodb.document_manager
+    liip_imagine.cache.manager.public:
+        alias: liip_imagine.cache.manager
     doctrine_mongodb.public:
         alias: doctrine_mongodb
     Doctrine\ODM\MongoDB\DocumentManager:

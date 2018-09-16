@@ -501,6 +501,37 @@ const PostFootElement  = createReactClass({
 
 	render() {
         const { footType, EmojiSelect, form_focus, videoUploaderOption } = this.props;
+        
+        if(footType === 'videoForm'){
+            return(
+                <div className="gl-frm-btm-li-post-l">
+                    <div className="gl-frm-btm-li-post-l-a">
+                        <div className="frm-group-video-dv item deg135">
+                            <div className={videoUploaderOption ? `video-upl-option in` : `video-upl-option out`}>
+                                <div className="camera-rec-zone">
+                                    <div className="camera-rec-ico"></div>
+                                    <span className="camera-rec-txt">From camera</span>
+                                </div>
+                                <div className="upl-vid-zone">
+                                    <div className="video-opt-str-btn-ctnr">
+                                        <div className="ico"></div>
+                                        <input 
+                                            type="file" 
+                                            id="post_type_vid" 
+                                            className="pst-inp-vid" 
+                                            onChange={this.fileChosen}/>
+                                        <label htmlFor="post_type_vid">Select Video</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span className="frm-group-btn-vdeo" onClick={this.handleVideoUploaderBtn}></span>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
+
         return (
 			<div className={!!form_focus ? `gl-frm-btm-li-post-l show-dv` : `gl-frm-btm-li-post-l`}>
                 <div className="gl-frm-btm-li-post-l-a">

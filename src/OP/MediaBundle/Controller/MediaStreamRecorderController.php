@@ -6,6 +6,12 @@ use Symfony\Component\HttpFoundation\Request,
     OP\MediaBundle\Document\MediaStreamRecorder,
     OP\MediaBundle\Form\MediaStreamRecorderType,
     Symfony\Component\HttpFoundation\JsonResponse,
+    OP\UserBundle\Security\UserProvider,
+    JMS\Serializer\SerializerInterface,
+    OP\MessageBundle\DocumentManager\ThreadManager,
+    OP\MessageBundle\DocumentManager\MessageManager,
+    OP\SocialBundle\DocumentManager\NotificationManager,
+    OP\UserBundle\DocumentManager\InvitationManager,
     Symfony\Component\HttpFoundation\File\UploadedFile,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
@@ -16,11 +22,84 @@ use Symfony\Component\HttpFoundation\Request,
 /**
  * MediaStreamRecorder controller.
  *
- * @Route("/mediastream")
+ * @Route("/streams")
  */
 class MediaStreamRecorderController extends Controller
 {
-     public function reserveAction(Request $request)
+    
+    protected $dm, $user_provider;
+
+    public function __construct(UserProvider $uProvider, \Doctrine\ODM\MongoDB\DocumentManager $dm) {
+        $this->dm           = $dm;
+        $this->user_provider = $uProvider;
+    }
+    
+    /**
+     * Lists all Image documents.
+     *
+     * @Route("", name="mediastreamrecorder")
+     *
+     * @return array
+     */
+    public function indexAction(Request $request, ThreadManager $threadMan, MessageManager $messMan, NotificationManager $notifMan, SerializerInterface $serializer, InvitationManager $invitMan)
+    {
+        $session  = $request->getSession();
+        if($token = $session->get('access_token')) {
+            $video  = $similar = [];
+            $user   = $this->_getUser();
+            $postId = $request->query->get('post_id');
+            $dm     = $this->getDocumentManager();
+            $videos = $dm->getRepository('OP\MediaBundle\Document\Video')->findAll();
+            
+            return $this->render('OPMediaBundle:Stream:index.html.twig', [
+                // We pass an array as props
+                'initialState' => [
+                    'App'         => [
+                        'sessionId'    => $session->getId()
+                    ],
+                    'User'        => [
+                        'user'      => $serializer->toArray($user)
+                    ],
+                    'Auth'         => [
+                        'token'    => $token,
+                        'data'      => $session->get('_authData')
+                    ],
+                    'Stream' => [
+                        'streams' => [
+                            'list' => [],
+                        ],
+                        'loading'=> false,
+                    ],
+                    'Notification' => [
+                        'nbAlerts'  => $notifMan->countAlerts($user),
+                    ],
+                    'Invitation'   => [
+                        'nbAlerts'  =>  $invitMan->countAlerts($user),
+                    ],
+                    'Message'      => [
+                        'nbAlerts'  =>  $messMan->countAlerts($user),
+                        'threadsIds' => $threadMan->findParticipantInboxThreadsIds($user)
+                    ],
+                    'Users'        => [
+                        'defaults'  => $invitMan->loadDefaultUsers($user, []),
+                        'onlines'   => []
+                    ],
+                    'NewsFeed'     => [
+                        'news'      => []
+                    ],
+                    'Invitation'    => [],
+                ],
+                'title'         => "My Streams",
+                'description'   => 'video show', 
+                'locale'        => $request->getLocale(),
+            ]);
+        } else {
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+    }
+
+
+    public function reserveAction(Request $request)
     {
         $notification = 'A message has been received by the server!<br />';
  
@@ -56,24 +135,6 @@ class MediaStreamRecorderController extends Controller
         return $this->render('AcmeAcmeBundle:Default:index.html.twig', array(
             'form' => $form->createView()
         ));
-    }
-    
-    
-    /**
-     * Lists all MediaStreamRecorder documents.
-     *
-     * @Route("/", name="mediastreamrecorder")
-     * @Template()
-     *
-     * @return array
-     */
-    public function indexAction()
-    {
-        $dm = $this->getDocumentManager();
-
-        $documents = $dm->getRepository('OPMediaBundle:MediaStreamRecorder')->findAll();
-
-        return array('documents' => $documents);
     }
 
     /**
@@ -307,6 +368,11 @@ class MediaStreamRecorderController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    public function _getUser()
+    {
+        return $this->user_provider->getHydratedUser();
     }
 
     /**

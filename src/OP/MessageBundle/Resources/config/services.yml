@@ -86,6 +86,6 @@ services:
     OP\MessageBundle\Topic\MessageReadTopic:
         tags:
             - { name: gos_web_socket.topic }
-    oOP\MessageBundle\Topic\MessageWritingTopic:
+    OP\MessageBundle\Topic\MessageWritingTopic:
         tags:
             - { name: gos_web_socket.topic }

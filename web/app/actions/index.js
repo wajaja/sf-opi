@@ -1,5 +1,5 @@
 export { 
-	Photo, Photos, FriendTag, EveryWhere, Video 
+	Photo, Photos, FriendTag, EveryWhere, Video, Stream 
 } 											from './media'
 
 export { Message, Secrets, Questions } 	from './message'
@@ -11,10 +11,10 @@ export { Posts, Likes, Rates, Shares,
 export { Header, PostForm, Notification,
 		 Confidence, Search, App, 
 		 VideoUploader, NewsFeed,
-		 Exception, Places, Stream		
+		 Exception, Places		
 } 											from './social'
 
 export { User, Auth, Invitation, Diary,
-		 RelationShip, SignUp, Profiles,
-		 Users, Groups,	Setting,     	
+		 RelationShip, Signup, Profiles,
+		 Users, Groups,	Setting, Login 	
 } 											from './user'

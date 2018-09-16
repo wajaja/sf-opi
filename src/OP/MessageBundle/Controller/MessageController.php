@@ -31,11 +31,6 @@ use FOS\UserBundle\FOSUserEvents,
     Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
-/**
- * Message controller.
- *
- * @Route("/messages")
- */
 class MessageController extends Controller
 {
 
@@ -50,12 +45,11 @@ class MessageController extends Controller
     /**
      * Lists all Message documents.
      *
-     * @Route("/", name="op_message_inbox")
-     * @Template()
+     * @Route("/", name="inbox")
      *
      * @return array
      */
-    public function inboxAction(Request $request, ThreadManager $threadMan, ObjectToArrayTransformer $transf, NotificationManager $notifMan, InvitationManager $invitMan)
+    public function inboxAction(Request $request, ThreadManager $threadMan, ObjectToArrayTransformer $transf, NotificationManager $notifMan, InvitationManager $invitMan, MessageManager $msgMan)
     {
         $thread   = $request->query->get('thread');
         $session  = $request->getSession();
@@ -63,8 +57,8 @@ class MessageController extends Controller
             $description  = 'Message';
             $serializer   = $this->get('jms_serializer');
             $user         = $this->_getUser();
-            $nbAlerts     = $messMessage->countAlerts($user);
-            $threadsData  = $thread_man->loadThreads($user, 10, []); //User, limit, initIds
+            $nbAlerts     = $msgMan->countAlerts($user);
+            $threadsData  = $threadMan->loadThreads($user, 10, []); //User, limit, initIds
 
             $messages = [
                 'messages'  => [],
@@ -72,7 +66,7 @@ class MessageController extends Controller
                 'nbAlerts'  => $nbAlerts,
                 'list'      => $threadsData['threads'],
                 'threads'   => array(''=>''),
-                'threadsIds' => $thread_man->findParticipantInboxThreadsIds($user)
+                'threadsIds' => $threadMan->findParticipantInboxThreadsIds($user)
             ];
                 
             if(count($thread) === 24) {

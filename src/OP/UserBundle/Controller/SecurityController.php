@@ -4,16 +4,58 @@ namespace OP\UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\Security\Core\Security,
+    Symfony\Component\Security\Csrf\CsrfTokenManagerInterface,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Symfony\Component\Translation\TranslatorInterface,
     Symfony\Component\Security\Core\SecurityContextInterface,
     Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 
 class SecurityController extends Controller
 {
+
+     protected $translator, $tokenMan;
+
+    public function __construct(TranslatorInterface $trans, CsrfTokenManagerInterface $tokenMan) {
+        $this->tokenMan  = $tokenMan;
+        $this->translator = $trans;
+    }
+
+
     public function loginAction(Request $request)
     {
 
+        $session    = $request->getSession();
+        $description = 'Login Opinion';
+        $loginKeys   = $this->getLoginKeys($request);
+        return  $this->render('OPUserBundle:Security:login.html.twig', [
+                               'initialState'  => [
+                                    'App'         => [
+                                        'sessionId' => $session->getId()
+                                    ],
+                                    'Login'  => [
+                                        'trans'     => $loginKeys['trans'],
+                                        'action'    => 'api/login_check',
+                                        'flashBag'   => $loginKeys['flashBag'],
+                                        'csrf_token' => $loginKeys['csrf_token'],
+                                        'server_error'  => $loginKeys['error'],
+                                        'last_username' => $loginKeys['last_username']
+                                    ]
+                                ],
+                                'title'       => 'Login',
+                                'description' => $description, 
+                                'locale'      => $request->getLocale()
+                            ]
+                        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function getLoginKeys(Request $request)
+    {
         /** @var $session Session */
         $session = $request->getSession();
 
@@ -37,22 +79,36 @@ class SecurityController extends Controller
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
 
-        $csrfToken = $this->has('security.csrf.token_manager')
-            ? $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue()
-            : null;
+        $csrfToken = $this->tokenMan->getToken('authenticate')->getValue();
 
-        $description = 'Login Opinion';
+        return  [
+            'error' => $error,
+            'trans' => $this->getTrans(),
+            'flashBag' => $this->getFlashBag($request),
+            'csrf_token' => $csrfToken,
+            'last_username' => $lastUsername,
+            "hasPreviousSession" => $request->hasPreviousSession()
+        ];
+    }
 
-        return $this->renderLogin(
-                        array(
-                            'last_username' => $lastUsername,
-                            'error'         => $error,
-                            'csrf_token'    => $csrfToken,
-                            'description'   => $description,
-                            'title'         => 'Login',
-                            'token' => $session->getId()
-                        )
-                    );
+    private function getTrans() {
+        $tr = $this->translator;
+        return [
+            "username" => $tr->trans('security.login.username', array(), 'FOSUserBundle'),
+            "password" => $tr->trans('security.login.password', array(), 'FOSUserBundle'),
+            "submit" => $tr->trans('security.login.submit', array(), 'FOSUserBundle'),
+        ];
+    }
+
+    protected function getFlashBag(Request $request) {
+        $bag = $request->getSession()->getFlashBag();
+        return [
+            "firstname" => $bag->get('registration.firstname'),
+            "lastname" => $bag->get('registration.lastname'),
+            "email" => $bag->get('registration.emailk'),
+            "plainPassword_first" => $bag->get('registration.plainPassword.first'),
+            "password_short" => $bag->get('registration.gender')
+        ];
     }
 
     /**
@@ -65,7 +121,7 @@ class SecurityController extends Controller
      */
     protected function renderLogin(array $data)
     {
-        return $this->render('OPUserBundle:Security:login.html.twig', $data);
+        return $this->render('OPUserBundle:Security:login_content.html.twig', $data);
     }
 
     public function checkAction()

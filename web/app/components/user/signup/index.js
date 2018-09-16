@@ -1,2 +1,2 @@
-export { SignupForm } from './SignupForm'
-export { SignupPage } from './SignupPage'
+export SignupForm from './SignupForm'
+export SignupPage from './SignupPage'

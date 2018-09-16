@@ -257,33 +257,48 @@ const WithAllies  = createReactClass({
 				        </div>
 				    </div>
 				</div>
- 
 				<div className="pst-ctnr-mdl pls-edtrs">
 					<div className="pst-ctnr-mdl-main">
 						<div className="main-ctnr">
 			                <div className="main-ctnr-a">
 			                	<div className="lft-pst-ctnr">
 			                		<div className="lft-pst-ctnr-a">
-					                	<Author.Photo author={author} imgHeight={40} />                           
+							        	{editors.map(function(editor, i) {
+											return <Author.Name author={editor} className="pst-aut-nm" />
+							        	})}                     
 					            	</div>
 					            </div>                                                    
 					            <div className="rght-pst-ctnr">
+					                <div className="rght-pst-dv-aut">	
+					               </div>
+					           </div>
+					        </div>
+			            </div>
+			        </div>
+			        <div className="pst-ctnr-mdl-edtrs">
+				        <div className="edtr-ctnr">
+			                <div className="edtr-ctnr-a">
+			                	<div className="lft-pst-ctnr">
+			                		<div className="lft-pst-ctnr-a">		               
+					                	<Author.Photo author={author} imgHeight={40} />  
+					                </div>	                         
+					            </div>                                                    
+					            <div className="rght-pst-ctnr">
 					                <div className="rght-pst-dv-aut">
-					               		<Author.Name author={author} className="pst-aut-nm" />
-					                   	<div className="multi-pst-ctnr-mdl-a">
-				                           	<div className="multi-dv-txt-ctn">
-				                               	<div className="multi-pst postContent" >
-				                               		<BuildContent 
-				                               			content={content}
-				                               			selectedText={this.props.selectedText}
-				                               			/>
-				                               	</div>
-				                           	</div>
-				                           	<div className="multi-pst-dv-img-ctn">
-				                               	<div className="multi-pst-dv-img-ctn-a">
-				                                   	<div className="multi-pst-dv-img-ctn-b">
-				                                   		{images.length > 0 && videos.length === 0 && 
-				                                       		<div className="multi-pst-dv-img">
+								        <div className="multi-pst-ctnr-mdl-a">
+					                       	<div className="multi-dv-txt-ctn">
+					                           	<div className="multi-pst postContent" >
+					                           		<BuildContent 
+					                           			content={content}
+					                           			selectedText={this.props.selectedText}
+					                           			/>
+					                           	</div>
+					                       	</div>
+					                       	<div className="multi-pst-dv-img-ctn">
+					                           	<div className="multi-pst-dv-img-ctn-a">
+					                               	<div className="multi-pst-dv-img-ctn-b">
+					                               		{images.length > 0 && videos.length === 0 && 
+					                                   		<div className="multi-pst-dv-img">
 					                                       		<Photos 
 					                                       			{...this.props}
 					                                       			images={this.props.mainPost.images}
@@ -291,8 +306,8 @@ const WithAllies  = createReactClass({
 					                                       			/>
 					                                       </div>
 					                                    }
-				                                       	{videos.length > 0 && 
-				                                       		<div className="multi-pst-dv-vdeos">
+					                                   	{videos.length > 0 && 
+					                                   		<div className="multi-pst-dv-vdeos">
 					                                       		<Videos 
 					                                       			{...this.props}
 					                                       			videos={this.props.mainPost.videos}
@@ -300,17 +315,14 @@ const WithAllies  = createReactClass({
 					                                       			/>
 					                                       </div>
 					                                   }
-				                                   </div>
-				                               </div>
-				                           </div>
-				                       </div>
-					               </div>
-					           </div>
-					        </div>
-			            </div>
-			        </div>
-
-			        <div className="pst-ctnr-mdl-edtrs">
+					                               </div>
+					                           </div>
+					                       </div>
+					                   </div>
+				                   </div>
+	                           </div>
+	                       </div>
+	                    </div>
 			        	{editors.map(function(editor, i) {
 							return <Allie 
 										key={i} 

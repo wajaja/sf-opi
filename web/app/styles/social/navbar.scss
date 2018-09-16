@@ -76,21 +76,21 @@ nav .default {
     /*border-color: #cbdbf1;*/
     margin-bottom: 0px;
     border-bottom: unset !important;
-    height: 46px;
-    min-height: 46px;
+    min-height: 55px;
+    max-height: 65px;
     &.modal-open {
         border-color: none !important;
     }
 }
 .gb-input-search{
-    width: 362px;
+    width: calc(100% - 40px);
     position: relative;
     outline: none;
     border: none;
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
-    height: 26px;
-    padding-left: 5px;
+    height: 28px;
+    padding-left: 4px;
     display: inline-block;
 }
 button a{
@@ -150,15 +150,19 @@ ul{
     padding: 2px;
     height: 30px;
     /*background: #bfcace;*/
-    border-radius: 2px;
+    /* border-radius: 2px; */
     /*border: 1px solid #b2b7c2;*/
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
 }
 .global-nav-right{
     display: inline-block;
     vertical-align: top;
     position: relative;
-    margin-left: 110px;
-    width: 355px;
+    width: 580px;
     height: 30px;
 }
 .form-search{
@@ -197,9 +201,8 @@ ul{
 .home-in-nav{
     position: relative;
     display: inline-block;
-    min-width: 40px;
+    min-width: 35px;
     height: 28px;
-    left: 5px;
 }
 .profile-in-nav, .config-in-nav{
     margin: 0 15px;

@@ -1,6 +1,6 @@
 {% trans_default_domain 'OPUserBundle' %}
 
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+<form action="{{ path('op_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
     <div>
         {% if invalid_username is defined %}
             <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>

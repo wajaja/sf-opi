@@ -19,7 +19,7 @@ services:
     OP\MediaBundle\Document\Picture: ~
     
     OP\MediaBundle\Construct\ImageConstructor:
-        arguments: ["@service_container", "@request_stack"]
+        arguments: ["@service_container", "@request_stack", "@liip_imagine.cache.manager.public"]
     
     OP\MediaBundle\Uploader\Storage\FilesystemStorage:
         arguments: ["%kernel.root_dir%"]

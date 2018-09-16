@@ -7,6 +7,9 @@ import { Link } 			from 'react-router-dom';
 import TextFielGroup 		from '../commons/TextFieldGroup';
 import validateInput 		from '../../../validations/user/login';
 import { Auth } 			from '../../../actions';
+import { BASE_PATH }     	from '../../../config/api'
+
+import '../../../styles/user/security.scss'
 
 const login = Auth.login;
 
@@ -38,8 +41,8 @@ const LoginForm  = createReactClass({
 	},
 
 	onSubmit(e) {
-	    e.preventDefault();
-	    if (this.isValid()) {
+	    if (!this.isValid()) {
+	    	e.preventDefault();
 	      	this.setState({ errors: {}, isLoading: true });
 	      	this.props.login(this.state).then(
 	        	(res) => this.context.router.push('/'),
@@ -49,15 +52,20 @@ const LoginForm  = createReactClass({
 	},
 
 	render() {
-		const {identifier, password, errors, isLoading } = this.state;
+		const {identifier, password, errors, isLoading } = this.state,
+		{ hasPreviousSession, action, server_error } = this.props.loginData
 		return (
 			<div className="frm-lgn-dv-ctnr">
+				{!!server_error && <div className="s-error">{server_error.messageDatq}</div>}
                 <div className="frm-msg-ttl">Login</div>
-				<form className="frm-lgn-tag" onSubmit={this.onSubmit}>
+				<form action={`${BASE_PATH}/${action}`} method="post" className="frm-lgn-tag" onSubmit={this.onSubmit}>
 					<div className="form-group">
 		                <TextFielGroup
-		                	field="identifier"
+		                	field="username"
+		                	name="username"
 		                	label=""
+		                	hasPreviousSession
+                        	wrapClassName=""
 		                	value={identifier}
 		                	error={errors.identifier}
 		                	onChange={this.onChange}
@@ -67,6 +75,9 @@ const LoginForm  = createReactClass({
 		                <TextFielGroup
 		                	field="password"
 		                	label=""
+		                	name="password"
+		                	hasPreviousSession
+                        	wrapClassName=""
 		                	value={password}
 		                	error={errors.password}
 		                	onChange={this.onChange}
@@ -74,25 +85,29 @@ const LoginForm  = createReactClass({
 		                />
 		            </div>
 	               	<div className="frm-lgn-dv-ctnr-btm">
+	               		<div className="lgn-dv-initialize">
+				            <Link to="/resetting/request" className="psw-fgt">Forgot password ?</Link>
+				        </div>
 				        <div className="lgn-dv-sbm-btn-ctnr">
 				            <button className="btn btn-default" disabled={isLoading} >Login</button>
 				        </div>
-				        <div className="lgn-dv-g-rgstr-ctnr">
-				            <Link to="/app_dev.php/signup" className="go-regiter">Sign Up</Link>
-				        </div>
 				    </div>
+			        <div className="lgn-dv-g-rgstr-ctnr">
+			        	<button className="btn go-regiter-btn" disabled={isLoading} >
+			            	<Link to="/signup" className="go-regiter">Sign Up</Link>
+			            </button>
+			        </div>
 	            </form>
 	        </div>
 		)
 	}
 })
 
-LoginForm.propTypes = {
-  login: PropTypes.func.isRequired
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated : state.Auth.isAuthenticated,
+        loginData: state.Login
+    }
 }
 
-LoginForm.contextTypes = {
-  router: PropTypes.object.isRequired
-}
-
-export default connect(null, { login })(LoginForm);
+export default connect(mapStateToProps, null)(LoginForm);

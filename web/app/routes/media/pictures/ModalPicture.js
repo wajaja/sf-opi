@@ -12,7 +12,7 @@ import {
 
 import '../../../styles/post/photo.scss'
 
-const Picture  = createReactClass( {
+const ModalPicture  = createReactClass( {
 
     /**
      * state
@@ -132,4 +132,4 @@ export default withRouter(connect(state => ({
     status: state.Photo.status,
     photosStore: state.Photos.photos,
     commentsStore: state.Comments.comments,
-}))(Picture))
+}))(ModalPicture))

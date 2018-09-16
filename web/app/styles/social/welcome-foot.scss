@@ -1,0 +1,44 @@
+.wlc-foot{
+    .foo{
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 50px;
+        border-top: #d2d4da;
+        background: #ebecef;
+        color: #727377;
+        font-size: 13px;
+        font-family: sans-serif;
+        a{
+            color: #727377;
+        }
+        .foo-opt-sh{
+            position: relative;
+            top: -6px;
+        }
+        .clss-network__share-button{
+            cursor: pointer;
+        }
+        .clss-network__share-count{
+            display: none;
+        }
+    }
+    .foo-a{
+        padding: 15px 60px;
+        position: relative;
+    }
+    .foo-lft, .foo-rght{
+        display: inline-block;
+        vertical-align: top;
+    }
+    .foo-rght{
+        position: absolute;
+        right: 60px;
+    }
+    .foo-opt{
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 40px;
+    }
+}

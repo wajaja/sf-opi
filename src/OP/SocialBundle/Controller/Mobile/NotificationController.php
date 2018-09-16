@@ -24,7 +24,7 @@ class NotificationController extends Controller
     /**
      * Lists all Notification documents.
      *
-     * @Route("/", name="notification")
+     * @Route("/", name="notification_mobile")
      * @Template()
      *
      * @return array

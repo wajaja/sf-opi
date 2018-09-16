@@ -7,6 +7,7 @@ import { connect }          from 'react-redux';
 import TextFielGroup        from '../commons/TextFieldGroup';
 import validateInput        from '../../../validations/user/login';
 import { Auth }             from '../../../actions';
+import { BASE_PATH }        from '../../../config/api'
 
 const login = Auth.login;
 
@@ -39,67 +40,69 @@ const InlineLoginForm  = createReactClass( {
       return isValid;
    },
 
-  onSubmit(e) {
-      e.preventDefault();
-      if (this.isValid()) {
-          this.setState({ errors: {}, isLoading: true });
-          this.props.login(this.state)
-              .then(
-                  (res) => this.context.router.push('/'),
-                  (err) => this.setState({ errors: err, isLoading: false })
-              )
-          ;
-      }
-  },
+    onSubmit(e) {
+        if (!this.isValid()) {
+            e.preventDefault();
+          // this.setState({ errors: {}, isLoading: true });
+          // this.props.login(this.state)
+          //     .then(
+          //         (res) => this.context.router.push('/'),
+          //         (err) => this.setState({ errors: err, isLoading: false })
+          //     )
+          // ;
+        }
+    },
 
 	render() {
-    const {username, password, errors, isLoading } = this.state;
+        const {username, password, errors, isLoading } = this.state,
+        { csrf_token, server_error, action, hasPreviousSession } = this.props.loginData
 		return (
-  			<form className="nav-fS-in" onSubmit={this.onSubmit}>
-            <div className="nav-sign-in-ip-d">
-                <TextFielGroup
-                    field="username"
-                    label=""
-                    placeholder="email or username"
-                    customClassName="nav-inp-control"
-                    value={username}
-                    error={errors.username}
-                    onChange={this.onChange}
-                />
-            </div>
-            <div className="nav-sign-in-ip-d">
-                <TextFielGroup
-                    field="password"
-                    label=""
-                    placeholder="password"
-                    customClassName="nav-inp-control"
-                    value={password}
-                    error={errors.password}
-                    onChange={this.onChange}
-                    type="password"
-                />
-                <label htmlFor="remember_me" className="nav-sign-in-r">
-                    <input type="checkbox" value="on" />
-                </label>
-            </div>
-            <button className="sbmit-login" disabled={isLoading} >Login</button>
-        </form>
+  			<form action={`${BASE_PATH}/${action}`} method="post" className="nav-fS-in" onSubmit={this.onSubmit}>
+                {!!server_error && <div className="s-error">{server_error.messageDat}</div>}
+                <input type="hidden" name="_csrfToken" value={csrf_token} />
+                <div className="nav-sign-in-ip-d">
+                    <TextFielGroup
+                        field="username"
+                        label=""
+                        name="username"
+                        hasPreviousSession
+                        wrapClassName=""
+                        placeholder="email or username"
+                        customClassName="nav-inp-control"
+                        value={username}
+                        error={errors.username}
+                        onChange={this.onChange}
+                    />
+                </div>
+                <div className="nav-sign-in-ip-d">
+                    <TextFielGroup
+                        label=""
+                        field="password"
+                        name="password"
+                        hasPreviousSession
+                        wrapClassName=""
+                        placeholder="password"
+                        customClassName="nav-inp-control"
+                        value={password}
+                        error={errors.password}
+                        onChange={this.onChange}
+                        type="password"
+                    />
+                    <label htmlFor="remember_me" className="nav-sign-in-r">
+                        <input type="checkbox" value="on" />
+                    </label>
+                </div>
+                <button className="sbmit-login" disabled={isLoading} >Login</button>
+            </form>
 		)
 	}
 })
 
-InlineLoginForm.propTypes = {
-  login: PropTypes.func.isRequired
-}
-
-InlineLoginForm.contextTypes = {
-  router: PropTypes.object.isRequired
-}
-
 const mapStateToProps = (state) => {
-  return {
-    isAuthenticated : state.Auth.isAuthenticated
-  }
+    return {
+        isAuthenticated : state.Auth.isAuthenticated,
+        loginData: state.Login
+    }
 }
 // Here is the complete 'connect' signature:
 // connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
@@ -107,4 +110,4 @@ const mapStateToProps = (state) => {
 
 //const wrappedComponentClass = connect(...)(ComponentClass)
 
-export default connect(mapStateToProps, { login })(InlineLoginForm);
+export default connect(mapStateToProps, null)(InlineLoginForm);

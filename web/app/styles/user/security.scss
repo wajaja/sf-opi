@@ -70,19 +70,7 @@
     top: 32px;
     position: relative;
 }
-div.registration-birthdate{
-    display: inline-block;
-    margin: 5px 10px 5px 10px;
-}
-label.form-registration-gender, label.registration-birthdate{
-    color: #8B8484;
-    font-weight: 600;
-    font-size: 13px;
-    text-transform: inherit;
-}
-.form-registration-gender-lab{
-    display: none;
-}
+
 #_submit_login{
     margin-left: 10px;
     color: #fff;
@@ -95,12 +83,29 @@ label.form-registration-gender, label.registration-birthdate{
 
 .sect-frm-ctnr{
     background-color: #fff;
-    padding: 10px;
-    position: absolute;
-    left: 37%;
-    width: 26%;
-    border-radius: 5px;
-    border: 1px solid #cccccc;
+    padding: 20px 40px;
+    position: relative;
+    left: 0;
+    top: 100px;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    width: 550px;
+    text-align: center;
+    height: 350px;
+    border-radius: 8px;
+    border: 1px solid #c0cad6;
+    .form-group{
+        margin-bottom: 35px;
+        input{
+            background: #fff !IMPORTANT;
+            width: 300px;
+            border: 1px solid #d8ddef;
+            height: 36px;
+            padding: 4px;
+            border-radius: 3px;
+        }
+    }
 }
 .sect-frm-ctnr > form {
     position: relative;
@@ -131,12 +136,10 @@ label.form-registration-gender, label.registration-birthdate{
 }
 
 .lgn-dv-g-rgstr-ctnr{
-    display: inline-block;
-    position: absolute;
-    left: 130px;
     font-size: 16px;
     font-weight: 600;
-    top: 5px;
+    border-top: 1px solid #e6dfdf;
+    margin-top: 15px;
 }
 .lgn-dv-sbm-btn-ctnr{
     display: inline-block;
@@ -159,7 +162,7 @@ label.form-registration-gender, label.registration-birthdate{
     height: 40px;
 }
 .frm-lgn-tag{
-    width: 250px;
+    width: 100%;
     .f-lgin-btm-r{
         display: inline-block;
         position: absolute;
@@ -169,10 +172,13 @@ label.form-registration-gender, label.registration-birthdate{
     }
 }
 .frm-msg-ttl{
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #32698e;
+    font-size: 20px;
+    /* font-weight: 600; */
+    margin-bottom: 32px;
+    color: #14181b;
+    letter-spacing: 0.4px;
+    font-family: sans-serif;
+}
 }
 .sbmit-login {
     height: 28px;

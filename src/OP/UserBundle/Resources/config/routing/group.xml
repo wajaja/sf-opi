@@ -4,24 +4,46 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="fos_user_group_list" path="/list" methods="GET">
-        <default key="_controller">FOSUserBundle:Group:list</default>
+    <route id="op_user_group_list" path="/" methods="GET">
+        <default key="_controller">OPUserBundle:Group:index</default>
     </route>
 
-    <route id="fos_user_group_new" path="/new" methods="GET POST">
-        <default key="_controller">FOSUserBundle:Group:new</default>
+    <route id="op_user_group_new" path="/new" methods="GET POST">
+        <default key="_controller">OPUserBundle:Group:new</default>
     </route>
 
-    <route id="fos_user_group_show" path="/{id}" methods="GET">
-        <default key="_controller">FOSUserBundle:Group:show</default>
+    <route id="op_user_group_show" path="/{id}" methods="GET">
+        <default key="_controller">OPUserBundle:Group:show</default>
     </route>
 
-    <route id="fos_user_group_edit" path="/{id}/edit" methods="GET POST">
-        <default key="_controller">FOSUserBundle:Group:edit</default>
+    <route id="op_user_group_edit" path="/{id}/edit" methods="GET POST">
+        <default key="_controller">OPUserBundle:Group:edit</default>
     </route>
 
-    <route id="fos_user_group_delete" path="/{id}/delete" methods="GET">
-        <default key="_controller">FOSUserBundle:Group:delete</default>
+    <route id="op_user_group_delete" path="/{id}/delete" methods="GET">
+        <default key="_controller">OPUserBundle:Group:delete</default>
+    </route>
+
+
+
+    <route id="op_user_group_list_m" path="/" methods="GET" host="m.opinion.com">
+        <default key="_controller">OPUserBundle:Group:Mobile:index</default>
+    </route>
+
+    <route id="op_user_group_new_m" path="/new" methods="GET POST" host="m.opinion.com">
+        <default key="_controller">OPUserBundle:Group:new</default>
+    </route>
+
+    <route id="op_user_group_show_m" path="/{id}" methods="GET" host="m.opinion.com">
+        <default key="_controller">OPUserBundle:Group:show</default>
+    </route>
+
+    <route id="op_user_group_edit_m" path="/{id}/edit" methods="GET POST" host="m.opinion.com">
+        <default key="_controller">OPUserBundle:Group:edit</default>
+    </route>
+
+    <route id="op_user_group_delete_m" path="/{id}/delete" methods="GET" host="m.opinion.com">
+        <default key="_controller">OPUserBundle:Group:delete</default>
     </route>
 
 </routes>

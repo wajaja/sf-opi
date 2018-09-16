@@ -142,10 +142,10 @@ export function sendTokenToServer(token) {
     return axios.post(  BASE_PATH + '/api/firebase/auth', {token : token})
           .then(
             res => {
-                console.log(res)
+                //console.log(res)
             },
             err => {
-                console.log(err)
+                //console.log(err)
             }
           )
   }

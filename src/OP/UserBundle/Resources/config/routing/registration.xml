@@ -4,8 +4,24 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="fos_user_registration_register" path="/signup/" methods="GET POST">
-        <default key="_controller">FOSUserBundle:Registration:register</default>
+    <route id="op_user_registration_register" path="/signup" methods="GET POST">
+        <default key="_controller">OPUserBundle:Registration:register</default>
     </route>
+    <route id="op_user_registration_confirmed_redir" path="/confirmed" methods="GET">
+        <default key="_controller">OPUserBundle:Registration:confirmedIndex</default>
+    </route>
+
+    <route id="op_user_registration_check_email" path="/check-email" methods="GET">
+        <default key="_controller">OPUserBundle:Registration:checkEmail</default>
+    </route>
+
+    <route id="op_user_registration_confirm" path="/confirm/{token}" methods="GET">
+        <default key="_controller">OPUserBundle:Registration:confirm</default>
+    </route>
+
+    <route id="op_user_registration_confirmed" path="/confirmed/{panel}" methods="GET">
+        <default key="_controller">OPUserBundle:Registration:confirmed</default>
+    </route>
+
 
 </routes>

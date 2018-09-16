@@ -1,14 +1,33 @@
-import React                    from 'react'
-import createReactClass         from 'create-react-class'
-import PropTypes                from 'prop-types'
-import map                      from 'lodash/map'
-import classnames               from 'classnames'
+import React             from 'react'
+import createReactClass  from 'create-react-class'
+import PropTypes         from 'prop-types'
+import map               from 'lodash/map'
+import classnames        from 'classnames'
+import { connect }       from 'react-redux'
+const zxcvbn        = require('zxcvbn')
 
 import {
     TextFieldGroup, 
     SelectedFieldGroup 
-}                               from '../../../components';
-import validateInput            from '../../../validations/user/signup';
+}                        from '../../../components';
+import validateInput     from '../../../validations/user/signup';
+import { BASE_PATH }     from '../../../config/api'
+
+import '../../../styles/user/register.scss'
+
+const regex  = {
+    email: /^[a-z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)?@[a-z][a-zA-Z-0-9]*\.[a-z]+(\.[a-z]+)?$/,
+    name: /^[a-zA-Z]+$/
+},
+password_strength = {
+    0: "Worst",
+    1: "Bad",
+    2: "Weak",
+    3: "Good",
+    4: "Strong"
+};
+var initial_strength = 'Worst';
+
 
 const SignupForm  = createReactClass( {
     getInitialState() {
@@ -41,7 +60,120 @@ const SignupForm  = createReactClass( {
 
     onTextChange(e) {
         //Set daysOfMonth by selected month
-        this.setState({ [e.target.name]: e.target.value });
+        let val = e.target.value,
+        name = e.target.name;
+        this.setState({name: val });
+
+        if(name == 'registration[plainPassword][first]') {
+            let result  = zxcvbn(val);
+            
+            // Update the text indicator
+            if(val !== "") {
+                initial_strength = password_strength[result.score];
+                errors.wrapper[name] = trans[(name + '_' + initial_strength)] || initial_strength;
+            } else {
+                errors.wrapper[name] = '';
+            }
+
+
+            if(initial_strength = 'Worst' || initial_strength === 'Bad')
+                errors['plainPassword_first'] = true;
+            else
+                delete errors['plainPassword_first'];
+        }
+    },
+
+    onBlur(e) {
+        let name = e.target.name,
+        type     = e.target.type,
+        value    = e.target.value,
+        errors   = this.state.errors,
+        { trans }= this.props.signupData;
+
+        if(!value.length) {
+            errors['wrapper'][name] = trans[(name + '_blank')];
+            errors['firstname'] = true;
+
+        } else if(value.length < 3) {
+            errors['wrapper'][name] = trans[(name + '_short')];
+            errors['firstname'] = true;
+
+        } else if(value.length > 40) {
+            errors['wrapper'][name] = trans[(name + '_long')];
+            errors['firstname'] = true;
+
+        } else {
+            if(name === 'registration[email]') {
+                if(regex.email.test(value)) {
+                    errors['wrapper'][name] = "";
+                    delete errors['email'];
+                    //check email 
+                    axios.get(`http://opinion.com/app_dev.php/api/check_email?email=${value}`)
+                        .then(function(res){
+                            var status = res.data.status;
+                            console.log(typeof status, status)
+                            if(status) {
+                                errors['wrapper'][name] = trans[(name + '_already_used')];
+                                console.log(data);
+                                errors['email'] = true;
+                            }
+                    });
+                } else {
+                    r.email.wrapper.text(r.email.message.invalid);
+                    errors['email'] = true;
+                } 
+
+            } 
+            else if(name === 'registration[plainPassword][first]'){
+                let result  = zxcvbn(val);
+                initial_strength = password_strength[result.score];
+
+                if(initial_strength === 'Worst') {
+                    errors['wrapper'][name] = trans[(name + '_Worst')] || 'Worst';
+                }
+                else if(initial_strength === 'Bad') {
+                    errors['wrapper'][name] = trans[(name + '_bad')] || 'bad';
+                }
+                else {
+                    errors['wrapper'][name] = '';
+                    delete errors['plainPassword_first'];
+                }
+
+                if(this.state['registration[plainPassword][second]'] !== "") {
+                    let second   = this.state['registration[plainPassword][second]'];
+
+                    if(value !== second) {
+                        errors.wrapper['registration[plainPassword][second]'] = trans.password_mismatch;
+                        errors['registration[plainPassword][second]'] = true;
+                    } else {
+                        errors.wrapper['registration[plainPassword][second]'] = '';
+                        delete errors['registration[plainPassword][second]'];
+                    }
+                }
+            } 
+            else if(name === 'registration[plainPassword][second]'){
+                errors.wrapper['registration[plainPassword][second]'] = '';
+                let first   = this.state['registration[plainPassword][second]']
+
+                if(first !== value) {
+                    console.log(first, value);
+                    errors.wrapper['registration[plainPassword][second]'] = trans.password_mismatch;
+                    errors['registration[plainPassword][second]'] = true;
+                } else {
+                    errors.wrapper['registration[plainPassword][second]'] = '';
+                    delete errors['registration[plainPassword][second]'];
+                }
+            } 
+            else {
+                if(regex.name.test(value)) {
+                    errors['wrapper'][name] = "";
+                    delete errors['firstname'];
+                } else {
+                    errors['wrapper'][name] = trans[('invalid')];
+                    errors[name] = true;
+                }
+            }
+        }
     },
 
     handleGenderChange(e) {
@@ -84,145 +216,165 @@ const SignupForm  = createReactClass( {
     },
 
     onSubmit(e) {
-        e.preventDefault();
         //console.log(this.state);
-        if (this.isValid()) {
-            this.setState({ errors: {}, isLoading: true });
-            this.props.userSignupRequest(this.state).then(
-                (data) => {
-              // this.props.addFlashMessage({
-              //   type: 'success',
-              //   text: 'You signed up successfully. Welcome!'
-              // });
-            }, (err) => this.setState({ errors: err.response.data, isLoading: false })
-            );
+        if(Object.keys(this.state.errors).length) {
+            e.preventDefault();
+            //JSON stringify
+            alert(errors);
         }
+        // if (!this.isValid()) {
+        //     e.preventDefault();
+        //     this.setState({ errors: {}, isLoading: true });
+        //     this.props.userSignupRequest(this.state).then(
+        //         (data) => {
+        //       // this.props.addFlashMessage({
+        //       //   type: 'success',
+        //       //   text: 'You signed up successfully. Welcome!'
+        //       // });
+        //     }, (err) => this.setState({ errors: err.response.data, isLoading: false })
+        //     );
+        // }
     },
 
     render() {
         const { errors } = this.state;
+        const { hasPreviousSession, form, signupData } = this.props;
+        { csrf_token, server_error, action, flashBag, hasPreviousSession } = this.props.loginData
         return (
-          <section className="h-sign-sect">
-            <span className="sign-ttl">Sign Up</span>
-            <form onSubmit={this.onSubmit} className="signup-form">
-              <TextFieldGroup
-                error={errors.firstname}
-                label=""
-                onChange={this.onTextChange}
-                value={this.state.firstname}
-                field= "firstname"
-                placeholder="Firstname"
-                customClassName="form-registration-firstname in-sign-up"
-              />
-              <TextFieldGroup
-                error={errors.lastname}
-                label=""
-                onChange={this.onTextChange}
-                value={this.state.lastname}
-                field="lastname"
-                placeholder="Lastname"
-                customClassName="form-registration-lastname in-sign-up"
-              />
-              <TextFieldGroup
-                error={errors.email}
-                label= ""
-                onChange= {this.onTextChange}
-                value= {this.state.email}
-                field="email"
-                placeholder="Email"
-                customClassName="form-registration-email in-sign-up"
-              />
-
-              <TextFieldGroup
-                error={errors.password}
-                label= ""
-                onChange= {this.onTextChange}
-                value= {this.state.password}
-                field="password"
-                placeholder="Email"
-                customClassName = "password in-sign-up"
-                type="password"
-              />
-              <TextFieldGroup
-                error={errors.passwordConfirmation}
-                label= ""
-                onChange= {this.onTextChange}
-                value= {this.state.passwordConfirmation}
-                field="passwordConfirmation"
-                placeholder="repeat password"
-                customClassName="password in-sign-up"
-                type="password"
-              />
-
-              <div className={classnames("form-group", { 'has-error': errors.timezone })}>
-                <label className="control-label">Birthday</label>
-                <SelectedFieldGroup
-                  error={errors.month}
-                  onChange={this.handleSelectedChange}
-                  value= {this.state.month}
-                  field="month"
-                  begin= {this.state.begin.month} 
-                  end= {this.state.end.month}
-                  customClassName="month in-sign-up"
-                />            
-                <SelectedFieldGroup
-                  error={errors.day}
-                  onChange={this.handleSelectedChange}
-                  value={this.state.day}
-                  field="day"
-                  begin={this.state.begin.day}
-                  end={this.state.end.day}
-                  customClassName="day in-sign-up"
-                />            
-                <SelectedFieldGroup
-                  error           = {errors.year}
-                  onChange        = {this.handleSelectedChange}
-                  value           = {this.state.year}
-                  field           ="year"
-                  begin           = {this.state.begin.year}
-                  end             = {this.state.end.year}
-                  customClassName ="year in-sign-up"
-                />
-              </div>
-              <div className="form-registration-gender">
-                <label>
-                  <input 
-                    type="radio"
-                    value="m"
-                    checked={this.state.gender === 'm'}
-                    onChange = {this.handleGenderChange}
-                  />
-                  Male
-                </label>
-                <label>
-                  <input 
-                    type="radio"
-                    value="f"
-                    checked={this.state.gender === 'f'}
-                    onChange = {this.handleGenderChange}
-                  />
-                  Female
-                </label>
-              </div>
-              <div className="form-group">
-                <button disabled={this.state.isLoading || this.state.invalid} className="form-registration-submit">
-                  Sign up
-                </button>
-              </div>
-            </form>
-          </section>
+            <section className="h-sign-sect">
+                <span className="sign-ttl">Sign Up</span>
+                <form action={`${BASE_PATH}/${action}`} method="post" onSubmit={this.onSubmit} className="signup-form">
+                    <TextFieldGroup
+                        label=""
+                        errors={errors}
+                        onChange={this.onTextChange}
+                        onBlur={this.onBlur}
+                        value={this.state.firstname}
+                        wrapClassName="fld-wrp fisrtname"
+                        name="registration[firstname]"
+                        field="firstname"
+                        hasPreviousSession
+                        placeholder="Firstname"
+                        customClassName="form-registration-firstname in-sign-up"/>
+                    <TextFieldGroup
+                        label=""
+                        errors={errors}
+                        hasPreviousSession
+                        onChange={this.onTextChange}
+                        onBlur={this.onBlur}
+                        wrapClassName="fld-wrp lastname"
+                        value={this.state.lastname}
+                        name="registration[lastname]"
+                        field="lastname"
+                        placeholder="Lastname"
+                        customClassName="form-registration-lastname in-sign-up" />
+                    <TextFieldGroup
+                        label= ""
+                        errors={errors}
+                        hasPreviousSession
+                        wrapClassName="fld-wrp email"
+                        onChange= {this.onTextChange}
+                        onBlur={this.onBlur}
+                        value={this.state.email}
+                        field="email"
+                        name="registration[email]"
+                        placeholder="Email"
+                        customClassName="form-registration-email in-sign-up"/>
+                    <TextFieldGroup
+                        label= ""
+                        errors={errors}
+                        hasPreviousSession
+                        wrapClassName="fld-wrp pwd-first"
+                        onChange= {this.onTextChange}
+                        onBlur={this.onBlur}
+                        field="first"
+                        value={this.state['registration[plainPassword][first]']}
+                        name="registration[plainPassword][first]"
+                        placeholder="Email"
+                        customClassName = "password in-sign-up"
+                        type="password"/>
+                    <TextFieldGroup
+                        label= ""
+                        errors={errors}
+                        hasPreviousSession
+                        wrapClassName="fld-wrp pwd-second"
+                        onChange= {this.onTextChange}
+                        onBlur={this.onBlur}
+                        value= {this.state['registration[plainPassword][second]']}
+                        name="registration[plainPassword][second]"
+                        field="second"
+                        placeholder="repeat password"
+                        customClassName="password in-sign-up"
+                        type="password"/>
+                    <div className="fld-wrp gender">
+                        <div id="registration_gender" className="form-registration-gender">
+                            <input 
+                                type="radio"
+                                value="Male"
+                                id="registration_gender_0"
+                                name="registration[gender]"
+                                checked={this.state.gender === 'Male'}
+                                onChange={this.handleGenderChange} />
+                            <label htmlFor="registration_gender_0">Male</label>
+                            <input 
+                                type="radio"
+                                value="Female"
+                                id="registration_gender_1"
+                                onBlur={this.onBlur}
+                                name="registration[gender]"
+                                checked={this.state.gender === 'Female'}
+                                onChange = {this.handleGenderChange}/>
+                            <label htmlFor="registration_gender_1">Female</label>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <button disabled={this.state.isLoading || this.state.invalid} className="form-registration-submit">
+                            Sign up
+                        </button>
+                    </div>
+                </form>
+            </section>
         );
     }
 })
 
-SignupForm.propTypes = {
-  userSignupRequest: PropTypes.func.isRequired,
-  // addFlashMessage: PropTypes.func.isRequired,
-  isUserExists: PropTypes.func.isRequired
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated : state.Auth.isAuthenticated,
+        signupData: state.Signup
+    }
 }
 
-SignupForm.contextTypes = {
-  router: PropTypes.object.isRequired
-}
+export default connect(mapStateToProps, null)(SignupForm);
 
-export default SignupForm;
+
+// <SelectedFieldGroup
+//   error={errors.month}
+//   onChange={this.handleSelectedChange}
+//   value= {this.state.month}
+//   name="month"
+//   hasPreviousSession
+//   begin= {this.state.begin.month} 
+//   end= {this.state.end.month}
+//   customClassName="month in-sign-up"
+// />            
+// <SelectedFieldGroup
+//   error={errors.day}
+//   onChange={this.handleSelectedChange}
+//   value={this.state.day}
+//   name="day"
+//   hasPreviousSession
+//   begin={this.state.begin.day}
+//   end={this.state.end.day}
+//   customClassName="day in-sign-up"
+// />            
+// <SelectedFieldGroup
+//   error     = {errors.year}
+//   onChange  = {this.handleSelectedChange}
+//   value     = {this.state.year}
+//   onBlur  = {this.onBlur}
+//   field     ="year"
+//   begin     = {this.state.begin.year}
+//   end       = {this.state.end.year}
+//   customClassName ="year in-sign-up"
+// />

@@ -27,12 +27,16 @@ const WelcomeNavBar  = createReactClass({
 	                        <span className="icon-bar"></span>
 	                    </button>
 	                </div>
-					<h1>
-		                <Link to="/login" className="navbar-brand">Opinion</Link>
-		            </h1>
-		            <div className="nav-sign-in-d">  
-		            	<InlineLoginForm />
-		            </div>
+					<div className="nav-lft">
+    					<div className="brand-ctnr">
+		                	<Link to="/login" className="navbar-brand">Opinion</Link>
+		            	</div>
+    				</div>
+		            <div className="nav-ctnr">
+			            <div className="nav-sign-in-d">  
+			            	<InlineLoginForm />
+			            </div>
+			        </div>
 	            </div>
 	        </nav>
 		)

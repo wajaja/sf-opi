@@ -6,7 +6,6 @@ use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Event\FormEvent,
     Lexik\Bundle\JWTAuthenticationBundle\Events,
     FOS\UserBundle\Event\FilterUserResponseEvent,
-    OP\MediaBundle\DocumentManager\PictureManager,
     Symfony\Component\EventDispatcher\EventSubscriberInterface,
     Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Component\HttpFoundation\JsonResponse,
@@ -40,14 +39,14 @@ class RegistrationListener extends AbstractUserListener implements EventSubscrib
         );
     }
 
-    public function onRegistrationCompleted(FilterUserResponseEvent $event, PictureManager $pic_man) {
+    public function onRegistrationCompleted(FilterUserResponseEvent $event) {
 
         $user       = $event->getUser();
         $request    = $event->getRequest();
         $session    = $request->getSession();
         $response   = $event->getResponse();
         $jwt        = $this->jwtManager->create($user);
-        $defaultPic = $pic_man->provideDefaultProfile($user);
+        $defaultPic = $this->pic_man->provideDefaultProfile($user);
         $jwtEvent   = new AuthenticationSuccessEvent(['token' => $jwt], $user, $response);
         
         if($defaultPic) {
@@ -56,15 +55,16 @@ class RegistrationListener extends AbstractUserListener implements EventSubscrib
         }
 
         if('application/x-www-form-urlencoded' === $request->headers->get('Content-Type')) {
-            $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $jwtEvent);
+            // $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $jwtEvent);
             $session->set('access_token', $jwtEvent->getData()['token']); //token in session
             $session->set('refresh_token', $jwtEvent->getData()['refresh_token']);
         } else {
             $response   = new JsonResponse();
-            $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $jwtEvent);
+            // $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $jwtEvent);
             $response->setData($jwtEvent->getData());
         }
-        $password = $request->request->get('password');
+
+        $password = $request->request->get('registration') ? $request->request->get('registration')['plainPassword']['first'] : 'default1';
 
         //create Firebase User
         try {
@@ -86,11 +86,11 @@ class RegistrationListener extends AbstractUserListener implements EventSubscrib
     public function onRegistrationSuccess(FormEvent $event) {
 
         if('application/x-www-form-urlencoded' === $this->request->headers->get('Content-Type')) {
-            $url        = $this->router->generate('fos_user_registration_confirmed', array('panel' => 'profilepic'));
+            $url        = $this->router->generate('op_user_registration_confirmed', array('panel' => 'profilepic'));
             $response   = new RedirectResponse($url);
         } else {
             $response   = new JsonResponse();
-            $response->setData(array('error'=>'registration error'));
+            $response->setData(array('success'=> true));
         }
 
         $event->setResponse($response);
@@ -98,7 +98,8 @@ class RegistrationListener extends AbstractUserListener implements EventSubscrib
 
     public function onRegistrationFaillure(FormEvent $event)
     {
-        $session  = $this->request->getSession();
+        $request  = $event->getRequest();
+        $session  = $request->getSession();
         $flashBag = $session->getFlashBag();
         $form     = $event->getForm();
 
@@ -111,12 +112,12 @@ class RegistrationListener extends AbstractUserListener implements EventSubscrib
             }
         }
 
-        if('application/x-www-form-urlencoded' === $this->request->headers->get('Content-Type')) {
-            $url        = $this->router->generate('fos_user_registration_register');
+        if('application/x-www-form-urlencoded' === $request->headers->get('Content-Type')) {
+            $url        = $this->router->generate('op_user_registration_register');
             $response   = new RedirectResponse($url);
         } else {
             $response   = new JsonResponse();
-            $response->setData(array('errors'=>'registration error'));
+            $response->setData(array('errors'=> $flashBag));
         }
 
         $event->setResponse($response);

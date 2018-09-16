@@ -52,7 +52,7 @@ const Body  = createReactClass({
 	        		{post.images.length > 0 && 
 		                <div className="rght-pst-ctnr-mdl-a">
 		                    <div className="pst-dv-txt-ctn">
-		                       <div id="postContent" className={contentClassnames} >
+		                       <div className={contentClassnames} >
 		                       		<BuildContent 
 		                       			content={content} />
 		                       </div>
@@ -100,7 +100,7 @@ const Body  = createReactClass({
 	               {post.images.length == 0 && 
 		            	<div className="rght-pst-ctnr-mdl-a">
 	                        <div className="pst-dv-txt-ctn">
-	                           	<div id="postContent" className={contentClassnames} >
+	                           	<div className={contentClassnames} >
                            			<BuildContent content={post.content} />
 	                           	</div>
 	                        </div>

@@ -28,3 +28,4 @@
 /src/OP/SocialBundle/Firebase/
 /src/OP/UserBundle/Security/Http/Authentication/google-service-account.json
 /src/OP/UserBundle/EventListener/google-service-account.json
+/web/app/components/social/home/form/PlacesSuggest.js

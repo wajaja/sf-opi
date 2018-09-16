@@ -26,6 +26,7 @@ use GuzzleHttp\Exception\{RequestException, ConnectException};
 use OP\MediaBundle\Document\Image,
     OP\UserBundle\Security\OnlineUsers,
     JMS\Serializer\SerializationContext,
+    Namshi\JOSE\InvalidArgumentException,
     Symfony\Component\DependencyInjection\ContainerInterface as Container,
     Symfony\Component\Routing\Exception\ResourceNotFoundException,
     Symfony\Component\Debug\Exception\ContextErrorException,
@@ -88,7 +89,7 @@ class ActivityListener
         }
 
 
-        $anonPaths  = ['/signup/', '/login', '/'];
+        $anonPaths  = ['/signup', '/login', '/', '/initialize/password'];
         $pathInfo   = $request->getPathInfo();
         $host       = $request->getHost();
 
@@ -126,7 +127,7 @@ class ActivityListener
         
         $request    = $event->getRequest();
         $session    = $request->getSession();
-        $anonPaths  = ['/signup/', '/login', '/'];
+        $anonPaths  = ['/signup', '/login', '/', '/initialize/password'];
         $pathInfo   = $request->getPathInfo();
         $host       = $request->getHost();
 
@@ -201,33 +202,31 @@ class ActivityListener
         $session    = $request->getSession();
         $msg        = $exception->getMessage();
 
+
         //Customize html page render exception
         if('html' === $request->getRequestFormat()) {
             if($exception instanceof NotFoundHttpException) {
                 $this->renderException($event, $msg, 'route');
-            }
-            if($exception instanceof UnexpectedTypeException) {
+            } 
+            else if($exception instanceof UnexpectedTypeException) {
                 //redirect ....
-            }
-
-            if($exception instanceof ConnectException) {
+            } 
+            else if($exception instanceof ConnectException) {
                 //redirect to not found page
                 echo "TODO customize this later; because guzzle connect error ConnectException";
                 die();
             }
-
-            if($exception instanceof RequestException) {
+            else if($exception instanceof RequestException) {
                 echo "TODO customize this later; because guzzle connect error RequestException";
                 die();
             }
-
-            if($exception instanceof OutOfRangeCurrentPageException) {
+            else if($exception instanceof OutOfRangeCurrentPageException) {
                 //redirect to not found page
             }
             //most time exception from cache on jms_serializer
             //when referenced document was removed
             //to prevent app crache
-            if($exception instanceof DocumentNotFoundException) {
+            else if($exception instanceof DocumentNotFoundException) {
                 // work on image collection
                 if (strpos($msg, '"MongoDBODMProxies\__CG__\OP\MediaBundle\Document\Image"') !== false) {
                     $_second = explode('The "MongoDBODMProxies\__CG__\OP\MediaBundle\Document\Image" document with identifier "', $msg)[1];
@@ -254,12 +253,26 @@ class ActivityListener
                 // var_dump($exception);
                 // die();
             }
-            if($exception instanceof ContextErrorException) {
+
+            else if($exception instanceof ContextErrorException) {
                 // echo "ContextErrorException";
                 // die();
             }
             //jwt token exceptions 
-            if ($exception instanceof JWTDecodeFailureException) {
+            else if ($exception instanceof JWTDecodeFailureException) {
+                $msg = $exception->getMessage();
+                if('Expired JWT Token' === $msg || 'Invalid JWT Token' === $msg) {
+                    // echo $msg;
+                    // die();
+                    /**
+                    * fully logout server side then
+                    * onCoreController will take place after
+                    * session->invalidate
+                    */
+                    $session->invalidate();     
+                    $this->renderException($event, $msg, 'jwt');
+                }
+            } else if($exception instanceof InvalidArgumentException) {
                 $msg = $exception->getMessage();
                 if('Expired JWT Token' === $msg || 'Invalid JWT Token' === $msg) {
                     /**
@@ -270,6 +283,9 @@ class ActivityListener
                     $session->invalidate();     
                     $this->renderException($event, $msg, 'jwt');
                 }
+            } else {
+                // echo "string";
+                // die();
             }
         }
 
@@ -354,6 +370,7 @@ class ActivityListener
     function renderException($event, $msg, ...$rest) {
         $request    = $event->getRequest();
         $session    = $request->getSession();
+        $token      = $session->get('access_token');
         $serializer = $this->container->get('jms_serializer');
         $response   = $this->templating->renderResponse(
             'OPSocialBundle:Home:home.html.twig', 
@@ -365,11 +382,14 @@ class ActivityListener
                         'message' => $msg,
                         'suggestions' => []
                     ],
+                    'Auth'         => [
+                        'token'    => $token,
+                    ],
                     'App' => [
                         'sessionId' => $session->getId()
                     ],
                     'User' => [
-                        'user' => $serializer->toArray($this->getUser()),
+                        'user' => $token ? $serializer->toArray($this->getUser()) : null,
                     ]
                 ],
                 'title'         => 'Opinion',

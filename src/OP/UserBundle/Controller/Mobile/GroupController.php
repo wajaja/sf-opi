@@ -32,7 +32,7 @@ class GroupController extends Controller
     /**
      * Show all groups
      */
-    public function listAction()
+    public function indexAction()
     {
         $groups = $this->get('fos_user.group_manager')->findGroups();
 

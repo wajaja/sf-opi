@@ -148,13 +148,14 @@ abstract class AbstractObjectToArrayTransformer
         }
 
         $images = [];
-        foreach($ids as $id){;
-            $image = $this->dm->getRepository('OP\MediaBundle\Document\Image')
-                              ->findPhotoById($id);
-            if(!$image) {
-                $images [] = null;
-            } else {
-                $images [] = $image;
+        foreach($ids as $id){
+            if(strlen($id) === 24) {
+                $image = $this->dm->getRepository('OP\MediaBundle\Document\Image')
+                                  ->findPhotoById($id);
+                if(!$image)
+                    $images [] = null;
+                else
+                    $images [] = $image;
             }
         }
 

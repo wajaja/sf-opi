@@ -5,8 +5,6 @@ import ReactDOM, { findDOMNode } from 'react-dom'
 import axios 				from 'axios'
 import _ 					from 'lodash'
 import { 
-	ReactSelectize, 
-	SimpleSelect, 
 	MultiSelect 
 } 							from 'react-selectize';
 

@@ -42,6 +42,32 @@ class PostManager extends BasePostManager
      * @param Post $post
      * @param Boolean $andFlush Whether to flush the changes (default true)
      */
+    public function loadPublic(User $user, $page=1, $date)
+    {
+        $user_id  = $user->getId();
+        $dm       = $this->dm;
+        $datas    = [];
+        $posts = $dm->getRepository('OPPostBundle:Post')->findBy(['confidence' => 'public']);
+        foreach ($posts as $post) {
+            //post not found or masked
+            if(!$post || $post->is_maskersForUser($user_id)) {
+                continue;
+            }
+            else {             
+                $data = $post->getType() == 'opinion' ? $this->transformer->opinionObjectToArray($post) :
+                                        $this->transformer->postObjectToArray($post);
+                $data['verb'] = 'post';
+                $datas[] = $data;
+            }
+        }
+
+        return ['posts' => $datas, 'lastStreamId'=> null];
+    }
+
+    /**
+     * @param Post $post
+     * @param Boolean $andFlush Whether to flush the changes (default true)
+     */
     public function loadTimelime(User $feed, $page=1, $date)
     {
         $stream  = $this->stream;     //getStream.io client

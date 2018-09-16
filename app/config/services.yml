@@ -26,6 +26,14 @@ services:
     OP\UserBundle\Controller\:
         resource: '../../src/OP/UserBundle/Controller/*'
         arguments: ['@OP\UserBundle\Security\UserProvider']
+    OP\UserBundle\Controller\SecurityController:
+        arguments: ['@translator', '@security.csrf.token_manager']
+    OP\UserBundle\Controller\RegistrationController:
+        arguments: ['@translator', '@OP\UserBundle\Security\UserProvider', '@fos_user.registration.form.factory']
+    OP\UserBundle\Controller\ResettingController:
+        arguments: ['@translator', '@OP\UserBundle\Security\UserProvider', '@fos_user.registration.form.factory']
+    OP\UserBundle\Controller\ChangePasswordController:
+        arguments: ['@translator', '@OP\UserBundle\Security\UserProvider', '@fos_user.registration.form.factory']
     # OP\UserBundle\Controller\Api\:
     #     resource: '../../src/OP/UserBundle/Controller/Api/*'
         # exclude: '../../src/OP/UserBundle/Controller/{Api}'
@@ -39,8 +47,15 @@ services:
     OP\SocialBundle\Controller\HomeController\:
         resource: '../../src/OP/SocialBundle/Controller/HomeController.php'
         # exclude: '../../src/OP/SocialBundle/{Document,Repository,Tests,Test,Twig}'
-        arguments: ['@OP\UserBundle\Security\UserProvider', '@op_user.user_provider', '@fos_user.registration.form.factory']
-
+        arguments: ['@OP\UserBundle\Security\UserProvider', '@doctrine.odm.mongodb.document_manager.public', '@OP\UserBundle\Controller\RegistrationController', '@OP\UserBundle\Controller\SecurityController']
+    OP\PostBundle\Controller\:
+        resource: '../../src/OP/PostBundle/Controller/*'
+        exclude: '../../src/OP/PostBundle/Controller/{Api,Mobile}'
+        arguments: ['@OP\UserBundle\Security\UserProvider', '@doctrine.odm.mongodb.document_manager.public']
+    OP\PostBundle\Controller\Api\:
+        resource: '../../src/OP/PostBundle/Controller/Api/*'
+        # exclude: '../../src/OP/SocialBundle/{Document,Repository,Tests,Test,Twig}'
+        arguments: ['@OP\UserBundle\Security\UserProvider', '@doctrine.odm.mongodb.document_manager.public']
 
     # OP\MessageBundle\Controller\Api\:
     #     resource: '../../src/OP/MessageBundle/Controller/Api/*'

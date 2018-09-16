@@ -8,7 +8,7 @@ import {
     HeadContainer, FormContainer 
 }                       from '../components'
 
-import 'react-toggle/style.css'
+import '../../../../styles/lib/react-toggle/style.css'
 
 const Notification = createReactClass({
 

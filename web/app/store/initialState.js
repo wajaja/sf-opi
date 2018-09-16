@@ -4,6 +4,8 @@ export default {
     Auth: require('./../reducers/user/auth').initialState,
     Diary: require('./../reducers/user/Diary').initialState,
     Groups: require('./../reducers/user/Groups').initialState,
+    Login: require('./../reducers/user/Login').initialState,
+    Signup: require('./../reducers/user/Signup').initialState,
     Profiles: require('./../reducers/user/Profiles').initialState,
     Invitation: require('./../reducers/user/Invitation').initialState,
     RelationShip: require('./../reducers/user/RelationShip').initialState,
@@ -11,7 +13,6 @@ export default {
     App: require('./../reducers/social/App').initialState,
     Place: require('./../reducers/social/Place').initialState,
     Search: require('./../reducers/social/Search').initialState,
-    Stream: require('./../reducers/social/Stream').initialState,
     NewsFeed: require('./../reducers/social/NewsFeed').initialState,
     PostForm: require('./../reducers/social/PostForm').initialState,
     Exception: require('./../reducers/social/Exception').initialState,
@@ -31,6 +32,7 @@ export default {
     Questions: require('./../reducers/message/Questions').initialState,
 
     Photo: require('./../reducers/media/Photo').initialState,
+    Stream: require('./../reducers/media/Stream').initialState,
     Photos: require('./../reducers/media/Photos').initialState,
     EveryWhere: require('./../reducers/media/EveryWhere').initialState,
     Videos: require('./../reducers/media/Videos').initialState

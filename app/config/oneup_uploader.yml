@@ -13,7 +13,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         # Prototype
         gallerypostedit:
@@ -23,7 +23,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         # Prototype
         galleryaddpost:
@@ -33,7 +33,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         # Prototype
         galleryaddpostedit:
@@ -43,7 +43,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         # Prototype
         galleryquestion:
@@ -53,7 +53,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         galleryimage:
             frontend:             fineuploader
@@ -61,7 +61,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         gallerymessage:
             frontend:             fineuploader
@@ -69,7 +69,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         gallerymsgdoc:
             frontend:             fineuploader
@@ -95,7 +95,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         galleryleft:
             frontend:             fineuploader
@@ -104,7 +104,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         galleryleftedit:
             frontend:             fineuploader
@@ -113,7 +113,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         galleryright:
             frontend:             fineuploader
@@ -122,7 +122,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         galleryrightedit:
             frontend:             fineuploader
@@ -131,7 +131,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         # Prototype
         gallerycommentedit:
@@ -141,7 +141,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
          # Prototype
         galleryundercomment:
@@ -151,7 +151,7 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api
         # Prototype
         galleryundercommentedit:
@@ -161,5 +161,5 @@ oneup_uploader:
             use_orphanage:        true
             enable_progress:      true
             enable_cancelation:   true
-            namer:                op_media.namer.uniqid
+            namer:                OP\MediaBundle\FileUploader\UniqidNamer
             route_prefix:         /api

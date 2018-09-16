@@ -2,7 +2,7 @@ import React from 'react';
 import createReactClass from 'create-react-class'
 import { findDOMNode } from 'react-dom'
 
-import 'video.js/dist/video-js.css'
+import '../../styles/lib/video.js/video-js.css'
 
 const VideoPlayer  = createReactClass( {
 

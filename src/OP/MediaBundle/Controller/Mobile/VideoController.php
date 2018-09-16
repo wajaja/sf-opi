@@ -38,7 +38,7 @@ class VideoController extends Controller
     /**
      * Lists all Image documents.
      *
-     * @Route("/", name="image")
+     * @Route("/", name="mobile_videos_list", host="m.opinion.com")
      * @Template()
      *
      * @return array

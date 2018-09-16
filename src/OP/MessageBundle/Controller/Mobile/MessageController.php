@@ -25,17 +25,12 @@ use FOS\UserBundle\FOSUserEvents,
     Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
-/**
- * Message controller.
- *
- * @Route("/messages")
- */
 class MessageController extends Controller
 {
     /**
      * Lists all Message documents.
      *
-     * @Route("/", name="op_message_inbox")
+     * @Route("/", name="mobile_inbox", host="m.opinion.com")
      * @Template()
      *
      * @return array

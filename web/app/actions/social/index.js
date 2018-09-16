@@ -1,7 +1,6 @@
 export * as App 			from './App'
 export * as Header 			from './Header'
 export * as Search 			from './Search'
-export * as Stream 			from './Stream'
 export * as Notification 	from './Notification'
 export * as Confidence 		from './Confidence'
 export * as PostForm 		from './PostForm'

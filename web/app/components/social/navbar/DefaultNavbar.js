@@ -1,14 +1,8 @@
-import React 					from 'react';
-import createReactClass 		from 'create-react-class'
-import {
-	Route, IndexRoute, 
-	Link, IndexLink 
-} 								from 'react-router-dom';
-import { connect } 				from 'react-redux';
-import PropTypes 				from 'prop-types'
+import React 			from 'react';
+import createReactClass from 'create-react-class'
+import { Link } 		from 'react-router-dom';
+import { connect } 		from 'react-redux';
 
-// import DefaultLoginForm from '../../../components/user/login/LoginForm';
-import InlineLoginForm from '../../../components/user/login/InlineLoginForm'
 import '../../../styles/social/navbar.scss'
 
 const DefaultNavBar  = createReactClass( {
@@ -25,12 +19,13 @@ const DefaultNavBar  = createReactClass( {
 	                        <span className="icon-bar"></span>
 	                    </button>
 	                </div>
-					<h1>
-		                <Link to="/login" className="navbar-brand">Opinion</Link>
-		            </h1>
-		            <div className="nav-sign-in-d">  
-		            	<InlineLoginForm />
-		            </div>
+					<div className="nav-lft">
+    					<div className="brand-ctnr">
+		                	<Link to="/login" className="navbar-brand">Opinion</Link>
+		            	</div>
+    				</div>
+		            <div className="nav-ctnr">
+			        </div>
 	            </div>
 	        </nav>
 		)

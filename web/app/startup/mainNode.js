@@ -99,7 +99,7 @@ const mainNode = (_initialProps, context) => {
                 <IntlProvider 
                     locale={possibleLocale}
                     messages={translationsForUsersLocale}>
-                    <div>
+                    <div className="wrp-server">
                         <Router 
                             store= {store}
                             history={history} >
@@ -143,11 +143,12 @@ const mainNode = (_initialProps, context) => {
                 <IntlProvider 
                     locale={possibleLocale}
                     messages={translationsForUsersLocale}>
-                    <div>
+                    <div className="wrp-client">
                         <ConnectedRouter 
                             store= {store}
                             history={history} >
                             <App 
+                                serverSide={false}
                                 history={history}
                                 store={store}
                                 dispatch={store.dispatch}>

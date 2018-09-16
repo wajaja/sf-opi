@@ -49,30 +49,34 @@ const Post  = createReactClass({
 	},
 
 	render () {
+		const { style } = this.props
 		return(
-			<div className="pst-d" >
-				{this.props.post.type == 'post' && 
-					<Basic 
-						{...this.props}
-						onLike={this.onLike}
-						onShare={this.onShare}
-						onComment={this.onComment}
-						editPostFormFocus={this.editPostFormFocus}
-						recomputePostHeight={this.recomputePostHeight}
-						/>
-				}
-				{this.props.post.type == 'opinion' && 
-					<Opinion 
-						{...this.props}
-						onLike={this.onLike}
-						onShare={this.onShare}
-						onComment={this.onComment}
-						onSideComment={this.onSideComment}
-						editPostFormFocus={this.editPostFormFocus}
-						recomputePostHeight={this.recomputePostHeight}
-						/>
-				}
-            </div>    
+			<div className="pst-c new-pst appended" style={style}>
+				<div className="pst-d" >
+					{this.props.post.type == 'post' && 
+						<Basic 
+							{...this.props}
+							onLike={this.onLike}
+							onShare={this.onShare}
+							onComment={this.onComment}
+							editPostFormFocus={this.editPostFormFocus}
+							recomputePostHeight={this.recomputePostHeight}
+							/>
+					}
+					{this.props.post.type == 'opinion' && 
+						<Opinion 
+							{...this.props}
+							onLike={this.onLike}
+							onShare={this.onShare}
+							onComment={this.onComment}
+							onSideComment={this.onSideComment}
+							editPostFormFocus={this.editPostFormFocus}
+							recomputePostHeight={this.recomputePostHeight}
+							/>
+					}
+	            </div>
+	        	<div className="pst-sep-foo"></div>
+            </div>  
 		)
 	}
 })

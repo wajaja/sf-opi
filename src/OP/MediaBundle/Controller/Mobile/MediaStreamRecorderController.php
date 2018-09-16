@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request,
 /**
  * MediaStreamRecorder controller.
  *
- * @Route("/mediastream")
+ * @Route("/streams")
  */
 class MediaStreamRecorderController extends Controller
 {
@@ -28,6 +28,22 @@ class MediaStreamRecorderController extends Controller
         $this->user_provider = $uProvider;
     }
 
+    /**
+     * Lists all MediaStreamRecorder documents.
+     *
+     * @Route("", name="mediastreamrecorder_mobile", host="m.opinion.com")
+     * @Template()
+     *
+     * @return array
+     */
+    public function indexAction()
+    {
+        $dm = $this->getDocumentManager();
+
+        $documents = $dm->getRepository('OPMediaBundle:MediaStreamRecorder')->findAll();
+
+        return array('documents' => $documents);
+    }
 
     public function reserveAction(Request $request)
     {
@@ -65,24 +81,6 @@ class MediaStreamRecorderController extends Controller
         return $this->render('AcmeAcmeBundle:Default:index.html.twig', array(
             'form' => $form->createView()
         ));
-    }
-    
-    
-    /**
-     * Lists all MediaStreamRecorder documents.
-     *
-     * @Route("/", name="mediastreamrecorder")
-     * @Template()
-     *
-     * @return array
-     */
-    public function indexAction()
-    {
-        $dm = $this->getDocumentManager();
-
-        $documents = $dm->getRepository('OPMediaBundle:MediaStreamRecorder')->findAll();
-
-        return array('documents' => $documents);
     }
 
     /**

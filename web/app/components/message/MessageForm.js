@@ -34,7 +34,14 @@ import MultiDecorator 				from 'draft-js-plugins-editor/lib/Editor/MultiDecorato
 const { hasCommandModifier } = KeyBindingUtil;
 import { positionSuggestions } 		from '../../utils'
 
-
+import MyLoadable    from '../../components/MyLoadable'
+const Dropzone  = MyLoadable({loader: () => import('react-fine-uploader/dropzone')}),
+Thumbnail 		= MyLoadable({loader: () => import('react-fine-uploader/thumbnail')}),
+RetryButton 	= MyLoadable({loader: () => import('react-fine-uploader/retry-button')}),
+ProgressBar 	= MyLoadable({loader: () => import('react-fine-uploader/progress-bar')}),
+DeleteButton 	= MyLoadable({loader: () => import('react-fine-uploader/delete-button')}),
+PauseResumeButton = MyLoadable({loader: () => import('react-fine-uploader/pause-resume-button')}),
+FileInput 		= MyLoadable({loader: () => import('react-fine-uploader/file-input')})
 
 
 const isFileGone = status => {
@@ -43,15 +50,6 @@ const isFileGone = status => {
         'deleted',
     ].indexOf(status) >= 0
 }
-
-let Dropzone = null,
-	Thumbnail = null, 
-	fileInput = null,
-	RetryButton = null,
-	ProgressBar = null,
-	DeleteButton = null,
-	CancelButton = null,
-	PauseResumeButton = null;
 
 
 const emojiPlugin 					= createEmojiPlugin({
@@ -396,24 +394,8 @@ const MessageForm  = createReactClass({
 
 		Promise.all([
 			import('fine-uploader-wrappers/traditional'),
-			import('react-fine-uploader/dropzone'),
-			import('react-fine-uploader/thumbnail'),
-			import('react-fine-uploader/file-input'),
-			import('react-fine-uploader/retry-button'),
-			import('react-fine-uploader/progress-bar'),
-			import('react-fine-uploader/delete-button'),
-			import('react-fine-uploader/cancel-button'),
-			import('react-fine-uploader/pause-resume-button')
 		]).then(function([
-				_traditional,
-				_dropzone,
-				_thumbnail,
-				_fileInput,
-				_retryButton,
-				_progressBar,
-				_deleteButton,
-				_cancelButton,
-				_pauseResumeButton
+				_traditional
 		]) {
 			const FineUploaderTraditional =	_traditional.default;
 			
@@ -511,16 +493,6 @@ const MessageForm  = createReactClass({
 
 			self.uploader 	= uploader;
 			self.docUploader= docUploader;
-			Dropzone 		= _dropzone.default
-			Thumbnail 		= _thumbnail.default
-			const FileInput = _fileInput.default
-			RetryButton 	= _retryButton.default
-			ProgressBar 	= _progressBar.default
-			DeleteButton 	= _deleteButton.default
-			CancelButton 	= _cancelButton.default
-			PauseResumeButton = _pauseResumeButton.default
-
-
 			////
 			const { hasCommandModifier } 	= KeyBindingUtil
 			if(self._isMounted)
@@ -751,7 +723,11 @@ const MessageForm  = createReactClass({
 						            			onClick={this.deleteFile.bind(this, id)}>
 						            			<i className="fa fa-times" aria-hidden="true"><span></span></i>
 						            		</button>
-						            		<CancelButton id={ id }  uploader={ uploader } children={timesIco} />
+						            		<button 
+					            				className="react-fine-uploader-cancel-button com-dlt-thumb-btn" 
+					            				onClick={this.cancelFile.bind(this, id)} type="submit">
+						            			{timesIco}
+						            		</button>
 						            		<RetryButton id={ id } uploader={ uploader } children={retryIco} />
 						            		<button 
 				                    			className="fine-uploader-tag-button" 

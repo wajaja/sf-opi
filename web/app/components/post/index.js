@@ -8,6 +8,7 @@ export { Body as OBody,
 export { Photos as PostPhotos } 				from './post/Photos'
 export { EditPostForm, AddPostForm } 			from './post/form'
 export Post, { Activities } 					from './post'
+export PostHolder 								from './post/PostHolder'
 export { EditReplyForm, Reply, ReplyForm } 		from './reply'
 export { ModalShare } 							from './share'
 export LoadingIndicator 						from './post/LoadingIndicator'

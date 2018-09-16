@@ -11,14 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     OP\UserBundle\Security\UserProvider,
     OP\UserBundle\DocumentManager\GroupManager,
     OP\UserBundle\DocumentManager\InvitationManager,
+    OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
  * RESTful controller managing group CRUD.
  *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Christophe Coevoet <stof@notk.org>
  */
 class GroupController extends Controller
 {
@@ -32,7 +31,7 @@ class GroupController extends Controller
     /**
      * Show all groups.
      */
-    public function listAction(Request $request, MessageManager $msgMan, ThreadManager $threadMan, GroupManager $groupManager, InvitationManager $invitMan)
+    public function indexAction(Request $request, MessageManager $msgMan, ThreadManager $threadMan, GroupManager $groupManager, InvitationManager $invitMan, NotificationManager $notiMan)
     {
 
         $session  = $request->getSession();

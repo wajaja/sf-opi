@@ -25,11 +25,6 @@ use OP\PostBundle\Document\Post,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 
-/**
- * Post controller.
- * default from routing.yml is "/post/"
- * @Route("/")
- */
 class PostController extends Controller
 {
 
@@ -37,7 +32,7 @@ class PostController extends Controller
     /**
      * Lists all Post posts.
      *
-     * @Route("/", name="post")
+     * @Route("/", name="post_index_mobile", host="m.opinion.com")
      * @Template()
      *
      * @return array
@@ -70,7 +65,7 @@ class PostController extends Controller
     /**
      * Creates a new Post post.
      *
-     * @Route("/create", name="post_create")
+     * @Route("/create", name="post_create_mobile", host="m.opinion.com")
      * @Method({"POST", "GET"})
      * @Template("OPPostBundle:Post:new.html.twig")
      *
@@ -137,7 +132,7 @@ class PostController extends Controller
     /**
      * Finds and displays a Post post.
      *
-     * @Route("/show/{id}", name="post_show")
+     * @Route("/show/{id}", name="post_show_mobile", host="m.opinion.com")
      * @Method("GET")
      * @Template()
      *
@@ -174,7 +169,7 @@ class PostController extends Controller
     /**
      * Displays a form to edit an existing Post post and update.
      *
-     * @Route("/edit/{id}", name="post_edit")
+     * @Route("/edit/{id}", name="post_edit_mobile", host="m.opinion.com")
      * @Template()
      * @Method({"POST", "GET"})
      * @param string $id The post ID
@@ -239,7 +234,7 @@ class PostController extends Controller
     /**
      * Deletes a Post post.
      *
-     * @Route("/remove/{id}", name="post_remove")
+     * @Route("/remove/{id}", name="post_remove_mobile", host="m.opinion.com")
      * @Method("POST")
      *
      * @param Request $request The request object
@@ -265,7 +260,7 @@ class PostController extends Controller
     /**
      * Favorite a Post post.
      *
-     * @Route("/favorite/{id}", name="post_favorite")
+     * @Route("/favorite/{id}", name="post_favorite_mobile", host="m.opinion.com")
      * @Method("POST")
      *
      * @param Request $request The request object

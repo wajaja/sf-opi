@@ -1,41 +1,46 @@
 import React                from 'react';
-import classnames           from 'classnames';
 import PropTypes            from 'prop-types';
 
 
-const TextFieldGroup = ({field, value, label, placeholder, error, type, customClassName, onChange, checkUserExists }) => {
+const TextnameGroup = ({name, field, hasPreviousSession, wrapClassName, flashBag, value, label, placeholder, errors, type, customClassName, onChange, onBlur, checkUserExists }) => {
     return (
-        <div className={classnames ('form-group', {'has-error' : error })}>
+        <div className={wrapClassName}>
+            {!!hasPreviousSession && !!flashBag && !!flashBag[name] && 
+                <div class={`flash ${field}`}>{flashBag[name]}</div>
+            }
+            {!!errors && !!errors[name] && <div class={`flash ${field}`}>{errors.wrapper[name]}</div>}
             <label className="control-label">{label}</label>
             <input 
                 onChange    = {onChange}
                 type        = {type} 
+                onBlur      = {onBlur}
                 className   = {customClassName} 
-                name        = {field}
+                name        = {name}
                 value       = {value}
                 placeholder = {placeholder}
             />
-            {error && <span className="help-block">{error}</span>}
         </div>
     )
 }
-TextFieldGroup.propTypes = {
-    field       : PropTypes.string.isRequired,
+
+////////
+TextnameGroup.propTypes = {
+    name       : PropTypes.string.isRequired,
     value       : PropTypes.string.isRequired,
     label       : PropTypes.string,
     placeholder : PropTypes.string,
-    error       : PropTypes.string,
+    errors       : PropTypes.object,
     type        : PropTypes.string,
     customClassName : PropTypes.string,
     onChange    : PropTypes.func.isRequired,
     checkUserExists: PropTypes.func
 }
 
-TextFieldGroup.defaultProps = {
+TextnameGroup.defaultProps = {
     type        : "text",
     placeholder : ""
 }
 
-export default TextFieldGroup;
+export default TextnameGroup;
                               
                     

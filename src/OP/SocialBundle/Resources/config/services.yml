@@ -12,6 +12,13 @@ services:
             - "@op_user.user_manager"
             - "@op_media.image_constructor"
             - '@OP\UserBundle\Security\UserProvider'
+    OP\SocialBundle\Http\ResponseHandler:
+        arguments: 
+            - "@request_stack"
+            - "@event_dispatcher"
+            - "@service_container"
+            - '@OP\UserBundle\Security\DeviceDetector'
+            - "@router"
 #    op_social.example:
 #        class: OP\SocialBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
@@ -30,6 +37,9 @@ services:
             - '@doctrine.odm.mongodb.document_manager.public'
             - '@op_social.search.class'
             - '@service_container'
+            - '@OP\PostBundle\DataTransformer\ToArrayTransformer'
+            - '@jms_serializer'
+            - '@OP\UserBundle\Elastica\QuerySearch'
     OP\SocialBundle\SeveralClass\DateTransformer: ~
     op_social.notification_constructor:
         class: OP\SocialBundle\SeveralClass\NoteConstructor

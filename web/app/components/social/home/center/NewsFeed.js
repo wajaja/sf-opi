@@ -1,6 +1,6 @@
 import React                    from 'react'
 import createReactClass         from 'create-react-class'
-import { findDOMNode, unmountComponentAtNode }          from 'react-dom'
+import { findDOMNode, unmountComponentAtNode }  from 'react-dom'
 import { connect }              from 'react-redux'
 import { Link }                 from 'react-router-dom'
 import _                        from 'lodash'
@@ -9,7 +9,9 @@ import { CellMeasurer,
     CellMeasurerCache, List, 
     InfiniteLoader, AutoSizer, WindowScroller
 }                               from 'react-virtualized';
-import { Post,LoadingIndicator } from '../../../../components'
+import { Post, LoadingIndicator, 
+    PostHolder 
+}                               from '../../../../components'
 import bindFunctions            from '../../../../utils/bindFunctions'
 import { 
     Posts as PostsActions, 
@@ -203,7 +205,8 @@ const NewsFeed  = createReactClass({
 
     shouldComponentUpdate(nextProps, nextState) {
         return (this.state.newsFeed !== nextState.newsFeed ||
-                this.state.sharing !== nextState.sharing)
+                this.state.sharing !== nextState.sharing || 
+                this.props.serverSide !== nextProps.serverSide)
     },
 
     /**
@@ -242,7 +245,26 @@ const NewsFeed  = createReactClass({
     render() {
         //registerChild used from WindowScroller in startup/Root Component
         const { newsFeed } = this.state,
-        { fetchPosts }    = this.props; 
+        { fetchPosts, serverSide }    = this.props; 
+
+        console.log('serverSide', serverSide);
+        // if(serverSide) {
+        //     return (
+        //         <div className="news-div-a">
+        //             <div className="news-div-b place-holder">
+        //                 {newsFeed.map((post, i) => (
+        //                     <div key={i} className="pst-c new-pst appended">
+        //                         <div className="pst-d">
+                                    
+        //                         </div>
+        //                     </div>
+        //                 ))}
+        //             </div>
+        //         </div>
+        //     )
+        // } 
+
+
         return (
             <InfiniteLoader
                 isRowLoaded={this._isRowLoaded}
@@ -253,7 +275,7 @@ const NewsFeed  = createReactClass({
                     this._onRowsRendered = onRowsRendered;
                     return(
                         <WindowScroller
-                            serverHeight={1500}
+                            serverHeight={2600}
                             >
                                 {({height, scrollTop /*,isScrolling, registerChild, onChildScroll,*/ }) => (
                                     <AutoSizer 
@@ -270,7 +292,7 @@ const NewsFeed  = createReactClass({
                                             this._registerList = registerChild;
 
                                             return (
-                                                <div className="news-div-a">
+                                                <div className={!!serverSide ? `news-div-b place-holder` : `news-div-a`}>
                                                     <List
                                                         autoHeight
                                                         width={516}
@@ -280,7 +302,7 @@ const NewsFeed  = createReactClass({
                                                         overscanRowCount={2}
                                                         scrollTop={scrollTop}
                                                         deferredMeasurementCache={this._cache}
-                                                        rowCount={newsFeed.length + 1}
+                                                        rowCount={newsFeed.length /*+ 1*/}
                                                         rowHeight={this._cache.rowHeight}
                                                         rowRenderer={this._rowRenderer}
                                                       />
@@ -300,16 +322,21 @@ const NewsFeed  = createReactClass({
     _rowRenderer({index, key, parent, style}) {
 
         const newsFeed = this.state.newsFeed,
-        { list,  selectedText, } = this.props;
+        { list,  selectedText, serverSide } = this.props;
 
         let content;
 
         if (index >= newsFeed.length) {
-            content = <LoadingIndicator />;
-        } else {
+            content = <PostHolder />;
+        } else if(serverSide) {
+            const post = newsFeed[index];
+            content = <PostHolder post={post} style={style} />
+        }
+        else {
             const post = newsFeed[index];
             content = (
                 <Post 
+                    style={style}
                     {...this.props}
                     post={post} 
                     postId={post.id}
@@ -336,10 +363,7 @@ const NewsFeed  = createReactClass({
                 key={key}
                 rowIndex={index}
                 parent={parent}>
-                    <div className="pst-c new-pst appended" style={style}>
-                        {content}
-                        <div className="pst-sep-foo"></div>
-                    </div>
+                    {content}
             </CellMeasurer>
         );
     },

@@ -38,7 +38,7 @@ class VideoController extends Controller
     /**
      * Lists all Image documents.
      *
-     * @Route("/", name="image")
+     * @Route("/", name="videos_list")
      * @Template()
      *
      * @return array
@@ -67,9 +67,7 @@ class VideoController extends Controller
                         'data'      => $session->get('_authData')
                     ],
                     'Videos' => [
-                        'videos' => [
-                            'list' => $this->videosToArray($videos),
-                        ],
+                        'videos' => $this->videosToArray($videos),
                         'loading'=> false,
                         'similar' => $similar
                     ],
@@ -80,7 +78,7 @@ class VideoController extends Controller
                         'nbAlerts'  =>  $invitMan->countAlerts($user),
                     ],
                     'Message'      => [
-                        'nbAlerts'  =>  $messMessage->countAlerts($user),
+                        'nbAlerts'  =>  $messMan->countAlerts($user),
                         'threadsIds' => $threadMan->findParticipantInboxThreadsIds($user)
                     ],
                     'Users'        => [
@@ -92,7 +90,7 @@ class VideoController extends Controller
                     ],
                     'Invitation'    => [],
                 ],
-                'title'         => "{$video['name']}",
+                'title'         => "My videos",
                 'description'   => 'video show', 
                 'locale'        => $request->getLocale(),
             ]);

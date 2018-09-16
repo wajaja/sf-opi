@@ -142,26 +142,51 @@ const Notification  = createReactClass({
                 <Helmet>
                     <title>Create Place</title>
                 </Helmet>
-                <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
+                <div id="hm_main_blk" className="hm-main-blk">
                     <div className="hm-main-blk-ctnr">
                         <div id="hm_lft_dv" className="hm-lft-dv">
-                            {screenWidth > 760 && 
-                                <div id="hm_frst_blk" className="hm-frst-blk">
-                                    <div className="hm-frst-blk-a">
-                                        <Left 
-                                            {...this.props}
-                                            q={q}
-                                            screenWidth={screenWidth}
-                                            />                                
-                                    </div>
+                            <div id="hm_frst_blk" className="hm-frst-blk">
+                                <div className="hm-frst-blk-a">
+                                    <Left 
+                                        user={this.props.user}
+                                        history={this.props.history}
+                                        auth_data={this.props.auth_data}
+                                        dispatch={this.props.dispatch}
+                                        access_token={this.props.access_token}
+                                        getImageFromCache={this.props.getImageFromCache}
+                                        changeView={this.props.changeView}
+                                        clientId={this.props.clientId}
+                                        peerCon={this.props.peerCon}
+                                        startCall={this.props.startCall}
+                                        callWindow={this.props.callWindow}
+                                        localSrc={this.props.localSrc}
+                                        peerSrc={this.props.peerSrc}
+                                        callConfig={this.props.callConfig}
+                                        mediaDevice={this.props.peerCon.mediaDevice}
+                                        endCall={this.props.endCall}
+                                        fireUser={this.props.fireUser}
+                                        firebase={this.props.firebase}
+                                        toggleOnlineList={this.props.toggleOnlineList}
+                                        />                                
                                 </div>
-                            }
+                            </div>
                         </div>
-                        <div id="home-center-div" className="home-center-div central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
+                        <div id="home-center-div" 
+                            style={{
+                                left: 0,
+                                right: 0,
+                                marginRight: "auto",
+                                marginLeft: "auto",
+                                position: "absolute",
+                                float: "none",
+                                background: "#fff",
+                                padding: "10px",
+                                borderRadius: "2px"
+                            }}
+                            className="home-center-div central-border">
                             <div className="hm-frst-blk">
                                 <div className="hm-frst-blk-a">
                                     {notifications.map((n, i) => {
-
                                         if(!n.id) return (<div key={i}></div>)
 
                                         return(

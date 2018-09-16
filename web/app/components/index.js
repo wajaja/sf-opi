@@ -6,7 +6,7 @@ export { Image, Images,
 	EveryWhereContainer, ListRect,
 	AudioRTC,
 	PhotoCapture, RecordTimer,
-	VideoRTC
+	VideoRTC, VideoSuggestList, VideoThumb
 } 			    from './media'
 
 export { 
@@ -24,7 +24,8 @@ export { ModalShare,  Author, Editors, OBody,
 		 RateButton, Reaction,  Activities,
 		 OFoot, OHead, Post, EditPostForm,
 		 EditReplyForm, Reply, ReplyForm, AddPostForm,
-		 RightForm, LeftForm, LoadingIndicator } from './post'
+		 RightForm, LeftForm, LoadingIndicator,
+		 PostHolder 					} from './post'
 
 export { Center, NewsFeed, PostForm,
 		 PostGallery, SelectType, Contributors,
@@ -43,7 +44,7 @@ export { Center, NewsFeed, PostForm,
 		 StaticModal, Exception,
 		 InputType, FriendButton, FollowButton,
 		 CheckRelationShipButton, MiniProfile,
-		 BuildHtmlString }					from './social'
+		 BuildHtmlString, ErrorStack, WelcomeFoot }					from './social'
 
 export { LoginPage, LoginForm, 
 		 SignupPage, SignupForm,

@@ -3,8 +3,8 @@ import { connect }          from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import createReactClass     from 'create-react-class';
 import PropTypes            from 'prop-types';
-import Select               from 'react-select';
-import VirtualizedSelect    from 'react-virtualized-select';
+import AsyncSelect          from 'react-select/lib/Async';
+// import VirtualizedSelect    from 'react-virtualized-select';
 import { 
     CountryDropdown, RegionDropdown 
 }                           from 'react-country-region-selector';
@@ -12,8 +12,8 @@ import {
 const cities = require('cities-list'),
 datas = require('countries-list/dist/data')
 
-import 'react-virtualized/styles.css'
-import 'react-virtualized-select/styles.css'
+import '../../../styles/lib/react-virtualized/styles.css'
+import '../../../styles/lib/react-virtualized-select/styles.css'
 
 /////////////
 const AdressForm = createReactClass({
@@ -45,7 +45,17 @@ const AdressForm = createReactClass({
         this.setState({region: value,});
     },
 
-    updateCity(newValue) {
+    updateCity(newValue, actionMeta) {
+        // possible values: since v2
+        // {
+        //   action: 'select-option' |
+        //     'deselect-option' |
+        //     'remove-value' |
+        //     'pop-value' |
+        //     'set-value' |
+        //     'clear' |
+        //     'create-option';
+        // }
         this.setState({
             city: newValue,
         });
@@ -96,8 +106,7 @@ const AdressForm = createReactClass({
     },
 
     render() {
-        const AsyncComponent = Select.Async,
-        { submitting }       = this.props,
+        const { submitting } = this.props,
         countries            = datas["countries"],
         countriesOptions     = []
         // citiesOptions        = []
@@ -155,7 +164,7 @@ const AdressForm = createReactClass({
                             </div>
                         </div>
                     </div>
-    	            <div className="section-label" style={{display: "none"}}>
+    	            <div className="section-label">
     	                <div className="section-label">
     	                    <div className="txt">
     	                        city 
@@ -163,9 +172,9 @@ const AdressForm = createReactClass({
     	                </div>
     	                <div className="section-inp">
                             <div className="lang-inp-ctnr">
-                                <AsyncComponent 
+                                <AsyncSelect 
                                     value={this.state.city}
-                                    onChange={this.onChange}  
+                                    onChange={this.updateCity}  
                                     labelKey="name"
                                     valueKey="name" 
                                     name="select-city"

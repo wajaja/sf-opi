@@ -9,45 +9,16 @@ import {
     Route, Switch,
     Redirect 
 }                           from 'react-router-dom'
-import { push }             from 'react-router-redux';
-import { 
-    Left,
-    Right, 
-}                           from './components'
-
 import {
 	Foot, IntroPrev, SoundForm,
+    Left, Right, Center
 }                         	from './components'
 import { 
 	Sounds as SoundsActions 
 }    						from '../../../actions'
 
-import { getUrlParameterByName } from '../../../utils/funcs'
-
-
 import '../../../styles/media/sound.scss'
 
-
-/**
- * handleRouteChange
- * @param dispatch
- * @param history
- * @param location
- */
-function handleSearchChange(dispatch, history, location) {
-    const pathname = location.pathname,
-    tag = getUrlParameterByName('tag', location.search) //['infos, photos, relations']
-
-    if(pathname.indexOf('/grouppic')) {
-        console.log('ProfilePic')
-    } else if(pathname.indexOf('/relations')) {
-        console.log('relations')
-    } else if(pathname.indexOf('/infos')) {
-        console.log('infos')
-    } else {
-        
-    }
-}
 
 const Sound  = createReactClass( {
 
@@ -56,7 +27,6 @@ const Sound  = createReactClass( {
 			hasOwnDiary: false,
             screenWidth: 760,
             group: {},
-            loading: true,
 		}
 	},
 
@@ -127,26 +97,6 @@ const Sound  = createReactClass( {
 
     // }
 
-    /**
-     * handleScroll
-     * @param e event
-     */
-    handleScroll(e) {
-
-        if (this.$scroll) window.clearRequestTimeout(this.$scroll)
-
-        this.$scroll = window.requestTimeout(() => {
-
-            const d = findDOMNode(this._pageElm)
-            const threshold = (d.offsetHeight / 2)
-
-            if ((d.scrollTop + d.offsetHeight) >= (d.scrollHeight - threshold)) {
-                this.props.onFetch()
-            }
-
-        }, 25)
-    },
-
     componentWillMount() {
         window.clearRequestTimeout(this.$scroll)
     },
@@ -186,7 +136,7 @@ const Sound  = createReactClass( {
             screenWidth, 
             newsRefs, loading 
         }                         = this.state,
-		{ dispatch, user }        = this.props
+		{ dispatch, user, serverSide }        = this.props
 
         if(loading) {
             return(
@@ -206,18 +156,6 @@ const Sound  = createReactClass( {
                     <div className="hm-main-blk-ctnr"> 
                         <div id="hm_lft_dv" className="hm-lft-dv">
                             <div className="show-grp-plus">
-                                <div className="show-grp-plus-a">
-                                    <div className="show-grp-plus-intro">
-                                        <IntroPrev
-                                            {...this.props} 
-                                            group={group}
-                                            user={user}
-                                            />
-                                    </div>                              
-                                    <Foot 
-                                        {...this.props} 
-                                        />
-                                </div>
                             </div>
                             <div id="hm_frst_blk" className="hm-frst-blk">
                                 <div className="hm-lft-dv">
@@ -225,7 +163,6 @@ const Sound  = createReactClass( {
                                         {...this.props}
                                         user={user}
                                         screenWidth={screenWidth}
-                                        group={group}
                                         />                                
                                 </div>
                             </div>
@@ -260,9 +197,6 @@ const Sound  = createReactClass( {
                         </div>
                     </div>
                 </div>
-                <div className={this.props.postFormFocus ? `gl-frm-out out-active` : `gl-frm-out`}></div>
-                <div className={this.props.editPostFormFocus ? `edt-pst-out out-active` : `edt-pst-out`}></div>
-                <ModalVideoConfirm />
             </div>
 		)
 	}
@@ -272,5 +206,5 @@ const Sound  = createReactClass( {
 //////
 export default  withRouter(connect(state =>({
 	user: state.User.user,
-	groups: state.Profiles.users,
+	stream: state.Stream.stream,
 }))(Sound))

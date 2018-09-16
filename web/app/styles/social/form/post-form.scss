@@ -23,6 +23,7 @@
 .start-list-form-lft{
     display: inline-block;
     right: 11px;
+    z-index: 10;
     position: absolute;
 }
 textarea,
@@ -37,24 +38,24 @@ pre{
 }
 .custom-form-editor {
     &.normal{
-        font-size: 19px;
-        line-height: 18px;
-        color: #4c4c4e;
+        font-size: 16px;
+        line-height: 24px;
+        color: #2d2d2f;
     }
     &.middle{
-        font-size: 20px;
-        line-height: 19px;
-        color: #4c4c4e;
+        font-size: 18px;
+        line-height: 27px;
+        color: #3c3c42;
     }
     &.big{
-        font-size: 23px;
-        line-height: 22px;
+        font-size: 22px;
+        line-height: 32px;
         color: #4c4c4e;
     }
     &.small{
-        font-size: 15px;
-        line-height: 16px;
-        color: #111111;
+        font-size: 14px;
+        line-height: 21px;
+        color: #0a0707;
     }
 }
 .expandingArea{
@@ -604,9 +605,10 @@ pre{
     text-align: center;
 }
 .frm-select-hd-ttl-sp{
-    font-size: 14px;
-    /*font-weight: 600;*/
+    font-size: 12px;
+    font-weight: 600;
     color: #2369af;
+    letter-spacing: .4px;
 }
 .frm-group-btn-vdeo{
     position: relative;
@@ -802,7 +804,8 @@ pre{
 }
 .video-area{
     height: 100%;
-    width: 100%;
+    width: 80%;
+    display: flex;
     /*position: absolute;*/
 }
 
@@ -1010,7 +1013,7 @@ pre{
 }
 .frm-select-hd{
     background: #f1f5f7;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #d9dee0;
     padding: 5px 3px;
     position: relative;
 }
@@ -1019,11 +1022,14 @@ pre{
     width: 100%;
 }
 .edtor-rct-srh{
-    padding-left: 3px;
+    padding: 5px;
     outline: none;
     width: 100%;
     border-radius: 2px;
-    border: 1px solid #ccc;
+    border: 1px solid #d3dbde;
+    height: 30px;
+    font-size: 13px;
+    color: #222;
 }
 .inp-frm-editor,
 .inp-frm-leftEditorTexts,
@@ -1169,14 +1175,14 @@ pre{
     width: 160px;
     padding: 5px;
     color: #ffffff;
+    border-radius: 5px;
     font-size: 12px;
-    line-height: 17px;
-    letter-spacing: .7px;
+    line-height: 18px;
+    letter-spacing: 0.7px;
     top: 30px;
-    border-radius: 0px;
     right: 0;
     min-height: 150px;
-    background: rgba(61, 68, 78, 0.72);
+    background: rgba(6, 9, 12, 0.72);
     &.opinion{
         right: unset !important;
         left: 0 !important;

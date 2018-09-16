@@ -14,5 +14,9 @@ require('./polyfills.js')
 require('./style.scss')
 import 'babel-polyfill'
 
+// if (!global._babelPolyfill) {
+// 	require('babel-polyfill');
+// }
+
 // imported in  webpack's config
 import './startup/registration'

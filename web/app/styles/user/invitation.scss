@@ -5,16 +5,26 @@
         .hm-frst-blk{
             .hm-frst-blk-tp, .hm-frst-blk-btm{
                 margin-bottom: 13px;
-                background: #e7ecef;
+                // background: #e7ecef;
                 padding: 5px;
-                border: 1px solid;
-                border-color: #d4d7d8;
+                // border: 1px solid;
+                // border-color: #d4d7d8;
                 border-radius: 3px;
             }
         }
     }
+    .central-border{
+        position: relative;
+        left: 0;
+        right: 0;
+        margin-right: auto;
+        margin-left: auto;
+        width: 540px;
+    }
     #hm_main_blk{
         margin-top: 0px !important;
+        margin-left: 0px !important;
+        width: 100%;
     }
 
     .u-invit-el{
@@ -34,12 +44,13 @@
             }
         }
         .u-invit-lft{
-            margin-right: 10px;
+            margin-right: 25px;
         }
         .nm-link-u-invit{
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 600;
             color: #1e588a;
+            text-transform: capitalize;
         }
         .mutuals-users{
             font-size: 12px;
@@ -47,7 +58,7 @@
         }
         .req-invit-btn-ct{
             position: relative;
-            margin-top: 10px;
+            margin-top: 7px;
             .lft, .rght{
                 display: inline-block;
                 vertical-align: top;
@@ -75,7 +86,7 @@
         letter-spacing: .5px;
         background: none!important;
         .u-sugg-lft{
-            margin-right: 8px;
+            margin-right: 20px;
             img{
                 width: 80px;
                 height: 80px;
@@ -93,7 +104,12 @@
     }
     .req-sugg-btn-ct{
         button{
-            background: #fff !important;
+            // background: #fff !important;
+            margin-top: 3px !important;
+            padding: 3px 11px !important;
+            font-size: 13px !important;
+            /* font-weight: 600 !important; */
+            letter-spacing: .9px;
         }
     }
 }

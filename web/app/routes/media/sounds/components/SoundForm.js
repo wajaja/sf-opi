@@ -22,7 +22,7 @@ const SoundForm = createReactClass({
 			<div className="in-top-a" >
 			    <div className="in-top-b">
 			        <div className="in-top-content">
-				       	
+				       	this is the SoundForm
 			        </div>
 			    </div>
 			</div>

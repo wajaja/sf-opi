@@ -29,6 +29,8 @@ class ApiRegistrationController extends FOSRestController implements ClassResour
      */
     public function registerAction(Request $request, FormFactory $formFactory, EventDispatcherInterface $dispatcher, OpinionUserManager $userManager)
     {
+        // $session = $request->getSession();
+        // $session->invalidate();
         $user           = $userManager->createUser();
         $contentType    = $request->headers->get('Content-Type');
 
@@ -41,7 +43,7 @@ class ApiRegistrationController extends FOSRestController implements ClassResour
         }
 
         if('application/x-www-form-urlencoded' === $contentType) { 
-            $url        = $this->generateUrl('fos_user_registration_register', array('panel' => 'profilepic'));
+            $url        = $this->generateUrl('op_user_registration_register');
             $response   = new RedirectResponse($url);
             $form       = $formFactory->createForm();
             $form->setData($user);
@@ -51,11 +53,12 @@ class ApiRegistrationController extends FOSRestController implements ClassResour
             $data       = json_decode($request->getContent(), true);
             $form->setData($user);
             $request->request->replace(is_array($data) ? $data : array());
-            $form->submit($data);
+            // $form->submit($data);
+            $form->handleRequest($request);
             // $response->setData(array('token'=>'token'));
         }
 
-        if ($form->isSubmitted()) {         
+        if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
@@ -63,7 +66,7 @@ class ApiRegistrationController extends FOSRestController implements ClassResour
                 $userManager->updateUser($user, false);
 
                 if (null === $response = $event->getResponse()) {
-                    $url = $this->generateUrl('fos_user_registration_confirmed');
+                    $url = $this->generateUrl('op_user_registration_confirmed', array('panel' => 'profilepic'));
                     $response = new RedirectResponse($url);
                 }
 
