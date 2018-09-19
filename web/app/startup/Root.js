@@ -4,6 +4,7 @@ const Post  = require('./../routes/post/posts/Post').default,
 Video       = require('./../routes/media/videos/components/Video').default,
 Sound       = require('./../routes/media/sounds/Sound').default, 
 Home        = require('./../routes/social/Home/Home').default,
+// Pass        = require('./../routes/social/Pass/Pass').default,
 Welcome     = require('./../routes/social/Welcome/Welcome').default,
 Group       = require('./../routes/user/group/Group').default,
 Place       = require('./../routes/social/place/Place').default,
@@ -16,14 +17,17 @@ Login       = require('./../routes/user/security/Login').default,
 Signup      = require('./../routes/user/registration/Signup').default,
 Confirmed   = require('./../routes/user/confirmed/Confirmed').default,
 Invitation  = require('./../routes/user/invitations/Invitation').default,
-Notification = require('./../routes/social/notification/Notification').default
+Notification = require('./../routes/social/notification/Notification').default,
+
+Setting = require('./../routes/user/settings/Setting').default,
+Resetting =require('./../routes/user/resettings/Resetting').default
 
 import 'react-virtualized/styles.css'; // only needs to be imported once
 
 import MyLoadable    from './../components/MyLoadable'
 
-const Setting = MyLoadable({loader: () => import('./../routes/user/settings/Setting')}),
-Resetting     = MyLoadable({loader: () => import('./../routes/user/resettings/Resetting')})
+// const Setting = MyLoadable({loader: () => import('./../routes/user/settings/Setting')}),
+// Resetting     = MyLoadable({loader: () => import('./../routes/user/resettings/Resetting')})
 
 /** Auth Wrapper **/
 // Applying to a function component for simplicity but could be Class or createClass component

@@ -1,23 +1,5 @@
 import React        from 'react'
 import { Link }     from 'react-router-dom'
-import {
-  FacebookShareCount,
-  GooglePlusShareCount,
-  LinkedinShareCount,
-  RedditShareCount,
-
-  FacebookShareButton,
-  GooglePlusShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  RedditShareButton,
-
-  FacebookIcon,
-  TwitterIcon,
-  GooglePlusIcon,
-  LinkedinIcon,
-  RedditIcon,
-} from 'react-share';
 
 const Foot = ({}) => {
     return (

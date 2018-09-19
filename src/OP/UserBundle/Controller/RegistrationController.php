@@ -54,70 +54,28 @@ class RegistrationController extends Controller
     public function registerAction(Request $request, EventDispatcherInterface $dispatcher, UserManagerInterface $userManager)
     {
 
-        // $user = $this->userManager->createUser();
-        // $user->setEnabled(true);
-
-        // $event = new GetResponseUserEvent($user, $request);
-        // $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
-
-        // if (null !== $event->getResponse()) {
-        //     return $event->getResponse();
-        // }
-
-        $form = $this->formFactory->createForm();
-        // $form->setData($user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $event = new FormEvent($form, $request);
-                $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
-
-                $this->userManager->updateUser($user);
-
-                if (null === $response = $event->getResponse()) {
-                    $url = $this->generateUrl('fos_user_registration_confirmed');
-                    $response = new RedirectResponse($url);
-                }
-
-                $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-                return $response;
-            }
-
-            $event = new FormEvent($form, $request);
-            $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_FAILURE, $event);
-
-            if (null !== $response = $event->getResponse()) {
-                return $response;
-            }
-        }
-
-        return $this->render('@OPUser/Registration/register_content.html.twig', array(
-            'form' => $form->createView(),
-        ));
-
-        // $session = $request->getSession();
-        // $registerForm = $this->getRegisterForm($request);
-        // $description = 'Sign Up';
-        // return  $this->render('OPUserBundle:Registration:register.html.twig', [
-        //                         'initialState'  => [
-        //                             'App'         => [
-        //                                 'sessionId' => $session->getId()
-        //                             ],
-        //                             'Signup' => [
-        //                                 'trans'  => $registerForm['trans'],
-        //                                 // 'form'   => $registerForm['form']->createView(),
-        //                                 'flashBag'=> $registerForm['flashBag'],
-        //                                 'action' => 'api/signup'
-        //                             ],
-        //                         ],
-        //                         'title'     => 'Sign Up',
-        //                         'description' => $description, 
-        //                         'locale'      => $request->getLocale()
-        //                     ]
-        //                 );
+        $session        = $request->getSession();
+        $registerForm   = $this->getRegisterForm($request);
+        $description    = 'Sign Up';
+        return  $this->render(
+            'OPUserBundle:Registration:register.html.twig', 
+            [
+                'initialState'  => [
+                    'App'         => [
+                        'sessionId' => $session->getId()
+                    ],
+                    'Signup' => [
+                        'trans'  => $registerForm['trans'],
+                        // 'form'   => $registerForm['form']->createView(),
+                        'flashBag'=> $registerForm['flashBag'],
+                        'action' => 'api/signup'
+                    ],
+                ],
+                'title'     => 'Sign Up',
+                'description' => $description, 
+                'locale'      => $request->getLocale()
+            ]
+        );
     }
 
     public function getRegisterForm(Request $request) {

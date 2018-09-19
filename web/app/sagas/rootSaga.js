@@ -10,6 +10,7 @@ import { secretsSaga, questionsSaga } 	from './questionSaga'
 import { suggestionsSaga }				from './RelationShipSaga'
 import diarySaga 						from './diarySaga'
 import { UserSaga, UsersSaga } 			from './usersSaga'
+import meetyouSaga						from './meetyouSaga'
 import invitationSaga					from './invitationSaga'
 
 /*
@@ -29,6 +30,7 @@ export default function* rootSaga() {
 			fork(sideCommentsSaga),
 			fork(suggestionsSaga),
 			fork(UserSaga),
-			fork(UsersSaga)
+			fork(UsersSaga),
+			fork(meetyouSaga)
 		])
 }

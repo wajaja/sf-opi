@@ -2,7 +2,7 @@ import React 				from 'react'
 import { findDOMNode } 		from 'react-dom'
 import createReactClass 	from 'create-react-class'
 import { connect } 			from 'react-redux'
-import { withRouter,  } from 'react-router-dom'
+import { withRouter,  Switch, Route, Redirect } from 'react-router-dom'
 import {
 	Request, SendEmail, Reset
 }                         	from './components'
@@ -42,4 +42,4 @@ const Resetting  = createReactClass( {
 //////
 export default  withRouter(connect(state =>({
 	user: state.User.user,
-}), mapDispatchToProps)(Resetting))
+}), null)(Resetting))

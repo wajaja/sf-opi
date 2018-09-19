@@ -75,6 +75,9 @@ const InlineLoginForm  = createReactClass( {
                     />
                 </div>
                 <div className="nav-sign-in-ip-d">
+                    <span className="lgn-dv-initialize">
+                        <a href="http://opinion.com/app_dev.php/resetting/request" className="psw-fgt">Forgot password ?</a>
+                    </span>
                     <TextFielGroup
                         label=""
                         field="password"
@@ -88,11 +91,8 @@ const InlineLoginForm  = createReactClass( {
                         onChange={this.onChange}
                         type="password"
                     />
-                    <label htmlFor="remember_me" className="nav-sign-in-r">
-                        <input type="checkbox" value="on" />
-                    </label>
                 </div>
-                <button className="sbmit-login" disabled={isLoading} >Login</button>
+                <button type="submit" className="btn btn-primary btn-sm sbmit-login" disabled={isLoading} >Login</button>
             </form>
 		)
 	}

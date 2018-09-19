@@ -6,20 +6,17 @@ import { Helmet }           from 'react-helmet'
 import { withRouter }       from 'react-router-dom'
 import { 
     Left,
-}                            from '../../notification/components'
-import Foot                  from './components/Foot'
+}                            from '../notification/components'
+import Foot                  from './Foot'
 
 //import Actor from 'components/Activity/Actor'
 import '../../../styles/social/not-matched.scss'
 
 
-
-const Home  = createReactClass({
+const NotMatched  = createReactClass({
 
     getInitialState() {
         return {
-            hasOwnDiary: true,
-            screenWidth: 760,
             newsRefs: [],
             noPostsResults: false,
         }
@@ -74,26 +71,6 @@ const Home  = createReactClass({
         this.props.getImageFromCache(filename, galleryDir)
     },
 
-    /**
-     * handleScroll
-     * @param e event
-     */
-    handleScroll(e) {
-
-        if (this.$scroll) window.clearRequestTimeout(this.$scroll)
-
-        this.$scroll = window.requestTimeout(() => {
-
-            const d = findDOMNode(this._pageElm)
-            const threshold = (d.offsetHeight / 2)
-
-            if ((d.scrollTop + d.offsetHeight) >= (d.scrollHeight - threshold)) {
-                this.props.onFetch()
-            }
-
-        }, 25)
-    },
-
     componentWillMount() {
         // this.screenWidth =  window.screen.width
         //far make more operations for newsRefs
@@ -106,19 +83,7 @@ const Home  = createReactClass({
      * componentDidMount
      */
     componentDidMount() {
-        const { user, lastStreamId, dispatch } = this.props;
-        findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll);
-
-        import('../../../utils/OpinionStream').then(OpinionStream => {
-            this.stream = new OpinionStream(dispatch, user.id, lastStreamId);
-        });
-        import('../../../utils/StreamAnalytic').then(StreamAnalytic => {            
-            //this._streamAnalytic = new StreamAnalytic(this.props.user); //TODO 
-        });
-
-        // this._opinionStream = new OpinionStream(dispatch, user.id, lastStreamId);
-        // dispatch(PostsActions.load(user.id, postIds));   //redux saga
-        // this._opinionStream.subscribeRealTime(user.id);
+        
     },
 
     /**
@@ -139,14 +104,6 @@ const Home  = createReactClass({
             this.setState({newsRefs: nextProps.newsRefs})
         }
     },
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.props.user !== nextProps.user || 
-            this.props.form_focus !== nextProps.form_focus ||
-            this.props.edit_form_focus !== nextProps.edit_form_focus ||
-            this.props.screenWidth !== nextProps.screenWidth ||
-            this.state.noPostsResults !== nextState.noPostsResults)
-    },
     
     /**
      * handleRefresh
@@ -154,18 +111,6 @@ const Home  = createReactClass({
      */
     handleRefresh(e) {
         this.props.onLoadHidden()
-    },
-
-    _fetchPostsStream() {
-        // if (this._opinionStream._loading)
-        //     return;
-
-        // if(this._opinionStream._noResults) {
-        //     this.setState({noPostsResults: true})
-        //     return;
-        // }
-
-        // this._opinionStream.load();
     },
 
     /**
@@ -180,7 +125,7 @@ const Home  = createReactClass({
         return (
             <div className="hm-container" ref={c => this._pageElm = c}>
                 <Helmet>
-                    <title>Opinion</title>
+                    <title>NotMatched</title>
                 </Helmet>
                 <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
                     <div className="hm-main-blk-ctnr">

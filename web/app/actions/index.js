@@ -11,10 +11,11 @@ export { Posts, Likes, Rates, Shares,
 export { Header, PostForm, Notification,
 		 Confidence, Search, App, 
 		 VideoUploader, NewsFeed,
-		 Exception, Places		
+		 Exception, Places, MeetYou		
 } 											from './social'
 
 export { User, Auth, Invitation, Diary,
 		 RelationShip, Signup, Profiles,
-		 Users, Groups,	Setting, Login 	
+		 Users, Groups,	Setting, Login,
+		 Resetting 	
 } 											from './user'

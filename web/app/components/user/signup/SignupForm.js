@@ -32,11 +32,6 @@ var initial_strength = 'Worst';
 const SignupForm  = createReactClass( {
     getInitialState() {
         return {
-            email: '',
-            password: '',
-            firstname: '',
-            lastname : '',
-            gender : '',
             birthday : {},
             passwordConfirmation: '',
             begin : {
@@ -52,17 +47,29 @@ const SignupForm  = createReactClass( {
             year : 1900,
             month: 1,
             day  : 1,     
-            errors: {},
+            errors: {
+                wrapper: {}
+            },
             isLoading: false,
-            invalid: false
+            invalid: false,
+            "registration[email]": '',
+            "registration[gender]": '',
+            "registration[lastname]": '',
+            "registration[firstname]": '',
+            "registration[plainPassword][first]": '',
+            "registration[plainPassword][second]": '',
         }
     },
 
     onTextChange(e) {
         //Set daysOfMonth by selected month
         let val = e.target.value,
-        name = e.target.name;
+        name = e.target.name,
+        errors= this.state.errors,
+        { trans }= this.props.signupData;
         this.setState({name: val });
+
+        console.log(name);
 
         if(name == 'registration[plainPassword][first]') {
             let result  = zxcvbn(val);
@@ -178,7 +185,7 @@ const SignupForm  = createReactClass( {
 
     handleGenderChange(e) {
         this.setState({
-            gender : e.target.value
+            "registration[gender]" : e.target.value
         })
     },
 
@@ -237,20 +244,24 @@ const SignupForm  = createReactClass( {
     },
 
     render() {
-        const { errors } = this.state;
-        const { hasPreviousSession, form, signupData } = this.props;
-        { csrf_token, server_error, action, flashBag, hasPreviousSession } = this.props.loginData
+        const { errors } = this.state,
+        { form, signupData } = this.props,
+        { csrf_token, server_error, action, flashBag, hasPreviousSession } = this.props.signupData
         return (
             <section className="h-sign-sect">
-                <span className="sign-ttl">Sign Up</span>
-                <form action={`${BASE_PATH}/${action}`} method="post" onSubmit={this.onSubmit} className="signup-form">
+                <div className="sign-ttl">Sign Up</div>
+                <form 
+                    name="registration"
+                    action={`${BASE_PATH}/${action}`} 
+                    method="post" onSubmit={this.onSubmit} 
+                    className="signup-form">
                     <TextFieldGroup
                         label=""
                         errors={errors}
                         onChange={this.onTextChange}
                         onBlur={this.onBlur}
-                        value={this.state.firstname}
-                        wrapClassName="fld-wrp fisrtname"
+                        value={this.state['registration[firstname]']}
+                        wrapClassName="fld-wrp firstname"
                         name="registration[firstname]"
                         field="firstname"
                         hasPreviousSession
@@ -263,7 +274,7 @@ const SignupForm  = createReactClass( {
                         onChange={this.onTextChange}
                         onBlur={this.onBlur}
                         wrapClassName="fld-wrp lastname"
-                        value={this.state.lastname}
+                        value={this.state['registration[lastname]']}
                         name="registration[lastname]"
                         field="lastname"
                         placeholder="Lastname"
@@ -275,7 +286,7 @@ const SignupForm  = createReactClass( {
                         wrapClassName="fld-wrp email"
                         onChange= {this.onTextChange}
                         onBlur={this.onBlur}
-                        value={this.state.email}
+                        value={this.state["registration[email]"]}
                         field="email"
                         name="registration[email]"
                         placeholder="Email"
@@ -313,7 +324,7 @@ const SignupForm  = createReactClass( {
                                 value="Male"
                                 id="registration_gender_0"
                                 name="registration[gender]"
-                                checked={this.state.gender === 'Male'}
+                                checked={this.state["registration[gender]"] === 'Male'}
                                 onChange={this.handleGenderChange} />
                             <label htmlFor="registration_gender_0">Male</label>
                             <input 
@@ -322,12 +333,12 @@ const SignupForm  = createReactClass( {
                                 id="registration_gender_1"
                                 onBlur={this.onBlur}
                                 name="registration[gender]"
-                                checked={this.state.gender === 'Female'}
+                                checked={this.state["registration[gender]"] === 'Female'}
                                 onChange = {this.handleGenderChange}/>
                             <label htmlFor="registration_gender_1">Female</label>
                         </div>
                     </div>
-                    <div className="form-group">
+                    <div className="in-sign-up-btm">
                         <button disabled={this.state.isLoading || this.state.invalid} className="form-registration-submit">
                             Sign up
                         </button>

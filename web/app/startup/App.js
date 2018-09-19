@@ -460,6 +460,7 @@ const App = createReactClass ({
      */
     componentDidMount() {
         if(this.props.user && this.props.access_token) {
+            console.log(this.props.user, 'et', this.props.access_token)
             this.subscribeToServices();   
         }
         ////https://web.facebook.com/videocall/incall/?peer_id=100006750760505&call_id=3164762795&is_caller=true&audio_only=false&nonce=f1d5a04124f80f4
@@ -739,6 +740,7 @@ const App = createReactClass ({
     },
 
     subscribeToServices() {
+        console.log('subscribe;;;')
         const self    = this,
         webSocket     = WS.connect("ws://127.0.0.1:8080"),
         { threadsIds, dispatch, getState, defaults, user, access_token, auth_data,  } = this.props,
@@ -746,34 +748,56 @@ const App = createReactClass ({
         { username, id, } = user;
         import('firebase').then((firebase) => {
             const config = process.env.NODE_ENV === 'production' ? prodConfig : devConfig;
-                if (!firebase.apps.length) {
-                    firebase.initializeApp(config);
-                    this.firebase = firebase;
-                }
-                this.database = firebase.database();
+            if (!firebase.apps.length) {
+                firebase.initializeApp(config);
+                this.firebase = firebase;
+            }
+            this.database = firebase.database();
 
-                const dbCall = firebase.database().ref(`webrtc/${this.props.user.id}`);
-                dbCall.on('child_added', this.readCallMessage);
+            const dbCall = firebase.database().ref(`webrtc/${this.props.user.id}`);
+            dbCall.on('child_added', this.readCallMessage);
 
-                // const { fireAuth, fireDB } = firebase
+            // const { fireAuth, fireDB } = firebase
 
-                // fireAuth.signOut();  //logout user
+            // fireAuth.signOut();  //logout user
 
-                // fireDB.onceGetUsers().then(snapshot =>
-                //   console.log('users', snapshot.val())
-                // );
+            // fireDB.onceGetUsers().then(snapshot =>
+            //   console.log('users', snapshot.val())
+            // );
 
-                //A listener that set firebase user in redux when signIn or signOut
-                firebase.auth().onAuthStateChanged(authUser => {
-                  authUser
-                    ? dispatch(AuthAction.setFireUser(authUser))
-                    : dispatch(AuthAction.setFireUser(null));
-                });
-        
-                const fireUser = firebase.auth().currentUser
+            //A listener that set firebase user in redux when signIn or signOut
+            firebase.auth().onAuthStateChanged(authUser => {
+              authUser
+                ? dispatch(AuthAction.setFireUser(authUser))
+                : dispatch(AuthAction.setFireUser(null));
+            });
+    
+            const fireUser = firebase.auth().currentUser
 
             
-                if(fireUser) {
+            if(fireUser) {
+                firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                    // Send token to your backend via HTTPS
+                    self.sendTokenToServer(idToken)
+                }).catch(function(error) {
+                    // Handle error
+                    console.log('error when sending idToken to server', error)
+                });
+                // auth.doPasswordReset(email).then(
+                //     () => {
+                //         this.setState(() => ({ ...INITIAL_STATE }));
+                //     }).catch(error => {
+                //         this.setState(byPropKey('error', error));
+                //     });
+                // auth.doPasswordUpdate(passwordOne).then(
+                //     () => {
+                //         this.setState(() => ({ ...INITIAL_STATE }));
+                //     }).catch(error => {
+                //         this.setState(byPropKey('error', error));
+                //     });
+            } else {
+                // Sign In for firebase
+                firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
                     firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
                         // Send token to your backend via HTTPS
                         self.sendTokenToServer(idToken)
@@ -781,88 +805,65 @@ const App = createReactClass ({
                         // Handle error
                         console.log('error when sending idToken to server', error)
                     });
-                    // auth.doPasswordReset(email).then(
-                    //     () => {
-                    //         this.setState(() => ({ ...INITIAL_STATE }));
-                    //     }).catch(error => {
-                    //         this.setState(byPropKey('error', error));
-                    //     });
-                    // auth.doPasswordUpdate(passwordOne).then(
-                    //     () => {
-                    //         this.setState(() => ({ ...INITIAL_STATE }));
-                    //     }).catch(error => {
-                    //         this.setState(byPropKey('error', error));
-                    //     });
-                } else {
-                    // Sign In for firebase
-                    firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-                        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-                            // Send token to your backend via HTTPS
-                            self.sendTokenToServer(idToken)
-                        }).catch(function(error) {
-                            // Handle error
-                            console.log('error when sending idToken to server', error)
-                        });
-                    }).catch(
-                        error => {                        
-                            if(error.code === 'auth/user-not-found') {
-                                firebase.auth().createUserWithEmailAndPassword(email, password).then(
-                                    authUser => {
-                                        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-                                          // Send token to your backend via HTTPS
-                                            self.sendTokenToServer(idToken)
-                                        }).catch(function(error) {
-                                            // Handle error
-                                            console.log('error when sending idToken to server', error)
-                                        });
-                                        // Create a user in your own accessible Firebase Database too
-                                        // authUser.uid || user.id 
-                                        firebase.database().ref(`users/${id}`).set({username, email,}).then(() => {
-                                            console.log('my own user accessible created')
-                                        }).catch(
-                                        error => {
-                                            console.log('my own user accessible not created', error)
-                                        });
-                                }).catch(
+                }).catch(
+                    error => {                        
+                        if(error.code === 'auth/user-not-found') {
+                            firebase.auth().createUserWithEmailAndPassword(email, password).then(
+                                authUser => {
+                                    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+                                      // Send token to your backend via HTTPS
+                                        self.sendTokenToServer(idToken)
+                                    }).catch(function(error) {
+                                        // Handle error
+                                        console.log('error when sending idToken to server', error)
+                                    });
+                                    // Create a user in your own accessible Firebase Database too
+                                    // authUser.uid || user.id 
+                                    firebase.database().ref(`users/${id}`).set({username, email,}).then(() => {
+                                        console.log('my own user accessible created')
+                                    }).catch(
                                     error => {
-                                        console.log('user not created', error)
-                                });
-                            } else {
-                                console.log('error', error)
-                            }
+                                        console.log('my own user accessible not created', error)
+                                    });
+                            }).catch(
+                                error => {
+                                    console.log('user not created', error)
+                            });
+                        } else {
+                            console.log('error', error)
                         }
-                    );
-                }
+                    }
+                );
+            }
+        })
+
+        this.setState({screenWidth:  window.screen.width })
+
+
+        /**
+        * !!!Important !!!!!!!!!!!!!!!!
+        * access_token mean a token comes from server with 
+        * initial Redux state  
+        */
+        window.localStorage.setItem('_tk_key', access_token);
+
+        //handle realtime incomming messages
+        //for all threadsIds where user is participant
+        webSocket.on("socket/connect", (session) => {
+            this.session = session;
+            _.each(threadsIds, (threadId, i) => {
+                this.session.subscribe(`message/send/channel/${threadId}`, (uri, payload) => {
+                    if(payload.data) {
+                        const message = JSON.parse(payload.data).data
+                        console.log(message)
+                        dispatch({type: 'MESSAGE::PUBLISH_THREAD_MESSAGE', message, threadId})
+                    }
+                });
             })
+        })
 
-            this.setState({screenWidth:  window.screen.width })
-
-
-            /**
-            * !!!Important !!!!!!!!!!!!!!!!
-            * access_token mean a token comes from server with 
-            * initial Redux state  
-            */
-            window.localStorage.setItem('_tk_key', access_token);
-
-            //handle realtime incomming messages
-            //for all threadsIds where user is participant
-            webSocket.on("socket/connect", (session) => {
-                this.session = session;
-                _.each(threadsIds, (threadId, i) => {
-                    this.session.subscribe(`message/send/channel/${threadId}`, (uri, payload) => {
-                        if(payload.data) {
-                            const message = JSON.parse(payload.data).data
-                            console.log(message)
-                            dispatch({type: 'MESSAGE::PUBLISH_THREAD_MESSAGE', message, threadId})
-                        }
-                    });
-                })
-            })
-
-            webSocket.on("socket/disconnect", function(error){
-                console.log("Disconnected for " + error.reason + " with code " + error.code);
-            })
+        webSocket.on("socket/disconnect", function(error){
+            console.log("Disconnected for " + error.reason + " with code " + error.code);
         })
     }
 })

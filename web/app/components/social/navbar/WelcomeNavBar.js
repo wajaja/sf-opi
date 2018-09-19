@@ -18,7 +18,7 @@ const WelcomeNavBar  = createReactClass({
 	render() {
 		const { login } = this.props;
 		return (
-			<nav  className="navbar navbar-inverse navbar-fixed-top">
+			<nav  className="navbar navbar-inverse navbar-fixed-top wlc">
             	<div className="container">
             		<div className="navbar-header">
 	                    <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

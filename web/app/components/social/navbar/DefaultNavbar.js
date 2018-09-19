@@ -25,6 +25,11 @@ const DefaultNavBar  = createReactClass( {
 		            	</div>
     				</div>
 		            <div className="nav-ctnr">
+		            	<div className="dft-g-rgstr-ctnr">
+				        	<button className="btn go-regiter-btn">
+				            	<a href="http://opinion.com/app_dev.php/signup" className="go-regiter">Sign Up</a>
+				            </button>
+				        </div>
 			        </div>
 	            </div>
 	        </nav>

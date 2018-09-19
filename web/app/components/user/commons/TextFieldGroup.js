@@ -2,7 +2,7 @@ import React                from 'react';
 import PropTypes            from 'prop-types';
 
 
-const TextnameGroup = ({name, field, hasPreviousSession, wrapClassName, flashBag, value, label, placeholder, errors, type, customClassName, onChange, onBlur, checkUserExists }) => {
+const TextFieldGroup = ({name, field, hasPreviousSession, wrapClassName, flashBag, value, label, placeholder, errors, type, customClassName, onChange, onBlur, checkUserExists }) => {
     return (
         <div className={wrapClassName}>
             {!!hasPreviousSession && !!flashBag && !!flashBag[name] && 
@@ -24,7 +24,7 @@ const TextnameGroup = ({name, field, hasPreviousSession, wrapClassName, flashBag
 }
 
 ////////
-TextnameGroup.propTypes = {
+TextFieldGroup.propTypes = {
     name       : PropTypes.string.isRequired,
     value       : PropTypes.string.isRequired,
     label       : PropTypes.string,
@@ -36,11 +36,11 @@ TextnameGroup.propTypes = {
     checkUserExists: PropTypes.func
 }
 
-TextnameGroup.defaultProps = {
+TextFieldGroup.defaultProps = {
     type        : "text",
     placeholder : ""
 }
 
-export default TextnameGroup;
+export default TextFieldGroup;
                               
                     

@@ -54,13 +54,14 @@ class RegistrationListener extends AbstractUserListener implements EventSubscrib
             $user->setProfilePic($defaultPic);
         }
 
+        $session->set('access_token', $jwtEvent->getData()['token']); //token in session
         if('application/x-www-form-urlencoded' === $request->headers->get('Content-Type')) {
-            // $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $jwtEvent);
-            $session->set('access_token', $jwtEvent->getData()['token']); //token in session
-            $session->set('refresh_token', $jwtEvent->getData()['refresh_token']);
+            $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $jwtEvent);
+            // $session->set('access_token', $jwtEvent->getData()['token']); //token in session
+            // $session->set('refresh_token', $jwtEvent->getData()['refresh_token']);
         } else {
-            $response   = new JsonResponse();
-            // $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $jwtEvent);
+            // $response   = new JsonResponse(); //don't use jsonResponse because we need to append data to filtered response
+            $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $jwtEvent);
             $response->setData($jwtEvent->getData());
         }
 

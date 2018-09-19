@@ -59,8 +59,10 @@ class ResettingController extends Controller
                     'Resetting' => [
                         'invalid_username' => false,
                         'action' => 'api/resetting/send-email',
-                        'username_trans' => $this->translator->trans('resetting.request.username', array(), 'OPUserBundle'),
-                        'submit_trans' => $this->translator->trans('resetting.request.submit', array(), 'OPUserBundle')
+                        'trans' => [
+                            'username' => $this->translator->trans('resetting.request.username', array(), 'OPUserBundle'),
+                            'submit' => $this->translator->trans('resetting.request.submit', array(), 'OPUserBundle')
+                        ]
                     ],
                 ],
                 'title'       => 'Reset your password',

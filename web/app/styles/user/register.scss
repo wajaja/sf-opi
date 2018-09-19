@@ -32,31 +32,38 @@ label.form-registration-gender, label.registration-birthdate{
     position: absolute;
     left: 0;
     right: 0;
+    padding: 10px 120px 10px 20px;
     margin-left: auto;
     margin-right: auto;
-    width: 425px;
-}
-.regist-f-ctnr{
-	margin-top: 150px;
+    height: 390px;
+    width: 500px;
+    margin-top: 100px;
+    border-radius: 7px;
 }
 .regist-f-ctnr-a{
-    width: 352px;
     position: relative;
+    height: 100%;
+    width: 100%;
 }
 .sign-ttl {
-    font-size: 19px;
-    font-weight: 600;
+    font-size: 18px;
+    /* font-weight: 600; */
     display: block;
     position: relative;
     letter-spacing: 1px;
-    font-family: sans-serif;
     color: #1a799f;
-    padding-bottom: 3px;
-    text-align: right;
+    margin: 0 0 25px 0;
+    padding-bottom: 5px;
+    text-align: center;
+    border-bottom: 1px solid #dde4e6;
 }
 .h-sign-sect {
-    /* background-color: #e0e3e4; */
-    /*-webkit-box-shadow: inset 0 1px 1px 0 rgba(0,0,0, 0.05);*/
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: #f1f6f7;
+    border: 1px solid #cad9e0;
+    padding: 10px;
 }
 
 .fos_user_registration_register {
@@ -71,17 +78,16 @@ label.form-registration-gender, label.registration-birthdate{
 
 	.firstname,
 	.lastname{
-		width: 170px;
+		width: 165px;
     	display: inline-block;
 	}
 }
 .in-sign-up {
-    margin-bottom: 10px;
     font-size: 17px;
     padding: 3px 4px;
     height: 35px;
     border-radius: 3px;
-    border: none;
+    border: 1px solid #ddd;
     width: 100%;
 }
 #fos_user_registration_form_birthdate {
@@ -138,9 +144,16 @@ div.form-registration-gender {
     letter-spacing: 1.1px;
     font-family: sans-serif;
 }
+.in-sign-up-btm{
+    position: absolute;
+    bottom: 10px;
+    right: 0px;
+}
 .fld-wrp{
+    width: 162px;
     position: relative;
-    display: inline-block; 
+    display: inline-block;
+    margin-bottom: 15px;
     .flash {
         position: absolute;
         min-width: 254px;
@@ -162,12 +175,12 @@ div.form-registration-gender {
 
     }
     &.lastname{
-        
+        float: right;
     }
     &.email{
         width: 100%;
     }
-    &.pwd-fisrt{
+    &.pwd-first{
         width: 100%
     }
     &.pwd-second{

@@ -21,13 +21,14 @@ const CheckEmail  = createReactClass( {
     // },
 
 	render() {
-		const { dispatch, user, check_email_trans} = this.props
+		const { dispatch, user, resettingData, } = this.props,
+		{ check_email, } = resettingData
 
 		return (
 			<div className="hm-container setting" ref={c => this._pageElm = c}>
                 <div id="sttg_main_blk" className="sttg-main-blk">
                     <div className="sect-frm-ctnr reset-req">
-                        <p>{check_email_trans}</p>
+                        <p>{trans.check_email}</p>
                     </div>
                 </div>
             </div>
@@ -38,4 +39,5 @@ const CheckEmail  = createReactClass( {
 //////
 export default  withRouter(connect(state =>({
 	user: state.User.user,
-}), mapDispatchToProps)(CheckEmail))
+	resettingData: state.Resetting,
+}), null)(CheckEmail))

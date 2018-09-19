@@ -86,18 +86,18 @@ const LoginForm  = createReactClass({
 		            </div>
 	               	<div className="frm-lgn-dv-ctnr-btm">
 	               		<div className="lgn-dv-initialize">
-				            <Link to="/resetting/request" className="psw-fgt">Forgot password ?</Link>
+				            <a href="http://opinion.com/app_dev.php/resetting/request" className="psw-fgt">Forgot password ?</a>
 				        </div>
 				        <div className="lgn-dv-sbm-btn-ctnr">
-				            <button className="btn btn-default" disabled={isLoading} >Login</button>
+				            <button className="btn btn-primary" disabled={isLoading} >Login</button>
 				        </div>
 				    </div>
-			        <div className="lgn-dv-g-rgstr-ctnr">
-			        	<button className="btn go-regiter-btn" disabled={isLoading} >
-			            	<Link to="/signup" className="go-regiter">Sign Up</Link>
-			            </button>
-			        </div>
 	            </form>
+		        <div className="lgn-dv-g-rgstr-ctnr">
+		        	<button className="btn go-regiter-btn" disabled={isLoading} >
+		            	<a href="http://opinion.com/app_dev.php/signup" className="go-regiter">Sign Up</a>
+		            </button>
+		        </div>
 	        </div>
 		)
 	}

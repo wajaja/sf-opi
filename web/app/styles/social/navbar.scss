@@ -1,8 +1,31 @@
 nav .container {
     position: relative;
-    height: 50px;
+    height: 100%; /**/
+    .nav-lft{
+        height: 100%;
+        position: absolute;
+        bottom: 0;
+    }
     .collapse.navbar-collapse{
         height: 100% !important;
+    }
+    .nav-ctnr{
+        .dft-g-rgstr-ctnr{
+            position: absolute;
+            top: 9px;
+            right: 0;
+        }
+        .go-regiter-btn{
+            min-width: 150px;
+            background-color: #65d3e0;
+            padding: 8px;
+            border: 1px solid #098590;
+            letter-spacing: 1px;
+            a {
+                font-size: 13px !important;
+                font-weight: 600;
+            }
+        }
     }
     .flt-ctnr{
         position: absolute;
@@ -76,8 +99,10 @@ nav .default {
     /*border-color: #cbdbf1;*/
     margin-bottom: 0px;
     border-bottom: unset !important;
-    min-height: 55px;
-    max-height: 65px;
+    height: 55px;
+    &.wlc{
+        height: 70px !important;
+    }
     &.modal-open {
         border-color: none !important;
     }
