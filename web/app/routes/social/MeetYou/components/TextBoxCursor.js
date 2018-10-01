@@ -1,12 +1,14 @@
 import React from 'react';
+import createReactClass   from 'create-react-class'
+import PropTypes from 'prop-types';
 import {CanvasLine} from './Canvas';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
-    coords: React.PropTypes.shape({
-      x: React.PropTypes.number.isRequired,
-      y1: React.PropTypes.number.isRequired,
-      y2: React.PropTypes.number.isRequired
+    coords: PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y1: PropTypes.number.isRequired,
+      y2: PropTypes.number.isRequired
     }).isRequired
   },
 

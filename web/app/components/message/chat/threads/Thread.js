@@ -471,32 +471,28 @@ const Thread = createReactClass({
 						<div className="thr-ctnr">
 				            <div className="thr-ctnr-a">
 					            <form className="thread-form" method="post" action="">
-					            	<Scrollbars
-							    		universal
-								        style={{ height: 220 }}>
-							            <div className="nw-msg-ct">
-							            	<div className="thr-select-bd">
-							                    <div className="thr-idtf">
-							                        <div className="msg-container">
-							                        	{messages && messages.map((message, i) => {
-										                    return ( <MessageBox
-									                    				key={i}
-									                       				{...this.props}
-									                    				message={message}
-									                    				sender={message.sender}
-									                    				reSubmitMsg={this.reSubmitMsg}
-									                    			/>
-									                    	)
-											            })}
-							                        </div>
-							                        <div 
-							                        	style={{float: "left", clear:"both"}}
-							                        	ref={(el) => this.messagesEnd = el}>
-							                        </div>
-							                    </div>
-							                </div>
-							            </div>
-							        </Scrollbars>
+						            <div className="nw-msg-ct">
+						            	<div className="thr-select-bd">
+						                    <div className="thr-idtf">
+						                        <div className="msg-container">
+						                        	{messages && messages.map((message, i) => {
+									                    return ( <MessageBox
+								                    				key={i}
+								                       				{...this.props}
+								                    				message={message}
+								                    				sender={message.sender}
+								                    				reSubmitMsg={this.reSubmitMsg}
+								                    			/>
+								                    	)
+										            })}
+						                        </div>
+						                        <div 
+						                        	style={{float: "left", clear:"both"}}
+						                        	ref={(el) => this.messagesEnd = el}>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>				
 					                <div className="cht-nw-msg-bd">
 						                <div className="cht-nw-msg-bd-a">
 						                    <div className="cht-nw-msg-bd-b">

@@ -10,7 +10,7 @@ import { CellMeasurer,
     InfiniteLoader, AutoSizer, WindowScroller
 }                               from 'react-virtualized';
 import { Post, LoadingIndicator, 
-    PostHolder 
+    PostHolder, NoPostResult 
 }                               from '../../../../components'
 import bindFunctions            from '../../../../utils/bindFunctions'
 import { 
@@ -161,8 +161,8 @@ const NewsFeed  = createReactClass({
 
         //recompute the first item in feed if new post have been added to newsFeed
         //delete all cache
-        } else if (this.props.newsRefs !== prevState.newsRefs && 
-                this.props.newsRefs[0].id !== prevProps.newsRefs[0].id) {
+        } else if (this.props.newsRefs && this.props.newsRefs[0] && 
+                (this.props.newsRefs[0].id !== prevProps.newsRefs[0].id)) {
             const index = prevState.newsFeed.length;
             this._cache.clearAll();
             if (this._list) {
@@ -282,6 +282,7 @@ const NewsFeed  = createReactClass({
                                         disableHeight
                                         onResize={this._onResize}>
                                         {({width /*, height*/}) => {
+                                            console.log('second he', height);
                                             if (this._mostRecentWidth && this._mostRecentWidth !== width) {
                                                 this._resizeAllFlag = true;
 
@@ -290,21 +291,24 @@ const NewsFeed  = createReactClass({
 
                                             this._mostRecentWidth = width;
                                             this._registerList = registerChild;
+                                            console.log(width);
 
                                             return (
-                                                <div className={!!serverSide ? `news-div-b place-holder` : `news-div-a`}>
+                                                <div 
+                                                    className={!!serverSide ? `news-div-a place-holder` : `news-div-a`}>
                                                     <List
                                                         autoHeight
                                                         width={516}
                                                         height={height}
                                                         className={this.props.edit_form_focus ? `nws-div-b active` : `nws-div-b`}
                                                         ref={this._setListRef}
-                                                        overscanRowCount={2}
+                                                        overscanRowCount={10}
                                                         scrollTop={scrollTop}
                                                         deferredMeasurementCache={this._cache}
                                                         rowCount={newsFeed.length /*+ 1*/}
                                                         rowHeight={this._cache.rowHeight}
                                                         rowRenderer={this._rowRenderer}
+                                                        noRowsRenderer={this._noRowsRenderer}
                                                       />
                                                 </div>
                                             )
@@ -365,6 +369,13 @@ const NewsFeed  = createReactClass({
                 parent={parent}>
                     {content}
             </CellMeasurer>
+        );
+    },
+
+    _noRowsRenderer() {
+
+        return (
+            <NoPostResult location={this.props.location} />
         );
     },
 

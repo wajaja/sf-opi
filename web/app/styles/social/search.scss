@@ -1,4 +1,11 @@
 .hm-container.search{
+	margin-top: 12px;
+	.hm-frst-blk{
+	    background: #fff;
+	    height: 340px;
+	    border: 1px solid #c9d0d4;
+	    border-radius: 5px
+	}
 	.stk-tri-ctnr{
 		padding-top: 5px;
 	}
@@ -16,8 +23,8 @@
 	.stk-tri-dv{
     	width: 720px;
 		background-color: #f1f7f5;
-	    border: 1px solid #c5cacc;
-	    border-radius: 2px;
+        border: 1px solid #d4d8da;
+    	border-radius: 5px;
 	    max-height: 163px;
 	    z-index: 15;
 	    display: inline-block;
@@ -45,7 +52,7 @@
 	    }
 	}
 	#hm_main_blk{
-		margin-left: 279px;
+		margin-left: 291px;
 		margin-top: 0px !important;	
 	}
 	.home-center-div{
@@ -53,12 +60,25 @@
 	}
 	.nav-mnu-dv-a{
 		.nav-mnu-chld{
-		    text-align: center;
-		    border-radius: 3px;
+		    width: 60px;
+		    .nav-mnu-chld-a{
+		    	height: 100%;
+		    }
 			&.active {
 				background: #f4f7f6;
 			    border: 1px solid #d3d9de;
 			}
+		}
+		.sh-nav-chld-lk{
+		    color: #0e0e0e;
+		    padding: 15px 5px;
+		    margin: 1px 0;
+		    letter-spacing: 0.6px;
+		    width: inherit;
+		    font-size: 13px;
+		    font-weight: 600;
+		    display: block;
+		    height: 100%;
 		}
 	}
 }

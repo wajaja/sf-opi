@@ -115,7 +115,7 @@ const Home  = createReactClass({
         findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll);
 
         import('../../../utils/OpinionStream').then(OpinionStream => {
-            this.stream = new OpinionStream(dispatch, user.id, lastStreamId);
+            //this.stream = new OpinionStream(dispatch, user.id, lastStreamId);
         });
         import('../../../utils/StreamAnalytic').then(StreamAnalytic => {            
             //this._streamAnalytic = new StreamAnalytic(this.props.user); //TODO 

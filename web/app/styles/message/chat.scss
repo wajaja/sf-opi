@@ -36,7 +36,7 @@
     background: #fff;
     border-radius: 3px;
     .thr-b-part{
-        padding: 3px 3px;
+        padding: 3px 6px;
         overflow: hidden;
     }
 
@@ -306,7 +306,7 @@
 }
 .oln-bd-ul-ct {
     .msg-dv-th-ctr{
-        line-height: 5px;
+        /* line-height: 5px; */
     }
     .qq-upload-file{
         width: 79px !important;
@@ -331,7 +331,6 @@
     }
     .thr-ctnr-a{
         position: relative;
-        overflow-y: hidden;
         height: 100%;
         width: 100%;
     }
@@ -348,18 +347,36 @@
         height: 100%;
         position: relative;
         bottom: 0;
+        display: flex;
+        flex-direction: column;
         .msg-dv-th{
+            max-width: calc(100% - 35px) !important;
             /*width: calc(100% - 50px) !important;
             width: -webkit-calc(100% - 50px) !important;
             width: -moz-calc(100% - 50px) !important;
             width: -o-calc(100% - 50px) !important;*/
         }
+        .msg-img-ul{
+            /* https://css-tricks.com/seamless-responsive-photo-grid/ */
+            display: flex;
+            line-height: 0;
+            -webkit-column-count: 2;
+            -webkit-column-gap: 0px;
+            -moz-column-count: 2;
+            -moz-column-gap: 0px;
+            column-count: 2;
+            column-gap: 0px;
+        }
         .li-msg-img{
+            cursor: position;
             img{
                 position: relative;
-                min-width: 100px;
-                max-width: 130px;
-                min-height: 100px;
+                /* https://css-tricks.com/seamless-responsive-photo-grid/ */
+                width: 100% !important;
+                height: auto !important;
+                padding: 0 3px 0 0;
+                flex: auto;
+                flex-shrink: 0;
             }
         }
     }
@@ -367,6 +384,7 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+        height: 100%;
     }
     .thr-select-bd{
         /*height: 320px;
@@ -375,26 +393,27 @@
     .cht-nw-msg-bd{
         position: absolute;
         bottom: 0;
-        width: calc(100% - 10px);
+        width: 100%;
         padding: 0 2px 0;
         text-align: start;
         font-size: 11.5px;
         border-radius: 6px;
-        margin: 2px 5px;
-        border: 1px solid #d4d5d8;
+        /* margin: 2px 5px; */
+        border-top: 1px solid #d4d5d8;
+        flex-shrink: 0;
         .expandingArea{
             /*background: none !important;*/
         }
     }
     .nw-msg-bod{
-        padding: 1px !important;
-        min-height: 26px;
+        padding: 1px 3px  !important;
+        min-height: 30px;
         /*padding: 2px 120px 1px 2px !important;*/
     }
     .divUploadResp{
         position: relative;
         padding: 2px;
-        border-top: 1px solid #d4d5d8;
+        /* border-top: 1px solid #d4d5d8; */
         .msg-opt-plus{
             display: inline-block;
             vertical-align: top;
@@ -403,6 +422,9 @@
             margin-right: 6px;
             position: relative;
             top: 0px;
+        }
+        .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
+            bottom: 70px;
         }
         .react-fine-uploader-file-input-container{
             width: 22px !important;
@@ -419,7 +441,7 @@
             height: 27px !important;
             border: none;
             font-size: 20px;
-            top: -10px;
+            top: -12px;
         }
         .lk-autocol.mic{
             width: 18px !important;
@@ -434,8 +456,8 @@
     .lft-msg-footer{
         width: 120px;
         padding: 2px;
-        margin-right: auto;
-        margin-left: auto;
+        // margin-right: auto;
+        // margin-left: auto;
     }
     .rght-msg-footer{
         display: none;

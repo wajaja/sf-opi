@@ -96,7 +96,7 @@ class GroupController extends Controller
      *
      * @return Response
      */
-    public function showAction(Request $request, $id, MessageManager $msgMan, ThreadManager $threadMan)
+    public function showAction(Request $request, $id, MessageManager $msgMan, ThreadManager $threadMan, GroupManager $groupManager, InvitationManager $invitMan, NotificationManager $notiMan)
     {
         $session    = $request->getSession();
         if($token = $session->get('access_token')) {
@@ -226,7 +226,7 @@ class GroupController extends Controller
      *
      * @return Response
      */
-    public function newAction(Request $request, MessageManager $msgMan, ThreadManager $threadMan)
+    public function newAction(Request $request, MessageManager $msgMan, ThreadManager $threadMan, GroupManager $groupManager, InvitationManager $invitMan, NotificationManager $notiMan)
     {
         $session    = $request->getSession();
         if($token   = $session->get('access_token')) {

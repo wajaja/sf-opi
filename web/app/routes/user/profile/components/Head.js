@@ -63,17 +63,18 @@ const Head = createReactClass({
 			                            <span>{profile.firstname}</span>
 			                            <span>{profile.lastname}</span>
 			                        </div>
-			                        <div className="in-top-sts-ctnr">
-			                            <i className="fa fa-quote-left" aria-hidden="true"></i>
-			                            <span className="sts-txt">
-			                                {profile.status}
-			                            </span>
-			                            {user.id === profile.id &&
-			                                <div className="edt-status">
-			                                	<i className="fa fa-pencil" aria-hidden="true"></i>
-			                                </div>
-			                            }
-			                        </div>
+			                        {false && <div className="in-top-sts-ctnr">
+				                            <i className="fa fa-quote-left" aria-hidden="true"></i>
+				                            <span className="sts-txt">
+				                                {profile.status}
+				                            </span>
+				                            {user.id === profile.id &&
+				                                <div className="edt-status">
+				                                	<i className="fa fa-pencil" aria-hidden="true"></i>
+				                                </div>
+				                            }
+				                        </div>
+				                    }
 			                    </div>
 			                    <div className="in-top-plus-plus">
 			                        {user.id != profile.id &&
@@ -91,7 +92,7 @@ const Head = createReactClass({
 				                            </div>
 				                            <div className="spa-in-sd-message">
 				                                <button 
-				                                	className="btn-in-sd-message btn btn-sm btn-default"
+				                                	className="btn-in-sd-message btn"
 				                                	onClick={this.createMessage}>
 				                                    <i className="fa fa-envelope"></i>
 				                                    <span>Message</span>

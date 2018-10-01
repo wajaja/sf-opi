@@ -72,10 +72,10 @@ const MessageRecipients  = createReactClass({
     	}
     },
 
-    shouldComponentUpdate(nextProps, nextState) {
-    	return this.props.recipients_error !== nextProps.recipients_error ||
-    		this.state !== nextState
-    },
+    // shouldComponentUpdate(nextProps, nextState) {
+    // 	return this.props.recipients_error !== nextProps.recipients_error ||
+    // 		this.state !== nextState
+    // },
 
 	render() {
 		const self = this,
@@ -85,12 +85,7 @@ const MessageRecipients  = createReactClass({
         });
 		return (
 			<div 
-				className="thread msg-select-recip" 
-				style={{
-					padding: "0 0px",
-					borderBottom: error ? "1px solid red" : "1px solid #ecedf2"
-				}}
-				>
+				className="thread msg-select-recip">
                 <div className="msg-select-recip-a">
                 	<MultiSelect
                 		autofocus={false}

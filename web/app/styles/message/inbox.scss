@@ -1,21 +1,27 @@
+* {
+    box-sizing: border-box;
+}
 .ibx-pg{
     display: inline-block;
     width: 600px;
-    border-right: 1px solid #b8bbc1;
-    height: 100vh;
+    height: 100%;
+    border-radius: 5px;
     .react-selectize.dropdown-menu.default:not(.flipped) {
-        border-color: #b3b3b3 #c3bdbd #c5bebe;
-        border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 4px;
+        border-color: #dbdee0 #c6c9cc #d6d7dc;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
         width: 300px !important;
-        background: #dde1e4;
-        padding-left: 4px;
+        background: #eef1f3;
+        padding: 6px;
+        max-height: 300px;
     }
 }
 .ibx-pg-b{
     background: #ffffff;
     position: relative;
-    height: calc(100% - 60px);
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid #cad3d8;
 }
 .ibx-pg-hd-r{
     display: inline-block;
@@ -24,6 +30,9 @@
     font-size: 13px;
     /* font-weight: 600; */
     color: #615e5e;
+}
+.thr-msg-rght{
+    text-align: right;
 }
 .ibx-pg-hd-l{
     display: inline-block;
@@ -45,17 +54,18 @@
 }
 .ibx-pg-hd{
     height: 100px;
-    border-bottom: 1px solid #c7cbd6;
-    background: #f1f7f5;
+    border-bottom: 1px solid #e5e9ea;
+    background: #fafbfb;
     padding: 10px 0;
+    border-radius: 5px 5px 0 0;
     .thr-crted-dte{
         display: inline-block;
         vertical-align: top;
     }
 }
 .ibx-pg-bd{
-    position: absolute;
-    display: inline-block;
+    position: relative;
+    flex: auto;
     vertical-align: top;
 }
 .ibx-pg-nd-a{
@@ -70,22 +80,23 @@
 }
 
 .ibx-pg-nw{
-    background: #fff;
-    width: 100%;
-}
-.ibx-pg-nw-form{
-    position: absolute;
     width: 100%;
     height: 100%;
-    bottom: 0;
+}
+.ibx-pg-nw-form{
+    position: relative;
+    width: 100%;
+    height: 100%;
     min-height: calc(100% - 100px);
     height: calc(100% - 100px);
 
     .thread-form{
         width: 100%;
         height: 100%;
-        position: relative;
+        position: absolute;
         bottom: 0;
+        display: flex;
+        flex-direction: column;
     }
     .ibx-pg-nw-bd{
         position: relative;
@@ -97,10 +108,16 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+        height: 100%;
     }
     .ibx-thr-select-bd{
-        height: 400px;
-        overflow-y: scroll;
+        max-height: calc(100% - 110px);
+        overflow-y: auto;
+        /* display: flex; */
+        /* flex-direction: column; */
+        flex: auto;
+        /* position: absolute; */
+        /* bottom: 0; */
     }
     .thr-idtf{
         /*height: 100%;*/ /*commented because it create issue when scrollToBottom*/
@@ -109,7 +126,7 @@
         /*height: 100%;*/ /*commented because it create issue when scrollToBottom*/
     }
     .nw-thr-recip-b{
-        margin: 2px 0;
+        margin: 6px 0 3px;
         .react-selectize-control{
             border: none !important;
         }
@@ -118,16 +135,26 @@
         /*position: absolute;
         bottom: 0;
         width: 100%;*/
-        border-top: 1px solid #d4d5d8;
+        border-top: 1px solid #e5e9ea;
+
+        flex-shrink: 0;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
     .msg-select-recip{
         position: relative;
+        padding: 0px;
+        border-radius: 3px;
+        border: 1px solid rgb(236, 237, 242);
+        .react-selectize-control{
+            border-radius: 3px !important;
+        }
     }
 }
 
 .ibx-pg-nw-bd-a{
     position: relative;
-    overflow-y: hidden;
     height: 100%;
     width: 100%;
 }
@@ -208,7 +235,7 @@
 
 .ibx-pg-msgs-bd{
     height: 100%;
-    border-right: 1px solid #ccc;
+    // border-right: 1px solid #ccc;
 }
 .ibx-pg-msgs-tp{
 	height: 60px;
@@ -217,11 +244,12 @@
 .ibx-pg-msgs-mn{
     position: relative;
     font-family: sans-serif;
-    background: #f1f7f5;
+    background: #fafbfb;
     display: block;
     height: 100px;
+    border-radius: 7px 7px 0 0;
     padding: 10px;
-    border-bottom: 1px solid #c7cbd6;
+    border-bottom: 1px solid #e5e9ea;
 }
 .ibx-msgs-key-bd{
     position: absolute;
@@ -359,6 +387,12 @@ input.nw-msg-recip{
 input.nw-msg-recip-modal{
 	display: none;
 }
+.msgForm-bd{
+    .expandingArea{
+        max-height: 303px;
+        overflow-y: auto;
+    }
+}
 .nw-thr-bd-b{
     .upl-list-ul{
         display: inline-block !important;
@@ -391,7 +425,19 @@ input.nw-msg-recip-modal{
     .bdy-txt{
         /*text-align: left;*/
     }
+    .msg-img-ul{
+        /* display: flex; */
+        line-height: 0;
+        -webkit-column-count: 3;
+        -webkit-column-gap: 0px;
+        -moz-column-count: 3;
+        -moz-column-gap: 0px;
+        column-count: 3;
+        column-gap: 0px;
+        
+    }
     .li-msg-img{
+        cursor: pointer;
         position: relative;
         /*min-width: 90px;
         max-width: 95px;
@@ -403,10 +449,10 @@ input.nw-msg-recip-modal{
         -ms-transform: translateX(-50%);
         -webkit-transform: translateX(-50%);*/
         img{
-            position: relative;
-            min-width: 110px;
-            max-width: 150px;
-            min-height: 107px;
+            min-height: 130px;
+            width: 100% !important;
+            height: auto !important;
+            margin: 2px;
         }
     }
 }
@@ -432,12 +478,15 @@ input.nw-msg-recip-modal{
 	text-align: center;
 }
 .thr-elem{
-    height: 65px;
-    border-bottom: 1px solid #e3dede;
+    height: 75px;
+    border-bottom: 1px solid #f3f2f2;
     cursor: pointer;
     overflow: hidden;
-    padding: 2px;
+    .emojione{
+        height: 20px;
+    }
 }
+
 .thr-b-part .rd{
     background: #ffe;
 }
@@ -474,7 +523,7 @@ input.nw-msg-recip-modal{
 .thr-lst-msg-hd{
     display: block;
     padding-right: 5px;
-    margin-bottom: 7px;
+    margin-bottom: 3px;
 }
 .thr-lst-msg-sdr{
     display: inline-block;
@@ -506,7 +555,9 @@ input.nw-msg-recip-modal{
     display: block;
     vertical-align: bottom;
     line-height: 13px;
-    color: #808284;
+    color: #5d6063;
+    max-height: 37px;
+    overflow: hidden
 }
 .thr-lst-msg-bdy{
     position: relative;
@@ -592,6 +643,7 @@ input.nw-msg-recip-modal{
     float: left;
     width: 24px;
     height: 22px;
+    top: 2px;
     display: inline-block;
     vertical-align: top;
     opacity: .7;
@@ -614,11 +666,16 @@ input.nw-msg-recip-modal{
 }
 
 .nw-thr-bd-a {
+    .expandingArea{
+        border-radius: 0 0 5px 5px;
+        padding: 0 5px;
+    }
     .divUploadResp{
-        padding: 3px 10px 0;
-        border-top: 1px solid #cdcdd2;
-        background: #dee1e4;
+        padding: 7px 10px 3px;
+        border-top: 1px solid #e8e8e8;
+        background: #ebedf1;
         position: relative;
+        border-radius: 0 0 5px 5px;
         .rght-msg-footer{
             display: inline-block;
             position: absolute;
@@ -667,7 +724,7 @@ input.nw-msg-recip-modal{
         }
 
         .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
-            bottom: 33px !important;
+            bottom: 40px !important;
         }
     }
 }
@@ -772,6 +829,7 @@ input.nw-msg-recip-modal{
         &.self-msg{
             right: 0px !important;
             left: unset !important;
+            text-align: left;
         }
     }
     .a-msg-sdr{

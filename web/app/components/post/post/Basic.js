@@ -275,18 +275,16 @@ const Basic  = createReactClass({
 		                 			toggleSubmittingPost={this.toggleSubmittingPost}
 		                 			recomputePostHeight={this.props.recomputePostHeight}
 		                 			/>
-		                 	}
-		                    {!this.props.fullPage && 
-		                    	<Foot 
-			                    	{...this.props} 
-			                    	type="WithAllies"
-			                    	editing={editing}
-			                    	onComment={this.onComment}
-			                    	onLike={this.onLike}
-			                    	onShare={this.onShare}
-			                    	recomputePostHeight={this.props.recomputePostHeight}
-			                    	/>
-		                    }
+		                 	}                  
+	                    	<Foot 
+		                    	{...this.props} 
+		                    	type="WithAllies"
+		                    	editing={editing}
+		                    	onComment={this.onComment}
+		                    	onLike={this.onLike}
+		                    	onShare={this.onShare}
+		                    	recomputePostHeight={this.props.recomputePostHeight}
+		                    	/>
 		                </div>
 		            </div>
 	        	</div>

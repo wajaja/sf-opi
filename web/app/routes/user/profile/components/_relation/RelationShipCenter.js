@@ -10,6 +10,12 @@ const RelationShipCenter 	= createReactClass({
 		}
 	},
 
+	componentDidMount() {
+        this.props.loadRelationship(this.props.profile.username).then(data => {
+            console.log(data);
+        })
+    },
+
 	render() {
 		return(
 			<div className="abt-cter-ctnr">

@@ -1,15 +1,18 @@
 .hm-container.notification{
 	.nt-pg-box{
+	    border-bottom: 1px solid #ececec;
 		.lk-to-notif{
 		    font-size: 13px;
-		    height: 65px;
-		    padding: 6px;
+		    height: 60px;
+		    padding: 3px;
 		    background: #fff;
 		    border-radius: 3px;
-		    border-bottom: 1px solid #ececec;
 		    margin-bottom: 7px;
 		    font-family: sans-serif;
 		    width: 100%;
+		}
+		&:last-child{
+		 	border-bottom: unset;
 		}
 	}
 

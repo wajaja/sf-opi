@@ -274,9 +274,12 @@ const Hashtag  = createReactClass({
  * Documentation: https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options
  */
 export default  withRouter(connect(state => ({
-    user:               state.User.user,
-    newsRefs:           state.Hashtag.keyword,
-    // tokens: state.Tokens,
-    // photos: state.Photos,
-    // onboarding: state.Onboarding,
+    tag: null,
+    term: state.Search.term,
+    user:  state.User.user,
+    search: state.Search,
+    postIds:  state.Posts.postIds,
+    newsRefs:   state.Search.newsRefs,
+    postFormFocus:  state.App.postFormFocus,
+    editPostFormFocus:  state.App.editPostFormFocus
 }))(Hashtag))

@@ -48,9 +48,9 @@ const Info  = createReactClass({
 	},
 
 	componentWillUnmount() {
-		window.clearRequestTimeout(this.timeout);
-		window.clearRequestInterval(this.interval);
-		window.removeEventListener('scroll', this.handleScroll);
+		// window.clearRequestTimeout(this.timeout);
+		// window.clearRequestInterval(this.interval);
+		// window.removeEventListener('scroll', this.handleScroll);
 	},
 
 	componentDidMount() {
@@ -60,14 +60,14 @@ const Info  = createReactClass({
 			  	return;
 		}
 		this.setState({ isHidden: true, isMounted: true });
-		this.timeout = window.requestTimeout(this.handleScroll, 100);
-		this.interval = window.requestInterval(() => this.tick(), 1000);
+		// this.timeout = window.requestTimeout(this.handleScroll, 100);
+		//this.interval = window.requestInterval(() => this.tick(), 100);
 		window.addEventListener('scroll', this.handleScroll);
 	},
 
 	componentWillUpdate(nextProps, nextState) {
 		if(this.state.showFlash !== nextState.showFlash && nextState.showFlash) {
-			this.timeout = window.requestTimeout(this.closeMessage, 8000);
+			// this.timeout = window.requestTimeout(this.closeMessage, 8000);
 		}
 	},
 

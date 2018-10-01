@@ -2098,7 +2098,7 @@ select::-ms-expand{
 }
 /*experimental circular on form*/
 .gl-frm-btm-li-post-l{
-    z-index: 2; /**/
+    z-index: 1; /**/
     display: none;
     background: #e5eded;
     position: relative !important;

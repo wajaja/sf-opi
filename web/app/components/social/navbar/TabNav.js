@@ -13,14 +13,11 @@ import InvitationBox            from './InvitationBox'
 
 import { 
     App as AppActions,
-    Notification as NotificationActions
- }                              from '../../../actions/social'
-import { 
-    Message as MessageActions 
-}                               from '../../../actions/message'
-import { 
+    Notification as NotificationActions,
+    Message as MessageActions,
     Invitation as InvitationActions 
-}                               from '../../../actions/user'
+ }                              from '../../../actions'
+
 import '../../../styles/social/tab-nav.scss'
 
 

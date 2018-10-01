@@ -19,7 +19,6 @@ use FOS\UserBundle\FOSUserEvents,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\Request,
     OP\UserBundle\Security\UserProvider,
-    FOS\UserBundle\Form\Factory\FormFactory,
     Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Component\Translation\TranslatorInterface,
     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -34,11 +33,12 @@ class ResettingController extends Controller
 {
 
     protected $translator, $user_provider, $formFactory;
+    private $retryTtl;
 
-    public function __construct(TranslatorInterface $trans, UserProvider $uProvider, FormFactory $formFactory) {
+    public function __construct(TranslatorInterface $trans, UserProvider $uProvider, $retryTtl) {
         $this->translator  = $trans;
         $this->user_provider = $uProvider;
-        $this->formFactory  = $formFactory;
+        $this->retryTtl     = $retryTtl;
     }
 
 
@@ -47,9 +47,15 @@ class ResettingController extends Controller
      */
     public function requestAction(Request $request)
     {
+        $invalid = $request->query->get('email');
+        return  $this->renderRequest($request, $invalid);
+    }
+
+
+    public function renderRequest($request, $invalid_email) {
         $session = $request->getSession();
         $description = 'reset your password';
-        return  $this->render(
+        return $this->render(
             'OPUserBundle:Resetting:index.html.twig', 
             [
                 'initialState'  => [
@@ -57,11 +63,13 @@ class ResettingController extends Controller
                         'sessionId' => $session->getId()
                     ],
                     'Resetting' => [
-                        'invalid_username' => false,
+                        'invalid_username' => $invalid_email,
                         'action' => 'api/resetting/send-email',
                         'trans' => [
                             'username' => $this->translator->trans('resetting.request.username', array(), 'OPUserBundle'),
-                            'submit' => $this->translator->trans('resetting.request.submit', array(), 'OPUserBundle')
+                            'submit' => $this->translator->trans('resetting.request.submit', array(), 'OPUserBundle'),
+                            //implode --> to string
+                            'invalid_username' => implode("|", $session->getFlashBag()->get('resetting'))
                         ]
                     ],
                 ],
@@ -70,45 +78,6 @@ class ResettingController extends Controller
                 'locale'      => $request->getLocale()
             ]
         );
-    }
-                    // 'invalid_username_trans' => $this->translator->trans('resetting.request.invalid_username', array("username" => null), 'OPUserBundle');
-        // resetting.request.submit
-        // $Check_trans = $this->translator->trans('resetting.check_email', array(), 'OPUserBundle')
-        // resetting.reset.submit
-
-    /**
-     * Request reset user password: submit form and send email
-     */
-    public function sendEmailAction(Request $request)
-    {
-        $username = $request->request->get('username');
-
-        /** @var $user UserInterface */
-        $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
-
-        if (null === $user) {
-            return $this->render('FOSUserBundle:Resetting:request.html.twig', array(
-                'invalid_username' => $username
-            ));
-        }
-
-        if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            return $this->render('FOSUserBundle:Resetting:passwordAlreadyRequested.html.twig');
-        }
-
-        if (null === $user->getConfirmationToken()) {
-            /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
-            $tokenGenerator = $this->get('fos_user.util.token_generator');
-            $user->setConfirmationToken($tokenGenerator->generateToken());
-        }
-
-        $this->get('fos_user.mailer')->sendResettingEmailMessage($user);
-        $user->setPasswordRequestedAt(new \DateTime());
-        $this->get('fos_user.user_manager')->updateUser($user);
-
-        return new RedirectResponse($this->generateUrl('fos_user_resetting_check_email',
-            array('email' => $this->getObfuscatedEmail($user))
-        ));
     }
 
     /**
@@ -120,12 +89,34 @@ class ResettingController extends Controller
 
         if (empty($email)) {
             // the user does not come from the sendEmail action
-            return new RedirectResponse($this->generateUrl('fos_user_resetting_request'));
+            return new RedirectResponse($this->generateUrl('op_user_resetting_request'));
         }
 
-        return $this->render('FOSUserBundle:Resetting:checkEmail.html.twig', array(
-            'email' => $email,
-        ));
+        return $this->render(
+            'OPUserBundle:Resetting:checkEmail.html.twig', 
+            [
+                'initialState'  => [
+                    'App'         => [
+                        'sessionId' => $request->getSession()->getId()
+                    ],
+                    'Resetting' => [
+                        'email' => $email,
+                        'trans' => [
+                            'check_email' => $this->translator->trans(
+                                'resetting.check_email', 
+                                array(
+                                    //'email' => $email, 
+                                    '%tokenLifetime%' => ceil($this->retryTtl / 3600)), 
+                                'OPUserBundle'
+                            )
+                        ]
+                    ],
+                ],
+                'title'       => 'Reset your password | check email',
+                'description' => "Reset password | check email", 
+                'locale'      => $request->getLocale()
+            ]
+        );
     }
 
     /**
@@ -133,52 +124,30 @@ class ResettingController extends Controller
      */
     public function resetAction(Request $request, $token)
     {
-        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
-        $formFactory = $this->get('fos_user.resetting.form.factory');
-        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-        $userManager = $this->get('fos_user.user_manager');
-        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
-        $dispatcher = $this->get('event_dispatcher');
-
-        $user = $userManager->findUserByConfirmationToken($token);
-
-        if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
-        }
-
-        $event = new GetResponseUserEvent($user, $request);
-        $dispatcher->dispatch(FOSUserEvents::RESETTING_RESET_INITIALIZE, $event);
-
-        if (null !== $event->getResponse()) {
-            return $event->getResponse();
-        }
-
-        $form = $formFactory->createForm();
-        $form->setData($user);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $event = new FormEvent($form, $request);
-            $dispatcher->dispatch(FOSUserEvents::RESETTING_RESET_SUCCESS, $event);
-
-            $userManager->updateUser($user);
-
-            if (null === $response = $event->getResponse()) {
-                ///////////////////////////////////////////////
-                $url = $this->generateUrl('fos_user_profile_show');
-                $response = new RedirectResponse($url);
-            }
-
-            $dispatcher->dispatch(FOSUserEvents::RESETTING_RESET_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
-
-            return $response;
-        }
-
-        return $this->render('FOSUserBundle:Resetting:reset.html.twig', array(
-            'token' => $token,
-            'form' => $form->createView(),
-        ));
+        $session = $request->getSession();
+        $description = 'reset your password';
+        return $this->render(
+            'OPUserBundle:Resetting:reset.html.twig', 
+            [
+                'initialState'  => [
+                    'App'         => [
+                        'sessionId' => $session->getId()
+                    ],
+                    'Resetting' => [
+                        'token' => $token,
+                        'action' => 'api/resetting/send-email',
+                        'trans' => [
+                            'submit' => $this->translator->trans('resetting.reset.submit', array(), 'OPUserBundle'),
+                            'new_password' => 'password',
+                            'new_password_confirmation' => 'confirm'
+                        ]
+                    ],
+                ],
+                'title'       => 'Reset your password',
+                'description' => $description, 
+                'locale'      => $request->getLocale()
+            ]
+        );
     }
 
     private function getTrans() {

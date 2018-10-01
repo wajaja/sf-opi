@@ -10,7 +10,6 @@ use FOS\UserBundle\FOSUserEvents,
     Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Component\HttpFoundation\JsonResponse,
     Symfony\Component\Routing\Generator\UrlGeneratorInterface,
-    Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
     Symfony\Component\DependencyInjection\ContainerInterface as Container,
     Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;

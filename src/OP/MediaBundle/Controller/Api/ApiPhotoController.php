@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\PostBundle\FormHandler\NewPostFormHandler,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
+    OP\MediaBundle\DataTransformer\ToArrayTransformer as Transformer,
     JMS\Serializer\SerializerInterface,
     OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
@@ -105,11 +106,10 @@ class ApiPhotoController extends FOSRestController implements ClassResourceInter
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If post doesn't exists
      */
-    public function loadAction(Request $request, $id)
+    public function loadAction(Request $request, $id, Transformer $transformer)
     {
         $res         = new JsonResponse();
         $dm          = $this->getDocumentManager();
-        $transformer = $this->get('op_media.to_array.transformer');
         $postId      = $request->query->get('post_id');
         $pic         = $dm->getRepository('OPMediaBundle:Image')->findPhotoById($id);
         if (!$pic) return;
@@ -117,6 +117,30 @@ class ApiPhotoController extends FOSRestController implements ClassResourceInter
         $post     = $this->getPostForPhoto($postId);
         return $res->setData(array('photo'=>$transformer->photoToArray($pic, $post)));
     }
+
+    /**
+     * Finds a Post post.
+     *
+     * @Get("/photos/zoom/{id}")
+     *
+     * @param string $id The post ID
+     * @param Request $request The request object
+     *
+     * @return object
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If post doesn't exists
+     */
+    public function zoomAction(Request $request, $id, Transformer $transformer)
+    {
+        $res   = new JsonResponse();
+        $dm    = $this->getDocumentManager();
+        $pic   = $dm->getRepository('OPMediaBundle:Image')->findPhotoById($id);
+        if (!$pic) 
+            return $res->setData(array('photo'=> null));
+
+        return $res->setData(array('photo'=> $transformer->photoToArray($pic, null)));
+    }
+
 
     protected function getPostForPhoto($id) {
         $dm       = $this->getDocumentManager();

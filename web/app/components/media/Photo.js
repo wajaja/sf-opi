@@ -1,6 +1,5 @@
 import React 			from 'react'
 import createReactClass from 'create-react-class'
-import { Link } 		from 'react-router-dom'
 import { connect } 		from 'react-redux'
 
 import { 
@@ -15,13 +14,7 @@ const Photo  = createReactClass({
 		}
 	},
 
-	onClick(e) {
-		// e.preventDefault();
-		const dispatch  = this.props;
-		this.setState({loading: true})
-	},
-
-	getPhoto(photo) {
+	getPhoto(photo, e) {
 		e.preventDefault();
 		// const { dispatch, postId, location : {pathname}, image: { id } } = this.props,
 		// loading 	= true,
@@ -29,16 +22,9 @@ const Photo  = createReactClass({
 		// query 		= { post_id: postId },
 		// status 		= {	modal: true, returnTo: pathname }
 
-		// dispatch(PhotoActions.load(id, postId))
-	},
-
-	componentDidUpdate(prevProps, prevState) {
-
-	},
-
-	shouldComponentUpdate(nextProps, nextState) {
-		return this.props.loading !== nextState.loading ||
-			this.props.image !== nextProps.image;
+		this.props.dispatch(PhotoActions.zoom(this.props.image.id))
+		this.setState({loading: true})
+		//this.props.getPhoto(photo);
 	},
 
 	render() {

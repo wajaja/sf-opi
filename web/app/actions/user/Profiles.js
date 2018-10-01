@@ -66,7 +66,7 @@ export function loadPhotos(username) {
                     console.log(res.data)
                     const { photos } = res.data;
                     dispatch(_loadPhotosResponse(username, photos));
-                    resolve(res.data)
+                    resolve(res.data.photos)
                 },
                 (error) => {
                     if(error.response) {

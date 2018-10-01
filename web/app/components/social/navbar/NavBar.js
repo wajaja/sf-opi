@@ -16,18 +16,13 @@ import { Search }                   from '../search'
 import '../../../styles/social/navbar.scss'
 
 
-const NavBar  = createReactClass( {
+const NavBar  = createReactClass({
 
 	imagePath : "/images/favicon.ico",
-
-    shouldComponentUpdate(nextProps) {
-        return this.props.postFormFocus !== nextProps.postFormFocus;
-    },
 
 	render() {
 		const { user } = this.props,
         modals = this.props.postFormFocus; // ||
-
 		return (
 			<nav  className={modals ? `navbar navbar-inverse navbar-fixed-top modal-open` : `navbar navbar-inverse navbar-fixed-top`}>
             	<div className="container">

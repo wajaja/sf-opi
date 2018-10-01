@@ -1,11 +1,13 @@
 import React from 'react';
+import createReactClass   from 'create-react-class'
+import PropTypes from 'prop-types';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
-    query: React.PropTypes.string.isRequired,
-    onSearch: React.PropTypes.func.isRequired,
-    onSearchReset: React.PropTypes.func.isRequired,
-    onQueryChange: React.PropTypes.func.isRequired
+    query: PropTypes.string.isRequired,
+    onSearch: PropTypes.func.isRequired,
+    onSearchReset: PropTypes.func.isRequired,
+    onQueryChange: PropTypes.func.isRequired
   },
 
   search(e) {

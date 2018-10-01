@@ -3,12 +3,7 @@ import createReactClass 	from 'create-react-class'
 import { Link } 			from 'react-router-dom'
 import { connect } 			from 'react-redux'
 import _ 					from 'lodash'
-import axios 				from 'axios'
-import { 
-	Photos as PhotosActions,
-	Photo as PhotoActions,
-    App as AppActions
-}                           from '../../actions'
+import { Photo as PhotoActions } from '../../actions'
 
 const Image  = createReactClass({
 

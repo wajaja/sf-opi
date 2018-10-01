@@ -4,6 +4,7 @@ export Image 			from './Image'
 export Picture 			from './Picture'
 export Video  			from './Video'
 export Videos 			from './Videos'
+export ZoomImage 		from './ZoomImage'
 export Cropper 			from './Cropper'
 export TaggableFaceImage, 
 { ListRect } 			from './TaggableFaceImage'

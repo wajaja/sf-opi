@@ -50,7 +50,7 @@ const Thread = createReactClass({
 	updateRecipients(recipients) {
 
 		//check if selected user has room in list
-		recipient = recipients.split(',')[0];
+		let recipient = recipients.split(',')[0];
 		let { list } = this.props,
 		_thread = list.filter((t, i) => {
 			let _p = t.otherParticipants.filter((p, i) => {
@@ -167,7 +167,7 @@ const Thread = createReactClass({
 		return new Promise((resolve, reject) => {
 			if(newThread) {
 				console.log(newThread)
-				if(!recipients || !recipients.length) {
+				if(!this.state.recipients || !this.state.recipients.length) {
 					this.setState({recipients_error: true})
 					reject();
 					return;
@@ -292,11 +292,8 @@ const Thread = createReactClass({
 	},
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return this.props.thread !== nextProps.thread ||
-			this.props.newThread !== nextProps.newThread ||
-			this.state.uniqueString !== nextState.uniqueString ||
-			this.state.messages !== nextState.messages || 
-			this.state.enterToSubmit !== nextState.enterToSubmit;
+		return this.props !== nextProps||
+			this.state !== nextState;
 	},
 
 	render() {
@@ -390,7 +387,7 @@ const Thread = createReactClass({
 	}
 })
 
-const mapStateToProps = (state, {thread_id, threads}) => {
+const mapStateToProps = (state, {thread_id, threads, location}) => {
 	return {
 		thread: getSelectedThread(threads, thread_id),
 		user: state.User.user

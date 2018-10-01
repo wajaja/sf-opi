@@ -108,8 +108,10 @@ const ThreadList = createReactClass({
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return (this.props.list !== nextProps.list || 
-				this.props.fetch_list !== nextProps.fetch_list ||
-				this.state.selected_thread_id !== nextState.selected_thread_id)
+			this.props.thread_id !== nextProps.thread_id ||
+			this.props.threads !== nextProps.threads ||
+			this.props.fetch_list !== nextProps.fetch_list ||
+			this.state.selected_thread_id !== nextState.selected_thread_id)
 	},
 
 	render() {

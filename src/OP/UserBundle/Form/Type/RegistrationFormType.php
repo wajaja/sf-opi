@@ -48,7 +48,7 @@ class RegistrationFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-         parent::configureOptions($resolver);
+        parent::configureOptions($resolver);
         $resolver->setDefaults(array(
             'csrf_protection' => false
         ));

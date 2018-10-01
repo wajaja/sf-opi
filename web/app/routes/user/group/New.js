@@ -6,6 +6,7 @@ import { fromJS, Map }      from 'immutable'
 import { Helmet }           from 'react-helmet'
 import { Link, withRouter } from 'react-router-dom'
 import { push } from 'react-router-redux';
+import { bindActionCreators } from 'redux'
 
 import Left                 from './Left'
 import Right                from './Right'
@@ -15,29 +16,15 @@ import {
 import { 
     Posts as PostsActions,
     Groups as GroupsActions 
-}                           from '../../../actions/post'
+}                           from '../../../actions'
 
 import { 
     GroupForm
 }                           from '../../../components'
 
-import { getUrlParameterByName } from '../../../utils/funcs'
+import MyLoadable    from '../../../components/MyLoadable'
+const HMember    = MyLoadable({loader: () => import('./components/HMember')})
 
-
-function handleSearchChange(dispatch, history, location) {
-    const pathname = location.pathname,
-    tag = getUrlParameterByName('tag', location.search) //['infos, photos, relations']
-
-    if(pathname.indexOf('/grouppic')) {
-        console.log('ProfilePic')
-    } else if(pathname.indexOf('/relations')) {
-        console.log('relations')
-    } else if(pathname.indexOf('/infos')) {
-        console.log('infos')
-    } else {
-        
-    }
-}
 
 const Head = (props) => {
     const { user } = props,
@@ -104,19 +91,10 @@ const New  = createReactClass( {
         this.setState({recipients})  //array of usernames
     },
 
-    componentWillMount() {
-        
-    },
-
     /**
      * componentDidMount
      */
     componentDidMount() {
-        this.setState({
-            screenWidth:  window.screen.width
-        })
-        findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll)
-
         // dispatch(PostsActions.load(user.id, postIds));   //redux saga
     },
 
@@ -124,8 +102,6 @@ const New  = createReactClass( {
      * componentWillUnmount
      */
     componentWillUnmount() {
-        window.clearRequestTimeout(this.$scroll);
-        findDOMNode(this._pageElm).removeEventListener('scroll', this.handleScroll)
     },
 
     componentWillReceiveProps(nextProps) {
@@ -145,60 +121,72 @@ const New  = createReactClass( {
     render() {
         const { 
             hasOwnDiary, screenWidth, 
-            loading 
+            loading, members 
         }                         = this.state,
         { dispatch, user, list }        = this.props
 
         /////////////////
         return (
-            <div className="hm-container group" ref={c => this._pageElm = c}>
+            <div className="hm-container group new">
                 <Helmet>
                     <title>Create Group</title>
                 </Helmet>
-                <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
+                <div className="hm_main_blk">
                     <div className="hm-main-blk-ctnr"> 
-                        <div className="hm-lft-dv">
-                            <div className="hm-frst-blk">
-                                <div className="hm-lft-dv">
+                        <div className="grp-lft-dv">
+                            <div className="grp-frst-blk">
+                                <div className="grp-frst-blk-a">
                                     <Left 
                                         {...this.props}
                                         user={user}
-                                        screenWidth={screenWidth}
+                                        group={{}}
                                         />                                
                                 </div>
                             </div>
                         </div>
-                        <div id="home-center-div" className="home-center-div central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
-                            <div  className="center-tp">
-                                <div  className="center-tp-a">
-                                    <Head 
-                                        {...this.props} 
-                                        />
+                        <div  className="cover_ctnr_0">
+                            <div className="pic-holder-ctnr">
+                                <div></div>
+                            </div>
+                            <GroupForm 
+                                {...this.props}
+                                onSubmit={this.handleGroupSubmit}
+                                updateRecipients={this.updateRecipients}
+                                user={user}
+                                />
+                            <div className="lft-dv-a">
+                                <div className="show-usr-plus-a">
+                                    <div className="show-usr-plus-intro">
+                                    </div>
+                                    <div className="show-usr-plus-pho">
+                                    </div>
+                                    <div className="show-usr-plus-ff">
+                                    </div>
                                 </div>
                             </div>
-                            <div  className="center-new-grp">
-                                <div  className="center-new-grp-a">
-                                    <GroupForm
-                                        {...this.props}
-                                        onSubmit={this.handleGroupSubmit}
-                                        updateRecipients={this.updateRecipients}
-                                        />
+                            <HMember
+                                {...this.props}
+                                members={this.state.recipients}
+                                />
+                            <div className="hm_main_blk">
+                                <div className="hm-main-blk-ctnr"> 
+                                    <div id="home-center-div" className="home-center-div central-border">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {screenWidth > 992 && 
-                    <div className="null">
-                        
-                    </div>
-                }
             </div>
         )
     }
 })
-
+/////
+function mapDispatchToProps(dispatch) {
+    return {
+        groupsActions: bindActionCreators(GroupsActions, dispatch),
+    }
+}
 
 //////
 export default  withRouter(connect(state =>({
@@ -206,4 +194,4 @@ export default  withRouter(connect(state =>({
     groups: state.Groups.groups,
     groupsList: state.Groups.list,
     groupForm: state.form.GroupForm,
-}))(New))
+}, mapDispatchToProps))(New))

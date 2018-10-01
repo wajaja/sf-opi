@@ -24,11 +24,13 @@ class PostManager extends BasePostManager
             $post = $dm->getRepository('OPPostBundle:Post')
                         ->findSimplePostById($post_id);
             //post not found or masked
-            if(!$post || in_array($user_id, $post['maskersForUserIds'])) {
+            if(!$post || in_array($user_id, $post['maskersForUserIds']) || 
+                $post['type'] === 'opinion'
+            ) {
                 continue;
             }
             else {             
-                $data = $post['type'] == 'opinion' ? $this->transformer->opinionToArray($post) :
+                $data = $post['type'] == 'opinion' ?  $this->transformer->opinionToArray($post) :
                                         $this->transformer->postToArray($post);
                 $data['verb'] = 'post';
                 $posts[] = $data;

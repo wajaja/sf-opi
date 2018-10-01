@@ -15,7 +15,9 @@ services:
 
     OP\MediaBundle\Controller\:
         resource: '../../src/OP/MediaBundle/Controller/*'
-        arguments: ['@OP\UserBundle\Security\UserProvider']
+        arguments: 
+            - '@OP\UserBundle\Security\UserProvider'
+            - '@doctrine.odm.mongodb.document_manager.public'
         # exclude: '../../src/OP/MediaBundle/Controller/{Api}'
 
     OP\MessageBundle\Controller\:
@@ -31,9 +33,28 @@ services:
     OP\UserBundle\Controller\RegistrationController:
         arguments: ['@translator', '@OP\UserBundle\Security\UserProvider', '@fos_user.registration.form.factory']
     OP\UserBundle\Controller\ResettingController:
-        arguments: ['@translator', '@OP\UserBundle\Security\UserProvider', '@fos_user.registration.form.factory']
+        arguments: 
+            - '@translator'
+            - '@OP\UserBundle\Security\UserProvider'
+            - '%fos_user.resetting.retry_ttl%'
     OP\UserBundle\Controller\ChangePasswordController:
         arguments: ['@translator', '@OP\UserBundle\Security\UserProvider', '@fos_user.registration.form.factory']
+    OP\UserBundle\Controller\Api\RegistrationController:
+        arguments: 
+            - '@OP\UserBundle\Security\UserProvider'
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@op_user.user_manager'
+            - '@OP\UserBundle\Controller\ResettingController'
+    OP\UserBundle\Controller\Api\ApiResettingController:
+        arguments: 
+            - '@OP\UserBundle\Security\UserProvider'
+            - '@doctrine.odm.mongodb.document_manager.public'
+            - '@op_user.user_manager'
+            - '@event_dispatcher'
+            - '@fos_user.util.token_generator'
+            - '@OP\UserBundle\Mailer\Mailer'
+            - '@fos_user.resetting.form.factory'
+            - '%fos_user.resetting.retry_ttl%'
     # OP\UserBundle\Controller\Api\:
     #     resource: '../../src/OP/UserBundle/Controller/Api/*'
         # exclude: '../../src/OP/UserBundle/Controller/{Api}'

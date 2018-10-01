@@ -66,7 +66,7 @@ const Post  = createReactClass( {
     },
 
     shouldComponentUpdate(nextProps, nextState) {
-    	return this.state !== nextState
+    	return this.state !== nextState || this.props !== nextProps
     },
 
 	render() {

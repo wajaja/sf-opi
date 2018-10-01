@@ -2,7 +2,7 @@ import { getPopularImages } from '../../routes/social/MeetYou/utils/unsplash';
 
 const images = getPopularImages();
 
-const initialState = {
+export const initialState = {
     filter: 'light_contrast',
     availableImages: [],
     selectedImage: null,
@@ -10,7 +10,6 @@ const initialState = {
     drawing: null,
     size: 'square',
     text: '“Others have seen what is and asked why. I have seen what could be and asked why not.”\n- Pablo Picasso',
-    textRect: [20, 20, 500 - 40, 500 - 40],
     textAttrs: {
         fontSize: 32,
         color: 'white',
@@ -23,7 +22,7 @@ const initialState = {
     editing: false
 };
 
-export default MeetYou(state = initialState, action) {
+function MeetYou(state = initialState, action) {
     let textAttrs;
     switch (action.type) {
         case 'SET_FONT':
@@ -69,3 +68,5 @@ export default MeetYou(state = initialState, action) {
             return state;
     }
 }
+
+export default MeetYou

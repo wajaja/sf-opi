@@ -46,7 +46,9 @@ class PlaceController extends Controller
      */
     public function indexAction(Request $request, ThreadManager $threadMan, MessageManager $msgMan, NotificationManager $notifMan, InvitationManager $invitMan, SerializerInterface $serializer)
     {
-        $documents = $this->getDocumentManager()->getRepository('OPSocialBundle:Place')->findAll();
+        $place = $request->query->get('q');
+        echo $place;
+        die();
         $session   = $request->getSession();
         if($token  = $session->get('access_token')) {
             $description    = 'Opinion Home page, news list';

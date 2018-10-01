@@ -99,12 +99,12 @@ class Search
             $this->setPage($request->query->get('page', 1));
             $this->setCriteria($request->query->get('criteria', 'all'));
             // $this->setInline($request->query->get('inline', true)); //load all types ??
-            $this->setQuery($request->query->get('q', ''));
+            $this->setQuery(urldecode($request->query->get('q', '')));
         } else {
             $this->setPage($request->get('page', 1));
             $this->setCriteria($request->get('criteria', 'all'));
             // $this->setInline($request->query->get('inline', true)); //load all types ??
-            $this->setQuery($request->get('q', ''));
+            $this->setQuery(urldecode($request->get('q', '')));
         }
     }
 
@@ -284,5 +284,27 @@ class Search
     public function getModifiedAt()
     {
         return $this->modifiedAt;
+    }
+
+    /**
+     * Set user
+     *
+     * @param OP\UserBundle\Document\User $user
+     * @return $this
+     */
+    public function setUser(\OP\UserBundle\Document\User $user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return OP\UserBundle\Document\User $user
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

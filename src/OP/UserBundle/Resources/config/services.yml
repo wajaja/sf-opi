@@ -244,3 +244,15 @@ services:
         tags:
             - { name: jms_serializer.event_subscriber }
     OP\UserBundle\Elastica\QuerySearch: ~
+    OP\UserBundle\Mailer\Mailer:
+        arguments:
+            - '@mailer'
+            - '@router'
+            - '@twig'
+            - 
+                template:
+                    confirmation: '%fos_user.registration.confirmation.template%'
+                    resetting: '%fos_user.resetting.email.template%'
+                from_email:
+                    confirmation: '%fos_user.registration.confirmation.from_email%'
+                    resetting: '%fos_user.resetting.email.from_email%'

@@ -1,5 +1,5 @@
-import {renderCanvasLayout} from 'utils/canvas';
-import {isInRect} from 'utils/pixels';
+import {renderCanvasLayout} from './canvas';
+import {isInRect} from './pixels';
 
 class CNode {
   constructor() {

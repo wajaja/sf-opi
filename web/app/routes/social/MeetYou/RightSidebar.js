@@ -1,12 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {setFilter, setFont, setFontSize, setColor, setBold, setItalic, setSize} from 'actions';
+import {
+    setFilter, setFont, setFontSize, 
+    setColor, setBold, setItalic, setSize
+}                   from '../../../actions/social/MeetYou';
 
 import Card from './components/Card';
 import FiltersPicker from './components/FiltersPicker';
 import TextPropertiesPicker from './components/TextPropertiesPicker';
 import SizePicker from './components/SizePicker';
 import DownloadButton from './components/DownloadButton';
+import Foot            from './Foot'
 
 const RightSidebar = ({ drawing, filter, onFilterChange, textAttrs, onFontChange, onFontSizeChange, onColorChange, onBoldChange, onItalicChange, size, onSizeSelect }) => {
     return <div className="Sidebar">
@@ -26,18 +30,17 @@ const RightSidebar = ({ drawing, filter, onFilterChange, textAttrs, onFontChange
                 onItalicChange={onItalicChange} />
         </Card>
         <DownloadButton drawing={drawing} />
-        <p className="Credit">
-            Made by <a href="http://goshakkk.name">Gosha Arinich</a>. <a href="https://github.com/goshakkk/pabla">Repo</a>.
-            Learn about rendering to canvas with React <a href="http://goshakkk.name/react-custom-renderers/">here</a>.
-        </p>
+        <div className="Credit">
+            <Foot />
+        </div>
     </div>;
 };
 
 const mapStateToProps = (state) => ({
-    textAttrs: state.textAttrs,
-    filter: state.filter,
-    size: state.size,
-    drawing: state.drawing
+    textAttrs: state.MeetYou.textAttrs,
+    filter: state.MeetYou.filter,
+    size: state.MeetYou.size,
+    drawing: state.MeetYou.drawing
 });
 
 const mapDispatchToProps = (dispatch) => ({

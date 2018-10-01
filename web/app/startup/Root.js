@@ -4,7 +4,7 @@ const Post  = require('./../routes/post/posts/Post').default,
 Video       = require('./../routes/media/videos/components/Video').default,
 Sound       = require('./../routes/media/sounds/Sound').default, 
 Home        = require('./../routes/social/Home/Home').default,
-// Pass        = require('./../routes/social/Pass/Pass').default,
+MeetYou     = require('./../routes/social/MeetYou/MeetYou').default,
 Welcome     = require('./../routes/social/Welcome/Welcome').default,
 Group       = require('./../routes/user/group/Group').default,
 Place       = require('./../routes/social/place/Place').default,
@@ -83,6 +83,11 @@ class Root extends React.PureComponent {
                 />
                 <Route path="/streams" children={() => 
                     <Sound 
+                        {...props}  
+                    />} 
+                />
+                <Route path="/meetyou" children={() => 
+                    <MeetYou 
                         {...props}  
                     />} 
                 />

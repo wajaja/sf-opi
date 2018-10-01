@@ -10,7 +10,7 @@ const Left = createReactClass({
 	render() {
 		const { dispatch, exception, history, screenWidth } = this.props
 		return(
-			<div id="social-block-left">
+			<div className="social-block-left">
 		        <div className="view-ctnr">
 		        	<NavLinks 
 		        		{...this.props}

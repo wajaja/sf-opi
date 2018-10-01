@@ -2,5 +2,5 @@
 
 {% block body %}
 {{ redux_store('opinionStore', initialState) }}
-{{ react_component('mainNode', {'rendering': 'server_side', 'trace': true}) }}
+{{ react_component('mainNode', {'rendering': 'client_side', 'trace': true}) }}
 {% endblock %}

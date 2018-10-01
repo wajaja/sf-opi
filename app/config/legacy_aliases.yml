@@ -67,6 +67,7 @@ services:
     op_user.user_serializer_subscriber: '@OP\UserBundle\Serializer\UserSerializerSubscriber'
     op_user.group_serializer_subscriber: '@OP\UserBundle\Serializer\GroupSerializerSubscriber'
     op_user.elastica.query_search: '@OP\UserBundle\Elastica\QuerySearch'
+    op_media.to_array.transformer: '@OP\MediaBundle\DataTransformer\ToArrayTransformer'
 
     # fos_user.user_manager.public:
     #     alias: fos_user.user_manager
@@ -83,3 +84,5 @@ services:
         alias: doctrine_mongodb.odm.default_document_manager
     FOS\UserBundle\Form\Factory\FormFactory:
         alias: fos_user.registration.form.factory
+    fos_user.mailer.twig_swift.public:
+        alias: fos_user.mailer.twig_swift

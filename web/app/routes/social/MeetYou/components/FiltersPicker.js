@@ -1,9 +1,11 @@
 import React from 'react';
+import createReactClass   from 'create-react-class'
+import PropTypes from 'prop-types';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
-    filter: React.PropTypes.oneOf(['none', 'light_contrast', 'heavy_contrast', 'light_blur', 'heavy_blur']).isRequired,
-    onFilterChange: React.PropTypes.func.isRequired
+    filter: PropTypes.oneOf(['none', 'light_contrast', 'heavy_contrast', 'light_blur', 'heavy_blur']).isRequired,
+    onFilterChange: PropTypes.func.isRequired
   },
 
   updateFilter() {

@@ -8,15 +8,19 @@ use OP\MediaBundle\Document\Image,
     OP\PostBundle\Document\Comment,
     OP\PostBundle\Form\CommentType,
     OP\UserBundle\Security\UserProvider,
+    JMS\Serializer\SerializerInterface,
+    OP\UserBundle\DocumentManager\InvitationManager,
     Symfony\Component\HttpFoundation\Request,
     OP\MessageBundle\DocumentManager\ThreadManager,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\MessageBundle\DocumentManager\MessageManager,
+    OP\MediaBundle\DataTransformer\ToArrayTransformer,
     OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+     Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Image controller.
@@ -31,23 +35,6 @@ class ImageController extends Controller
     public function __construct(UserProvider $uProvider, \Doctrine\ODM\MongoDB\DocumentManager $dm) {
         $this->dm           = $dm;
         $this->user_provider = $uProvider;
-    }
-    
-    /**
-     * Lists all Image documents.
-     *
-     * @Route("/", name="image")
-     * @Template()
-     *
-     * @return array
-     */
-    public function indexAction()
-    {
-        $dm = $this->getDocumentManager();
-
-        $documents = $dm->getRepository('OPMediaBundle:Image')->findAll();
-
-        return array('documents' => $documents);
     }
 
     /**
@@ -64,21 +51,21 @@ class ImageController extends Controller
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If post doesn't exists
      */
-    public function showAction(Request $request, $id, ThreadManager $threadMan, MessageManager $messMan, NotificationManager $notifMan)
+    public function showAction(Request $request, $id, ThreadManager $threadMan, MessageManager $messMan, NotificationManager $notifMan, InvitationManager $invit_man, SerializerInterface $serializer,
+        ToArrayTransformer $transformer)
     {
         $session  = $request->getSession();
         if($token = $session->get('access_token')) {
             $photos     = [];
-            $serializer = $this->get('jms_serializer');
             $user       = $this->_getUser();
             $postId     = $request->query->get('post_id');
-            $invit_man  = $this->get('op_user.invitation_manager');
             $dm         = $this->getDocumentManager();
-            $data       = $dm->getRepository('OPMediaBundle:Image')->findPhotoById($id);
-            if ($data) {
-                $transformer = $this->get('op_media.to_array.transformer');
-                $post        = $this->getPostForPhoto($postId);
+
+            $pic         = $dm->getRepository('OPMediaBundle:Image')->findPhotoById($id);
+            if (!$pic) {
+                throw new NotFoundHttpException("Image not found", null);
             }
+            $post     = $this->getPostForPhoto($postId);
 
             $photo = $transformer->photoToArray($pic, $post);
             $photos[] = $photo;
@@ -105,11 +92,10 @@ class ImageController extends Controller
                         'nbAlerts'  => $notifMan->countAlerts($user),
                     ],
                     'Invitation'   => [
-                        'nbAlerts'  =>  $this->get('op_user.invitation_manager')
-                                             ->countAlerts($user),
+                        'nbAlerts'  =>  $invit_man->countAlerts($user),
                     ],
                     'Message'      => [
-                        'nbAlerts'  =>  $messMessage->countAlerts($user),
+                        'nbAlerts'  =>  $messMan->countAlerts($user),
                         'threadsIds' => $threadMan->findParticipantInboxThreadsIds($user)
                     ],
                     'Users'        => [

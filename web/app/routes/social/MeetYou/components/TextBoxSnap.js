@@ -1,16 +1,18 @@
 import React from 'react';
+import createReactClass   from 'create-react-class'
+import PropTypes from 'prop-types';
 import {CanvasRect} from './Canvas';
-import {shrinkRect} from 'utils/pixels';
+import {shrinkRect} from '../utils/pixels';
 
 const MIN_TEXT_WIDTH = 100;
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
-    frame: React.PropTypes.array.isRequired,
-    textRect: React.PropTypes.array.isRequired,
-    color: React.PropTypes.string.isRequired,
-    direction: React.PropTypes.oneOf(['left', 'right']),
-    onMove: React.PropTypes.func.isRequired
+    frame: PropTypes.array.isRequired,
+    textRect: PropTypes.array.isRequired,
+    color: PropTypes.string.isRequired,
+    direction: PropTypes.oneOf(['left', 'right']),
+    onMove: PropTypes.func.isRequired
   },
 
   handleResizeStart(e, mousePos) {

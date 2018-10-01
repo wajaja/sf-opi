@@ -26,27 +26,6 @@ import '../../../styles/social/search.scss'
 // } from 'actions'
 
 /**
- * handleRouteChange
- * @param dispatch
- * @param history
- * @param location
- */
-function handleSearchChange(dispatch, history, location) {
-    const pathname = location.pathname,
-    tag = getUrlParameterByName('tag', location.search) //['infos, photos, relations']
-
-    if(pathname.indexOf('/grouppic')) {
-        console.log('ProfilePic')
-    } else if(pathname.indexOf('/relations')) {
-        console.log('relations')
-    } else if(pathname.indexOf('/infos')) {
-        console.log('infos')
-    } else {
-        
-    }
-}
-
-/**
  * Home
  * '/'
  * React Route - Documentation: https://github.com/reactjs/react-router/tree/master/docs
@@ -125,26 +104,6 @@ const Search  = createReactClass({
 
     // }
 
-    /**
-     * handleScroll
-     * @param e event
-     */
-    handleScroll(e) {
-
-        if (this.$scroll) window.clearRequestTimeout(this.$scroll)
-
-        this.$scroll = window.requestTimeout(() => {
-
-            const d = findDOMNode(this._pageElm)
-            const threshold = (d.offsetHeight / 2)
-
-            if ((d.scrollTop + d.offsetHeight) >= (d.scrollHeight - threshold)) {
-                this.props.onFetch()
-            }
-
-        }, 25)
-    },
-
     componentWillMount() {
         // this.screenWidth =  window.screen.width
         //far make more operations for newsRefs
@@ -203,30 +162,26 @@ const Search  = createReactClass({
      */
     render() {
 
-        const { dispatch, user, location }      = this.props,
+        const { dispatch, user, location, q, tag }      = this.props,
         { hasOwnDiary, screenWidth, newsRefs }  = this.state,
-        userId                        = user.id,
-        q = getUrlParameterByName('q', location.search),
-        tag = getUrlParameterByName('tag', location.search)
+        userId                        = user.id
         return (
-            <div className="hm-container search" ref={c => this._pageElm = c}>
+            <div className="hm-container search">
                 <Helmet>
                     <title>{`Search . ${q}`}</title>
                 </Helmet>
                 <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
                     <div className="hm-main-blk-ctnr">
-                        <div id="hm_lft_dv" className="hm-lft-dv">
-                            {screenWidth > 760 && 
-                                <div id="hm_frst_blk" className="hm-frst-blk">
-                                    <div className="hm-frst-blk-a">
-                                        <Left 
-                                            {...this.props}
-                                            q={q}
-                                            screenWidth={screenWidth}
-                                            />                                
-                                    </div>
+                        <div id="hm_lft_dv" className="hm-lft-dv"> 
+                            <div id="hm_frst_blk" className="hm-frst-blk">
+                                <div className="hm-frst-blk-a">
+                                    <Left 
+                                        q={q}
+                                        tag={tag}
+                                        {...this.props}
+                                        />                                
                                 </div>
-                            }
+                            </div>
                         </div>
                         <div className="home-center-div central-border">
                             <Center 
@@ -263,9 +218,13 @@ const Search  = createReactClass({
     }
 })
 
-const mapStateToProps = (state, { }) => {
-    const search = state.Search;
+const mapStateToProps = (state, { location }) => {
+    const search = state.Search,
+    q = getUrlParameterByName('q', location.search),
+    tag = getUrlParameterByName('tag', location.search)
     return {
+        q: q,
+        tag: tag,
         user:  state.User.user,
         search: search,
         postIds:  state.Posts.postIds,

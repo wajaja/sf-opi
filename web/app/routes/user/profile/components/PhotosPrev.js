@@ -36,7 +36,7 @@ const PhotosPrev = createReactClass({
 			    </div>
 			    <div id="usr-sml-pics-ctnr" className="usr-sml-pics-ctnr">
 			        <div className="usr-sml-pics-ctnr-a">
-				        {photos && photos.map(function(photo, i) {
+				        {!!photos && photos.map(function(photo, i) {
 				        	return(
 			                    <div className="sml-pic-ctnr" key={i}>
 			                        <div className="sml-pic-ctnr-a">
@@ -52,6 +52,13 @@ const PhotosPrev = createReactClass({
 					            </div>
 				        	)
 				        })}
+				        {!photos && 
+		                    <div className="sml-pic-ctnr">
+		                        <div className="sml-pic-ctnr-a">
+		                        	No Pictures
+		                        </div>
+				            </div>
+				        }
 				    </div>
 			    </div>
 			</div>

@@ -182,6 +182,9 @@ const Inbox = createReactClass({
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return (this.props.threads !== nextProps.threads ||
+				this.props.list !== nextProps.list  || 
+				this.state.thread_id !== nextState.thread_id ||
+				this.props.location !== nextProps.location ||
 				this.state.loading_thread !== nextState.loading_thread)
 	},
 
@@ -198,7 +201,7 @@ const Inbox = createReactClass({
                 <div id="hm_main_blk" className="hm-main-blk">
                     <div className="hm-main-blk-ctnr"> 
                     	<div id="hm_lft_dv" className="hm-lft-dv">
-                            <div id="hm_frst_blk" className="hm-frst-blk">
+                            <div className="hm-frst-blk">
                                 <div className="hm-frst-blk-a" >
                                     <Left 
                                         {...this.props}

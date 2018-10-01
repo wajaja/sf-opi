@@ -3,8 +3,7 @@ import { findDOMNode } 		from 'react-dom'
 import createReactClass 	from 'create-react-class'
 import { connect } 			from 'react-redux'
 import { Helmet }           from 'react-helmet'
-import { Link, withRouter, 
-        Switch, Route } from 'react-router-dom'
+import { withRouter }       from 'react-router-dom'
 import { push } from 'react-router-redux';
 
 import {
@@ -47,6 +46,14 @@ const Basic  = createReactClass( {
 		}
 	},
 
+    scrollToTop() {
+        findDOMNode(this).scrollTop = 0
+    },
+
+    scrollToBottom() {
+        this.postEnd.scrollIntoView({ behavior: "smooth" });
+    },
+
     /**
      * handleScroll
      * @param e event
@@ -66,7 +73,7 @@ const Basic  = createReactClass( {
         this.setState({
             screenWidth:  window.screen.width
         })
-        findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll)
+        //findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll)
     },
 
     /**
@@ -120,6 +127,9 @@ const Basic  = createReactClass( {
                                         post={post} 
                                         />
                                 </div>
+                                <div style={{ float:"left", clear: "both" }}
+                                     ref={(el) => { this.postEnd = el; }}>
+                                </div>
                             </div>
                         </div>
                         <div className="rght-dv-abs">
@@ -134,10 +144,6 @@ const Basic  = createReactClass( {
                         </div>
                     </div>
                 </div>
-                <Switch>
-                    <Route path="/videos/" children={() => <Video {...props} />} />                  
-                    <Route path="/pictures/:id" children={() => <Picture {...props} />} />
-                </Switch>
             </div>
 		)
 	}

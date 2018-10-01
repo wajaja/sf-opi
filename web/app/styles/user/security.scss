@@ -23,6 +23,9 @@
         color: #fdf4f4;
         font-size: 12px;
         display: inline-block;
+        a{
+            color: #fcfcfc;
+        }
     }
 }
 .nav-sign-in-ip-d::last-child {
@@ -63,6 +66,7 @@
 }
 .nav-fS-in{
     position: relative;
+    height: 100%;
 }
 .f-lgin-inpts{
     display: inline-block;
@@ -235,10 +239,11 @@
     .go-regiter-btn{
         margin-top: 20px;
         width: 300px;
-        background-color: #0294a5;
-        padding: 8px;
-        border: 1px solid #098590;
         a{
+            width: 100%;
+            background-color: #0294a5;
+            padding: 8px;
+            border: 1px solid #098590;
             font-size: 14px !important;
         }
     }

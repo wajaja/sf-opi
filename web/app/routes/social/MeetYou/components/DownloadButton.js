@@ -1,8 +1,10 @@
 import React from 'react';
+import createReactClass from 'create-react-class'
+import PropTypes from 'prop-types';
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
-    drawing: React.PropTypes.string
+    drawing: PropTypes.string
   },
 
   handleDownload(e) {

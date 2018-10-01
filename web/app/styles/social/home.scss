@@ -23,11 +23,17 @@
 .hm-container{
     display: flex;
     width: 100%;
+    &.group{
+       
+    }
+    &.search{
+
+    }
     #hm_frst_blk {
         width: 272px;
         z-index: 22;
         position: fixed;
-        left: 8px;
+        left: 10px;
         top: 61px;
         padding: unset;
         height: calc(100vh - 424px);
@@ -37,6 +43,12 @@
     }
 
     &.profile {
+        .lft-dv-a{
+            flex: auto;
+            width: 280px;
+            position: relative;
+            margin-top: 5px;
+        }
         #hm_frst_blk {
             width: 280px;
             top: auto !important;
@@ -53,17 +65,18 @@
     }
 
     &.inbox {
-        #hm_frst_blk {
-            width: 320px;
-            height: 100vh;
+        .hm-frst-blk {
+            height: 100%;
             padding: 0;
-            left: unset !important;
-            position: relative;
+            left: unset;
+            z-index: 10;
             top: 0;
+            position: relative;
             .hm-frst-blk-a{
                 height: 100%;
                 background: #ffffff;
-                
+                border: 1px solid #cad3d8;
+                border-radius: 6px;
             }
         }
 
@@ -159,7 +172,8 @@
             height: 100% !important;
         }
         .hm-main-blk-ctnr{
-            /*display: flex; /*important*/
+            position: relative;
+            display: flex; /*important*/
         }
         .lft-dv{
             width: 240px !important;
@@ -173,23 +187,26 @@
             position: fixed;
             left: 0;
             right: 0;
-            top: 38px;
-            width: 920px;
+            top: 50px;
+            width: 960px;
             margin-right: auto;
             margin-left: auto;
             float: unset;
+            height: calc(100vh - 70px);
         }
         .hm-lft-dv{
             display: inline-block;
-            width: 320px !important;
+            width: 350px !important;
             height: 100% !important;
-            /*left: -320px !important;*/
+            flex: auto;
+            margin-right: 12px;
         }
         .hm-frst-blk{
 
         }
         .hm-main-blk-ctnr{
-            /*display: flex; /*important*/
+            display: flex;
+            height: 100%;
         }
         .lft-dv{
             width: 240px !important;
@@ -237,6 +254,10 @@
     /*Profile style*/
     .profile{
         display: inline-block;
+        .lft-dv-a{
+            flex: auto;
+            width: 280px;
+        }
         .hm-lft-dv{
             position: absolute !important;
             width: 280px !important;

@@ -1,6 +1,6 @@
 export { TimeAgo, TimeOut, BuildContent, 
 	FlashMessage, BuildHtmlString,
-	ErrorStack } from './commons'
+	ErrorStack, BuildTextArr } from './commons'
 export { Center, NewsFeed, PostForm,
 		 PostGallery, SelectType, Contributors,
 		 ContentEditable, SelectRecipient, 

@@ -44,7 +44,6 @@ class SearchController extends Controller
         if($token = $session->get('access_token')) {
             $serializer = $this->get('jms_serializer');
             $user       = $this->_getUser();
-            $datas      = $this->get('fos_user.group_manager')->findGroups();
 
             return $this->render('OPSocialBundle:Search:index.html.twig', [
                 // We pass an array as props

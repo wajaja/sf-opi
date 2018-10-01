@@ -3,8 +3,9 @@
 	width: 100%;
 	position: relative;
 	.cter-dv{
-		width: 480px;
-		display: inline-block;
+	    width: 500px;
+	    display: inline-block;
+	    margin-left: 12px;
 		.center-bd{
 			display: block;
 			.center-bd-a{
@@ -20,12 +21,14 @@
 		color: #0f5b9c;
     	font-size: 14px;
 	}
+	.rght-pst-dv-aut{
+	    margin-left: 10px;
+	}
 	.postContent{
-		color: rgba(84, 93, 109, 0.8);
-    	font-size: 13px;
-    	font-family: Helvetica, Arial, sans-serif;
-    	font-weight: 600;
-    	text-shadow: 1px 1px 2px #f9f9f9;
+	    color: rgba(15, 16, 16, 0.8);
+	    font-size: 15px;
+	    font-family: Helvetica, Arial, sans-serif;
+        margin: 0px 0 5px;
 	}
 	.react-fine-uploader-file-input-container{
 		margin-right: 5px;
@@ -40,10 +43,19 @@
 	    position: absolute;
 	    right: 69px;
 	    top: -13px;
-	    width: 400px;
-	    min-height: 100vh;
-	    background: #f7f7f7;
-	    padding: 4px;
-	    border: 1px solid #bfc6d4;
+	    min-width: 200px;
+	    height: 100vh;
+	    .psts-top-a, .psts-top-b{
+	    	position: relative;
+	    	height: 100%;
+	    }
+	    .scr-btm{
+    	    position: absolute;
+    		bottom: 100px;
+	    }
+	    .scr-tp{
+    	    position: absolute;
+    		bottom: 50px;
+	    }
 	}
 }

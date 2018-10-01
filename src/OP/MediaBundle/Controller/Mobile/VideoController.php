@@ -38,7 +38,7 @@ class VideoController extends Controller
     /**
      * Lists all Image documents.
      *
-     * @Route("/", name="mobile_videos_list", host="m.opinion.com")
+     * @Route("/", name="m_videos_list", host="m.opinion.com")
      * @Template()
      *
      * @return array
@@ -104,7 +104,7 @@ class VideoController extends Controller
     /**
      * Finds and displays a Post post.
      *
-     * @Route("/{id}", name="picture_show")
+     * @Route("/{id}", name="m_video_show", host="m.opinion.com")
      * @Method("GET")
      * @Template()
      *

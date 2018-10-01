@@ -99,14 +99,15 @@ class UserSerializerSubscriber implements EventSubscriberInterface
     }
 
     protected function getLastActivity($user) {
+        $dateNow = new \Datetime(null, new \DateTimeZone("UTC"));
         try {
             $last = $user->getLastActivity() ? $user->getLastActivity() : $user->getLastLogin();
         } catch (Exception $e) {
             //catch if lastActivité come from seialized data in redis
             //then renew value
-             $last = new \Datetime(null, new \DateTimeZone("UTC"));
+             $last = $dateNow;
         }
-        return $last->getTimestamp();
+        return $last ? $last->getTimestamp() : $dateNow->getTimestamp();
     }
 
     protected function getThreadId($id1, $id2) {

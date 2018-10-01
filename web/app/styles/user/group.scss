@@ -1,21 +1,88 @@
 .hm-container.group {
+    &.new{
+    }
     .hm-main-blk-ctnr{
         /*width: 700px;
         min-height: 100px;*/
+    }
+    .grp-form{
+        border: unset!important;
+    }
+    .grp-form-btm{
+        position: absolute!important;
+    }
+    .hm_main_blk{
+        padding: 0px 10px;
     }
     #hm_main_blk{
         margin-top: 0px;
     }
     .grp-lft-dv{
-        width: 280px;
-        min-height: 100vh;
-        position: fixed;
-        left: 0;
+        /* width: 280px;
+        min-height: 100vh; */
+        /* position: fixed; */
+        /* left: 0;
         top: 59px;
+        z-index: 5; */
         /*background: #dee4e7;*/
         /*border-right: 1px solid #c2c5c5;*/
     }
-
+    .cover_ctnr_0{
+        left: 0px!important;
+        margin-top: 10px;
+        border: 1px solid #c8d3de;
+        padding: 7px;
+        background: #f1f2f3;
+        /* width: 100% !important;*/
+        .grp-top-lft{
+            display: flex;
+            flex: auto;
+            width: 840px;
+        }
+        .grp-blc-lft-a{
+            flex: auto;
+        }
+        .grp-top-content{
+            width: 500px;
+            flex: auto;
+            background: #fff;
+            margin: 2px 15px;
+            padding: 0px;
+            border: 1px solid #d0dce8;
+            border-radius: 4px;
+        }
+        .lft-dv{
+            flex: auto;
+        }
+    }
+    .grp-top-a{
+        display: inline-block;
+    }
+    .HMember-ctnr{
+        width: 1080px;
+        display: inline-block;
+        margin: 5px 0px 0px;
+        .sml-dv-usr-ctnr{
+            width: unset;
+            height: unset;
+            border: unset;
+            margin: 0 2px;
+        }
+        .sml-usr-lk{
+            border: 1px solid #d0dce8;
+            display: block;
+        }
+        .sml-usr-prof-pic{
+            width: 40px;
+            height: 40px;
+        }
+        .HMember-ctnr-a{
+            /*padding: 3px 0;*/
+            /* background: #fff; */
+            /* height: 50px; */
+            display: inline-block;
+        }
+    }
     .center-tp{
         position: relative;
         background: #ffffff;
@@ -25,7 +92,8 @@
         /*border: 1px solid #c5c8cc*/
     }
     .home-center-div{
-        width: 500px;
+        width: 516px;
+        margin-left: 280px;
     }
     .center-bd-empt-lst{
         width: 100%;
@@ -62,9 +130,14 @@
             font-size: 17px;
             font-weight: 600;
         }
+        .grp-intro-ul{
+            padding: 0px;
+        }
     }
     .grp-intro-about-ctnr{
-        margin-top: 10px;
+        position: relative;
+        padding: 0px 1px 0px 15px;
+        top: 15px;
     }
     .grp-intro-cont{
         font-size: 12px;
@@ -72,7 +145,7 @@
         margin-top: 10px;
     }
     .grp-intro-hd{
-        text-align: center;
+        padding: 0px;
     }
     .pic-grp-list{
         width: 50px;

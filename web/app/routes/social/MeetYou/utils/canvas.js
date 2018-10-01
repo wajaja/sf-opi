@@ -1,5 +1,5 @@
-import {addText} from 'utils/text';
-import {centerCrop} from 'utils/pixels';
+import {addText} from './text';
+import {centerCrop} from './pixels';
 import StackBlur from 'stackblur-canvas';
 
 const canvasComponents = {

@@ -17,7 +17,7 @@ const LoginForm  = createReactClass({
 
 	getInitialState() {
 		return {
-			identifier : "",
+			username : "",
 			password   : "",
 			errors	   : {},
 			isLoading  : false 
@@ -43,22 +43,25 @@ const LoginForm  = createReactClass({
 	onSubmit(e) {
 	    if (!this.isValid()) {
 	    	e.preventDefault();
-	      	this.setState({ errors: {}, isLoading: true });
-	      	this.props.login(this.state).then(
-	        	(res) => this.context.router.push('/'),
-	        	(err) => this.setState({ errors: err.response.data.errors, isLoading: false })
-	      );
+	      // 	this.setState({ errors: {}, isLoading: true });
+	      // 	this.props.login(this.state).then(
+	      //   	(res) => this.context.router.push('/'),
+	      //   	(err) => this.setState({ errors: err.response.data.errors, isLoading: false })
+	      // );
 	    }
 	},
 
 	render() {
-		const {identifier, password, errors, isLoading } = this.state,
+		const {identifier, password, errors, isLoading, username } = this.state,
 		{ hasPreviousSession, action, server_error } = this.props.loginData
 		return (
 			<div className="frm-lgn-dv-ctnr">
 				{!!server_error && <div className="s-error">{server_error.messageDatq}</div>}
                 <div className="frm-msg-ttl">Login</div>
-				<form action={`${BASE_PATH}/${action}`} method="post" className="frm-lgn-tag" onSubmit={this.onSubmit}>
+				<form 
+					action={`${BASE_PATH}/${action}`} 
+					method="post" className="frm-lgn-tag" 
+					onSubmit={this.onSubmit}>
 					<div className="form-group">
 		                <TextFielGroup
 		                	field="username"
@@ -66,8 +69,9 @@ const LoginForm  = createReactClass({
 		                	label=""
 		                	hasPreviousSession
                         	wrapClassName=""
-		                	value={identifier}
-		                	error={errors.identifier}
+		                	placeholder="email or username"
+		                	value={username}
+                        	error={errors.username}
 		                	onChange={this.onChange}
 		                />
 		            </div>
@@ -94,9 +98,9 @@ const LoginForm  = createReactClass({
 				    </div>
 	            </form>
 		        <div className="lgn-dv-g-rgstr-ctnr">
-		        	<button className="btn go-regiter-btn" disabled={isLoading} >
+		        	<div className="btn go-regiter-btn">
 		            	<a href="http://opinion.com/app_dev.php/signup" className="go-regiter">Sign Up</a>
-		            </button>
+		            </div>
 		        </div>
 	        </div>
 		)

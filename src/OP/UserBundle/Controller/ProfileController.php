@@ -7,7 +7,6 @@ use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Model\UserInterface,
     OP\UserBundle\Document\User,
     OP\UserBundle\Security\UserProvider,
-    OP\SocialBundle\SeveralClass\ReactJS,
     Symfony\Component\HttpFoundation\Request,
     FOS\UserBundle\Event\GetResponseUserEvent,
     OP\UserBundle\Repository\OpinionUserManager,
@@ -17,10 +16,12 @@ use FOS\UserBundle\FOSUserEvents,
     OP\MessageBundle\DocumentManager\ThreadManager,
     OP\MessageBundle\DocumentManager\MessageManager,
     OP\PostBundle\DocumentManager\PostManager,
+    JMS\Serializer\SerializerInterface,
     Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\StreamedResponse,
     OP\UserBundle\DocumentManager\InvitationManager,
+    OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -42,25 +43,23 @@ class ProfileController extends Controller
     /**
      * Show the user
      */
-    public function showAction(Request $request, PictureManager $imageMan, MessageManager $msgMan, ThreadManager $threadMan, PostManager $pMan, InvitationManager $invitMan)
+    public function showAction(Request $request, PictureManager $imageMan, MessageManager $msgMan, ThreadManager $threadMan, PostManager $pMan, InvitationManager $invitMan, SerializerInterface $serializer, OpinionUserManager $userMan, NotificationManager $notiMan)
     {
 
-        $profiles   = [];
         $session    = $request->getSession();
         if($token = $session->get('access_token')) {
-            $serializer = $this->get('jms_serializer');
             $user       = $this->_getUser();
             $referer    = $request->headers->get('referer');
             $username   = str_replace('/', '', $request->getPathInfo());
-            $profile    = $this->get('fos_user.user_manager')->findUserByUsername($username);
+            $profile    = $userMan->findUserByUsername($username);
             $utcDate    = new \Datetime(null, new \DateTimeZone("UTC"));
             // $postsData  = $this->loadInitialPosts($profile, 1, $utcDate);
             
-            if (!is_object($profile) || !$profile instanceof UserInterface) {
-                throw new AccessDeniedException('This user does not have access to this section.');
-            }
+            // if (!is_object($profile) || !$profile instanceof UserInterface) {
+            //     throw new AccessDeniedException('This user does not have access to this section.');
+            // }
 
-            $profiles[]     = $profile;
+            $firstname = $profile ? $profile->getFirstname() : 'User Not Found';
 
             return $this->render('OPUserBundle:Profile:profile.html.twig', [
                 // We pass an array as props
@@ -78,14 +77,14 @@ class ProfileController extends Controller
                     'Profiles' => [
                         'users'   => [
                             $username => [
-                                'user'      => $serializer->toArray($profile),
-                                'newsRefs'  => [], //$postsData['newsRefs'],
-                                'photos'    => $imageMan->loadProfileImages($profile, [], 9) //user, initIds, limit
+                                'user'    => $profile ? $serializer->toArray($profile) : null,
+                                'newsRefs'=> [], //$postsData['newsRefs'],
+                                'photos'  => $profile ? $imageMan->loadProfileImages($profile, [], 9) : [] //user, initIds, limit
                             ]
                         ]
                     ],
                     'Notification' => [
-                        'nbAlerts'  => $notiMan>countAlerts($user),
+                        'nbAlerts'  => $notiMan->countAlerts($user),
                     ],
                     'Invitation'   => [
                         'nbAlerts'  =>  $invitMan->countAlerts($user),
@@ -106,7 +105,7 @@ class ProfileController extends Controller
                     // ],
                     'Invitation'    => [],
                 ],
-                'title'         => "{$profile->getFirstname()}",
+                'title'         => "{$firstname}",
                 'description'   => $this->getProfileDescription($profile), 
                 'locale'        => $request->getLocale(),
             ]);

@@ -17,7 +17,8 @@ use Symfony\Component\HttpFoundation\{
 };
 use Symfony\Component\HttpKernel\{
     Event\GetResponseForExceptionEvent, Event\FilterResponseEvent, Event\FilterControllerEvent, 
-    Event\GetResponseEvent, HttpKernel, Exception\NotFoundHttpException, Controller\ControllerResolver
+    Event\GetResponseEvent, HttpKernel, Exception\NotFoundHttpException, Controller\ControllerResolver,
+    Exception\MethodNotAllowedHttpException
 };
 use Symfony\Component\Security\Core\Authentication\Token\{
     UsernamePasswordToken, Storage\TokenStorage
@@ -89,7 +90,7 @@ class ActivityListener
         }
 
 
-        $anonPaths  = ['/signup', '/login', '/', '/initialize/password'];
+        $anonPaths  = ['/signup', '/login', '/', '/initialize/password', '/meetyou'];
         $pathInfo   = $request->getPathInfo();
         $host       = $request->getHost();
 
@@ -127,7 +128,7 @@ class ActivityListener
         
         $request    = $event->getRequest();
         $session    = $request->getSession();
-        $anonPaths  = ['/signup', '/login', '/', '/initialize/password'];
+        $anonPaths  = ['/signup', '/login', '/', '/initialize/password', '/meetyou'];
         $pathInfo   = $request->getPathInfo();
         $host       = $request->getHost();
 
@@ -205,7 +206,8 @@ class ActivityListener
 
         //Customize html page render exception
         if('html' === $request->getRequestFormat()) {
-            if($exception instanceof NotFoundHttpException) {
+            if($exception instanceof NotFoundHttpException || 
+               (/*environement*/ false && $exception instanceof MethodNotAllowedHttpException)) {
                 $this->renderException($event, $msg, 'route');
             } 
             else if($exception instanceof UnexpectedTypeException) {
@@ -384,6 +386,7 @@ class ActivityListener
                     ],
                     'Auth'         => [
                         'token'    => $token,
+                        'data'      => $session->get('_authData')
                     ],
                     'App' => [
                         'sessionId' => $session->getId()

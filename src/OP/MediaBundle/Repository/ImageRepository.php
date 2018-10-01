@@ -53,6 +53,7 @@ class ImageRepository extends DocumentRepository
             //or identifyd by......
             // ->field('published')->equals(true)
             ->sort('createdAt', 'DESC')
+            ->field('directory')->equals('gallerypost')
             ->select('id', 'path', 'directory')
             ->hydrate(false)
             ->limit($limit);

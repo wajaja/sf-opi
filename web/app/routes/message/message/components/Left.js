@@ -1,6 +1,7 @@
 import React 				from 'react'
 import createReactClass 	from 'create-react-class'
 import ThreadList 			from './ThreadList'
+import { connect } 			from 'react-redux'
 
 
 const Left = createReactClass({
@@ -43,5 +44,9 @@ const Left = createReactClass({
 	}
 })
 
-
-export default Left
+const mapStateToProps = (state, {location}) => {
+	return {
+		list: state.Message.list,
+	}
+}
+export default connect(mapStateToProps)(Left)

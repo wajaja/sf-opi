@@ -41,24 +41,12 @@ const Allie  = createReactClass({
     },
 
 	componentWillMount() {
-		const { mainPost: {id, nbAllies }, editor, allies} = this.props;
-			const allie = allies.filter((allie, i) => {
-				for(var prop in allie) {
-					return allie[prop].mainAllieId === id && 
-						   allie[prop].author.id === editor.id
-				}
-			})
-			.map((allie, i) => {
-                for(var prop in allie) {
-                    return allie[prop];
-                }
-            })[0];
-			this.setState({allie: allie})
+		
 	},
 
 	componentWillUpdate(nextProps, nextState) {
 		const { mainPost: {id, nbAllies }, editor} = this.props;
-		if((this.props.allies !== nextProps.allies)) {
+		if(!!this.props.allies && (this.props.allies !== nextProps.allies)) {
 			const allie = nextProps.allies.filter((allie, i) => {
 				for(var prop in allie) {
 					return allie[prop].mainAllieId === id && 
@@ -97,7 +85,7 @@ const Allie  = createReactClass({
                 	<div className="lft-pst-ctnr">
                 		<div className="lft-pst-ctnr-a">		               
 		                	<Author.Photo author={editor} imgHeight={40} />  
-		                </div>	                         
+		                </div>
 		            </div>                                                    
 		            <div className="rght-pst-ctnr">
 		                <div className="rght-pst-dv-aut">
@@ -264,7 +252,7 @@ const WithAllies  = createReactClass({
 			                	<div className="lft-pst-ctnr">
 			                		<div className="lft-pst-ctnr-a">
 							        	{editors.map(function(editor, i) {
-											return <Author.Name author={editor} className="pst-aut-nm" />
+											return <Author.Name key={i} author={editor} className="pst-aut-nm" />
 							        	})}                     
 					            	</div>
 					            </div>                                                    
@@ -328,6 +316,7 @@ const WithAllies  = createReactClass({
 										key={i} 
 										{...self.props} 
 										editor={editor} 
+										allies={self.props.allies}
 										nextPost={self.nextPost}
 										nextPostForm={nextPostForm}
 										onAddToPost={self.onAddToPost}

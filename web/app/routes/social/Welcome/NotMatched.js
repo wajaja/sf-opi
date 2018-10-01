@@ -120,46 +120,18 @@ const NotMatched  = createReactClass({
     render() {
         const { location, dispatch, user, serverSide, access_token } = this.props,
         // picRoute = ~location.pathname.indexOf('/pictures/') ? true : false,
-        { hasOwnDiary, newsRefs }  = this.state,
-        userId                        = user.id;
+        { hasOwnDiary, newsRefs }  = this.state
         return (
-            <div className="hm-container" ref={c => this._pageElm = c}>
+            <div className="hm-container notMatched">
                 <Helmet>
                     <title>NotMatched</title>
                 </Helmet>
-                <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
-                    <div className="hm-main-blk-ctnr">
-                        <div id="hm_lft_dv" className="hm-lft-dv">
-                            <div id="hm_frst_blk" className="hm-frst-blk">
-                                <div className="hm-frst-blk-a">
-                                    <Left 
-                                        user={this.props.user}
-                                        history={this.props.history}
-                                        auth_data={this.props.auth_data}
-                                        dispatch={this.props.dispatch}
-                                        access_token={this.props.access_token}
-                                        getImageFromCache={this.props.getImageFromCache}
-                                        changeView={this.props.changeView}
-                                        clientId={this.props.clientId}
-                                        peerCon={this.props.peerCon}
-                                        startCall={this.props.startCall}
-                                        callWindow={this.props.callWindow}
-                                        localSrc={this.props.localSrc}
-                                        peerSrc={this.props.peerSrc}
-                                        callConfig={this.props.callConfig}
-                                        mediaDevice={this.props.peerCon.mediaDevice}
-                                        endCall={this.props.endCall}
-                                        fireUser={this.props.fireUser}
-                                        firebase={this.props.firebase}
-                                        toggleOnlineList={this.props.toggleOnlineList}
-                                        />                                
-                                </div>
-                            </div>
-                        </div>
-                        <div id="home-center-div" className="home-center-div central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
-                            <div className="lft-dv">
-                                <div className="lft-dv-a">
-                                                                   
+                <div className="hm-main-blk-ctnr">
+                    <div className="hm-main-blk-ctnr-a">
+                        <div className="home-center-div central-border">
+                            <div className="not-found-dv">
+                                <div className="not-found-dv-a">
+                                    Not Matched
                                 </div>
                             </div>
                         </div>

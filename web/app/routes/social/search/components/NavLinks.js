@@ -1,67 +1,60 @@
 import React 					from 'react'
-import { NavLink } 				from 'react-router-dom'
+import { Link } 				from 'react-router-dom'
 
 const NavLinks = (props) => {
 
-	const { match, groups, q } = props
+	const { match, groups, q, tag } = props
 	return (
 		<div className="nav-mnu-dv setting">
 			<div className="nav-mnu-dv-a">
 				<div className="nav-mnu-ctnr">
-					<div className="nav-mnu-chld">
+					<div className={!tag === 'users' ? `nav-mnu-chld active` : `nav-mnu-chld`}>
 						<div className="nav-mnu-chld-a">
-							<NavLink 
+							<Link 
 								to={`${match.url}?q=${q}&tag=users`} 
-								className="stt-nav-chld-lk"
-								activeStyle={{
-									background: '#f0f6f7',
-									border: '1px solid #cfe0e3'
-								}}
-								>
+								className="sh-nav-chld-lk"								>
 								<span className="mnu-txt-ctnr">Users</span>
-							</NavLink>
+							</Link>
 						</div>
 					</div>
-					<div className="nav-mnu-chld">
+					<div className={!tag === 'posts' ? `nav-mnu-chld active` : `nav-mnu-chld`}>
 						<div className="nav-mnu-chld-a">
-							<NavLink 
+							<Link 
 								to={`${match.url}?q=${q}&tag=posts`}
-								className="stt-nav-chld-lk"
-								activeStyle={{
-									    background: '#f0f6f7',
-										border: '1px solid #cfe0e3'
-								}}
+								className="sh-nav-chld-lk"
 								>
 								<span className="txt-ctnr">Posts</span>
-							</NavLink>
+							</Link>
 						</div>
 					</div>
-					<div className="nav-mnu-chld">
+					<div className={!tag === 'groups' ? `nav-mnu-chld active` : `nav-mnu-chld`}>
 						<div className="nav-mnu-chld-a">
-							<NavLink 
+							<Link 
 								to={`${match.url}?q=${q}&tag=groups`}
-								className="stt-nav-chld-lk"
-								activeStyle={{
-									    background: '#f0f6f7',
-										border: '1px solid #cfe0e3'
-								}}
+								className="sh-nav-chld-lk"
 								>
 								<span className="txt-ctnr">Groups</span>
-							</NavLink>
+							</Link>
 						</div>
 					</div>
-					<div className="nav-mnu-chld">
+					<div className={!tag === 'places' ? `nav-mnu-chld active` : `nav-mnu-chld`}>
 						<div className="nav-mnu-chld-a">
-							<NavLink 
+							<Link 
 								to={`${match.url}?q=${q}&tag=places`}
-								className="stt-nav-chld-lk"
-								activeStyle={{
-									    background: '#f0f6f7',
-										border: '1px solid #cfe0e3'
-								}}
+								className="sh-nav-chld-lk"
 								>
 								<span className="txt-ctnr">Places</span>
-							</NavLink>
+							</Link>
+						</div>
+					</div>
+					<div className={!tag ? `nav-mnu-chld active` : `nav-mnu-chld`}>
+						<div className="nav-mnu-chld-a">
+							<Link 
+								to={`${match.url}?q=${q}&tag=all`} 
+								className="sh-nav-chld-lk"
+								>
+								<span className="mnu-txt-ctnr">All</span>
+							</Link>
 						</div>
 					</div>
 				</div>

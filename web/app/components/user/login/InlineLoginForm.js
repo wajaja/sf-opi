@@ -57,7 +57,11 @@ const InlineLoginForm  = createReactClass( {
         const {username, password, errors, isLoading } = this.state,
         { csrf_token, server_error, action, hasPreviousSession } = this.props.loginData
 		return (
-  			<form action={`${BASE_PATH}/${action}`} method="post" className="nav-fS-in" onSubmit={this.onSubmit}>
+  			<form 
+            action={`${BASE_PATH}/${action}`} 
+            method="post" 
+            className="nav-fS-in" 
+            onSubmit={this.onSubmit}>
                 {!!server_error && <div className="s-error">{server_error.messageDat}</div>}
                 <input type="hidden" name="_csrfToken" value={csrf_token} />
                 <div className="nav-sign-in-ip-d">

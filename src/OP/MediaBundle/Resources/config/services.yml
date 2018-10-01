@@ -38,12 +38,12 @@ services:
     # op_media.form_handler:
     #     class: OP\MediaBundle\FormHandler\GalleryFormHandler
     #     arguments: ["@request_stack", "@op_post.post_manager", "@op_post.composer", "@op_message.participant_provider"]
-    # op_media.to_array.transformer:
-    #     class: OP\MediaBundle\DataTransformer\ToArrayTransformer
-    #     arguments: ["@service_container", "@request_stack", "@doctrine.odm.mongodb.document_manager.public", "@op_user.user_manager", '@OP\UserBundle\Security\UserProvider']
+    OP\MediaBundle\DataTransformer\ToArrayTransformer:
+        arguments: ["@service_container", "@request_stack", "@doctrine.odm.mongodb.document_manager.public", "@op_user.user_manager", '@OP\UserBundle\Security\UserProvider']
     OP\MediaBundle\DocumentManager\PictureManager:
         arguments: 
             - '@doctrine.odm.mongodb.document_manager.public'
             - '@service_container'
             - '@request_stack'
             - '@op_user.user_manager'
+            - '@OP\MediaBundle\Construct\ImageConstructor'

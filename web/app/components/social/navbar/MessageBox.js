@@ -81,10 +81,6 @@ const MessageBox  = onClickOutside(
             }
         },
 
-        shouldComponentUpdate(nextProps) {
-            return this.props.list !== nextProps.list
-        },
-
     	render() {
             const { list } = this.props
     		return (
@@ -110,7 +106,7 @@ const MessageBox  = onClickOutside(
                                                 <Scrollbars
                                                     universal
                                                     style={{ height: 450 }}>
-                                                    {list.map && list.map(function(thread, i) {
+                                                    {list && list.map && list.map(function(thread, i) {
                                                         return <ThreadPreview
                                                                     key={i}
                                                                     {...self.props}

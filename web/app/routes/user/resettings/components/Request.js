@@ -109,8 +109,14 @@ const Request  = createReactClass( {
                             action={`${BASE_PATH}/${action}`} 
                             className="op_user_resetting_request">
                             <div className="wrp-req-tp">
-                                {!!invalid_username && <p>{trans.invalid_username}</p> }
                                 <label for="username">{trans.username}</label>
+                                {!!invalid_username && 
+                                    <p style={{
+                                        color: '#da0f0f',
+                                        fontSize: '14px',
+                                        fontWeight: 600
+                                    }}>{trans.invalid_username}</p>
+                                }
                                 <TextFieldGroup
                                     label= ""
                                     errors={errors}

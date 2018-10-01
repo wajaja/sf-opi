@@ -38,7 +38,7 @@ class VideoController extends Controller
     /**
      * Lists all Image documents.
      *
-     * @Route("/", name="videos_list")
+     * @Route("/", name="video_list")
      * @Template()
      *
      * @return array
@@ -102,7 +102,7 @@ class VideoController extends Controller
     /**
      * Finds and displays a Post post.
      *
-     * @Route("/{id}", name="picture_show")
+     * @Route("/{id}", name="video_show")
      * @Method("GET")
      * @Template()
      *
@@ -202,7 +202,7 @@ class VideoController extends Controller
     /**
      * Edits an existing Image document.
      *
-     * @Route("/{id}/update", name="image_update")
+     * @Route("/{id}/update", name="video_update")
      * @Method("POST")
      * @Template("OPMediaBundle:Image:edit.html.twig")
      *
@@ -246,7 +246,7 @@ class VideoController extends Controller
     /**
      * Deletes a Image document.
      *
-     * @Route("/{id}/delete", name="image_delete")
+     * @Route("/{id}/delete", name="video_delete")
      * @Method("POST")
      *
      * @param Request $request The request object

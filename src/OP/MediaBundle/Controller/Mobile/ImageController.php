@@ -27,7 +27,7 @@ class ImageController extends Controller
     /**
      * Lists all Image documents.
      *
-     * @Route("/", name="image")
+     * @Route("/", name="m_image", host="m.opinion.com")
      * @Template()
      *
      * @return array
@@ -45,7 +45,7 @@ class ImageController extends Controller
      * Creates a new Image document.
      * use post Document as model for gallery
      *
-     * @Route("/create", name="gallery_create")
+     * @Route("/create", name="m_gallery_create", host="m.opinion.com")
      * @Method("POST")
      *
      * @param Request $request
@@ -111,7 +111,7 @@ class ImageController extends Controller
     /**
      * Finds and displays a Image document.
      *
-     * @Route("/{id}/show", name="image_show")
+     * @Route("/{id}/show", name="m_image_show", host="m.opinion.com")
      * @Template()
      *
      * @param string $id The document ID
@@ -141,7 +141,7 @@ class ImageController extends Controller
     /**
      * Displays a form to edit an existing Image document.
      *
-     * @Route("/{id}/edit", name="image_edit")
+     * @Route("/{id}/edit", name="m_image_edit", host="m.opinion.com")
      * @Template()
      *
      * @param string $id The document ID
@@ -173,7 +173,7 @@ class ImageController extends Controller
     /**
      * Edits an existing Image document.
      *
-     * @Route("/{id}/update", name="image_update")
+     * @Route("/{id}/update", name="m_image_update", host="m.opinion.com")
      * @Method("POST")
      * @Template("OPMediaBundle:Image:edit.html.twig")
      *
@@ -217,7 +217,7 @@ class ImageController extends Controller
     /**
      * Deletes a Image document.
      *
-     * @Route("/{id}/delete", name="image_delete")
+     * @Route("/{id}/delete", name="m_image_delete", host="m.opinion.com")
      * @Method("POST")
      *
      * @param Request $request The request object

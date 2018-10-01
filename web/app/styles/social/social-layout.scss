@@ -20,6 +20,9 @@ and open the template in the editor.
         width: 100%;
     }
 }
+.bdy-children-a{
+  display: flex;
+}
 input {
 	outline: none;
 }
@@ -48,4 +51,21 @@ input {
 .reg-ctnr{
 	margin-top: 90px;
 	position: relative;
+}
+.not-found-dv{
+    top: 250px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    width: 400px;
+    background: #fff;
+    text-align: center;
+    min-height: 90px;
+    padding: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid #ced4ea;
+    border-radius: 4px;
 }

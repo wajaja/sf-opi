@@ -16,12 +16,15 @@ nav .container {
             right: 0;
         }
         .go-regiter-btn{
-            min-width: 150px;
-            background-color: #65d3e0;
-            padding: 8px;
-            border: 1px solid #098590;
             letter-spacing: 1px;
+            margin: 0 20px;
             a {
+                border-radius: unset;
+                border: 1px solid #5a8a8e;
+                text-align: center;
+                padding: 8px;
+                background-color: #65d3e0;
+                min-width: 150px;
                 font-size: 13px !important;
                 font-weight: 600;
             }

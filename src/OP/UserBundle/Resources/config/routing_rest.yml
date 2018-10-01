@@ -7,9 +7,9 @@ registration:
 change_password:
     type: rest
     resource: OP\UserBundle\Controller\Api\ApiChangePasswordController
-# reset_password:
-#     type: rest
-#     resource: OP\UserBundle\Controller\Api\ApiResetPasswordController
+resetting:
+    type: rest
+    resource: OP\UserBundle\Controller\Api\ApiResettingController
 group:
     type: rest
     resource: OP\UserBundle\Controller\Api\ApiGroupController

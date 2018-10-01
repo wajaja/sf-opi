@@ -29,12 +29,12 @@ const Option = createReactClass({
         }
     },
 
-    showSecret(e) {
+    scrollTop(e) {
         e.preventDefault();
         console.log('showSecret')
     },
 
-    showBestComments(e) {
+    scrollBottom(e) {
         e.preventDefault();
         console.log('showBestComments')
     },
@@ -49,45 +49,26 @@ const Option = createReactClass({
             <div className="psts-top-a" >
                 <div className="psts-top-b">
                     <div className="psts-top-content">
-                        <div className="psts-opt show-secr">
+                        <div className="psts-opt scr-tp">
                             <div className="psts-opt-a">
                                 <div  
                                     className="btn-dv"
-                                    onClick={this.showSecret}>
-                                    Secret
+                                    onClick={this.scrollTop}>
+                                    Scroll to Top
                                 </div>
                             </div>
                         </div>
-                        <div className="psts-opt bst-cmts">
+                        <div className="psts-opt scr-btm">
                             <div className="psts-opt-a">
                                 <div 
                                     className="btn-dv"
-                                    onClick={this.showBestComments}>
-                                    Comments
+                                    onClick={this.scrollBottom}>
+                                    Scroll to bottom
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="fxd-opt-blc">
-                    <div className="fxd-opt-blc-a">
-                        {typeof post.editors === 'array' && 
-                         post.editors.length > 0 && 
-                         <Foot 
-                            {...this.props} 
-                            type="WithAllies"
-                            editing={editing}
-                            />
-                        }
-                        {!post.editors.length && 
-                         <Foot 
-                            {...this.props} 
-                            type='Simple'
-                            editing={editing}
-                            />
-                        }
-                    </div>
-                </div>                
             </div>
         )
     }

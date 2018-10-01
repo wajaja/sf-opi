@@ -17,6 +17,11 @@ export const initialState = {
     status: {},
 
     loading: false,
+
+    showZoomImage: false,
+    zoomRequest: false,
+    zoomSrc: null,
+    zoomId: null,
 }
 
 /**
@@ -33,7 +38,27 @@ function Photo(state = initialState, action) {
     switch (action.type) {
 
         
-        
+        case PhotoActions.CLOSE_ZOOM:
+            return Object.assign({}, state, {
+                showZoomImage: false,
+                zoomSrc: null,
+                zoomId: null,
+            })
+
+        case PhotoActions.ZOOM_PHOTO_REQUEST:
+            return Object.assign({}, state, {
+                showZoomImage: true,
+                zoomRequest: true,
+                zoomId: null,
+            })
+
+        case PhotoActions.ZOOM_PHOTO_RESPONSE:
+            return Object.assign({}, state, {
+                zoomRequest: false,
+                zoomId: action.photo.id,
+                zoomSrc: action.photo.webPath
+            })
+
         case PhotoActions.MODAL_PHOTO:
             return Object.assign({}, state, {
                 params: action.params,

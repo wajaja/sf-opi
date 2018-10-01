@@ -55,14 +55,14 @@ const isFileGone = status => {
 const emojiPlugin 					= createEmojiPlugin({
 	selectButtonContent: ''
 }),
-{ EmojiSuggestions, EmojiSelect } 	= emojiPlugin,
-hashtagPlugin 						= createHashtagPlugin(),
-linkifyPlugin 						= createLinkifyPlugin({
-  	component: (props) => (
-    	// eslint-disable-next-line no-alert, jsx-a11y/anchor-has-content
-    	<a {...props} onClick={() => alert('Clicked on Link!')} />
-  	)
-})
+{ EmojiSuggestions, EmojiSelect } 	= emojiPlugin;
+// hashtagPlugin 						= createHashtagPlugin(),
+// linkifyPlugin 						= createLinkifyPlugin({
+//   	component: (props) => (
+//     	// eslint-disable-next-line no-alert, jsx-a11y/anchor-has-content
+//     	<a {...props} onClick={() => alert('Clicked on Link!')} />
+//   	)
+// })
 
 const MessageForm  = createReactClass({
 
@@ -115,6 +115,7 @@ const MessageForm  = createReactClass({
             emojibtn: false,
             imageHover: false,
             completedFiles: [],
+            completedDocs: [],
 			files: [],
 			content: '',
 			unique: this.getUniqueForm(),
@@ -238,7 +239,14 @@ const MessageForm  = createReactClass({
     },
 
     composeData() {
-    	const { editorState, unique, completedFiles } = this.state
+    	const { editorState, unique, completedFiles, completedDocs } = this.state;
+    	//if form is empty at all
+    	if(!editorState.getCurrentContent().hasText() && 
+    		!completedFiles.length && 
+    		!completedDocs.length) {
+    		alert('empty form');
+    		return;
+    	}
 		BuildHtmlString(convertToRaw(editorState.getCurrentContent())).then(htmlString => {
 			const data = {
 				unique  : unique,
@@ -276,8 +284,8 @@ const MessageForm  = createReactClass({
 	    	} else { 
 	    		/* see in componentWillReceiveProps for new thread's uploader params update*/ 
 	    	}
-		}, () => {
-			console.log('data not submitted')	
+		}, (err) => {
+			console.log('data not submitted', err)	
 		});
 		
 	},
@@ -510,6 +518,11 @@ const MessageForm  = createReactClass({
 		return Math.random().toString(36).substr(2, 9);
 	},
 
+	cancelFile(id, e) {
+    	e.preventDefault();
+    	this.uploader.methods.cancel(id);
+    },
+
 	registerEvents() {
 		const self 			= this,
     	{ thread, newThread, uniqueString }= this.props,
@@ -674,99 +687,99 @@ const MessageForm  = createReactClass({
 		{ 
 			MentionSuggestions 
 		} 				= mentionPlugin,
-		plugins 		= [mentionPlugin, emojiPlugin, hashtagPlugin, linkifyPlugin],
+		plugins 		= [emojiPlugin],
     	retryIco 		= <span className="qq-retry-icon">Retry</span>,
     	timesIco 		= <i className="fa fa-times" aria-hidden="true"><span></span></i>;
 /////
 
 
 		return(
-        	<div className="expandingArea">
-            	{initialized && 
-            		<div className="nw-msg-bod autoExpand-message" onClick={this.focus}>
-	                    <Editor 
-	                        // blockStyleFn={getBlockStyle}
-	                        // customStyleMap={styleMap}
-	                        ref={(elem) => {this.editor = elem}}
-	                        spellCheck={true}
-	                        plugins={plugins}
-	                        placeholder="content"
-	                        onChange={this.onChange}
-	                        editorState={editorState}
-	                        keyBindingFn={this.myKeyBindingFn} 
-	                        handleKeyCommand={this.handleKeyCommand}
-	                    />
-	                    <EmojiSuggestions />
-	                    <MentionSuggestions
-					        onSearchChange={this.onSearchChange}
-					        suggestions={suggestions}
-					        />
+			<div className="msgForm-bd">
+	        	<div className="expandingArea">
+	            	{initialized && 
+	            		<div className="nw-msg-bod autoExpand-message" onClick={this.focus}>
+		                    <Editor 
+		                        // blockStyleFn={getBlockStyle}
+		                        // customStyleMap={styleMap}
+		                        ref={(elem) => {this.editor = elem}}
+		                        spellCheck={true}
+		                        plugins={plugins}
+		                        placeholder="content"
+		                        onChange={this.onChange}
+		                        editorState={editorState}
+		                        keyBindingFn={this.myKeyBindingFn} 
+		                        handleKeyCommand={this.handleKeyCommand}
+		                    />
+		                    <EmojiSuggestions />
+		                    <MentionSuggestions
+						        onSearchChange={this.onSearchChange}
+						        suggestions={suggestions}
+						        />
+		                </div>
+	            	}
+	            	<div className="msgFormImageHolder">
+	                	<div className="qq-gallery">  
+		            		<div className="zone-upload-cmt" >
+			            		<ul 
+			            			className="qq-upload-list-selector qq-upload-list upl-list-ul" 
+			            			role="region" 
+			            			ref={el => this.uploadList = el}
+			            			style={{
+			            				display: 'flex'
+			            			}}>
+					                {this.state.submittedFiles.map(function(id) {
+							            return (
+							            	<li key={id} className="qq-upload-file com-img-li">
+							            		<Thumbnail id={ id } uploader={ uploader } className="thumb-msg-img"/>
+							            		<button 
+							            			className="react-fine-uploader-delete-button com-dlt-thumb-btn" 
+							            			onClick={this.deleteFile.bind(this, id)}>
+							            			<i className="fa fa-times" aria-hidden="true"><span></span></i>
+							            		</button>
+							            		<button 
+						            				className="react-fine-uploader-cancel-button com-dlt-thumb-btn" 
+						            				onClick={this.cancelFile.bind(this, id)} type="submit">
+							            			{timesIco}
+							            		</button>
+							            		<RetryButton id={ id } uploader={ uploader } children={retryIco} />
+							            		<button 
+					                    			className="fine-uploader-tag-button" 
+					                    			onClick={this.getImageFromCache.bind(this, id)} 
+					                    			type="button">
+					                    			<span className="tag-ico" ></span>
+					                    		</button>
+							            	</li>
+							            )      
+							        }.bind(this))}
+							        
+					            </ul>
+					            <ul 
+					            	className="qq-upload-list-selector qq-upload-list docs-list-ul" 
+					            	role="region" 
+					            	ref={el => this.docList = el}
+					            	style={{
+			            				display: 'flex'
+			            			}}>
+					            	{this.state.submittedDocs.map(function(id) {
+							            return (
+							            	<li key={id} className="qq-upload-file com-img-li doc">
+							            		<Thumbnail id={ id } uploader={ docUploader } className="thumb-cmt-img"/>
+							            		<button 
+							            			className="react-fine-uploader-delete-button com-dlt-thumb-btn" 
+							            			onClick={this.deleteDoc.bind(this, id)}>
+							            			<i className="fa fa-times" aria-hidden="true"><span></span></i>
+							            		</button>
+							            		<CancelButton id={ id }  uploader={ docUploader } children={timesIco} />
+							            		<RetryButton id={ id } uploader={ docUploader } children={retryIco} />
+							            	</li>
+							            )      
+							        }.bind(this))}
+					            </ul>
+				            </div>            
+			            </div>
+			            <div className="documents-container"></div>
 	                </div>
-            	}
-            	<div className="msgFormImageHolder">
-                	<div className="qq-gallery">  
-	            		<div className="zone-upload-cmt" >
-		            		<ul 
-		            			className="qq-upload-list-selector qq-upload-list upl-list-ul" 
-		            			role="region" 
-		            			ref={el => this.uploadList = el}
-		            			style={{
-		            				display: 'inline-block',
-		            				verticalAlign: 'top'
-		            			}}>
-				                {this.state.submittedFiles.map(function(id) {
-						            return (
-						            	<li key={id} className="qq-upload-file com-img-li">
-						            		<Thumbnail id={ id } uploader={ uploader } className="thumb-msg-img"/>
-						            		<button 
-						            			className="react-fine-uploader-delete-button com-dlt-thumb-btn" 
-						            			onClick={this.deleteFile.bind(this, id)}>
-						            			<i className="fa fa-times" aria-hidden="true"><span></span></i>
-						            		</button>
-						            		<button 
-					            				className="react-fine-uploader-cancel-button com-dlt-thumb-btn" 
-					            				onClick={this.cancelFile.bind(this, id)} type="submit">
-						            			{timesIco}
-						            		</button>
-						            		<RetryButton id={ id } uploader={ uploader } children={retryIco} />
-						            		<button 
-				                    			className="fine-uploader-tag-button" 
-				                    			onClick={this.getImageFromCache.bind(this, id)} 
-				                    			type="button">
-				                    			<span className="tag-ico" ></span>
-				                    		</button>
-						            	</li>
-						            )      
-						        }.bind(this))}
-						        
-				            </ul>
-				            <ul 
-				            	className="qq-upload-list-selector qq-upload-list docs-list-ul" 
-				            	role="region" 
-				            	ref={el => this.docList = el}
-				            	style={{
-		            				display: 'inline-block',
-		            				verticalAlign: 'top'
-		            			}}>
-				            	{this.state.submittedDocs.map(function(id) {
-						            return (
-						            	<li key={id} className="qq-upload-file com-img-li doc">
-						            		<Thumbnail id={ id } uploader={ docUploader } className="thumb-cmt-img"/>
-						            		<button 
-						            			className="react-fine-uploader-delete-button com-dlt-thumb-btn" 
-						            			onClick={this.deleteDoc.bind(this, id)}>
-						            			<i className="fa fa-times" aria-hidden="true"><span></span></i>
-						            		</button>
-						            		<CancelButton id={ id }  uploader={ docUploader } children={timesIco} />
-						            		<RetryButton id={ id } uploader={ docUploader } children={retryIco} />
-						            	</li>
-						            )      
-						        }.bind(this))}
-				            </ul>
-			            </div>            
-		            </div>
-		            <div className="documents-container"></div>
-                </div>
+	            </div>
 
 	            <div className="divUploadResp">
                 	<div className="lft-msg-footer">
@@ -826,7 +839,7 @@ const MessageForm  = createReactClass({
 		                </div>
 	            	</div>
 	            </div>
-            </div>
+	        </div>
 		)
 	}
 })

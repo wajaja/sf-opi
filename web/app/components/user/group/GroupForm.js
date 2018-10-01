@@ -69,7 +69,7 @@ const _GroupRecipients  = createReactClass({
     updateRecipients(recipients) {
         const usernames = recipients.reduce((txt, r) => { return txt + r.label + ','}, '')
         this.setState({recipients: recipients});
-        this.props.updateRecipients(usernames);
+        this.props.updateRecipients(recipients);
     },
 
     componentDidUpdate(oldProps, oldState) {

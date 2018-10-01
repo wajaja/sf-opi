@@ -36,6 +36,7 @@ import MyLoadable    from './../components/MyLoadable'
 
 import { prodConfig, devConfig } from './../firebase/firebase'
 
+import './../styles/screen-fix.scss'
 import './../styles/social/social-layout.scss'
 import './../styles/social/opinion-animate.scss'
 import './../styles/social/rc-menu.scss';
@@ -47,6 +48,7 @@ Exception        = MyLoadable({loader: () => import('./../components/social/Exce
 ModalShare       = MyLoadable({loader: () => import('./../components/post/share/ModalShare')}),
 NewMessageModal  = MyLoadable({loader: () => import('./../components/message/NewMessageModal')}),
 ModalTagFriend   = MyLoadable({loader: () => import('./../components/media/ModalTagFriend')}),
+ZoomImage        = MyLoadable({loader: () => import('./../components/media/ZoomImage')}),
 CallModal        = MyLoadable({loader: () => import('./../components/message/CallModal')}),
 CallWindow       = MyLoadable({loader: () => import('./../components/message/chat/calls/CallWindow')})
 // import 'video-js.css'
@@ -309,7 +311,7 @@ const App = createReactClass ({
             this.setState({navNotifsBox: val});
             return;
         }
-        this.setState({navNotifsBox: !self.state.navNotifsBox})
+        this.setState({navNotifsBox: !this.state.navNotifsBox})
     },
 
     getImageFromCache(filename, galleryDir) {
@@ -334,6 +336,10 @@ const App = createReactClass ({
 
     closeModalImageCache() {
         this.setState({showModalImageCache: false})
+    },
+
+    closeZoomImage() {
+        this.setState({showZoomImage: false})
     },
 
     closeModalShare() {
@@ -460,7 +466,6 @@ const App = createReactClass ({
      */
     componentDidMount() {
         if(this.props.user && this.props.access_token) {
-            console.log(this.props.user, 'et', this.props.access_token)
             this.subscribeToServices();   
         }
         ////https://web.facebook.com/videocall/incall/?peer_id=100006750760505&call_id=3164762795&is_caller=true&audio_only=false&nonce=f1d5a04124f80f4
@@ -576,18 +581,18 @@ const App = createReactClass ({
     //             console.error('Full (Notifications): Could not estabilsh faye connection', err);
     //         });
     // }
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.state.flashMessage !== nextState.flashMessage ||
-            this.state.showModalImageCache !== nextState.showModalImageCache ||
-            this.state.screenWidth !== nextState.screenWidth ||
-            this.state.form_focus !== nextState.form_focus ||
-            this.state.edit_form_focus !== nextState.edit_form_focus ||
-            this.state.createMessage !== nextState.createMessage ||
-            this.props.exception !== nextProps.exception ||
-            this.props.modalShare !== nextProps.modalShare ||
-            this.props.flashMessage !== nextProps.flashMessage || 
-            this.props.location !== nextProps.location);
-    },
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return (this.state.flashMessage !== nextState.flashMessage ||
+    //         this.state.showModalImageCache !== nextState.showModalImageCache ||
+    //         this.state.screenWidth !== nextState.screenWidth ||
+    //         this.state.form_focus !== nextState.form_focus ||
+    //         this.state.edit_form_focus !== nextState.edit_form_focus ||
+    //         this.state.createMessage !== nextState.createMessage ||
+    //         this.props.exception !== nextProps.exception ||
+    //         this.props.modalShare !== nextProps.modalShare ||
+    //         this.props.flashMessage !== nextProps.flashMessage || 
+    //         this.props.location !== nextProps.location);
+    // },
 
     /**
      * render
@@ -601,9 +606,6 @@ const App = createReactClass ({
         // isModalVideo = !!(vidRoute && location.state && location.state.modal && (this.previousLocation !== location)),
         isModalPhoto = !!(picRoute && location.state && location.state.modal && (this.previousLocation !== location)); // not initial render
 
-        console.log('picRoute', picRoute)
-        console.log('location.state.modal', location)
-        console.log('this.previousLocation', this.previousLocation)
         const childrenWithProps = React.Children.map(this.props.children, 
             (child) => React.cloneElement(child, {
                 onLike: this.onLike,
@@ -683,6 +685,13 @@ const App = createReactClass ({
                                     src={this.state.srcImageCache}
                                     imageId={this.state.idImageCache}
                                     />}
+                            {this.props.showZoomImage && 
+                                <ZoomImage 
+                                    dispatch={this.props.dispatch}
+                                    isRequesting={this.props.zoomRequest}
+                                    src={this.props.zoomSrc}
+                                    imageId={this.props.zoomId}
+                                    />}
                             {this.props.flashMessage && 
                                 <FlashMessage
                                     message={this.state.flashMessageType}
@@ -706,7 +715,7 @@ const App = createReactClass ({
                     </StickyContainer>
                 </div>
                 {isModalPhoto ? <Route path="/pictures/:id" children={() => <ModalPicture {...this.props} />} /> : null }
-                {!this.props.access_token &&
+                {!this.props.access_token && location.pathname !== '/meetyou/' && 
                     <WelcomeFoot
                         dispatch={this.props.dispatch} />
                 }
@@ -891,6 +900,10 @@ const mapStateToProps = (state /*, props*/) => {
         flashMessage:   state.App.flashMessage,
         defaults:       state.Users.defaults,
         exception:      state.Exception,
+        zoomId:         state.Photo.zoomId,
+        zoomSrc:        state.Photo.zoomSrc,
+        zoomRequest:    state.Photo.zoomRequest,
+        showZoomImage: state.Photo.zoomRequest
     }
 }
 

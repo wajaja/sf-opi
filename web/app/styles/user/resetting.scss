@@ -1,0 +1,33 @@
+.op_user_resetting_reset{
+	.wrp-btm, .wrp-hd{
+		position: relative;
+		height: 50px;
+	}
+	.reset-pwd{
+	    min-width: 110px;
+	    background: #25bb69;
+	    position: absolute;
+	    right: 0;
+	}
+	.fld-wrp{
+	    height: 40px;
+	    label{
+	    	margin-right: 20px;
+	    }
+	}
+	input{
+		position: absolute;
+	    right: 0;
+	    padding: 3px 4px;
+	}
+}
+
+.chk-ml{
+	.chk-msg{
+	    white-space: pre-line;
+	    text-align: left;
+	    font-size: 14px;
+	    // font-weight: 600;
+	    line-height: 20px;
+	}
+}

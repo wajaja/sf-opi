@@ -99,6 +99,18 @@
     border: 1px solid #d2d9dc;
     border-radius: 3px;
     background: #fff;
+    min-height: 300px;
+    .pst-sugg-wrp-a{
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+        color: #969da0;
+        position: absolute;
+        top: 140px;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
     .nxt-abord, edit-abord{
         cursor: pointer;
         z-index: 10;
@@ -617,6 +629,12 @@ a:focus, a:hover{
     font-family: Helvetica, Arial sans-serif;
     position: relative;
     text-transform: capitalize;
+    &:after{
+        content: '& ';
+    }
+    &:last-child:after{
+        content: '' !important;
+    }
     span {
         display: inline-block;
         text-transform:  capitalize;
@@ -1100,6 +1118,7 @@ div.edit-frm-btm-li-post-r>gl-ldr-pst{
     width: 100%;
     height: 100%;
     display: inline-block;
+    border: 1px solid #e4e8ea;
 }
 .pst-img-lk.first{
     display: inline-block;
@@ -1361,7 +1380,8 @@ li>.edit-post-file-selector{
                     width: calc(100% - 44px);
                 }
                 .edtr-ctnr{
-                    margin-top: 20px;
+                    margin-top: 0px;
+                    margin-bottom: 50px;
                     .empty-content{
                         font-size: 21px;
                         font-weight: 600;

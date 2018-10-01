@@ -32,11 +32,13 @@ class PictureManager extends BaseManager
 
 	protected $dm, $request, $container, $user_manager;
 	
-	public function __construct(Manager $dm, Container $container, RequestStack $req, OpinionUserManager $uMan) {
+	public function __construct(Manager $dm, Container $container, RequestStack $req, OpinionUserManager $uMan, ImageConstructor $construct) {
         $this->dm       = $dm;
         $this->request  = $req->getCurrentRequest();
         $this->container= $container;
         $this->user_manager = $uMan;
+        $this->img_construct = $construct;
+
     }
 
 	/**
@@ -46,12 +48,12 @@ class PictureManager extends BaseManager
      * @param String $crop_path
      * @return Image
      */
-    public function loadProfileImages(User $user, $initIds=[], $limit = 10, ImageConstructor $construct)
+    public function loadProfileImages(User $user, $initIds=[], $limit = 10)
     {
         $repo        = $this->dm->getRepository('OPMediaBundle:Image');
         $images      = $repo->loadImages($user, $initIds, $limit);
 
-        return $construct->imagesToArray($images);
+        return $this->img_construct->imagesToArray($images);
     }
 
     /**
@@ -61,7 +63,7 @@ class PictureManager extends BaseManager
      * @param String $crop_path
      * @return Image
      */
-    public function loadPaginateUserImages(User $user, $page=1, $limit = 10, ImageConstructor $construct)
+    public function loadPaginateUserImages(User $user, $page=1, $limit = 10)
     {
         $images      = [];
         $repo        = $this->dm->getRepository('OPMediaBundle:Image');
@@ -73,7 +75,7 @@ class PictureManager extends BaseManager
         $pager->setMaxPerPage($limit);
         $pager->setCurrentPage((string)$page);
 
-        return $construct->imagesToArray($pager->getCurrentPageResults());; //array_values($pager->getCurrentPageResults()); //$constructor->imagesToArray($pager->getCurrentPageResults());
+        return  $this->img_construct->imagesToArray($pager->getCurrentPageResults());; //array_values($pager->getCurrentPageResults()); //$constructor->imagesToArray($pager->getCurrentPageResults());
     }
 
     public function createEveryWhere($photoId, User $user) {

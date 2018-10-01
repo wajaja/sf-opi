@@ -1,3 +1,28 @@
+.cfmd-ctnr{
+    position: absolute;
+    width: 500px;
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    .h-sign-sect{
+        padding: 15px 40px !important;
+        border-radius: unset;
+    }
+    .signup-form {
+        height: 400px;
+        .firstname, .lastname{
+            width: 200px;
+        }
+    }
+    .in-sign-up{
+        font-size: 18px;
+        padding: 4px;
+        height: 42px;
+        border-radius: 3px;
+    }
+}
 .nav-sign-in-d,
 form.fos_user_registration_register > div{
     display: block;
@@ -47,7 +72,7 @@ label.form-registration-gender, label.registration-birthdate{
 }
 .sign-ttl {
     font-size: 18px;
-    /* font-weight: 600; */
+    font-weight: 600;
     display: block;
     position: relative;
     letter-spacing: 1px;
@@ -64,6 +89,7 @@ label.form-registration-gender, label.registration-birthdate{
     background-color: #f1f6f7;
     border: 1px solid #cad9e0;
     padding: 10px;
+    border-radius: 6px;
 }
 
 .fos_user_registration_register {
@@ -72,6 +98,7 @@ label.form-registration-gender, label.registration-birthdate{
 }
 .signup-form{
 	position: relative;
+    height: 293px;
 	.firstname{
 		margin-right: 8px;
 	}
@@ -87,7 +114,7 @@ label.form-registration-gender, label.registration-birthdate{
     padding: 3px 4px;
     height: 35px;
     border-radius: 3px;
-    border: 1px solid #ddd;
+    border: 1px solid #c2c6ca;
     width: 100%;
 }
 #fos_user_registration_form_birthdate {
@@ -132,17 +159,16 @@ div.form-registration-gender {
     height: 30px;
 }
 .form-registration-submit{
-    position: absolute;
-    right: 0;
-    width: 90px;
+    position: relative;
+    min-width: 130px;
     color: #fff;
-    border: 1px solid #34b944;
-    background-color: #26bc84;
-    height: 30px;
+    border: 1px solid #038c9c;
+    background-color: #0294a5;
     border-radius: 2px;
     font-weight: 500;
     letter-spacing: 1.1px;
     font-family: sans-serif;
+    padding: 7px 15px;
 }
 .in-sign-up-btm{
     position: absolute;

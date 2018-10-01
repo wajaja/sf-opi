@@ -133,9 +133,9 @@ const Reset  = createReactClass( {
     // },
 
 	render() {
-		const { screenWidth, } = this.state,
+		const { screenWidth, errors } = this.state,
 		{ dispatch, user, resettingData } = this.props,
-        { server_error, action, trans, flashBag, hasPreviousSession } = resettingData
+        { server_error, action, trans, flashBag, hasPreviousSession, token } = resettingData
 		return (
 			<div className="hm-container setting">
                 <div className="sttg-main-blk">
@@ -144,6 +144,9 @@ const Reset  = createReactClass( {
                             method="post" 
                             action={`${BASE_PATH}/api/resetting/reset/${token}`} 
                             className="op_user_resetting_reset">
+                            <div className="wrp-hd">
+                                Reset your password
+                            </div>
                             <div className="wrp-ct">
                                 <TextFieldGroup
                                     label={trans.new_password}
@@ -172,8 +175,8 @@ const Reset  = createReactClass( {
                                     customClassName="password in-reset"
                                     type="password"/>
                             </div>
-                            <div>
-                                <input type="submit" value={trans.reset_submit} />
+                            <div className="wrp-btm">
+                                <input className="btn reset-pwd" type="submit" value={trans.reset_submit} />
                             </div>
                         </form>
                     </div>

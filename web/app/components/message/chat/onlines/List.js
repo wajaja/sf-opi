@@ -48,7 +48,7 @@ const List 	= createReactClass({
 						</div>
 					</div> 
 	            	<div className={bodyClassnames}>
-						{onlines.map && onlines.map((user, i) => 
+						{!!onlines && onlines.map && onlines.map((user, i) => 
 							<Box 
 								key={i} 
 								user={user} 
@@ -56,6 +56,11 @@ const List 	= createReactClass({
 								selectUser={this.props.selectUser}
 								/>
 				        )}
+				        {!onlines && 
+							<div className="oln-usr-not">
+								<div className="oln-usr-not-a">No one connected</div>
+							</div>
+				        }
 	                </div>
 	            </div>
 		    </div>

@@ -55,7 +55,7 @@
         <default key="_controller">OPUserBundle:Profile:getImages</default>
     </route>
     <route id="op_user_profile_show" path="/{username}" methods="GET">
-        <default key="_controller">FOSUserBundle:Profile:show</default>
+        <default key="_controller">OPUserBundle:Profile:show</default>
     </route>
     <route id="op_user_get_user_infos" path="/{username}/about" methods="GET">
         <default key="_controller">OPUserBundle:Profile:getUserInfos</default>

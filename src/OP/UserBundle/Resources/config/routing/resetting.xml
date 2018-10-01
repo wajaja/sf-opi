@@ -8,9 +8,9 @@
         <default key="_controller">OPUserBundle:Resetting:request</default>
     </route>
 
-    <route id="op_user_resetting_send_email" path="/send-email" methods="POST" host="opinion.com">
+    <!-- <route id="op_user_resetting_send_email" path="/send-email" methods="POST" host="opinion.com">
         <default key="_controller">OPUserBundle:Resetting:sendEmail</default>
-    </route>
+    </route> -->
 
     <route id="op_user_resetting_check_email" path="/check-email" methods="GET" host="opinion.com">
         <default key="_controller">OPUserBundle:Resetting:checkEmail</default>

@@ -1,4 +1,6 @@
 import React from 'react';
+import createReactClass   from 'create-react-class'
+import PropTypes from 'prop-types';
 import Option from './Option';
 
 const SizeItem = ({ name, code, currentCode, onSelect }) => {
@@ -15,10 +17,10 @@ const SizeItem = ({ name, code, currentCode, onSelect }) => {
   </div>
 };
 
-export default React.createClass({
+export default createReactClass({
   propTypes: {
-    size: React.PropTypes.oneOf(['tall', 'square', 'wide']).isRequired,
-    onSizeSelect: React.PropTypes.func.isRequired
+    size: PropTypes.oneOf(['tall', 'square', 'wide']).isRequired,
+    onSizeSelect: PropTypes.func.isRequired
   },
 
   render() {

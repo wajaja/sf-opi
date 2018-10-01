@@ -1,8 +1,9 @@
 import React from 'react';
-import {getImage} from 'utils/imageCache';
+import createReactClass   from 'create-react-class'
+import {getImage} from '../utils/imageCache';
 
 export default (Component) => {
-  return React.createClass({
+  return createReactClass({
     loadImage(url) {
       if (!url) return Promise.resolve();
       if (this.props.image !== url) this.setState({ image: null });

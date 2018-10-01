@@ -142,7 +142,7 @@ const Notification  = createReactClass({
                 <Helmet>
                     <title>Create Place</title>
                 </Helmet>
-                <div id="hm_main_blk" className="hm-main-blk">
+                <div className="hm-main-blk">
                     <div className="hm-main-blk-ctnr">
                         <div id="hm_lft_dv" className="hm-lft-dv">
                             <div id="hm_frst_blk" className="hm-frst-blk">
@@ -179,6 +179,7 @@ const Notification  = createReactClass({
                                 marginLeft: "auto",
                                 position: "absolute",
                                 float: "none",
+                                marginTop: "12px", 
                                 background: "#fff",
                                 padding: "10px",
                                 borderRadius: "2px"
@@ -203,16 +204,17 @@ const Notification  = createReactClass({
                                             </div>
                                         )
                                     })}
+                                    {!notifications.length && 
+                                        <div  className="nt-pg-box">
+                                            <div className="nt-pg-box-ctnr">
+                                                You don't have notifications
+                                            </div>
+                                        </div>}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {screenWidth > 992 && 
-                    <div className="null">
-                    </div>
-                }
             </div>
         )
     }

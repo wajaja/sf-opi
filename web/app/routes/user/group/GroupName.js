@@ -3,7 +3,8 @@ import { findDOMNode } 		from 'react-dom'
 import createReactClass 	from 'create-react-class'
 import { connect } 			from 'react-redux'
 import { fromJS, Map }  	from 'immutable'
-
+import { bindActionCreators } from 'redux'
+import { Helmet }           from 'react-helmet'
 import { Link, withRouter } from 'react-router-dom'
 import { push } from 'react-router-redux';
 
@@ -22,41 +23,20 @@ PhotosPrev    = MyLoadable({loader: () => import('./components/PhotosPrev')}),
 StickyMenu    = MyLoadable({loader: () => import('./components/StickyMenu')}),
 StickyNavLinks= MyLoadable({loader: () => import('./components/StickyNavLinks')}),
 OptionsPrev   = MyLoadable({loader: () => import('./components/OptionsPrev')}),
-MembersPrev   = MyLoadable({loader: () => import('./components/MembersPrev')})
+MembersPrev   = MyLoadable({loader: () => import('./components/MembersPrev')}),
+HMember       = MyLoadable({loader: () => import('./components/HMember')})
 import { 
 	Posts as PostsActions,
 	Groups as GroupsActions 
-}    						from '../../../actions/post'
+}    						from '../../../actions'
 
 import { getUrlParameterByName } from '../../../utils/funcs'
 
 import '../../../styles/user/group.scss'
 
 
-/**
- * handleRouteChange
- * @param dispatch
- * @param history
- * @param location
- */
-function handleSearchChange(dispatch, history, location) {
-    const pathname = location.pathname,
-    tag = getUrlParameterByName('tag', location.search) //['infos, photos, relations']
-
-    if(pathname.indexOf('/grouppic')) {
-        console.log('ProfilePic')
-    } else if(pathname.indexOf('/relations')) {
-        console.log('relations')
-    } else if(pathname.indexOf('/infos')) {
-        console.log('infos')
-    } else {
-        
-    }
-}
-
-
 const Head = (props) => {
-    const { members } = props,
+    const { members, group, user } = props,
 
     imageStyle = {
         display: 'inline-block',
@@ -64,18 +44,36 @@ const Head = (props) => {
     return(
         <div className="grp-top-a" >
             <div className="grp-top-lft">
-                <div className="grp-top-content">
-                    {members.map(function(u, i) {
-
-                        return(
-                            <div key={i} className="pic-dv-grp-list">
-                                <img 
-                                    src={u.profile_pic.web_path}
-                                    style={imageStyle}
-                                    className="pic-grp-list" />
+                <div className="grp-blc-lft-a">
+                    <div className="show-grp-plus">
+                        <div className="show-grp-plus-a">
+                            <div className="show-grp-plus-intro">
+                                <IntroPrev
+                                    {...props} 
+                                    group={group}
+                                    user={user}
+                                    />
                             </div>
-                        )
-                    })}
+                            <div className="show-grp-plus-opt">
+                                
+                            </div>
+                            <div className="show-grp-plus-pho">
+                                
+                            </div>
+                            <div className="show-grp-plus-mbr">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="grp-top-content">
+                    {!!group.cover &&
+                        <div className="pic-dv-grp-cov">
+                            <img 
+                                src={group.cover.web_path}
+                                style={imageStyle}
+                                className="pic-grp-list" />
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -260,11 +258,11 @@ const GroupName  = createReactClass( {
     	}
     },
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return (this.props.loading !== nextProps.props ||
-            this.state.group !== nextState.group ||
-            this.state.noPostsResults !== nextState.noPostsResults)
-    },
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return (this.props.loading !== nextProps.props ||
+    //         this.state.group !== nextState.group ||
+    //         this.state.noPostsResults !== nextState.noPostsResults)
+    // },
 
 	render() {
 		const { 
@@ -272,7 +270,7 @@ const GroupName  = createReactClass( {
             group, newsRefs, 
             photos, 
         }                         = this.state,
-		{ dispatch, user, loading  }        = this.props
+		{ dispatch, user, loading, tag  }        = this.props
 
         if(loading) {
             return(
@@ -284,8 +282,11 @@ const GroupName  = createReactClass( {
 
         /////////////////
 		return (
-			<div className="hm-container group" ref={c => this._pageElm = c}>
-                <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
+			<div className="hm-container group new" ref={c => this._pageElm = c}>
+                <Helmet>
+                    <title>Create Group</title>
+                </Helmet>
+                <div className="hm_main_blk">
                     <div className="hm-main-blk-ctnr"> 
                     	<div className="grp-lft-dv">
                             <div className="grp-frst-blk">
@@ -301,15 +302,54 @@ const GroupName  = createReactClass( {
                                 </div>
                             </div>
                     	</div>
-                        <div id="home-center-div" className="home-center-div central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
-                            <div  className="center-tp">
-                                <Head 
-                                    {...this.props} 
-                                    group={group}
-                                    members={group.members}
-                                    user={user}
-                                    />
+                        <div  className="cover_ctnr_0">
+                            <Head 
+                                {...this.props} 
+                                group={group}
+                                members={group.members}
+                                user={user}
+                                />
+                            <div className="lft-dv">
+                                <div className="lft-dv-a">
+                                    <StickyNavLinks
+                                        {...this.props}
+                                        dispatch={dispatch}
+                                        group={group}
+                                        user={user}
+                                        />        
+                                </div>
                             </div>
+                        </div>
+                        <HMember
+                            {...this.props}
+                            members={group.members}
+                            />        
+                        <div className="home-center-div central-border">
+                            {tag === 'photos' && 
+                                <PhotosCenter 
+                                    {...this.props}
+                                    user={user}
+                                    photos={profile.photos}
+                                    profile={profileUser}
+                                    />
+                            }
+
+                            {tag === 'infos' && 
+                                <AboutCenter 
+                                    {...this.props}
+                                    user={user}
+                                    about={profile.about}
+                                    profile={profileUser}
+                                    />
+                            }
+                            {tag === 'relationship' && 
+                                <RelationShipCenter 
+                                    {...this.props}
+                                    user={user}
+                                    friends={profile.friends}
+                                    profile={profileUser}
+                                    />
+                            }
                             <div  className="center-bd">
                                 <Center 
                                     {...this.props} 
@@ -331,30 +371,29 @@ const GroupName  = createReactClass( {
                                     />
                             </div>
                         </div>
-                        <div id="hm_rght_div" className="col-xs-4 col-sm-4 col-md-3 col-lg-2">
-                            <div className="lft-dv">
-                                <div className="lft-dv-a">
-                                    <StickyNavLinks
-                                    	{...this.props}
-                                        dispatch={dispatch}
-                                        group={group}
-                                        user={user}
-                                        />        
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <ModalVideoConfirm />
             </div>
 		)
 	}
 })
 
+///////
+const mapStateToProps = (state, {location}) => {
+    const tag = getUrlParameterByName('tag', location.search) //['infos, photos, relations']
+    return {
+        tag: tag,
+    	user: state.User.user,
+    	groups: state.Groups.groups,
+        loading: state.Groups.loading
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        groupsActions: bindActionCreators(GroupsActions, dispatch),
+    }
+}
 
 //////
-export default  withRouter(connect(state =>({
-	user: state.User.user,
-	groups: state.Groups.groups,
-    loading: state.Groups.loading
-}))(GroupName))
+export default  withRouter(connect(mapStateToProps, mapDispatchToProps)(GroupName))

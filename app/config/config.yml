@@ -126,7 +126,9 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }
+    # spool:     { type: memory }
+    encryption: ssl
+    auth_mode:   login
 
 #https://www.blog.davidfuhr.de/2016/09/28/implement-a-datetimeinterface-handler-for-jmsserializer.html
 jms_serializer:
@@ -314,8 +316,8 @@ fos_user:
     use_username_form_type:   true #mettre à false pour arreter l'utilisation de forme de fosUser... à suivre
     model_manager_name:     null  # change it to the name of your entity/document manager if you don't want to use the default one.
     from_email:
-        address:        opinion@gmail.com #modifier par wajaja
-        sender_name:    opinion
+        address:        cedrickngeja@gmail.com #modifier par wajaja
+        sender_name:    Cedrick Ngeja
     profile:
         form:
             type:               FOS\UserBundle\Form\Type\ProfileFormType # or 'fos_user_profile' on Symfony < 2.8
@@ -332,7 +334,7 @@ fos_user:
                 address:        cedrickngeja@gmail.com   #modifier par wajaja
                 sender_name:    opinion             #modifier par wajaja
             enabled:            false    #true                   # change to true for required email confirmation
-            template:           FOSUserBundle:Registration:email.txt.twig
+            template:           '@OPUser/Registration/email.txt.twig'
         form:
             type:               OP\UserBundle\Form\Type\RegistrationFormType  # 
             name:               registration  #fait...
@@ -342,15 +344,15 @@ fos_user:
         token_ttl: 86400
         email:
             from_email: # Use this node only if you don't want the global email address for the resetting email
-                address:        ...
-                sender_name:    ...
-            template:   '@FOSUser/Resetting/email.txt.twig'
+                address:        cedrickngeja@gmail.com
+                sender_name:    Opinion Team
+            template:   '@OPUser/Resetting/email.txt.twig'
         form:
-            type:               FOS\UserBundle\Form\Type\ResettingFormType # or 'fos_user_resetting' on Symfony < 2.8
-            name:               fos_user_resetting_form
+            type:               OP\UserBundle\Form\Type\ResettingFormType # or 'fos_user_resetting' on Symfony < 2.8
+            name:               resetting
             validation_groups:  [ResetPassword, Default]
     service:
-        mailer:                 fos_user.mailer.twig_swift
+        mailer:                 OP\UserBundle\Mailer\Mailer
         email_canonicalizer:    fos_user.util.canonicalizer.default
         username_canonicalizer: fos_user.util.canonicalizer.default
         token_generator:        fos_user.util.token_generator.default

@@ -49,7 +49,7 @@ class InvitationManager
             $invits[] = $this->transformer->invitationToArray($data);
         }
 
-        return $invits;
+        return array_unique($invits, SORT_REGULAR);
     }
 
 
@@ -85,6 +85,7 @@ class InvitationManager
                                               : "/images/favicon.ico"
             ];
         }
+
         return $suggestions;
     }
 

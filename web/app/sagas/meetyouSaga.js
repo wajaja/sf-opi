@@ -1,8 +1,7 @@
-import { takeEvery } from 'redux-saga';
-import { call, put, fork } from 'redux-saga/effects';
+import { call, put, fork, takeEvery } from 'redux-saga/effects';
 
 import * as unsplash from '../routes/social/MeetYou/utils/unsplash';
-import {selectImage} from '../actions';
+import {selectImage} from '../actions/social/MeetYou';
 
 function* initImagesSaga() {
     const images = yield call(unsplash.getPopularImages);

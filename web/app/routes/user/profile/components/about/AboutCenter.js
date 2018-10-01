@@ -10,6 +10,12 @@ const AboutCenter 	= createReactClass({
 		}
 	},
 
+    componentDidMount() {
+        this.props.loadInfos(this.props.profile.username).then(data => {
+            console.log(data);
+        })
+    },
+
 	render() {
 		const { profile, user, about } = this.props
 		return(

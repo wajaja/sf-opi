@@ -30,15 +30,26 @@ security:
             security: false
             stateless: true
             anonymous: true
-        api_check_email:
-            pattern: ^/api/check_email
+        # api_check_email:
+        #     pattern: ^/api/resetting/check_email
+        #     security: false
+        #     stateless: true
+        #     anonymous: true
+        api_send_email:
+            pattern: ^/api/resetting/send-email
             security: false
             stateless: true
             anonymous: true
         api_password_reset:
-            pattern: ^/api/password/reset
+            pattern: ^/api/resetting/reset/.*
+            security: false
             stateless: true
             anonymous: true
+        # api_password_reset:
+        #     pattern: ^/api/password/reset
+        #     security: false
+        #     stateless: true
+        #     anonymous: true
         api_logout:
             logout_on_user_change: true  #SF4
             pattern:        ^/api/logout

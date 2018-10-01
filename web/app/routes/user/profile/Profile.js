@@ -167,8 +167,8 @@ const Profile  = createReactClass( {
             })
         } else {
             this.setState({
-                loading: true,
-                profileUser: {},
+                loading: false,
+                profileUser: null,
                 newsRefsUser: [],
                 photosUser: []
             })
@@ -238,6 +238,9 @@ const Profile  = createReactClass( {
             this.props.tag      !== nextProps.tag ||
             this.props.profiles !== nextProps.profiles ||
             this.state.loading  !== nextState.loading ||
+            this.props.form_focus !== nextProps.form_focus ||
+            this.props.screenWidth !== nextProps.screenWidth ||
+            this.props.edit_form_focus !== nextProps.edit_form_focus ||
             this.state.noPostsResults !== nextState.noPostsResults)
     },
 
@@ -254,114 +257,136 @@ const Profile  = createReactClass( {
 
         if(this.state.loading) {
             return(
-                <div className="hm-container profile" ref={c => this._pageElm = c}>
-                    <div className="ld-route-dta">loading</div>
-                </div>
-            )
-        }
-
-
-        /////////////////
-        return (
-            <div className="hm-container profile" ref={c => this._pageElm = c}>
-                <Helmet>
-                    <title>{profileUser.firstname}</title>
-                </Helmet>
-                <div id="hm_lft_dv" className="hm-lft-dv">
-                    {tag === null && 
-                        <div className="show-usr-plus">
-                            <div id="show-usr-plus-a" className="show-usr-plus-a">
-                                <div className="show-usr-plus-intro">
-                                    <IntroPrev
-                                        {...this.props} 
-                                        profile={profileUser}
-                                        user={user}
-                                        />
-                                </div>
-                                <div id="show_usr_plus_pho" className="show-usr-plus-pho">
-                                    <PhotosPrev
-                                        {...this.props} 
-                                        user={user}
-                                        profile={profileUser}
-                                        photos={photosUser}
-                                        />
-                                </div>
-                                <div id="show_usr_plus_ff" className="show-usr-plus-ff">
-                                    <RelationShipPrev
-                                        {...this.props} 
-                                        user={user}
-                                        profile={profileUser}
-                                        />
-                                </div>                                  
+                <div className="hm-container profile" >
+                    <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
+                        <div className="hm-main-blk-ctnr"> 
+                            <div id="home-center-div" className="home-center-div central-border">
+                                <div className="ld-route-dta">loading</div>
                             </div>
-                        </div>
-                    }
-                    {tag === 'photos' && 
-                        <PhotosLeft 
-                            {...this.props}
-                            user={user}
-                            photos={profile.photos}
-                            videoList={profile.videoList}
-                            mostLiked={profile.mostLiked}
-                            recentPhotos={profile.recentPhotos}
-                            profile={profileUser}
-                            />
-                    }                    
-                    {tag === 'infos' && 
-                        <AboutLeft 
-                            {...this.props}
-                            user={user}
-                            about={profile.about}
-                            profile={profileUser}
-                            />
-                    }
-                    {tag === 'relationship' && 
-                        <RelationShipLeft 
-                            {...this.props}
-                            user={user}
-                            friends={profile.friends}
-                            profile={profileUser}
-                            />
-                    }
-                    <div id="hm_frst_blk" className="hm-frst-blk">
-                        <div className="hm-lft-dv">
-                            <Left 
-                                {...this.props}
-                                user={user}
-                                profile={profileUser}
-                                />                                
                         </div>
                     </div>
                 </div>
-                <div  className="cover_ctnr_0">
-                    <Head 
-                        {...this.props} 
-                        profile={profileUser}
-                        user={user}
-                        createMessageTo={this.createMessageTo}
-                        />
-                </div>
-                <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
-                    <div className="hm-main-blk-ctnr"> 
-                        <div id="home-center-div" className="home-center-div central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
-                            {tag === null && 
-                                <Center 
-                                    {...this.props} 
-                                    onShare={this.onShare} 
-                                    onComment={this.onComment}
-                                    onLike={this.onLike}
-                                    home={false}
+            )
+        } 
+
+        else if(this.state.profileUser === null) {
+            return(
+                <div className="hm-container profile">
+                    <div className="hm-lft-dv">
+                        <div id="hm_frst_blk" className="hm-frst-blk">
+                            <div className="hm-lft-dv">
+                                <Left 
+                                    {...this.props}
+                                    user={user}
                                     profile={profileUser}
-                                    newsRefs={newsRefsUser}
-                                    fetchPosts={this._fetchPostsStream}
-                                    onSideComment={this.onSideComment}
-                                    postFormFocus={this.postFormFocus}
-                                    editPostFormFocus={this.editPostFormFocus}
-                                    referIn="profile"
-                                    timelineId={profileUser.id}
-                                    timeType='user'
+                                    />                                
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hm_main_blk" className="col-sm-12 col-md-12 col-lg-10 col-xs-12">
+                        <div className="hm-main-blk-ctnr"> 
+                            <div id="home-center-div" className="home-center-div central-border">
+                                User Not fount
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        } else {
+            /////////////////
+            return (
+                <div className="hm-container profile" ref={c => this._pageElm = c}>
+                    <Helmet>
+                        <title>{profileUser.firstname}</title>
+                    </Helmet>
+                    <div className="hm-lft-dv">
+                        <div id="hm_frst_blk" className="hm-frst-blk">
+                            <div className="hm-lft-dv">
+                                <Left 
+                                    {...this.props}
+                                    user={user}
+                                    profile={profileUser}
+                                    />                                
+                            </div>
+                        </div>
+                    </div>
+                    <div  className="cover_ctnr_0">
+                        <Head 
+                            {...this.props} 
+                            profile={profileUser}
+                            user={user}
+                            createMessageTo={this.createMessageTo}
+                            />
+                        <div className="lft-dv-a">
+                            <StickyNavLinks
+                                {...this.props}
+                                dispatch={dispatch}
+                                profile={profileUser}
+                                user={user}
+                                tag={tag}
+                                />
+                            {tag === null && 
+                                <div className="show-usr-plus">
+                                    <div id="show-usr-plus-a" className="show-usr-plus-a">
+                                        <div className="show-usr-plus-intro">
+                                            <IntroPrev
+                                                {...this.props} 
+                                                profile={profileUser}
+                                                user={user}
+                                                />
+                                        </div>
+                                        <div id="show_usr_plus_pho" className="show-usr-plus-pho">
+                                            <PhotosPrev
+                                                {...this.props} 
+                                                user={user}
+                                                profile={profileUser}
+                                                photos={photosUser}
+                                                />
+                                        </div>
+                                        <div id="show_usr_plus_ff" className="show-usr-plus-ff">
+                                            <RelationShipPrev
+                                                {...this.props} 
+                                                user={user}
+                                                profile={profileUser}
+                                                />
+                                        </div>                                  
+                                        <Foot 
+                                            {...this.props} 
+                                            />
+                                    </div>
+                                </div>
+                            }
+                            {tag === 'photos' && 
+                                <PhotosLeft 
+                                    {...this.props}
+                                    user={user}
+                                    photos={profile.photos}
+                                    videoList={profile.videoList}
+                                    mostLiked={profile.mostLiked}
+                                    recentPhotos={profile.recentPhotos}
+                                    profile={profileUser}
+                                    />
+                            }                    
+                            {tag === 'infos' && 
+                                <AboutLeft 
+                                    {...this.props}
+                                    user={user}
+                                    about={profile.about}
+                                    profile={profileUser}
                                     />
                             }
+                            {tag === 'relationship' && 
+                                <RelationShipLeft 
+                                    {...this.props}
+                                    user={user}
+                                    friends={profile.friends}
+                                    profile={profileUser}
+                                    />
+                            }
+                        </div>
+                    </div>
+                    <div id="hm_main_blk" className="hm_main_blk home-center-div">
+                        <div className="hm-main-blk-ctnr"> 
                             {tag === 'photos' && 
                                 <PhotosCenter 
                                     {...this.props}
@@ -387,27 +412,32 @@ const Profile  = createReactClass( {
                                     profile={profileUser}
                                     />
                             }
-                        </div>
-                        <div id="hm_rght_div" className="col-xs-4 col-sm-4 col-md-3 col-lg-2">
-                            <div className="lft-dv">
-                                <div className="lft-dv-a">
-                                    <StickyNavLinks
-                                        {...this.props}
-                                        dispatch={dispatch}
+                            <div id="home-center-div" className="central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
+                                {tag === null && 
+                                    <Center 
+                                        {...this.props} 
+                                        onShare={this.onShare} 
+                                        onComment={this.onComment}
+                                        onLike={this.onLike}
+                                        home={false}
                                         profile={profileUser}
-                                        user={user}
-                                        />        
-                                </div>
-                                <Foot 
-                                    {...this.props} 
-                                    />
+                                        newsRefs={newsRefsUser}
+                                        fetchPosts={this._fetchPostsStream}
+                                        onSideComment={this.onSideComment}
+                                        postFormFocus={this.postFormFocus}
+                                        editPostFormFocus={this.editPostFormFocus}
+                                        referIn="profile"
+                                        timelineId={profileUser.id}
+                                        timeType='user'
+                                        />
+                                }
                             </div>
                         </div>
                     </div>
+                    <ModalVideoConfirm />
                 </div>
-                <ModalVideoConfirm />
-            </div>
-        )
+            )
+        }
     }
 })
 ///////
@@ -423,9 +453,7 @@ const mapStateToProps = (state, {location}) => {
 
 /////
 function mapDispatchToProps(dispatch) {
-    return {
-        profileActions: bindActionCreators(ProfilesActions, dispatch),
-    }
+    return bindActionCreators(Object.assign({}, ProfilesActions), dispatch)
 }
 
 //////

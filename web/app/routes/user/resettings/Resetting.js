@@ -4,7 +4,7 @@ import createReactClass 	from 'create-react-class'
 import { connect } 			from 'react-redux'
 import { withRouter,  Switch, Route, Redirect } from 'react-router-dom'
 import {
-	Request, SendEmail, Reset
+	Request, SendEmail, Reset, CheckEmail
 }                         	from './components'
 // import { 
 //     Setting as SettingActions, 

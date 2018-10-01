@@ -33,7 +33,6 @@ const SignupForm  = createReactClass( {
     getInitialState() {
         return {
             birthday : {},
-            passwordConfirmation: '',
             begin : {
                 day : 1,
                 month : 1,
@@ -47,8 +46,9 @@ const SignupForm  = createReactClass( {
             year : 1900,
             month: 1,
             day  : 1,     
+            wrapper: {},
             errors: {
-                wrapper: {}
+                "registration[firstname]": true
             },
             isLoading: false,
             invalid: false,
@@ -64,10 +64,10 @@ const SignupForm  = createReactClass( {
     onTextChange(e) {
         //Set daysOfMonth by selected month
         let val = e.target.value,
-        name = e.target.name,
-        errors= this.state.errors,
+        name    = e.target.name,
+        { errors, wrapper }  = this.state,
         { trans }= this.props.signupData;
-        this.setState({name: val });
+        this.setState({[e.target.name]: val});
 
         console.log(name);
 
@@ -77,16 +77,16 @@ const SignupForm  = createReactClass( {
             // Update the text indicator
             if(val !== "") {
                 initial_strength = password_strength[result.score];
-                errors.wrapper[name] = trans[(name + '_' + initial_strength)] || initial_strength;
+                wrapper[name] = trans[(name + '_' + initial_strength)] || initial_strength;
             } else {
-                errors.wrapper[name] = '';
+                wrapper[name] = '';
             }
 
 
             if(initial_strength = 'Worst' || initial_strength === 'Bad')
-                errors['plainPassword_first'] = true;
+                errors['registration[plainPassword][first]'] = true;
             else
-                delete errors['plainPassword_first'];
+                delete errors['registration[plainPassword][first]'];
         }
     },
 
@@ -94,40 +94,40 @@ const SignupForm  = createReactClass( {
         let name = e.target.name,
         type     = e.target.type,
         value    = e.target.value,
-        errors   = this.state.errors,
+        {errors, wrapper }   = this.state,
         { trans }= this.props.signupData;
 
         if(!value.length) {
-            errors['wrapper'][name] = trans[(name + '_blank')];
-            errors['firstname'] = true;
+            wrapper[name] = trans[(name + '_blank')];
+            errors[name] = true;
 
         } else if(value.length < 3) {
-            errors['wrapper'][name] = trans[(name + '_short')];
-            errors['firstname'] = true;
+            wrapper[name] = trans[(name + '_short')];
+            errors[name] = true;
 
         } else if(value.length > 40) {
-            errors['wrapper'][name] = trans[(name + '_long')];
-            errors['firstname'] = true;
+            wrapper[name] = trans[(name + '_long')];
+            errors[name] = true;
 
         } else {
             if(name === 'registration[email]') {
                 if(regex.email.test(value)) {
-                    errors['wrapper'][name] = "";
-                    delete errors['email'];
+                    wrapper[name] = "";
+                    delete errors[name];
                     //check email 
                     axios.get(`http://opinion.com/app_dev.php/api/check_email?email=${value}`)
                         .then(function(res){
                             var status = res.data.status;
                             console.log(typeof status, status)
                             if(status) {
-                                errors['wrapper'][name] = trans[(name + '_already_used')];
+                                wrapper[name] = trans[(name + '_already_used')];
                                 console.log(data);
-                                errors['email'] = true;
+                                errors[name] = true;
                             }
                     });
                 } else {
-                    r.email.wrapper.text(r.email.message.invalid);
-                    errors['email'] = true;
+                    wrapper[name] = 'email invalid';
+                    errors[name] = true;
                 } 
 
             } 
@@ -136,51 +136,55 @@ const SignupForm  = createReactClass( {
                 initial_strength = password_strength[result.score];
 
                 if(initial_strength === 'Worst') {
-                    errors['wrapper'][name] = trans[(name + '_Worst')] || 'Worst';
+                    wrapper[name] = trans[(name + '_Worst')] || 'Worst';
                 }
                 else if(initial_strength === 'Bad') {
-                    errors['wrapper'][name] = trans[(name + '_bad')] || 'bad';
+                    wrapper[name] = trans[(name + '_bad')] || 'bad';
                 }
                 else {
-                    errors['wrapper'][name] = '';
-                    delete errors['plainPassword_first'];
+                    wrapper[name] = '';
+                    delete errors[name];
                 }
 
                 if(this.state['registration[plainPassword][second]'] !== "") {
                     let second   = this.state['registration[plainPassword][second]'];
 
                     if(value !== second) {
-                        errors.wrapper['registration[plainPassword][second]'] = trans.password_mismatch;
+                        wrapper['registration[plainPassword][second]'] = trans.password_mismatch;
                         errors['registration[plainPassword][second]'] = true;
                     } else {
-                        errors.wrapper['registration[plainPassword][second]'] = '';
+                        wrapper['registration[plainPassword][second]'] = '';
                         delete errors['registration[plainPassword][second]'];
                     }
                 }
             } 
             else if(name === 'registration[plainPassword][second]'){
-                errors.wrapper['registration[plainPassword][second]'] = '';
+                wrapper['registration[plainPassword][second]'] = '';
                 let first   = this.state['registration[plainPassword][second]']
 
                 if(first !== value) {
                     console.log(first, value);
-                    errors.wrapper['registration[plainPassword][second]'] = trans.password_mismatch;
+                    wrapper['registration[plainPassword][second]'] = trans.password_mismatch;
                     errors['registration[plainPassword][second]'] = true;
                 } else {
-                    errors.wrapper['registration[plainPassword][second]'] = '';
+                    wrapper['registration[plainPassword][second]'] = '';
                     delete errors['registration[plainPassword][second]'];
                 }
             } 
             else {
                 if(regex.name.test(value)) {
-                    errors['wrapper'][name] = "";
-                    delete errors['firstname'];
+                    wrapper[name] = "";
+                    delete errors[name];
                 } else {
-                    errors['wrapper'][name] = trans[('invalid')];
+                    wrapper[name] = 'invalid';
                     errors[name] = true;
                 }
             }
         }
+        this.setState({
+            errors: errors,
+            wrapper: wrapper
+        });
     },
 
     handleGenderChange(e) {
@@ -227,7 +231,7 @@ const SignupForm  = createReactClass( {
         if(Object.keys(this.state.errors).length) {
             e.preventDefault();
             //JSON stringify
-            alert(errors);
+            this.setState(this.state)
         }
         // if (!this.isValid()) {
         //     e.preventDefault();

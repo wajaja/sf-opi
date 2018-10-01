@@ -8,7 +8,7 @@ import { BASE_PATH }        from '../../../../config/api'
 
 
 
-const CheckEmail  = createReactClass( {
+const CheckEmail  = createReactClass({
 
 	getInitialState() {
 		return {
@@ -16,19 +16,15 @@ const CheckEmail  = createReactClass( {
 		}
 	},
 
-    // shouldComponentUpdate(nextProps) {
-    //     return this.props.location !== nextProps.location
-    // },
-
 	render() {
 		const { dispatch, user, resettingData, } = this.props,
-		{ check_email, } = resettingData
+		{ check_email, trans } = resettingData
 
 		return (
-			<div className="hm-container setting" ref={c => this._pageElm = c}>
-                <div id="sttg_main_blk" className="sttg-main-blk">
+			<div className="hm-container chk-ml">
+                <div className="sttg-main-blk">
                     <div className="sect-frm-ctnr reset-req">
-                        <p>{trans.check_email}</p>
+                        <p className="chk-msg">{trans.check_email}</p>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ import '../../../styles/social/navbar.scss'
 
 const DefaultNavBar  = createReactClass( {
 	render() {
-		const { login } = this.props;
+		const { login, location } = this.props;
 
 		return (
 			<nav  className="navbar navbar-inverse navbar-fixed-top">
@@ -26,9 +26,16 @@ const DefaultNavBar  = createReactClass( {
     				</div>
 		            <div className="nav-ctnr">
 		            	<div className="dft-g-rgstr-ctnr">
-				        	<button className="btn go-regiter-btn">
-				            	<a href="http://opinion.com/app_dev.php/signup" className="go-regiter">Sign Up</a>
-				            </button>
+			        		{location.pathname !== '/signup' && 
+			        			<div className="btn go-regiter-btn">
+			            			<a href="http://opinion.com/app_dev.php/signup" className="go-regiter">Sign Up</a>
+			            		</div>
+			        		}
+			        		{location.pathname !== '/login' && 
+			            		<div className="btn go-regiter-btn">
+			            			<a href="http://opinion.com/app_dev.php/login" className="go-regiter">Login</a>
+			            		</div>
+			        		}
 				        </div>
 			        </div>
 	            </div>
