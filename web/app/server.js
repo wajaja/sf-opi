@@ -15,7 +15,9 @@ var server          = http.createServer(function(req, res) {
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.setHeader("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-        res.end(content);
+        //res.end(content); //https://github.com/mozilla/nunjucks/issues/652#issuecomment-175881104
+
+        res.render(content);
     });
 }).listen(8081);
 

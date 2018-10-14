@@ -55,6 +55,7 @@ function Photo(state = initialState, action) {
         case PhotoActions.ZOOM_PHOTO_RESPONSE:
             return Object.assign({}, state, {
                 zoomRequest: false,
+                showZoomImage: true,
                 zoomId: action.photo.id,
                 zoomSrc: action.photo.webPath
             })

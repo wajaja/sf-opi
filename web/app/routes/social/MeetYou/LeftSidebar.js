@@ -21,7 +21,11 @@ const LeftSidebar = createReactClass({
     },
 
     render() {
-        const { access_token, query, availableImages, selectedImage, onSelectImage, onSearch, onSearchReset, onQueryChange } = this.props
+        const { 
+            access_token, query, availableImages, 
+            selectedImage, onSelectImage, onSearch, 
+            onSearchReset, onQueryChange,
+            leftPanel } = this.props
         return (
             <div className="Sidebar">
                 <Card title="Images">

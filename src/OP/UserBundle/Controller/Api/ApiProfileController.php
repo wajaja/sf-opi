@@ -220,7 +220,7 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
         $u_man      = $this->get('fos_user.user_manager');
         $serializer = $this->get('jms_serializer');
         $user       = $this->_getUser();
-        $page       = $request->query->get('page') ? $request->query->get('page') : 1;
+        $page       = !!$request->query->get('page') ? $request->query->get('page') : 1;
         $profile    = $u_man->findUserByUsername($username);
         $results    = $profile->getMyFriends()->toArray();
         //Warning: it will use the "==" comparison, not the strict comparison ("===")

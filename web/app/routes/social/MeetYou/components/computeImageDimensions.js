@@ -7,8 +7,8 @@ const SIZES = {
 };
 
 export default (Component) => {
-  return ({ size, ...rest }) => {
-    const [canvasWidth, canvasHeight] = SIZES[size];
-    return <Component {...rest} {...{canvasWidth, canvasHeight}} />;
+  return ({ page, ...rest }) => {
+    const [canvasWidth, canvasHeight] = SIZES[page.size];
+    return <Component page={page} {...rest} {...{canvasWidth, canvasHeight}} />;
   };
 };

@@ -104,7 +104,10 @@ const BuildTextArr  = async function(content) {
                         index: i,
                         type: 'mention',
                         text: el.innerHTML,
-                        style: {},
+                        style: {
+                            color: "black", //"#1CA782",
+                            fontFamily: "cursive"
+                        },
                         link: link,
                         pIndex: pIndex,
                         fullUrl: `http://opinion.com${BASE_PATH}/${link}`
@@ -114,7 +117,12 @@ const BuildTextArr  = async function(content) {
                     textArr.push({
                         index: i,
                         type: 'emojione',
-                        style: {},
+                        style: {
+                            height: 20,
+                            width: 20,
+                            color: "black", //"#1CA782",
+                            fontFamily: "cursive"
+                        },
                         src: el.src,
                         alt: el.alt,
                         pIndex: pIndex,
@@ -130,7 +138,10 @@ const BuildTextArr  = async function(content) {
                                 index: i+index,
                                 type: 'hashtag',
                                 text: spanArr[index],
-                                style: {},
+                                style: {
+                                    color: "black", //"#1CA782",
+                                    fontFamily: "cursive"
+                                },
                                 link: tag,
                                 pIndex: pIndex,
                                 fullUrl: `http://opinion.com${BASE_PATH}/${tag}`
@@ -139,8 +150,11 @@ const BuildTextArr  = async function(content) {
                             textArr.push({
                                 index: i+index,
                                 type: 'text',
+                                style: {
+                                    color: "black", //"#1CA782",
+                                    fontFamily: "cursive"
+                                },
                                 text: spanArr[index],
-                                style: {},
                                 pIndex: pIndex,
                             })
                         }
@@ -172,7 +186,10 @@ const BuildTextArr  = async function(content) {
                 index: 0,
                 type: 'text',
                 text: txt,
-                style: {},
+                style: {
+                    color: "black", //"#1CA782",
+                    fontFamily: "cursive"
+                },
                 pIndex: i,
             })
         })

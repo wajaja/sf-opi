@@ -146,12 +146,15 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         // $d              = file_get_contents($url);
         // $data           = json_decode($d , true);
         // $countryInfos   = $this->getCountryInfos($clientIp);
+        $request = $this->request;
+        $session = $request->getSession();
         $deviceDetector = $this->deviceDetector;
 
         if (null !== $user->getLocale()) {
             $session->set('_locale', $user->getLocale());
         }
 
+        $session->set('isMobile', $deviceDetector->isMobileBrowser($request));
         $token = new UsernamePasswordToken($user, null, "api", $user->getRoles());
         $this->container->get("security.token_storage")->setToken($token);
 
@@ -162,5 +165,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         $this->dm->persist($device);
         // $user->setCountryInfos($countryInfos);
         $this->userManager->updateUser($user);
+
+
     }
 }

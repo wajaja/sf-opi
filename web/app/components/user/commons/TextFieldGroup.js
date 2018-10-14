@@ -2,13 +2,16 @@ import React                from 'react';
 import PropTypes            from 'prop-types';
 
 
-const TextFieldGroup = ({name, field, hasPreviousSession, wrapClassName, flashBag, value, label, placeholder, errors, type, customClassName, onChange, onBlur, checkUserExists }) => {
+const TextFieldGroup = ({
+    name, field, hasPreviousSession, wrapClassName, 
+    flashBag, value, label, placeholder, errors, wrapper,
+    type, customClassName, onChange, onBlur, checkUserExists }) => {
     return (
         <div className={wrapClassName}>
             {!!hasPreviousSession && !!flashBag && !!flashBag[name] && 
-                <div class={`flash ${field}`}>{flashBag[name]}</div>
+                <div className={`flash ${field}`}>{flashBag[name]}</div>
             }
-            {!!errors && !!errors[name] && <div class={`flash ${field}`}>{errors.wrapper[name]}</div>}
+            {!!errors && !!errors[name] && <div className={`flash ${field}`}>{wrapper[name]}</div>}
             <label className="control-label">{label}</label>
             <input 
                 onChange    = {onChange}

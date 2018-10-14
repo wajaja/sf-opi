@@ -58,14 +58,17 @@ class ApiSecurityController extends FOSRestController implements ClassResourceIn
     public function logoutAction(Request $request) {
 
     	$session = $request->getSession();
-    	$session->invilidate();
+        $isMobile = $session->get('isMobile');
+    	// $session->invalidate();
+        // echo $request->headers->get('content_type');
+        // die();
 
-    	if('application/json' === $request->headers->get('content_type')) {
-    		$response = new JsonResponse();
-            $response->setData(array('status'=> 'success'));
-    	} else {
-            $url = '/';
-    		$response = new RedirectResponse($url);
+    	if('html' === $request->headers->get('content_type')) {
+            $url =  $this->generateUrl($isMobile ? 'mobile_homepage' : 'homepage');
+            $response = new RedirectResponse($url);
+        } else {
+
+    		$response = new JsonResponse(['status'=> 'success']);
     		// $event    = new AuthenticationSuccessEvent(['token' => $jwt], $user, $response);
             // $this->dispatcher->dispatch(Events::AUTHENTICATION_SUCCESS, $event);
             

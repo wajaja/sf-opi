@@ -1,15 +1,13 @@
 import { getPopularImages } from '../../routes/social/MeetYou/utils/unsplash';
+import undoable, { distinctState } from 'redux-undo'
 
 const images = getPopularImages();
 
 export const initialState = {
-    filter: 'light_contrast',
     availableImages: [],
-    selectedImage: null,
     query: "",
     drawing: null,
-    size: 'square',
-    text: '“Others have seen what is and asked why. I have seen what could be and asked why not.”\n- Pablo Picasso',
+    filter: 'light_contrast',
     textAttrs: {
         fontSize: 32,
         color: 'white',
@@ -18,8 +16,25 @@ export const initialState = {
         italic: false,
         lineHeight: 1.35
     },
-    focused: false,
-    editing: false
+    pages: [
+        {
+            size: 'square',
+            editing: false,
+            cards: [
+                {
+                  id: 1,
+                  order: 0,
+                  type: '', // image || edittex
+                  textArr: [],
+                  url: '',
+                  content: '',
+                  unique: '1-0' //1-0 page1-card0
+                }
+            ],
+            selectedCardId: "1_1",
+            activePage: 1
+        }
+    ]
 };
 
 function MeetYou(state = initialState, action) {
@@ -69,4 +84,8 @@ function MeetYou(state = initialState, action) {
     }
 }
 
-export default MeetYou
+const undoableMeetYou = undoable(MeetYou, {
+    filter: distinctState()
+})
+
+export default undoableMeetYou

@@ -22,14 +22,15 @@ class InvitationManager
      *
      * @var type
      */
-    protected $dm, $container, $transformer, $uProvider, $userManager;
+    protected $dm, $container, $transformer, $uProvider, $userManager, $domain_name;
 
-    public function __construct(DocumentManager $dm, Container $container, ObjectToArrayTransformer $transformer, UserProvider $uProvider, OpinionUserManager $uMan) {
+    public function __construct(DocumentManager $dm, Container $container, ObjectToArrayTransformer $transformer, UserProvider $uProvider, OpinionUserManager $uMan, $domain_name) {
         $this->dm           = $dm;
         $this->container    = $container;
         $this->transformer  = $transformer;
         $this->uProvider    = $uProvider;
         $this->userManager  = $uMan;
+        $this->domain_name  = $domain_name;
     }
 
     public function countAlerts(User $user) {
@@ -82,7 +83,7 @@ class InvitationManager
                 'firstname'     => $d['firstname'],
                 'friendRequest' => $this->checkInvitationRequest($_id, $invitations),
                 'profilePic'    => $profileId ? $this->getProfilePic($profileId) 
-                                              : "/images/favicon.ico"
+                                              : "{$this->domain_name}/images/favicon.ico"
             ];
         }
 
@@ -109,7 +110,7 @@ class InvitationManager
                 'lastname'      => $d['lastname'],
                 'firstname'     => $d['firstname'],
                 'profilePic'    => $profileId ? $this->getProfilePic($profileId) 
-                                              : "/images/favicon.ico"
+                                              : "{$this->domain_name}/images/favicon.ico"
             ];
         }
         return $users;

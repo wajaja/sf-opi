@@ -1,0 +1,14 @@
+<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <ellipse ry="0.491352" rx="0.196541" id="svg_12" cy="13.740362" cx="25.737028" fill-opacity="null" stroke-opacity="null" stroke-width="null" stroke="null" fill="none"/>
+  <ellipse ry="1.031839" rx="0.737028" id="svg_14" cy="18.211665" cx="20.283021" fill-opacity="null" stroke-opacity="null" stroke-width="null" stroke="null" fill="none"/>
+  <ellipse ry="2.161949" rx="2.653301" id="svg_17" cy="17.572908" cx="25.835298" fill-opacity="null" stroke-opacity="null" stroke-width="null" stroke="null" fill="none"/>
+  <text font-style="normal" font-weight="bold" stroke="null" transform="matrix(1.4331844006125267,0,0,1.4773766044797807,-9.265738465802855,-16.761134348881797) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_21" y="37.201253" x="8.94569" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#000000">Aa</text>
+ </g>
+</svg>

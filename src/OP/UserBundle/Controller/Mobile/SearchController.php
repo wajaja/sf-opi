@@ -57,7 +57,7 @@ class SearchController extends Controller
             $user['firstname']  = $g_user->getFirstname();
             $user['lastname']   = $g_user->getLastname();
             $user['pic_path']   = $g_user->getProfilePic() ? '\/opinion/'.$g_user->getProfilePic()->getWebPath() 
-                                                         : "/images/favicon.ico";           
+                                                         : "{$this->domain_name}/images/favicon.ico";           
             $datas []           = $user;
         }
 
@@ -118,7 +118,7 @@ class SearchController extends Controller
             $user['firstname'] = $dbUser->getFirstname();
             $user['lastname'] = $dbUser->getLastname();
             $user['pic_path'] = $dbUser->getProfilePic() ? '/opinion/web/'.$dbUser->getProfilePic()
-                                                                                ->getWebPath() : "/opinion/web/images/favicon.ico";           
+                                                                                ->getWebPath() : "{$this->domain_name}/images/favicon.ico";           
             $datas [] = $user;
         }
 

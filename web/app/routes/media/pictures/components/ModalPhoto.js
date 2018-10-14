@@ -17,7 +17,7 @@ import { BASE_PATH }                from '../../../../config/api'
 import * as DraftFuncs              from '../../../../components/social/home/form/DraftFuncs'
 import { BuildContent, LikeButton, 
          Author, TimeAgo,
-         Modal, EmojisContainer,
+         Modal,
         EveryWhereContainer, }                    from '../../../../components' 
 import Right             from './Right'
 
@@ -472,7 +472,10 @@ const ModalPhoto  = createReactClass({
                         <title>Photo of {photo.author.firstname}</title>
                     </Helmet>
                     <div className="black-drop-dv" onClick={this.closeModal}></div>
-                    <div className="container" style={{width: `${width}px`, height: `${height}px`}}>
+                    <div className="container" style={{
+                        width: `${width}px`, 
+                        height: `${height}px`
+                    }}>
                         <div className="dv-ph-ctnr" >
                             <div className="ph_header">
                                 <span className="ph-close" onClick={this.closeModal}>
@@ -568,6 +571,7 @@ const ModalPhoto  = createReactClass({
                                             photo={photo}
                                             params={params}
                                             onShare={this.onShare}
+                                            onComment={this.props.onComment}
                                             comments={this.state.comments}
                                             showLikes={showLikes}
                                             questions={questions}

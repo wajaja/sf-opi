@@ -4,6 +4,7 @@ import { connect }          from 'react-redux'
 import { fromJS }                   from 'immutable'
 import { BASE_PATH }                from '../../config/api'
 import { Modal }                    from '../../components'
+import { bindActionCreators }       from 'redux'
 
 import { 
     Photo as PhotoAction
@@ -77,11 +78,10 @@ const ZoomImage  = createReactClass({
                                 zIndex: 2
                             }}
                             >
-                            <div className="share_form_header">
-                                <span className="opinion-modal-close" onClick={this.closeZoom}>
-                                    <i className="fa fa-times"></i>
-                                </span>
-                            </div> 
+                            
+                            <span className="opinion-modal-close" onClick={this.closeZoom}>
+                                
+                            </span> 
                             <div className="img-ctnr">
                                 {!isRequesting && 
                                     <img 

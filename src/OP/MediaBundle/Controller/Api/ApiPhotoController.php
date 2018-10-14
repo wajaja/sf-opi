@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     OP\MediaBundle\DataTransformer\ToArrayTransformer as Transformer,
     JMS\Serializer\SerializerInterface,
+    OP\UserBundle\Security\UserProvider,
     OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
     FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -26,7 +27,12 @@ use Symfony\Component\HttpFoundation\Request,
 class ApiPhotoController extends FOSRestController implements ClassResourceInterface
 {
 
+    protected $dm, $user_provider;
 
+    public function __construct(UserProvider $uProvider, \Doctrine\ODM\MongoDB\DocumentManager $dm) {
+        $this->dm           = $dm;
+        $this->user_provider = $uProvider;
+    }
         /**
      * Lists all Image documents.
      *

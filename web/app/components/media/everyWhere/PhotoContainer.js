@@ -49,7 +49,7 @@ const PhotoContainer = createReactClass({
 		console.log('moveEmoji', left, top, title)
 		this.setState(
 			update(this.state, {
-				hasEmoji: false,
+				hasEmoji: {$set: false},
 				emoji: {
 					$merge: { left, top, title },
 				},

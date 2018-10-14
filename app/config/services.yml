@@ -27,7 +27,9 @@ services:
 
     OP\UserBundle\Controller\:
         resource: '../../src/OP/UserBundle/Controller/*'
-        arguments: ['@OP\UserBundle\Security\UserProvider']
+        arguments: 
+            - '@OP\UserBundle\Security\UserProvider'
+            - '@doctrine.odm.mongodb.document_manager.public'
     OP\UserBundle\Controller\SecurityController:
         arguments: ['@translator', '@security.csrf.token_manager']
     OP\UserBundle\Controller\RegistrationController:

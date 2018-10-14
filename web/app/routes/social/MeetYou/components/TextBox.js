@@ -4,18 +4,31 @@ import PropTypes    from 'prop-types';
 import {
     CanvasRect, 
     CanvasText, 
+    CanvasDraggableImage,
     CanvasOutline,
     CanvasGroup
 }                   from './Canvas';
 import Snap from './TextBoxSnap';
 import Cursor from './TextBoxCursor';
-import {findIdxForCursor, findPosForCursor, findCoordsForPos, findRectsForSelection} from '../utils/text';
+import {
+    findIdxForCursor, findPosForCursor, 
+    findCoordsForPos, findRectsForSelection
+}                   from '../utils/text';
 import {keys} from '../utils/keyboard';
 import {rectCenter, moveRect} from '../utils/pixels';
+const { fromJS } = require('immutable');
 
 const makeBlue = (alpha) => `rgba(87, 205, 255, ${alpha})`;
 
 export default createReactClass({
+
+    getInitialState(){
+        return {
+            x: {},
+            y: {}
+        }
+    },
+
   propTypes: {
     text: PropTypes.string.isRequired,
     textAttrs: PropTypes.object.isRequired,
@@ -54,15 +67,25 @@ export default createReactClass({
 
     this.mouseHeld = true;
     if (this.getFocusState().isFocused) {
-      this.mouseDown = new Date;
+        this.mouseDown = new Date;
     }
     this.props.setFocus();
   },
 
+    updateNextPos(nextIndex, position) {
+        let imState = fromJS(this.state);
+        imState.get('x').set(nextIndex, position.x)
+        imState.get('y').set(nextIndex, position.y)
+        this.setState(imState.toJS())
+    },
+
   render() {
     const {text, textAttrs, textArr} = this.props;
     const {mouseHeld} = this;
-    const self = this
+    const self = this;
+    let lastX = 0; //todo
+    let lastY = 0; //todo
+    let canvasHeight = 20;
 
     // const selectionRectFrames = this.getSelectionRects();
     // const selectionRects = selectionRectFrames.map((frame, i) => {
@@ -71,15 +94,48 @@ export default createReactClass({
 
     // invisible rect to allow text selection/dragging
     return <CanvasGroup>
-      {!!textArr && textArr.map(function(tObject, i) {
-         return <CanvasText
-              tObject={tObject}
-              frame={tObject.frame}
-              fill="rgba(0,0,0,0)"
-              mouseSnap={true}
-              onMouseDown={self.handleMouseDown}
-              onMouseMove={self.handleMouseMove}
-              onMouseUp={self.handleMouseUp} />
+        {textArr.map && textArr.map(function(tObject, i) {
+            //13 mean 13px of default text; times to textLength
+            // canvasWidth = canvasWidth + (tObject.text.length * 13);
+            let x = self.state.x[i] ? self.state.x[i] : lastX,
+            y = self.state.y[i] ? self.state.y[i] : lastY
+
+            if(x >= 420) { //break line|| handle text overflowing canvas
+                x = 0;
+                y  = lastY + 30; //new line
+            }
+
+            let $return = tObject.type === "emojione"
+                ? <CanvasDraggableImage
+                    x={x}
+                    y={y}
+                    order={i}
+                    tObject={tObject}
+                    updateNextPos={self.updateNextPos}
+                    key={i}
+                    frame={tObject.frame}
+                    fill={tObject.style.color}
+                    mouseSnap={true}
+                    onMouseDown={self.handleMouseDown}
+                    onMouseMove={self.handleMouseMove}
+                    onMouseUp={self.handleMouseUp} />
+                : <CanvasText
+                    x={x}
+                    y={y}
+                    order={i}
+                    tObject={tObject}
+                    frame={tObject.frame}
+                    fill={tObject.style.color}
+                    fontSize={17}
+                    mouseSnap={true}
+                    updateNextPos={self.updateNextPos}
+                    key={i}
+                    onMouseDown={self.handleMouseDown}
+                    onMouseMove={self.handleMouseMove}
+                    onMouseUp={self.handleMouseUp} />;
+
+                            
+         return $return
       })}
     </CanvasGroup>;
   }

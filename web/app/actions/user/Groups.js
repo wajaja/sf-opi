@@ -75,14 +75,14 @@ export const _loadGroupResponse = (name, group, newsRefs, photos) => ({
     type: LOAD_GROUP_RESPONSE, name, group, newsRefs, photos 
 }) 
 
-export function loadGroup(name) {
+export function loadGroup(id) {
     return (dispatch, getState) => {
         return new Promise((resolve, reject) => {
-            axios.get(`${BASE_PATH}/api/groups/${name}`).then(
+            axios.get(`${BASE_PATH}/api/groups/show/${id}`).then(
                 (res) => {
                     console.log(res.data)
                     const { group, newsRefs, photos } = res.data;
-                    dispatch(_loadGroupResponse(name, group, newsRefs, photos))
+                    dispatch(_loadGroupResponse(id, group, newsRefs, photos))
                     resolve(res.data)
                 },
                 (error) => {

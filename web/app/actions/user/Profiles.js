@@ -215,8 +215,8 @@ export function loadRelationship(username, page) {
             axios.get(`${BASE_PATH}/api/friends/load/${username}?page=${page}`).then(
                 (res) => {
                     console.log(res.data)
-                    const { users } = res.data;
-                    dispatch(_loadFriendsResponse(username, users))
+                    const { friends } = res.data;
+                    dispatch(_loadFriendsResponse(username, friends))
                     resolve(res.data)
                 },
                 (error) => {

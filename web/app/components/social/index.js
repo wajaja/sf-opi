@@ -1,6 +1,8 @@
 export { TimeAgo, TimeOut, BuildContent, 
 	FlashMessage, BuildHtmlString,
-	ErrorStack, BuildTextArr } from './commons'
+	ErrorStack, BuildTextArr, FontSelector,
+	FontSizeSelector, ColorPicker,
+	BackgroundColorPicker } from './commons'
 export { Center, NewsFeed, PostForm,
 		 PostGallery, SelectType, Contributors,
 		 ContentEditable, SelectRecipient, 

@@ -50,6 +50,13 @@
         margin: 0;
         padding: 0;
         position: relative;
+        transform: translate(50%, 50%);
+        max-width: 500px;
+        display: flex;
+        img{
+            max-height: 600px;
+            flex: auto;
+        }
         .loading-dv{
             display: inline-block;
             position: fixed;
@@ -75,11 +82,11 @@
         }
         .formPshare, .mdl-tg-frd{
             top: 30px;
-            left: 100px;
+            /* left: 100px; */
             display: none;
             position: fixed;
             width: 520px;
-            left: 50%;
+            /* left: 50%; */
             /*margin: -260px 0 0 -260px; /* top & left = width/2 if position fixed */
             -webkit-animation-name: zoomOut;
             -moz-animation-name: zoomOut;
@@ -113,6 +120,10 @@
                 color: #6a727e;
                 right: 8px;
                 top: 3px;
+                display: block;
+                height: 30px;
+                width: 30px;
+                background: rgba( 255, 255, 255, 1 ) url('http://opinion.com/images/if_cancel_32.png') 50% 50% no-repeat;
             }
             .shr-foo-rght{
                 display: inline-block;

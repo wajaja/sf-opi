@@ -919,12 +919,24 @@
 }
 
 .home-center-div{
+    .photos-ctnr-a{
+        flex: auto;
+    }
     .abt-cter-ctnr, .photos-ctnr{
+        display: flex;
         background: #fff;
         padding: 10px 10px;
         border: 1px solid #d2d9dc;
         border-radius: 3px;
         margin: 0 12px;
+        width: 516px;
+        .sml-pic-ctnr{
+            width: 160px !important;
+            height: 160px !important;
+            margin: 2px !important;
+            overflow: hidden;
+            flex: auto;
+        }
         .nm-ctnr, .adr-ctnr-tp, .stt-ctnr{
             padding: 4px;
             font-size: 14px;

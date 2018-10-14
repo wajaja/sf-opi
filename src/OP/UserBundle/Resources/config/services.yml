@@ -21,6 +21,7 @@ services:
             - "@doctrine.odm.mongodb.document_manager.public"
             - "@op_user.user_manager"
             - '@OP\UserBundle\Security\UserProvider'
+            - '%domain_name%'
     OP\UserBundle\Security\JwtTokenAuthenticator:
         autowire: true
     OP\UserBundle\Encoder\OPJWTEncoder: ~
@@ -44,7 +45,7 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onCoreResponse }
             - { name: kernel.event_listener, event: kernel.exception, method: onCoreException }
     OP\UserBundle\Security\UserProvider:
-        arguments: ["@request_stack", "@service_container", "@op_user.user_manager"]
+        arguments: ["@request_stack", "@service_container", "@op_user.user_manager", "%domain_name%"]
     OP\UserBundle\Security\DeviceDetector:
         arguments: ["@request_stack", "@service_container"]
         # src/Acme/UserBundle/Resources/config/services.yml
@@ -220,7 +221,7 @@ services:
             - '@OP\UserBundle\DataTransformer\ObjectToArrayTransformer'
             - '@OP\UserBundle\Security\UserProvider'
             - '@OP\UserBundle\Repository\OpinionUserManager'
-            - '@OP\MediaBundle\DocumentManager\PictureManager'
+            - '%domain_name%'
     OP\UserBundle\DocumentManager\SettingManager:
         arguments: 
             - '@doctrine.odm.mongodb.document_manager.public'

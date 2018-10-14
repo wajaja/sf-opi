@@ -18,7 +18,8 @@ const PhotosCenter = createReactClass({
 	},
 
 	render() {
-		const { photos,  } = this.props
+		const self = this;
+		const { photos, profile } = this.props
 		return(
 			<div className="photos-ctnr">
 				<div className="photos-ctnr-a">
@@ -29,7 +30,7 @@ const PhotosCenter = createReactClass({
 		                        	<Picture 
 			                   			tag="all_pics"
 			                   			image={photo}
-			                   			username={this.props.profile.username} 
+			                   			username={self.props.profile.username} 
 			                   			className="sml-pic-img" 
 			                   			pClassName="sml-pic-lk"
 			                   			{...self.props}

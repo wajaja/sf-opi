@@ -1,37 +1,61 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Konva from 'konva';
 import { Text } from 'react-konva';
 
-class TextC extends PureComponent {
+//TODO:: Replace Component by PureComponent
+class TextC extends Component {
 
-  state = {
-    text1: 'black',
-    text2: 'black',
-    text3: 'black',
-    text3x: 10,
-    text3y: 60
-  };
+    constructor(props) {
+        super(props);
 
-  handleDragEnd = e => {
-    // correctly save node position
-    this.setState({
-      text3: Konva.Util.getRandomColor(),
-      text3x: e.target.x(),
-      text3y: e.target.y()
-    });
-  };
+        this.state = {
+            x: props.x,
+            y: props.y,
+            fill: props.fill,
+            fontSize: props.fontSize
+        }    
+    }
+
+    handleDragEnd = e => {
+        // correctly save node position
+        this.setState({
+            // text3: Konva.Util.getRandomColor(),
+            x: e.target.x(),
+            y: e.target.y(),
+        });
+    };
+
+    componentDidMount() {
+        if(this.props.order === 0) {
+            let nextY = this.props.y,
+            nextX = 0 + this.textNode.getWidth();
+            this.props.updateNextPos((this.props.order + 1), {x: nextX, y: nextY});
+        }
+    }
+
+    componentDidUpdate(oldProps, oldState) {
+        if(this.props.x !== oldProps.x || this.props.y !== oldProps.y) {
+            let nextY = this.props.y,
+            nextX = oldProps.x + this.textNode.getWidth();
+            this.props.updateNextPos((this.props.order + 1), {x: nextX, y: nextY});
+        }
+    }
 
   render() {
     return (
         <Text 
-          text="Some text on canvas" 
-          fontSize={15} 
-          fill={this.state.text3}
-          x={this.state.text3x}
-          y={this.state.text3y}
-          draggable
-          onDragEnd={this.handleDragEnd}
-          />
+            ref={node => {
+              this.textNode = node;
+            }}
+            text={this.props.tObject.text} 
+
+            fontSize={this.state.fontSize} 
+            fill={this.state.fill}
+            x={this.state.x}
+            y={this.state.y}
+            draggable
+            onDragEnd={this.handleDragEnd}
+            />
     );
   }
 }

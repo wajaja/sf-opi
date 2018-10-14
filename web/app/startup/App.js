@@ -338,9 +338,9 @@ const App = createReactClass ({
         this.setState({showModalImageCache: false})
     },
 
-    closeZoomImage() {
-        this.setState({showZoomImage: false})
-    },
+    // closeZoomImage() {
+    //     this.setState({showZoomImage: false})
+    // },
 
     closeModalShare() {
         const { dispatch } = this.props;
@@ -903,7 +903,7 @@ const mapStateToProps = (state /*, props*/) => {
         zoomId:         state.Photo.zoomId,
         zoomSrc:        state.Photo.zoomSrc,
         zoomRequest:    state.Photo.zoomRequest,
-        showZoomImage: state.Photo.zoomRequest
+        showZoomImage: state.Photo.showZoomImage
     }
 }
 

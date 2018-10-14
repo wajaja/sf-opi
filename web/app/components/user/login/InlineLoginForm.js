@@ -18,9 +18,13 @@ const InlineLoginForm  = createReactClass( {
   getInitialState(props) {
     return {
       username : "",
-      password   : "",
-      errors     : {},
-      isLoading  : false 
+      password : "",
+      errors   : {},
+      wrapper  : {
+        password: '',
+        username: ''
+      },
+      isLoading : false 
     }
   },
 
@@ -69,6 +73,7 @@ const InlineLoginForm  = createReactClass( {
                         field="username"
                         label=""
                         name="username"
+                        wrapper={this.state.wrapper}
                         hasPreviousSession
                         wrapClassName=""
                         placeholder="email or username"
@@ -91,6 +96,7 @@ const InlineLoginForm  = createReactClass( {
                         placeholder="password"
                         customClassName="nav-inp-control"
                         value={password}
+                        wrapper={this.state.wrapper}
                         error={errors.password}
                         onChange={this.onChange}
                         type="password"

@@ -1,0 +1,42 @@
+<svg width="500.00000000000006" height="500.00000000000006" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <line id="svg_3" y2="368.083" y1="304.246" x2="397.414" x1="437.485" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_4" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m397.414,368.083c-5.066,8.015 -10.936,16.389 -19.102,21.081" clip-rule="evenodd"/>
+  <line id="svg_5" y2="421.083" y1="389.164" x2="321.398291" x1="376.488291" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_6" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m323.223,420.170646c-20.957,11.904 -30.757,6.977 -28.196,-19.891" clip-rule="evenodd"/>
+  <line id="svg_7" y2="340.649" y1="401.192" x2="300.646" x1="295.026" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_8" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m300.646,340.649c0.913,-9.772 4.733,-18.16 8.471,-24.112" clip-rule="evenodd"/>
+  <line id="svg_9" y2="208.004" y1="316.537" x2="379.102" x1="309.117" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_10" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m336.012,334.601c5.468,-7.959 16.666,-10.104 25.275,-4.845c8.9,5.385 11.82,16.555 6.533,24.971" clip-rule="evenodd"/>
+  <path id="svg_11" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m368.152,354.519c4.318,-6.34 13.178,-8.069 20.084,-3.89c7.087,4.291 9.413,13.219 5.191,19.904" clip-rule="evenodd"/>
+  <path id="svg_12" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m309.823,319.25c4.374,-6.367 13.357,-8.111 20.251,-3.876c7.17,4.347 9.551,13.316 5.287,20.043" clip-rule="evenodd"/>
+  <path id="svg_13" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m297.311,376.402c9.896,1.813 19.337,5.385 27.919,10.547c7.516,4.596 14.271,10.368 19.932,17.123" clip-rule="evenodd"/>
+  <line id="svg_14" y2="446.704" y1="380.444" x2="434.177" x1="434.177" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_15" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m434.177,446.704c0,15.517 -13.053,28.292 -28.832,28.292" clip-rule="evenodd"/>
+  <line id="svg_16" y2="474.996" y1="474.996" x2="91.264" x1="405.345" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_17" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m91.264,474.996c-15.738,0 -28.749,-12.692 -28.749,-28.292" clip-rule="evenodd"/>
+  <polyline id="svg_18" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" points="61.602645099163055,446.7040100097656 61.602645099163055,138.2010040283203 186.13564985990524,25.003999710083008 404.43264693021774,25.003999710083008 " fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_19" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m405.345,25.004c15.863,0 28.832,12.79 28.832,28.292" clip-rule="evenodd"/>
+  <line id="svg_20" y2="260.918709" y1="55.120709" x2="434.177" x1="434.177" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <line id="svg_21" y2="129.37" y1="25.004" x2="192.778" x1="192.778" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_22" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m192.778,129.37c0,8.305 -6.977,15.143 -15.378,15.143" clip-rule="evenodd"/>
+  <line id="svg_23" y2="144.513" y1="144.513" x2="62.515" x1="177.4" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <line id="svg_24" y2="73.007" y1="73.007" x2="376.706" x1="267.814" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_25" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m376.706,73.007c3.737,0 6.77,3.28 6.77,7.336" clip-rule="evenodd"/>
+  <line id="svg_26" y2="142.326" y1="80.343" x2="383.476" x1="383.476" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_27" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m383.476,142.326c0,4.056 -3.032,7.322 -6.77,7.322" clip-rule="evenodd"/>
+  <line id="svg_28" y2="149.648" y1="149.648" x2="267.814" x1="376.706" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_29" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m267.814,149.648c-3.766,0 -6.797,-3.267 -6.797,-7.322" clip-rule="evenodd"/>
+  <line id="svg_30" y2="80.343" y1="142.326" x2="261.018" x1="261.018" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <path id="svg_31" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" d="m261.018,80.343c0,-4.056 3.031,-7.336 6.797,-7.336" clip-rule="evenodd"/>
+  <line id="svg_32" y2="215.465" y1="215.465" x2="321.963" x1="107.957" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <line id="svg_33" y2="316.163" y1="316.163" x2="252.063" x1="107.957" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+  <line id="svg_34" y2="416.861" y1="416.861" x2="252.063" x1="107.957" stroke-width="4" stroke-miterlimit="2.6131" stroke-linejoin="round" stroke-linecap="round" stroke="#000000" fill-rule="evenodd" fill="none" clip-rule="evenodd"/>
+ </g>
+</svg>

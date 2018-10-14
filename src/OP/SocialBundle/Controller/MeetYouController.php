@@ -78,9 +78,6 @@ class MeetYouController extends Controller
                 'MeetYou'    => [
                     'availableImages'=> [],
                     'query'=> '',
-                    'size'=> 'wide',
-                    'filter' => 'none',
-                    'text' => 'Invitation',
                     'textAttrs' => [
                         'font' =>  'Georgia',
                         'fontSize' =>  17,
@@ -88,7 +85,27 @@ class MeetYouController extends Controller
                         'bold' =>  true,
                         'italic' =>  true
                     ],
-                    'selected' => 'selectedImage'
+                    'filter' => 'none',
+                    'selectedCardId' => "1_1",
+                    'activePage' => 1
+                    ,'pages' => [
+                        [
+                            'size'=> 'wide',
+                            'text' => 'Invitation',
+                            'selected' => 'selectedImage',
+                            'cards' => [
+                                [
+                                    'id' => 1,
+                                    'order' => 0,
+                                    'type' => '', // image || edittex
+                                    'textArr' => [],
+                                    'url' => '',
+                                    'content' => '',
+                                    'unique' => '1-0' //1-0 page1-card0
+                                ]
+                            ]
+                        ]
+                    ]
                 ],
             ],
             'title'         => 'MeetYou | best way to meet people',

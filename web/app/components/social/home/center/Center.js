@@ -132,6 +132,7 @@ const Center  = createReactClass( {
                             onSideComment={this.onSideComment}
                             editPostFormFocus={this.editPostFormFocus}
                             serverSide={this.props.serverSide}
+                            match={this.props.match}
                             />
                     </div>
                 </div>

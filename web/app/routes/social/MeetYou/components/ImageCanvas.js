@@ -15,60 +15,15 @@ import Spinner            from './Spinner';
 import TextBox            from './TextBox';
 import computeDimensions  from './computeImageDimensions';
 import loadImage          from './loadImage';
-import TextEditor         from './TextEditor'
-
 import textEditor from '../utils/textEditor';
 
-const makeBlue = (alpha) => `rgba(87, 205, 255, ${alpha})`;
+//const makeBlue = (alpha) => `rgba(87, 205, 255, ${alpha})`;
 
-const FILTERS = {
-  light_contrast: ['contrast', 0.35],
-  heavy_contrast: ['contrast', 0.65],
-  light_blur: ['blur', 15],
-  heavy_blur: ['blur', 40]
-};
-
-// TODO: make this work & use this
-const ControlledTextarea = createReactClass({
-  componentDidMount() {
-    const txt = ReactDOM.findDOMNode(this);
-    const [start, end] = this.props.selection;
-    txt.setSelectionRange(start, end);
-  },
-
-  componentWillReceiveProps(nextProps) {
-    const txt = ReactDOM.findDOMNode(this);
-    const [start, end] = nextProps.selection;
-    txt.setSelectionRange(start, end);
-  },
-
-  handleSelect(e) {
-    const {selectionStart, selectionEnd} = e.target;
-    if (this._focusing !== true) {
-      this.props.onSelect(selectionStart, selectionEnd);
-    }
-    this.select();
-    this._focusing = false;
-    e.preventDefault();
-    e.stopPropagation();
-  },
-
-  select(e) {
-    this._focusing = true;
-    const txt = ReactDOM.findDOMNode(this);
-    const [start, end] = this.props.selection;
-    txt.setSelectionRange(start, end);
-  },
-
-  render() {
-    const {selection, onSelect, ...rest} = this.props;
-    return <textarea onSelect={this.handleSelect} onFocus={this.select} {...rest} />;
-  }
-});
-
-// const Filter = ({ name: humanName, frame }) => {
-//   const [name, value] = FILTERS[humanName];
-//   return <CanvasFilter filter={name} value={value} frame={frame} />;
+// const FILTERS = {
+//   light_contrast: ['contrast', 0.35],
+//   heavy_contrast: ['contrast', 0.65],
+//   light_blur: ['blur', 15],
+//   heavy_blur: ['blur', 40]
 // };
 
 const ImageCanvas = createReactClass({
@@ -155,39 +110,41 @@ const ImageCanvas = createReactClass({
     const {horizontal: horizontalGuideLine, vertical: verticalGuideLine} = this.getGuideLines();
     const {horizontal: showHorizontalGuide, vertical: showVerticalGuide} = isFocused ? this.closeToGuides(isFocused) : {};
 
-    return <div className="ImageCanvas">
-        <Stage
-            ref="canvas"
-            width={canvasWidth}
-            height={canvasHeight}
-            onRedraw={this.props.onRedraw}>
-            <Layer>
-                <CanvasImage image={image} frame={mainFrame} onMouseDown={this.handleClickOnImage} />
-                  <TextBox
-                    ref="bodyBox"
-                    part="body"
-                    cancelEditing={this.props.onCancelEdit}
-                    setEditing={this.props.onEdit}
-                    setFocus={this.props.onFocus.bind(this, 'body')}
-                    moveRect={this.props.onTextRectMove.bind(this)}
-                    textAttrs={this.props.body.textAttrs}
-                    textArr={this.props.textArr}
-                    text={this.props.body.text}
-                    selection={this.getCursors()}
-                    onAreaSelection={(start, end) => { this.textEditor.setSelection(start, end, this.refs.txt); this.forceUpdate(); }}
-                    onSetCursor={(pos) => { this.textEditor.setCursor(pos, this.refs.txt); this.forceUpdate(); }}
-                    onEditEnter={() => this.refs.txt.focus()}
-                    focusedPart={this.props.isFocused}
-                    isEditing={this.props.isEditing} />
-            </Layer>
-        </Stage>
-      <TextEditor
-        ref="txt"
-        updateTextArr={this.updateTextArr}
-        />
-    </div>
-  }
+    return(
+          <Stage
+              ref="canvas"
+              width={canvasWidth}
+              height={canvasHeight}
+              onRedraw={this.props.onRedraw}>
+              <Layer>
+                  {this.props.cards.map && this.props.cards.map((card, i) => {
+                    if(card.type === 'image') 
+                        return <CanvasImage 
+                                  image={card}
+                                  onMouseDown={this.handleClickOnImage} />
+                    else if(card.type === 'edittex')
+                        return <TextBox
+                                  ref="bodyBox"
+                                  part="body"
+                                  cancelEditing={this.props.onCancelEdit}
+                                  setEditing={this.props.onEdit}
+                                  setFocus={this.props.onFocus.bind(this, 'body')}
+                                  moveRect={this.props.onTextRectMove.bind(this)}
+                                  textAttrs={this.props.body.textAttrs}
+                                  textArr={card.textArr}
+                                  text={this.props.body.text}
+                                  selection={this.getCursors()}
+                                  onAreaSelection={(start, end) => { this.textEditor.setSelection(start, end, this.refs.txt); this.forceUpdate(); }}
+                                  onSetCursor={(pos) => { this.textEditor.setCursor(pos, this.refs.txt); this.forceUpdate(); }}
+                                  onEditEnter={() => this.refs.txt.focus()}
+                                  focusedPart={this.props.isFocused}
+                                  isEditing={this.props.isEditing} />
+                    })}  
+              </Layer>
+          </Stage>
+        )
+    }
 });
 
-export default computeDimensions(loadImage(ImageCanvas));
+export default ImageCanvas;
                   // <Filter name={filter} frame={mainFrame} />

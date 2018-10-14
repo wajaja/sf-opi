@@ -1,5 +1,8 @@
-import React 						from 'react'
+import React, { Component }			from 'react'
 import createReactClass 			from 'create-react-class'
+import PropTypes 					from 'prop-types';
+import camelCase 					from 'lodash/camelCase';
+import has 							from 'lodash/has';
 import axios 						from 'axios'
 import { fromJS } 					from 'immutable'
 import { connect } 					from 'react-redux'
@@ -9,6 +12,7 @@ import EmojiPicker 					from 'emojione-picker'
 import createEmojiPlugin 			from 'draft-js-emoji-plugin'
 import Status 						from 'react-fine-uploader/status'
 import createStickerPlugin 			from 'draft-js-sticker-plugin';
+import onClickOutside 				from 'react-onclickoutside'
 import { 
     RichUtils, getDefaultKeyBinding, 
     KeyBindingUtil, EditorState,
@@ -22,6 +26,22 @@ import createLinkifyPlugin 			from 'draft-js-linkify-plugin'
 import createMentionPlugin, 
 { defaultSuggestionsFilter } 		from 'draft-js-mention-plugin'; // eslint-disable-line import/no-unresolved
 import MultiDecorator 				from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
+
+import createInlineToolbarPlugin, { Separator } from 'draft-js-inline-toolbar-plugin';
+import {
+  ItalicButton,
+  BoldButton,
+  UnderlineButton,
+  CodeButton,
+  HeadlineOneButton,
+  HeadlineTwoButton,
+  HeadlineThreeButton,
+  UnorderedListButton,
+  OrderedListButton,
+  BlockquoteButton,
+  CodeBlockButton,
+} from 'draft-js-buttons';
+
 import { canUseDOM } 				from '../../../../utils/executionEnvironment'
 import { BASE_PATH } 				from '../../../../config/api'
 import * as DraftFuncs 				from '../../../../components/social/home/form/DraftFuncs'
@@ -30,6 +50,16 @@ import {
 	ReplyForm as FormActions,
 	Authors as AuthorsActions
 } 									from '../../../../actions/post'
+
+
+//
+// import '../css/Draftjs-custom.css';
+import createBlockStylesPlugin from '../plugins/blockStyles';
+import { DYNAMIC_STYLES_PREFIX } from '../utils/customStylesUtils';
+
+//import { getLSItem } from '../utils/localStorage';
+import { reverseString } from '../utils/stringUtils';
+const blockStylesPlugin = createBlockStylesPlugin();
 
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -43,13 +73,6 @@ PauseResumeButton = MyLoadable({loader: () => import('react-fine-uploader/pause-
 FileInput 		= MyLoadable({loader: () => import('react-fine-uploader/file-input')})
 
 
-const isFileGone = status => {
-    return [
-        'canceled',
-        'deleted',
-    ].indexOf(status) >= 0
-}
-
 const emojiPlugin 					= createEmojiPlugin({
 	selectButtonContent: ''
 }),
@@ -60,9 +83,93 @@ linkifyPlugin 						= createLinkifyPlugin({
     	// eslint-disable-next-line no-alert, jsx-a11y/anchor-has-content
     	<a {...props} onClick={() => alert('Clicked on Link!')} />
   	)
-})
+});
 
-const TextEditor  = createReactClass( {
+///////////
+
+class HeadlinesPicker extends Component {
+  	componentDidMount() {
+    	setTimeout(() => { window.addEventListener('click', this.onWindowClick); });
+  	}
+
+  	componentWillUnmount() {
+    	window.removeEventListener('click', this.onWindowClick);
+  	}
+
+  	onWindowClick = () =>
+	    // Call `onOverrideContent` again with `undefined`
+	    // so the toolbar can show its regular content again.
+	    this.props.onOverrideContent(undefined);
+
+  	render() {
+	    const buttons = [HeadlineOneButton, HeadlineTwoButton, HeadlineThreeButton];
+	    return (
+			<div>
+				{buttons.map((Button, i) => // eslint-disable-next-line
+				  <Button key={i} {...this.props} />
+				)}
+			</div>
+	    );
+  	}
+}
+
+class HeadlinesButton extends Component {
+	// When using a click event inside overridden content, mouse down
+	// events needs to be prevented so the focus stays in the editor
+	// and the toolbar remains visible  onMouseDown = (event) => event.preventDefault()
+	onMouseDown = (event) => event.preventDefault()
+
+  	onClick = () =>
+	    // A button can call `onOverrideContent` to replace the content
+	    // of the toolbar. This can be useful for displaying sub
+	    // menus or requesting additional information from the user.
+	    this.props.onOverrideContent(HeadlinesPicker);
+
+  	render() {
+	    return (
+	      	<div onMouseDown={this.onMouseDown} className={editorStyles.headlineButtonWrapper}>
+		        <button onClick={this.onClick} className={editorStyles.headlineButton}>
+		          H
+		        </button>
+	      	</div>
+	    );
+  	}
+}
+
+const inlineToolbarPlugin = createInlineToolbarPlugin({
+  structure: [
+    BoldButton,
+    ItalicButton,
+    UnderlineButton,
+    CodeButton,
+    Separator,
+    HeadlinesButton,
+    UnorderedListButton,
+    OrderedListButton,
+    BlockquoteButton,
+    CodeBlockButton
+  ]
+});
+const { InlineToolbar } = inlineToolbarPlugin;
+
+const TextEditor  = onClickOutside(createReactClass({
+
+	getDefaultProps() {
+        return {
+            customStylesUtils: PropTypes.object.isRequired,
+            currentColor: PropTypes.string.isRequired,
+            setCurrentColor: PropTypes.func.isRequired,
+            colorHandle: PropTypes.string.isRequired,
+            switchColorHandle: PropTypes.func.isRequired,
+            setCurrentFontSize: PropTypes.func.isRequired,
+            hasEditorFocus: PropTypes.bool.isRequired,
+            setEditorFocus: PropTypes.func.isRequired,
+            editorState: PropTypes.object.isRequired,
+            setEditorState: PropTypes.func.isRequired,
+            setEditorBackground: PropTypes.func.isRequired,
+            setCurrentFontFamily: PropTypes.func.isRequired,
+        }
+    },
 
 	getInitialState() {
 		const compositeDecorator = new MultiDecorator([
@@ -167,16 +274,23 @@ const TextEditor  = createReactClass( {
     	this.uploader.methods.cancel(id);
     },
 
-    addText(e) {
+    //method from 'react-onclickoutside' module
+	handleClickOutside(e) {
     	e.preventDefault();
 		this.composeData();
+		//TODO
+		this.props.setEditorFocus(false);
 	},
+
+ //    addText(e) {
+	// },
 
     composeData() {
     	const { editorState, unique, successFiles } = this.state
+    	console.log(convertToRaw(editorState.getCurrentContent()));
 		BuildTextArr(convertToRaw(editorState.getCurrentContent())).then(textArr => {
 			console.log('textArr', textArr);
-			this.props.updateTextArr(textArr);
+			this.props.updateCardData(this.props.id, {textArr: textArr});
 		});
 	},
 
@@ -253,7 +367,87 @@ const TextEditor  = createReactClass( {
         this.setState({
         	editorState: editorState
         })
+
+        //TODO
+        this.props.setEditorState(editorState);
+        this.props.setEditorFocus(true);
+    	this.syncCurrentDynamicStylesWithSources(editorState);
     },
+
+    syncCurrentDynamicStylesWithSources(editorState) {
+	    const currentStyles = editorState.getCurrentInlineStyle();
+	    const BLACK = '#000000';
+
+	    if (!currentStyles.size) {
+	      	this.props.setCurrentColor(BLACK);
+	    }
+
+	    // TODO: Remove if not needed
+	    // const COLOR_PREFIX = DYNAMIC_STYLES_PREFIX + 'COLOR_';
+	    const regex = /_(.+)/;
+
+	    //model
+	    /*ContentState
+			{
+			  "entityMap": {},
+			  "blocks": [
+			    {
+			      "key": "s84s",
+			      "text": "Hello World",
+			      "type": "unstyled",
+			      "depth": 0,
+			      "inlineStyleRanges": [
+			        {
+			          "offset": 1,
+			          "length": 10,
+			          "style": "CUSTOM_COLOR_rgba(189,24,24,1)"
+			        }
+			      ],
+			      "entityRanges": [],
+			      "data": {}
+			    }
+			  ]
+			}*/
+
+	    //TODO
+	    const dynamicStyles = currentStyles
+	      	.filter(val => val.startsWith(DYNAMIC_STYLES_PREFIX))
+	      	.map(val => {
+		        const withoutPrefixVal = val.replace(`${DYNAMIC_STYLES_PREFIX}`, '');
+		        const saneArray = reverseString(withoutPrefixVal)
+		          	.split(regex)
+		          	.filter(val => val.trim() !== '')
+		          	.map(val => reverseString(val))
+		          	.reverse();
+
+		        return saneArray;
+	      	})
+	      	.reduce((acc, value) => {
+	        	acc[camelCase(value[0])] = value[1];
+	        	return acc;
+	      	}, {});
+
+	    	if (has(dynamicStyles, 'fontSize')) {
+	      		this.props.setCurrentFontSize(
+	        		parseInt(dynamicStyles['fontSize'].replace('px', ''), 10),
+	      		);
+	    	} else {
+	      		this.props.setCurrentFontSize(11);
+	    	}
+
+	    	if (has(dynamicStyles, 'fontFamily')) {
+	      		this.props.setCurrentFontFamily(dynamicStyles['fontFamily']);
+	    	} else {
+		      	this.props.setCurrentFontFamily('Arial'); // this will only hold true if default font of editor is set to 'arial'
+		      	// hackish way (DONE RIGHT NOW) — put default font from css ('Arial' word repeated across technologies (css, js))
+		      	// TODO: right way — haven't found it yet; try again with customStylesUtils
+	    	}
+
+	    	if (has(dynamicStyles, 'color')) {
+	      		this.props.setCurrentColor(dynamicStyles['color']);
+	    	}
+  	},
+
 
     handleKeyCommand(command) {
         this._handleKeyCommand(command)
@@ -444,8 +638,16 @@ const TextEditor  = createReactClass( {
 	render() {
 		const self   			= this,
 		uploader 				= this.uploader,
-		{ user, comment } 		= this.props,
-		{ editorState, 
+		{ 
+			user, comment,
+			hasEditorFocus,
+	      	editorState,
+	      	customStylesUtils,
+	      	editorBackground,
+	      	setEditorRef, } 		= this.props,
+		
+		{ 
+			/*editorState,*/ 
 		  fileInput, 
 		  initialized,
 		  suggestions
@@ -454,9 +656,14 @@ const TextEditor  = createReactClass( {
 		{ 
 			MentionSuggestions 
 		} 				= mentionPlugin,
-		plugins 		= [mentionPlugin, emojiPlugin, hashtagPlugin, linkifyPlugin],
-    	timesIco 				= <i className="fa fa-times" aria-hidden="true"><span></span></i>,
-    	retryIco 				= <span className="qq-retry-icon">Retry</span>;
+		plugins 		= [
+			mentionPlugin, 
+			emojiPlugin, 
+			hashtagPlugin, 
+			linkifyPlugin, 
+			inlineToolbarPlugin, 
+			blockStylesPlugin
+		]
     	
     	///////return
  		return(
@@ -471,11 +678,14 @@ const TextEditor  = createReactClass( {
 			                        ref={(elem) => {this.editor = elem}}
 			                        spellCheck={true}
 			                        plugins={plugins}
-			                        placeholder="reply ..."
+			                        placeholder="your text"
 			                        onChange={this.onChange}
 			                        editorState={editorState}
 			                        keyBindingFn={this.myKeyBindingFn} 
 			                        handleKeyCommand={this.handleKeyCommand}
+
+			                        stripPastedStyles={true}
+			                        customStyleFn={customStylesUtils.customStyleFn}
 			                    />
 			                    <EmojiSuggestions 
 			                    	onOpen={this.onEmojiOpen}
@@ -491,19 +701,13 @@ const TextEditor  = createReactClass( {
 							<div className="emoji-dv" ref={(el)=> {this.emojiDiv = el}}>
 			                    <EmojiSelect />
 			                </div>
-		                	<div className="sbm-dv">
-		                    	<button 
-		                    		type="submit" 
-		                    		className="btn add-text" 
-		                    		onClick={this.addText}>add</button>
-		                	</div>
 		                </div>
 			        </div>
 			    </form>
 			</div>
 		)
 	}
-})
+}))
 
 export default connect(state =>({
 	user: state.User.user,

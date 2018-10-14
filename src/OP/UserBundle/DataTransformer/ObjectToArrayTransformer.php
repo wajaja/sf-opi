@@ -22,15 +22,16 @@ class ObjectToArrayTransformer
      * @var type 
      */
     protected $container, $dm, $request, $um, $user_provider,
-              $participantProvider;
+              $participantProvider, $domain_name;
 
 
-    public function __construct(Container $container, RequestStack $request, DocumentManager $dm, OpinionUserManager $um, UserProvider $user_provider) {
+    public function __construct(Container $container, RequestStack $request, DocumentManager $dm, OpinionUserManager $um, UserProvider $user_provider, $domain_name) {
         $this->dm               = $dm;
         $this->um               = $um;
         $this->request          = $request->getCurrentRequest();
         $this->container        = $container;
         $this->user_provider    = $user_provider;
+        $this->domain_name      = $domain_name;
     }
 
     public function invitationToArray($inv){
@@ -109,7 +110,7 @@ class ObjectToArrayTransformer
     public function getProfilePic($id) {
 
         if(!$id || gettype($id) !== 'string') 
-            return $this->getUploadRootDir() . "/images/favicon.ico";
+            return $this->getUploadRootDir() . "{$this->domain_name}/images/favicon.ico";
 
         $p      = $this ->dm
                         ->getRepository('OP\MediaBundle\Document\Image')

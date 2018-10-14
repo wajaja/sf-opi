@@ -9,7 +9,7 @@ import { PictureComments,
 const Right = ({selected_activity, photo, comments, showComments,
 				questionId, secretAlreadySeen, changeView, changeQuestionId,
 				showLikes, secretView, showSecrets, loadingSecret, questions,
-				onShare, renderSecrets, renderComments, renderLikes, params, user, ...rest}) => (
+				onShare, renderSecrets, renderComments, renderLikes, params, user, onComment, ...rest}) => (
 	<div className="rght-a">
         <div className="rght-b">
             <div className="actties-ctnr">
@@ -18,6 +18,7 @@ const Right = ({selected_activity, photo, comments, showComments,
                         {...rest}
                         photo={photo} 
                         comments={comments} 
+                        onComment={onComment}
                         showComments={showComments}
                         />
                     <PictureLikes

@@ -13,6 +13,7 @@ use FOS\UserBundle\FOSUserEvents,
     OP\UserBundle\Repository\OpinionUserManager,
     FOS\UserBundle\Event\GetResponseUserEvent,
     OP\UserBundle\DocumentManager\GroupManager,
+    OP\UserBundle\Security\UserProvider,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\UserBundle\Event\FilterGroupResponseEvent,
     FOS\UserBundle\Form\Factory\FactoryInterface,
@@ -29,6 +30,13 @@ use FOS\UserBundle\FOSUserEvents,
  */
 class ApiGroupController extends FOSRestController implements ClassResourceInterface
 {
+
+    protected $dm, $user_provider;
+
+    public function __construct(UserProvider $uProvider, \Doctrine\ODM\MongoDB\DocumentManager $dm) {
+        $this->dm           = $dm;
+        $this->user_provider = $uProvider;
+    }
 
     /**
      * @Annotations\Post("/groups/new")
@@ -195,6 +203,11 @@ class ApiGroupController extends FOSRestController implements ClassResourceInter
         }
 
         return $group;
+    }
+
+    public function _getUser()
+    {
+        return $this->user_provider->getHydratedUser();
     }
 
     /**

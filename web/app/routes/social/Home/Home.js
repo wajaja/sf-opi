@@ -242,7 +242,7 @@ const Home  = createReactClass({
                                 getImageFromCache={this.getImageFromCache}
                                 referIn="home"
                                 timelineType='user'
-
+                                match={this.props.match}
                                 />
                         </div>
                         <div id="hm_rght_div" className="col-xs-4 col-sm-4 col-md-3 col-lg-2">

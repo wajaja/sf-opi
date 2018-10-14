@@ -3,7 +3,7 @@ import createReactClass from 'create-react-class'
 import { connect } 		from 'react-redux'
 
 import { 
-    Photos as PhotosActions
+    Photo as PhotoActions
 }                                   from '../../actions/media'
 
 const Photo  = createReactClass({

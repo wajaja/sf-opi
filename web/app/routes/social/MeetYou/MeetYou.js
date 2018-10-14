@@ -1,42 +1,124 @@
 import React            from 'react';
 import createReactClass from 'create-react-class';
-import {connect}        from 'react-redux';
-import {
-    cacheDrawing, setText, setTextRect, 
-    setFocus, setEditing, setNoFocus, 
-    setNoEditing
-}                   from '../../../actions/social/MeetYou';
-
-import LeftSidebar  from './LeftSidebar';
-import RightSidebar from './RightSidebar';
-import ImageCanvas  from './components/ImageCanvas';
+import { connect }      from 'react-redux';
+import { withRouter }   from 'react-router-dom'
+import LeftSidebar      from './LeftSidebar';
+import EditMenu         from './EditMenu';
+import WorkSpace        from './WorkSpace'
 
 import '../../../styles/social/meetyou.scss'
 
 const MeetYou = createReactClass({
     getInitialState() {
         return{
-            textArr: []
+            leftPanel: true
         }
     },
-    //
-    updateDrawnImage(data) {
-        if (this.props.drawing === data) return;
-        this.props.onCacheDrawing(data);
+
+
+    // componentDidMount() {
+    //     document
+    //       .querySelector('body')
+    //       .addEventListener('keydown', this.closeModalOnEscape);
+    // }
+
+    // componentWillUnmount() {
+    //     document
+    //       .querySelector('body')
+    //       .removeEventListener('keydown', this.closeModalOnEscape);
+    // }
+
+    // closeModalOnEscape = e => {
+    //     if (e.keyCode === 27 && this.state.isModal) {
+    //       this.toggleModal();
+    //     }
+    // };
+
+    // toggleModal = () => {
+    //     this.setState((prevState, props) => {
+    //       return { isModal: !prevState.isModal };
+    //     });
+    // };
+
+    handleCurrentFontSizeChange(fontSize) {
+        this.setState({ currentFontSize: fontSize });
+        this.customStylesUtils.addFontSize(fontSize);
     },
 
-    updateTextArr(textArr){
+    setCurrentFontFamily(fontFamily){
         this.setState({
-            textArr: textArr
-        })
+          currentFontFamily: fontFamily,
+        });
+
+        // this.customStylesUtils.addFontFamily(fontFamily);
     },
+
+    setCurrentFontSize(fontSize){
+        if (!fontSize) {
+            throw new Error('You need to pass font size');
+        }
+
+        this.setState({
+            currentFontSize: fontSize,
+        });
+    },
+
+
 
     render() {
         const selectedUrl = this.props.selected && this.props.selected.url;
         const {text, textRect, textAttrs, filter, size} = this.props;
+
+
+        const {
+            state: {
+                editorFocus,
+                editorState,
+                editorBackground,
+                colorHandle,
+                currentColor,
+                editorRef,
+                currentItalicState,
+                currentBoldState,
+            },
+            setEditorFocus,
+            setEditorState,
+            switchColorHandle,
+            setCurrentColor,
+            handleCurrentColorChange,
+            setEditorBackground,
+            setEditorRef,
+        } = this.props;
+
+
         return (
             <div className="MeetYou Container">
-                <LeftSidebar 
+                <EditMenu 
+                    {...this.props}
+                    {...this.state} 
+                    selectedCard={this.state.selectedCard}
+                    editing={this.state.editing}
+
+                    setCurrentColor={setCurrentColor}
+                    colorHandle={colorHandle}
+                    // switchColorHandle={switchColorHandle}
+                    setCurrentFontSize={this.setCurrentFontSize}
+                    hasEditorFocus={editorFocus}
+                    setEditorFocus={setEditorFocus}
+                    setEditorState={setEditorState}
+                    setEditorBackground={setEditorBackground}
+                    setCurrentFontFamily={this.setCurrentFontFamily}
+                    setEditorRef={setEditorRef}
+
+                    currentColor={currentColor}
+                    currentFontSize={currentFontSize}
+                    currentFontFamily={currentFontFamily}
+                    currentItalicState={this.state.currentItalicState}
+                    currentBoldState={this.state.currentBoldState}
+                    currentFontSize={this.state.currentFontSize}
+                    />
+                <LeftSidebar
+                    leftPanel={this.state.leftPanel}
                     user={this.props.user}
                     history={this.props.history}
                     auth_data={this.props.auth_data}
@@ -57,73 +139,46 @@ const MeetYou = createReactClass({
                     firebase={this.props.firebase}
                     toggleOnlineList={this.props.toggleOnlineList}
                     />
-                <div className="Main">
-                    <ImageCanvas
-                        image={selectedUrl}
-                        textArr={this.state.textArr}
-                        body={{
-                            text, textAttrs,
-                        }}
-                        filter={filter}
-                        size={size}
-                        isFocused={this.props.focused}
-                        isEditing={this.props.editing}
-                        onFocus={this.props.onFocus}
-                        onEdit={this.props.onEdit}
-                        textArr={this.state.textArr}
-                        onBlur={this.props.onBlur}
-                        updateTextArr={this.updateTextArr}
-                        onCancelEdit={this.props.onCancelEdit}
-                        onTextRectMove={this.props.onTextRectMove}
-                        onRedraw={this.updateDrawnImage}
-                        onTextChange={this.props.onTextChange} />
+                <div className="work-space">
+                    <div className="work-space-a">
+                        <WorkSpace 
+                            {...this.props}  
+
+
+                            customStylesUtils={this.customStylesUtils}
+                            setCurrentColor={setCurrentColor}
+                            colorHandle={colorHandle}
+                            // switchColorHandle={switchColorHandle}
+                            setCurrentFontSize={this.setCurrentFontSize}
+                            hasEditorFocus={editorFocus}
+                            setEditorFocus={setEditorFocus}
+                            editorState={editorState}
+                            setEditorState={setEditorState}
+                            editorBackground={editorBackground}
+                            setEditorBackground={setEditorBackground}
+                            setCurrentFontFamily={this.setCurrentFontFamily}
+                            setEditorRef={setEditorRef}
+                            editorRef={editorRef}
+
+                            currentColor={currentColor}
+                            currentFontFamily={this.state.currentFontFamily}
+                            currentItalicState={currentItalicState}
+                            currentBoldState={currentBoldState}
+                            currentFontSize={this.state.currentFontSize}
+                            />
+                    </div>
                 </div>
-                <RightSidebar />
             </div>
-        );
+        )
     }
 });
 
 const mapStateToProps = (state) => ({
-    user: state.User.user,
-    textAttrs: state.MeetYou.textAttrs,
-    filter: state.MeetYou.filter,
-    size: state.MeetYou.size,
-    selected: state.MeetYou.selectedImage,
-    drawing: state.MeetYou.drawing,
-    text: state.MeetYou.text,
-    focused: state.MeetYou.focused,
-    editing: state.MeetYou.editing
+    user: state.User.user
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    onCacheDrawing(drawing) {
-        dispatch(cacheDrawing(drawing));
-    },
 
-    onTextChange(text) {
-        dispatch(setText(text));
-    },
 
-    onTextRectMove(part, rect) {
-        dispatch(setTextRect(part, rect));
-    },
-
-    onFocus(part) {
-        dispatch(setFocus(part));
-    },
-
-    onEdit() {
-        dispatch(setEditing());
-    },
-
-    onBlur() {
-        dispatch(setNoFocus());
-    },
-
-    onCancelEdit() {
-        dispatch(setNoEditing());
-    }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MeetYou);
+/////
+export default  withRouter(connect(mapStateToProps, null)(MeetYou))
+;

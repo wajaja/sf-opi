@@ -10,13 +10,14 @@ use OP\PostBundle\DocumentManager\PostManager,
 
 class UserProvider
 {
-    protected $request, $um, $container, $authorizer;
+    protected $request, $um, $container, $authorizer, $domain_name;
 
-    public function __construct(RequestStack $requestStack, Container $container, OpinionUserManager $um)
+    public function __construct(RequestStack $requestStack, Container $container, OpinionUserManager $um, $domain_name)
     {
-        $this->request              = $requestStack->getCurrentRequest();
-        $this->container            = $container;
-        $this->um                   = $um;
+        $this->request      = $requestStack->getCurrentRequest();
+        $this->container    = $container;
+        $this->um           = $um;
+        $this->domain_name  = $domain_name;
         //$this->authorizer           = $authorizer;
     }
 
@@ -28,7 +29,7 @@ class UserProvider
         if(isset($author['profilePic']['$id'])){
             $user['picPath'] = $this->getProfilePic((string)$author['profilePic']['$id']);
         }else{
-            $user['picPath'] = "/opinion/web/images/favicon.ico";
+            $user['picPath'] = "{$this->domain_name}/images/favicon.ico";
         }
         return $user;
     }

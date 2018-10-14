@@ -1,5 +1,21 @@
 .hm-container.group {
     &.new{
+        .lft-dv-a{
+            height: 200px;
+            width: 450px;
+            flex: none;
+            margin: 0 12px;
+            background: #fff;
+        }
+        .HMember-ctnr{
+            width: unset;
+            display: block;
+            margin: unset !important;
+            flex: none;
+        }
+        .sml-usr-lk{
+            border: unset !important;
+        }
     }
     .hm-main-blk-ctnr{
         /*width: 700px;
@@ -7,6 +23,7 @@
     }
     .grp-form{
         border: unset!important;
+        margin-bottom: unset !important;
     }
     .grp-form-btm{
         position: absolute!important;
@@ -132,6 +149,9 @@
         }
         .grp-intro-ul{
             padding: 0px;
+            li{
+                list-style: none;
+            }
         }
     }
     .grp-intro-about-ctnr{
@@ -167,8 +187,7 @@
     border: 1px solid #c4c8c9;
     margin-bottom: 12px;
     .grp-form-tp{
-        padding: 20px;
-        border-bottom: 1px solid #ddd;
+        padding: 10px;
     }
     .inp-tgther{
     	margin-bottom: 30px;
@@ -185,8 +204,7 @@
             height: 32px;
         }
     	input{
-    		width: 100%;
-		    height: 26px;
+    		width: 300px;
 		    padding: 0 5px;
 		    border-radius: 2px;
 		    border: 1px solid #e1e1e6;
@@ -197,13 +215,14 @@
     	position: relative;
     	width: 100%;
         height: 40px;
-        padding: 4px 20px;
+        padding: 0px 20px;
     	.grp-form-btm-rght{
     		position: absolute;
     		right: 20px;
+            bottom: 25px;
     	}
     	.create-grp{
-    		padding: 3px 5px;
+    		padding: 6px 30px;
     		border-radius: 2px;
     	}
     }

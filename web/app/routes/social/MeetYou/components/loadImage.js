@@ -20,9 +20,9 @@ export default (Component) => {
       this.loadImage(nextProps.image).then(() => this.forceUpdate());
     },
 
-    componentWillMount() {
-      this.loadImage(this.props.image);
-    },
+    // componentWillMount() {
+    //   this.loadImage(this.props.image);
+    // },
 
     render() {
       const {image: _, ...rest} = this.props;

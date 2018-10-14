@@ -20,6 +20,10 @@ const LoginForm  = createReactClass({
 			username : "",
 			password   : "",
 			errors	   : {},
+			wrapper  : {
+		        password: '',
+		        username: ''
+		    },
 			isLoading  : false 
 		}
 	},
@@ -71,6 +75,7 @@ const LoginForm  = createReactClass({
                         	wrapClassName=""
 		                	placeholder="email or username"
 		                	value={username}
+		                	wrapper={this.state.wrapper}
                         	error={errors.username}
 		                	onChange={this.onChange}
 		                />
@@ -83,6 +88,7 @@ const LoginForm  = createReactClass({
 		                	hasPreviousSession
                         	wrapClassName=""
 		                	value={password}
+		                	wrapper={this.state.wrapper}
 		                	error={errors.password}
 		                	onChange={this.onChange}
 		                	type="password"

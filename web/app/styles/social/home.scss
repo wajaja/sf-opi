@@ -264,7 +264,8 @@
             height: 100% !important;
         }
         .hm-main-blk-ctnr{
-            display: inline-block; /*important*/
+            display: flex;
+            /* display: inline-block; */ /*important*/
         }
         .lft-dv{
             width: 240px !important;

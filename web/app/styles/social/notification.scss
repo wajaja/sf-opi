@@ -1,19 +1,25 @@
 .hm-container.notification{
 	.nt-pg-box{
-	    border-bottom: 1px solid #ececec;
+	    display: flex;
+	    flex: auto;
 		.lk-to-notif{
 		    font-size: 13px;
-		    height: 60px;
+		    height: 65px;
 		    padding: 3px;
 		    background: #fff;
 		    border-radius: 3px;
-		    margin-bottom: 7px;
+		    /* margin-bottom: 7px; */
 		    font-family: sans-serif;
 		    width: 100%;
+	    	border-bottom: 1px solid #ececec;
 		}
 		&:last-child{
 		 	border-bottom: unset;
 		}
+	}
+	.nt-pg-box-ctnr{
+		display: inline-block;
+		width: 100%;
 	}
 
 	.tri-note-dv{

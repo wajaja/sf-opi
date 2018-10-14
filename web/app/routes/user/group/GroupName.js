@@ -35,6 +35,30 @@ import { getUrlParameterByName } from '../../../utils/funcs'
 import '../../../styles/user/group.scss'
 
 
+/**
+ * handleRouteChange
+ * @param dispatch
+ * @param history
+ * @param location
+ */
+function handleSearchChange(dispatch, history, location, group, user) {
+    const userId  = user.id,
+    groudId = group.id,
+    tag = getUrlParameterByName('tag', location.search) //['infos, photos, relations']
+
+   //call function (Action) like => SettingActions.contact();
+    if(tag === 'infos')
+        dispatch(GroupsActions.loadInfos(groudId))
+    else if (tag === 'photos')
+        dispatch(GroupsActions.loadPhotos(groudId, 1))
+    else if(tag === 'members')
+        dispatch(GroupsActions.loadMembers(groudId, 1))
+    else if(tag === 'timeline') 
+        dispatch(GroupsActions.loadTimeline(groudId, 1))
+    else 
+        dispatch(GroupsActions.loadProfile(groudId))
+}
+
 const Head = (props) => {
     const { members, group, user } = props,
 
@@ -250,11 +274,13 @@ const GroupName  = createReactClass( {
     	}
 
     	if(this.props.location !== nextProps.location) {
-    		handleSearchChange(
-    			this.props.dispatch,
-    			nextProps.history,
-    			nextProps.location
-    		)
+    		 handleSearchChange(
+                this.props.dispatch,
+                nextProps.history,
+                nextProps.location,
+                this.state.group,
+                this.props.user
+            )
     	}
     },
 
@@ -310,7 +336,7 @@ const GroupName  = createReactClass( {
                                 user={user}
                                 />
                             <div className="lft-dv">
-                                <div className="lft-dv-a">
+                                <div className="">
                                     <StickyNavLinks
                                         {...this.props}
                                         dispatch={dispatch}

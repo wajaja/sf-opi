@@ -168,12 +168,6 @@ const New  = createReactClass( {
                                 {...this.props}
                                 members={this.state.recipients}
                                 />
-                            <div className="hm_main_blk">
-                                <div className="hm-main-blk-ctnr"> 
-                                    <div id="home-center-div" className="home-center-div central-border">
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

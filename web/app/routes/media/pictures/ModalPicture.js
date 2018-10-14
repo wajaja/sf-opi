@@ -116,6 +116,7 @@ const ModalPicture  = createReactClass( {
                 onFriendRequest={this.onFriendRequest}
                 onDeleteInvitation={this.onDeleteInvitation}
                 onUnFollowRequest={this.onUnFollowRequest}
+                onComment={this.props.onComment}
                 {...this.props} 
             />
         )

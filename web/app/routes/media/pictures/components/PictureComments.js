@@ -22,6 +22,10 @@ const PictureComments  = createReactClass({
 
 	},
 
+    recomputePostHeight(){
+        // this.recomputePostHeight
+    },
+
 	onComment(postId, refer, data) {
 
         this.props.dispatch(CommentsActions.submitComment(postId, refer, data)).then(comment => {
@@ -138,6 +142,7 @@ const PictureComments  = createReactClass({
                                 comments={comments} 
                                 postAuthorId={author.id}
                                 editingComment={editingComment}
+                                recomputePostHeight={this.recomputePostHeight}
                                 reSubmitComment={this.reSubmitComment}
                                 handleCommentEdit={this.handleCommentEdit} 
                                 postId={id}
@@ -154,19 +159,20 @@ const PictureComments  = createReactClass({
                                     postId={id}
 	        						refer='photo'
                                     dispatch={dispatch}
+                                    recomputePostHeight={this.recomputePostHeight}
                                     onComment={this.onComment}
 	        						post={this.props.photo}
 	        						/>
 	        				}
 			                {editingComment && 
 			                    <EditCommentForm 
-			                    	{...this.props}
-			                        post={this.props.photo}
-			                        dispatch={dispatch}
-			                        onComment={this.onComment}
-			                        refer='photo'
-			                        key={id} 
+                                    refer='photo'
+                                    {...this.props}
+                                    post={this.props.photo}
+                                    dispatch={dispatch}
+                                    onComment={this.onComment}
 			                        comment={editedComment} 
+                                    recomputePostHeight={this.recomputePostHeight}
 			                        commentEdited={this.commentEdited}
 			                        postId={id}
 			                    />}

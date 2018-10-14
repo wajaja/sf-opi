@@ -46,7 +46,14 @@ const SignupForm  = createReactClass( {
             year : 1900,
             month: 1,
             day  : 1,     
-            wrapper: {},
+            wrapper: {
+                "registration[email]": '',
+                "registration[gender]": '',
+                "registration[lastname]": '',
+                "registration[firstname]": '',
+                "registration[plainPassword][first]": '',
+                "registration[plainPassword][second]": ''
+            },
             errors: {
                 "registration[firstname]": true
             },
@@ -270,6 +277,7 @@ const SignupForm  = createReactClass( {
                         field="firstname"
                         hasPreviousSession
                         placeholder="Firstname"
+                        wrapper={this.state.wrapper}
                         customClassName="form-registration-firstname in-sign-up"/>
                     <TextFieldGroup
                         label=""
@@ -282,6 +290,7 @@ const SignupForm  = createReactClass( {
                         name="registration[lastname]"
                         field="lastname"
                         placeholder="Lastname"
+                        wrapper={this.state.wrapper}
                         customClassName="form-registration-lastname in-sign-up" />
                     <TextFieldGroup
                         label= ""
@@ -293,6 +302,7 @@ const SignupForm  = createReactClass( {
                         value={this.state["registration[email]"]}
                         field="email"
                         name="registration[email]"
+                        wrapper={this.state.wrapper}
                         placeholder="Email"
                         customClassName="form-registration-email in-sign-up"/>
                     <TextFieldGroup
@@ -302,6 +312,7 @@ const SignupForm  = createReactClass( {
                         wrapClassName="fld-wrp pwd-first"
                         onChange= {this.onTextChange}
                         onBlur={this.onBlur}
+                        wrapper={this.state.wrapper}
                         field="first"
                         value={this.state['registration[plainPassword][first]']}
                         name="registration[plainPassword][first]"
@@ -315,6 +326,7 @@ const SignupForm  = createReactClass( {
                         wrapClassName="fld-wrp pwd-second"
                         onChange= {this.onTextChange}
                         onBlur={this.onBlur}
+                        wrapper={this.state.wrapper}
                         value= {this.state['registration[plainPassword][second]']}
                         name="registration[plainPassword][second]"
                         field="second"

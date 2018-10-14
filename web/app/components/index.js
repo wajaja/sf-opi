@@ -45,7 +45,8 @@ export { Center, NewsFeed, PostForm,
 		 InputType, FriendButton, FollowButton,
 		 CheckRelationShipButton, MiniProfile,
 		 BuildHtmlString, ErrorStack, WelcomeFoot,
-		 BuildTextArr }					from './social'
+		 BuildTextArr, FontSelector, FontSizeSelector,
+		 ColorPicker, BackgroundColorPicker }					from './social'
 
 export { LoginPage, LoginForm, 
 		 SignupPage, SignupForm,

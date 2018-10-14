@@ -16,6 +16,10 @@ const Comments  = createReactClass({
 		this.props.handleCommentEdit(status, editedComment)
 	},
 
+	recomputePostHeight(){
+		// this.recomputePostHeight
+	},
+
 	render() {
 		const { comments, postAuthorId } = this.props;
 		const self = this;
@@ -25,6 +29,7 @@ const Comments  = createReactClass({
 					return <Comment key={i} 
 								comment={comment}
 								onLike={self.onLike}
+								recomputePostHeight={self.recomputePostHeight}
 								handleCommentEdit={self.handleCommentEdit}
 								editingComment={self.props.editingComment}
 								{...self.props}
