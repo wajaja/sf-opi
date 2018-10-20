@@ -11,6 +11,7 @@ use Pagerfanta\Pagerfanta,
     Symfony\Component\HttpFoundation\Request,
     OP\UserBundle\Elastica\QuerySearch,
     JMS\Serializer\SerializerInterface,
+    FOS\ElasticaBundle\Index\IndexManager,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
 	Symfony\Component\DependencyInjection\ContainerInterface as Container;
@@ -20,16 +21,17 @@ use Pagerfanta\Pagerfanta,
 */
 class SearchManager
 {
-	protected $dm, $search, $container, $pTransformer, $serializer, $querySearch;
+	protected $dm, $search, $container, $pTransformer, $serializer, $querySearch, $indexManager;
 	
-	public function __construct(DocumentManager $dm, Search $search, Container $container, ToArrayTransformer $transformer, SerializerInterface $serializer, QuerySearch $querySearch)
+	public function __construct(DocumentManager $dm, Search $search, Container $container, ToArrayTransformer $transformer, SerializerInterface $serializer, QuerySearch $querySearch, IndexManager $indexManager)
 	{
 		$this->dm 		= $dm;
 		$this->search 	= $search;
-        $this->container= $container;
+        $this->container = $container;
         $this->serializer = $serializer;
         $this->querySearch = $querySearch;
         $this->pTransformer = $transformer;
+        $this->indexManager = $indexManager;
 	}
 
 
@@ -105,8 +107,7 @@ class SearchManager
 
         if($post->getCriteria() === 'all') {
 	        //Match all posts containing some string char
-	        $mngr 		= $container->get('fos_elastica.index_manager');
-	        $search 	= $mngr->getIndex('app')->createSearch();
+	        $search 	= $this->indexManager->getIndex('app')->createSearch();
 	        $search->addType('post');
 	        $resultSet 	= $search->search($post->getQuery());
         }
@@ -131,8 +132,7 @@ class SearchManager
 		$datas 		= [];
 		$doc 		= new Search();
         $doc->handleRequest($request);
-        $mngr 		= $container->get('fos_elastica.index_manager');
-        $search 	= $mngr->getIndex('app')->createSearch();
+        $search 	= $this->indexManager->getIndex('app')->createSearch();
 
         $resultSet 	= $search->search($doc->getQuery(), 21);
 	    $results 	= $resultSet->getResults();
@@ -157,8 +157,7 @@ class SearchManager
     public function searchRecents($recents = []) {
         // notre index est directement disponible sous forme de service
         $datas      = $results  = [];
-        $mngr       = $container->get('fos_elastica.index_manager');
-        $search     = $mngr->getIndex('app')->createSearch();
+        $search     = $this->indexManager->getIndex('app')->createSearch();
 
         $searchPeerTerm = ceil(20 / count($recents));
 

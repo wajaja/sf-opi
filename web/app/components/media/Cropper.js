@@ -1,8 +1,6 @@
 import React                from 'react';
 import { findDOMNode }      from 'react-dom'
 import createReactClass     from 'create-react-class'
-
-import { StaticModal }      from './../../components'
 import './../../styles/media/image-crop-styles.scss'
 
 const ReactCropper   = require('react-cropper').default;

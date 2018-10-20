@@ -1,264 +1,264 @@
-# fos_elastica:
-#     clients:
-#         default: { host: %elasticsearch_host%, port: %elasticsearch_port%, compression: true }        
-#     serializer:
-#         callback_class: FOS\ElasticaBundle\Serializer\Callback
-#         serializer: jms_serializer
-#     indexes:
-#         app:
-#             # ref tuto Autocompletion avec Elasticsearch from lexik site
-#             settings:
-#                 index:
-#                     analysis:
-#                         analyzer:
-#                             my_search_analyzer:
-#                                 type: custom
-#                                 tokenizer: letter
-#                                 filter   : ["standard", "asciifolding" ,"lowercase", "french_stem", "stop_fr", "edgeNGram"]
-#                             my_analyzer:
-#                                 type: custom
-#                                 tokenizer: letter
-#                                 filter   : ["asciifolding", "lowercase", "french_stem", "stop_fr", "edgeNGram"]
-#                         filter:
-#                             custom_filter:
-#                                 type: edgeNGram  #edgeNGram crée des tokens pour tous les sous-ensembles d’un mot, )
-#                                 side: front      #A partir d’un bord; début du mot avec front
-#                                 min_gram: 1
-#                                 max_gram: 20
-#                             stop_fr:
-#                                 type: "stop"
-#                                 stopwords: ["l", "m", "t", "qu", "n", "s", "j", "d"]
-#             types:
-#                 user:
-#                     serializer:
-#                         groups: [elastica]
-#                     properties:
-#                         id: ~
-#                         enabled: ~
-#                         lastActivity: { type: date }
-#                         username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                         firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                         lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                         email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                     persistence:
-#                         driver: mongodb
-#                         model: OP\UserBundle\Document\User
-#                         provider: ~
-#                         # by default, listens to "insert", "update" and "delete"
-#                         listener:
-#                             insert: true
-#                             update: true
-#                             delete: true
-#                             defer: true #Asynchronous index update
-#                         finder: ~
-#                         # repository: OP\UserBundle\Elastica\UserRepository
-#                 group:
-#                     properties:
-#                         id: ~
-#                         name: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                     persistence:
-#                         driver: mongodb
-#                         model: OP\UserBundle\Document\Group
-#                         provider: ~
-#                         listener:
-#                             insert: true
-#                             update: true
-#                             delete: true
-#                             defer: true #Asynchronous index update
-#                         finder: ~
-#                         # repository: OP\UserBundle\Elastica\GroupRepository
-#                         # elastica_to_model_transformer:
-#                         #     ignore_missing: true
-#                 post:
-#                     properties:
-#                         id: ~
-#                         # content: ~
-#                         keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                         author: 
-#                             type: "object"
-#                             properties:
-#                                 id: ~
-#                                 username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                                 firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                                 lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                                 email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                         # comments:
-#                         #     type: "nested"
-#                         #     properties:
-#                         #         date: { boost: 5 }
-#                         #         keywords: {type: text}
-#                         # leftcomments:
-#                         #     type: "nested"
-#                         #     properties:
-#                         #         date: { boost: 5 }
-#                         #         keywords: {type: text}
-#                         # rightcomments:
-#                         #     type: "nested"
-#                         #     properties:
-#                         #         date: { boost: 5 }
-#                         #         keywords: {type: text}
-#                     persistence:
-#                         model_to_elastica_transformer:
-#                             service: op_post.model_to_elastica.transformer.post
-#                         elastica_to_model_transformer:
-#                             service: op_post.elastica_to_model.transformer.post
-#                             ignore_missing: true
-#                             query_builder_method: createSearchQueryBuilder
-#                         driver: mongodb
-#                         model: OP\PostBundle\Document\Post
-#                         provider: ~
-#                         listener:
-#                             insert: true
-#                             update: true
-#                             delete: true
-#                             defer: true #Asynchronous index update
-#                         finder: ~
-#                         repository: OP\PostBundle\Elastica\PostRepository
-#                 # comment:
-#                 #     properties:
-#                 #         id: ~
-#                 #         keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 #         author: 
-#                 #             type: "object"
-#                 #             properties:
-#                 #                 id: ~
-#                 #                 username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 #                 firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 #                 lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 #                 email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 #     _parent:
-#                 #         type: post
-#                 #         property: "post"
-#                 #         identifier: "id"
-#                 #     persistence:
-#                 #         driver: mongodb
-#                 #         model: OP\PostBundle\Document\Comment
-#                 #         provider: ~
-#                 #         listener: ~ # by default, listens to "insert", "update" and "delete"
-#                 #         finder: ~
-#                 #         # repository: OP\PostBundle\Elastica\
-#                 #         # model_to_elastica_transformer:
-#                 #         #     service: op_post.model_to_elastica.transformer.post
-#                 #         # elastica_to_model_transformer:
-#                 #         #     service: op_post.elastica_to_model.transformer.post
-#                 #         #     ignore_missing: true
-#                 # leftcomment:
-#                 #     properties:
-#                 #         id: ~
-#                 #         keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 #         author: 
-#                 #             type: "object"
-#                 #     _parent:
-#                 #         type: "post"
-#                 #         property: "post"
-#                 #         identifier: "id"
-#                 #     persistence:
-#                 #         driver: mongodb
-#                 #         model: OP\PostBundle\Document\LeftComment
-#                 #         provider: ~
-#                 #         listener: ~ # by default, listens to "insert", "update" and "delete"
-#                 #         finder: ~
-#                 #         # repository: OP\PostBundle\Elastica\UserRepository
-#                 #         # model_to_elastica_transformer:
-#                 #         #     service: op_post.model_to_elastica.transformer.post
-#                 #         # elastica_to_model_transformer:
-#                 #         #     service: op_post.elastica_to_model.transformer.post
-#                 #         #     ignore_missing: true
-#                 # rightcomment:
-#                 #     properties:
-#                 #         id: ~
-#                 #         keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 #         author: 
-#                 #             type: "object"
-#                 #     _parent:
-#                 #         type: "post"
-#                 #         property: "post"
-#                 #         identifier: "id"
-#                 #     persistence:
-#                 #         driver: mongodb
-#                 #         model: OP\PostBundle\Document\RightComment
-#                 #         provider: ~
-#                 #         listener: ~ # by default, listens to "insert", "update" and "delete"
-#                 #         finder: ~
-#                 #         # repository: OP\PostBundle\Elastica\UserRepository
-#                 #         # model_to_elastica_transformer:
-#                 #         #     service: op_post.model_to_elastica.transformer.post
-#                 #         # elastica_to_model_transformer:
-#                 #         #     service: op_post.elastica_to_model.transformer.post
-#                 #         #     ignore_missing: true
-#                 # undercomment:
-#                 #     properties:
-#                 #         id: ~
-#                 #         keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 #         author: 
-#                 #             type: "object"
-#                 #     _parent:
-#                 #         type: "comment"
-#                 #         property: "comment"
-#                 #         identifier: "id"
-#                 #     persistence:
-#                 #         driver: mongodb
-#                 #         model: OP\PostBundle\Document\UnderComment
-#                 #         provider: ~
-#                 #         listener: ~ # by default, listens to "insert", "update" and "delete"
-#                 #         finder: ~
-#                 #         # repository: OP\PostBundle\Elastica\UserRepository
-#                 #         # model_to_elastica_transformer:
-#                 #         #     service: op_post.model_to_elastica.transformer.post
-#                 #         # elastica_to_model_transformer:
-#                 #         #     service: op_post.elastica_to_model.transformer.post
-#                 #         #     ignore_missing: true
-#                 #         #     query_builder_method: createSearchQueryBuilder
-#                 # # thread:
-#                 # #     # dynamic: strict
-#                 # #     properties:
-#                 # #         id: ~
-#                 # #         messages:
-#                 # #             type: nested
-#                 # #             properties:
-#                 # #                 id: ~
-#                 # #                 body: { type: object, dynamic: true }
-#                 # #         participants: 
-#                 # #             type: nested
-#                 # #             properties:
-#                 # #                 id: ~
-#                 # #                 username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #                 firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #                 lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #                 email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #         keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #     persistence:
-#                 # #         driver: mongodb
-#                 # #         model: OP\MessageBundle\Document\Thread
-#                 # #         provider: ~
-#                 # #         listener: ~ # by default, listens to "insert", "update" and "delete"
-#                 # #         finder: ~
-#                 # #         # repository: OP\MessageBundle\Elastica\ThreadRepository
-#                 # #         # elastica_to_model_transformer:
-#                 # #         #     ignore_missing: true
-#                 # # message:
-#                 # #     # dynamic: strict
-#                 # #     properties:
-#                 # #         id: ~
-#                 # #         sender: 
-#                 # #             type: object
-#                 # #             properties:
-#                 # #                 id: ~
-#                 # #                 username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #                 firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #                 lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #                 email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
-#                 # #         body: { type: object, dynamic: true }
-#                 # #     _parent:
-#                 # #         type: "thread"
-#                 # #         property: "thread"
-#                 # #         identifier: "id"
-#                 # #     persistence:
-#                 # #         driver: mongodb
-#                 # #         model: OP\MessageBundle\Document\Message
-#                 # #         provider: ~
-#                 # #         listener: ~ # by default, listens to "insert", "update" and "delete"
-#                 # #         finder: ~
-#                 #         # repository: OP\MessageBundle\Elastica\ThreadRepository
-#                 #         # elastica_to_model_transformer:
-#                 #         #     ignore_missing: true
+fos_elastica:
+    clients:
+        default: { host: %elasticsearch_host%, port: %elasticsearch_port%, compression: true }        
+    serializer:
+        callback_class: FOS\ElasticaBundle\Serializer\Callback
+        serializer: jms_serializer
+    indexes:
+        app:
+            # ref tuto Autocompletion avec Elasticsearch from lexik site
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            my_search_analyzer:
+                                type: custom
+                                tokenizer: letter
+                                filter   : ["standard", "asciifolding" ,"lowercase", "french_stem", "stop_fr", "edgeNGram"]
+                            my_analyzer:
+                                type: custom
+                                tokenizer: letter
+                                filter   : ["asciifolding", "lowercase", "french_stem", "stop_fr", "edgeNGram"]
+                        filter:
+                            custom_filter:
+                                type: edgeNGram  #edgeNGram crée des tokens pour tous les sous-ensembles d’un mot, )
+                                side: front      #A partir d’un bord; début du mot avec front
+                                min_gram: 1
+                                max_gram: 20
+                            stop_fr:
+                                type: "stop"
+                                stopwords: ["l", "m", "t", "qu", "n", "s", "j", "d"]
+            types:
+                user:
+                    serializer:
+                        groups: [elastica]
+                    properties:
+                        id: ~
+                        enabled: ~
+                        lastActivity: { type: date }
+                        username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                    persistence:
+                        driver: mongodb
+                        model: OP\UserBundle\Document\User
+                        provider: ~
+                        # by default, listens to "insert", "update" and "delete"
+                        listener:
+                            insert: true
+                            update: true
+                            delete: true
+                            defer: true #Asynchronous index update
+                        finder: ~
+                        # repository: OP\UserBundle\Elastica\UserRepository
+                group:
+                    properties:
+                        id: ~
+                        name: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                    persistence:
+                        driver: mongodb
+                        model: OP\UserBundle\Document\Group
+                        provider: ~
+                        listener:
+                            insert: true
+                            update: true
+                            delete: true
+                            defer: true #Asynchronous index update
+                        finder: ~
+                        # repository: OP\UserBundle\Elastica\GroupRepository
+                        # elastica_to_model_transformer:
+                        #     ignore_missing: true
+                post:
+                    properties:
+                        id: ~
+                        # content: ~
+                        keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        author: 
+                            type: "object"
+                            properties:
+                                id: ~
+                                username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        # comments:
+                        #     type: "nested"
+                        #     properties:
+                        #         date: { boost: 5 }
+                        #         keywords: {type: text}
+                        # leftcomments:
+                        #     type: "nested"
+                        #     properties:
+                        #         date: { boost: 5 }
+                        #         keywords: {type: text}
+                        # rightcomments:
+                        #     type: "nested"
+                        #     properties:
+                        #         date: { boost: 5 }
+                        #         keywords: {type: text}
+                    persistence:
+                        # model_to_elastica_transformer:
+                        #     service: op_post.model_to_elastica.transformer.post
+                        # elastica_to_model_transformer:
+                        #     service: op_post.elastica_to_model.transformer.post
+                        #     ignore_missing: true
+                        #     query_builder_method: createSearchQueryBuilder
+                        driver: mongodb
+                        model: OP\PostBundle\Document\Post
+                        provider: ~
+                        listener:
+                            insert: true
+                            update: true
+                            delete: true
+                            defer: true #Asynchronous index update
+                        finder: ~
+                        repository: OP\PostBundle\Elastica\PostRepository
+                comment:
+                    properties:
+                        id: ~
+                        keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        author: 
+                            type: "object"
+                            properties:
+                                id: ~
+                                username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                    _parent:
+                        type: post
+                        property: "post"
+                        identifier: "id"
+                    persistence:
+                        driver: mongodb
+                        model: OP\PostBundle\Document\Comment
+                        provider: ~
+                        listener: ~ # by default, listens to "insert", "update" and "delete"
+                        finder: ~
+                        # repository: OP\PostBundle\Elastica\
+                        # model_to_elastica_transformer:
+                        #     service: op_post.model_to_elastica.transformer.post
+                        # elastica_to_model_transformer:
+                        #     service: op_post.elastica_to_model.transformer.post
+                        #     ignore_missing: true
+                leftcomment:
+                    properties:
+                        id: ~
+                        keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        author: 
+                            type: "object"
+                    _parent:
+                        type: "post"
+                        property: "post"
+                        identifier: "id"
+                    persistence:
+                        driver: mongodb
+                        model: OP\PostBundle\Document\LeftComment
+                        provider: ~
+                        listener: ~ # by default, listens to "insert", "update" and "delete"
+                        finder: ~
+                        # repository: OP\PostBundle\Elastica\UserRepository
+                        # model_to_elastica_transformer:
+                        #     service: op_post.model_to_elastica.transformer.post
+                        # elastica_to_model_transformer:
+                        #     service: op_post.elastica_to_model.transformer.post
+                        #     ignore_missing: true
+                rightcomment:
+                    properties:
+                        id: ~
+                        keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        author: 
+                            type: "object"
+                    _parent:
+                        type: "post"
+                        property: "post"
+                        identifier: "id"
+                    persistence:
+                        driver: mongodb
+                        model: OP\PostBundle\Document\RightComment
+                        provider: ~
+                        listener: ~ # by default, listens to "insert", "update" and "delete"
+                        finder: ~
+                        # repository: OP\PostBundle\Elastica\UserRepository
+                        # model_to_elastica_transformer:
+                        #     service: op_post.model_to_elastica.transformer.post
+                        # elastica_to_model_transformer:
+                        #     service: op_post.elastica_to_model.transformer.post
+                        #     ignore_missing: true
+                undercomment:
+                    properties:
+                        id: ~
+                        keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        author: 
+                            type: "object"
+                    _parent:
+                        type: "comment"
+                        property: "comment"
+                        identifier: "id"
+                    persistence:
+                        driver: mongodb
+                        model: OP\PostBundle\Document\UnderComment
+                        provider: ~
+                        listener: ~ # by default, listens to "insert", "update" and "delete"
+                        finder: ~
+                        # repository: OP\PostBundle\Elastica\UserRepository
+                        # model_to_elastica_transformer:
+                        #     service: op_post.model_to_elastica.transformer.post
+                        # elastica_to_model_transformer:
+                        #     service: op_post.elastica_to_model.transformer.post
+                        #     ignore_missing: true
+                        #     query_builder_method: createSearchQueryBuilder
+                thread:
+                    # dynamic: strict
+                    properties:
+                        id: ~
+                        messages:
+                            type: nested
+                            properties:
+                                id: ~
+                                body: { type: object, dynamic: true }
+                        participants: 
+                            type: nested
+                            properties:
+                                id: ~
+                                username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        keywords: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                    persistence:
+                        driver: mongodb
+                        model: OP\MessageBundle\Document\Thread
+                        provider: ~
+                        listener: ~ # by default, listens to "insert", "update" and "delete"
+                        finder: ~
+                        # repository: OP\MessageBundle\Elastica\ThreadRepository
+                        # elastica_to_model_transformer:
+                        #     ignore_missing: true
+                message:
+                    # dynamic: strict
+                    properties:
+                        id: ~
+                        sender: 
+                            type: object
+                            properties:
+                                id: ~
+                                username: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                firstname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                lastname: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                                email: { search_analyzer: my_search_analyzer, analyzer: my_analyzer }
+                        body: { type: object, dynamic: true }
+                    _parent:
+                        type: "thread"
+                        property: "thread"
+                        identifier: "id"
+                    persistence:
+                        driver: mongodb
+                        model: OP\MessageBundle\Document\Message
+                        provider: ~
+                        listener: ~ # by default, listens to "insert", "update" and "delete"
+                        finder: ~
+                        repository: OP\MessageBundle\Elastica\ThreadRepository
+                        elastica_to_model_transformer:
+                            ignore_missing: true

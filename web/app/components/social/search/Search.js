@@ -126,11 +126,16 @@ const Search  = createReactClass({
         
         return (
             <div className="frm-contrib-ctnr-b">
-                <form action={`/search?q=${encodeURIComponent(this.state.value)}&tag=all`} className="form-search" onSubmit={this.handleSubmit} id="form-search">
+                <form 
+                    autocomplete="off"
+                    action={`/search?q=${encodeURIComponent(this.state.value)}&tag=all`} 
+                    className="form-search" 
+                    onSubmit={this.handleSubmit} 
+                    id="form-search">
                     <input  type="text"
                         ref={el => this._searchField = el } 
                         name="query" 
-                        placeholder="search user by his name or username" 
+                        placeholder="Search over opinions" 
                         className="gb-input-search" 
                         value={this.props.query} 
                         onChange={this.handleSearchChange} 

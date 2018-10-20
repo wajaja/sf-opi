@@ -57,20 +57,50 @@ class ApiNotificationController extends FOSRestController implements ClassResour
         return  $nbNotes;
     }
 
+     /**
+     * @Annotations\Put("/notifications/read/{id}")
+     *
+     */
+    public function readAction(Request $request, $id)
+    {
+        $user   = $this->_getUser();
+        $dm     = $this->getDocumentManager();
+        $notif  = $dm->getRepository('OPSocialBundle:Notification')->find($id);
+        $notif->setIsReadByParticipant($user, true);
+        $dm->flush();
+
+        return $response = new JsonResponse(true);
+    }
+
     /**
-    * @Annotations\Get("/notifications/notifications/seeing")
+     * @Annotations\Put("/notifications/unread/{id}")
+     *
+     */
+    public function unreadAction(Request $request, $id)
+    {
+        $user   = $this->_getUser();
+        $dm     = $this->getDocumentManager();
+        $notif  = $dm->getRepository('OPSocialBundle:Notification')->find($id);
+        $notif->setIsReadByParticipant($user, false);
+        $dm->flush();
+
+        return $response = new JsonResponse(true);
+    }
+
+    /**
+    * @Annotations\Get("/notifications/alert/hide")
     */
     public function hideAlertAction(Request $request, OpinionUserManager $userManager) {
          $client = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
         //make all as seens
         $this->updateLastView($userManager);
-        return  'request return some response';
+        return  new JsonResponse(['success' => true]);
     }
 
     /**
      * Lists all Message documents.
      *
-     * @Annotations\Get("/notifications/notifications/get")
+     * @Annotations\Get("/notifications/alert/get")
      * @return array
      */
     public function getNotificationsAction(Request $request)

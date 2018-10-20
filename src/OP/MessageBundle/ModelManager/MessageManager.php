@@ -52,12 +52,13 @@ abstract class MessageManager implements MessageManagerInterface
 
     public function countAlerts(User $user) {
         $userId = $user->getId();
-        $lastReadingDate = $user->getLastMessageView();
+        $lastReading = $user->getLastMessageView() ? $user->getLastMessageView() : $user->getLastActivity();
         return $this->repository->createQueryBuilder()
                     ->field('unreadForParticipants')->equals($userId)
-                    ->field('createdAt')->gt($lastReadingDate)
+                    ->field('createdAt')->gt($lastReading)
                     ->getQuery()
-                    ->count();
+                    ->count()
+                    ;
     }
 
     /**

@@ -239,7 +239,7 @@ class InvitationManager
         return false;
     }
 
-    protected function updateLastView() {
+    public function updateLastView() {
         $user = $this->_getUser();
         $lastReading = new \Datetime(null, new \DateTimeZone("UTC"));
         $user->setLastInvitationView($lastReading);

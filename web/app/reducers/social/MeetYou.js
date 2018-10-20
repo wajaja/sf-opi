@@ -8,6 +8,8 @@ export const initialState = {
     query: "",
     drawing: null,
     filter: 'light_contrast',
+    senders: [],
+    receivers: [],
     textAttrs: {
         fontSize: 32,
         color: 'white',

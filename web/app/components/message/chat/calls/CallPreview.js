@@ -1,4 +1,4 @@
-import React 				from 'react'
+import React, { Fragment }	from 'react'
 import { connect } 			from 'react-redux'
 import createReactClass 	from 'create-react-class'
 import { BuildContent,
@@ -21,27 +21,40 @@ const CallPreview 	= createReactClass({
         		>
                 <div className="thr-b-part rd">
                     <div className="thr-lst-msg-hd">
-                    	<div className="call-lst-msg-r">
+                    	<div className="call-lst-msg-l">
 	                    	{thread.otherParticipants.map(function(user, i) {
 	                            return (
-	                            	<div key={i} className="call-lst-msg-sdr" >
-		                                <img 
-		                                	src={user.profile_pic.web_path} 
-		                                	style={{width:'34px', height:'34px'}} 
-		                                	/>
-		                            </div>
+	                            	<Fragment>
+		                            	{i === 0 && 
+			                            	<div key={i} className="call-lst-msg-sdr" >
+				                                <img 
+				                                	src={user.profile_pic.web_path} 
+				                                	style={{width:'34px', height:'34px'}} 
+				                                	/>
+				                            </div>
+				                        }
+			                        </Fragment>
 		                        )
 	                    	})}
 	                    </div>
-	                    <div className="call-lst-msg-l">
+	                    <div className="call-lst-msg-r">
 	                    	{thread.otherParticipants.map(function(user, i) {
 	                            return (
-	                            	<div key={i} className="call-lst-msg-sdr" >
-		                                <span className="thr-lst-msg-nm">
-			                                <span>{user.firstname}</span>
-			                                <span>{user.lastname}</span>
-		                                </span>
-		                            </div>
+	                            	<Fragment>
+		                            	{i === 0 && 
+		                            		<div key={i} className="call-lst-msg-sdr" >
+				                                <div className="thr-lst-msg-nm">
+					                                <span>{user.firstname}</span>
+					                                <span>{user.lastname}</span>
+				                                </div>
+				                            </div>
+				                        }
+				                        {i === 1 && 
+				                        	<div key={i} className="sdr-plus">
+				                        		+{thread.otherParticipants.length - 1}
+				                        	</div>
+				                        }
+				                    </Fragment>
 		                        )
 	                    	})}
 	                    	{thread.last_appellant && (thread.last_appellant.id === user.id) && 

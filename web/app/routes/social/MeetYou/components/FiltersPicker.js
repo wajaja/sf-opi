@@ -25,16 +25,23 @@ export default createReactClass({
 
   render() {
     const { active } = this.state
-    return <Fragment>
+    return (
+      <Fragment>
         <div className={active ? `ico active` : `ico`} onClick={this.onClick}></div>
         {active && 
-          <select className="FiltersPicker" value={this.props.filter} ref="select" onChange={this.updateFilter}>
-          <option value="none">None</option>
-          <option value="light_contrast">Light contrast</option>
-          <option value="heavy_contrast">Heavy contrast</option>
-          <option value="light_blur">Light blur</option>
-          <option value="heavy_blur">Heavy blur</option>
-        </select>
-    </Fragment>;
+          <select 
+            className="FiltersPicker" 
+            value={this.props.filter} 
+            ref="select" 
+            onChange={this.updateFilter}>
+            <option value="none">None</option>
+            <option value="light_contrast">Light contrast</option>
+            <option value="heavy_contrast">Heavy contrast</option>
+            <option value="light_blur">Light blur</option>
+            <option value="heavy_blur">Heavy blur</option>
+          </select>
+        }
+      </Fragment>
+    )
   }
 });

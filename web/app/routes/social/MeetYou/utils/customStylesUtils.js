@@ -30,16 +30,21 @@ const addFontFamily = (updateEditorState, getEditorState) => fontFamily => {
   return updateEditorState(styles.fontFamily.add(getEditorState(), fontFamily));
 };
 
-const colorPickerUtil = (updateEditorState, getEditorState) => ({
+const customStyleUtil = (updateEditorState, getEditorState) => ({
   addColor: addColor(updateEditorState, getEditorState),
   removeColor: removeColor(updateEditorState, getEditorState),
   // currentColor: currentColor(getEditorState), // TODO: is not being used anywhere (check and remove)
   addFontSize: addFontSize(updateEditorState, getEditorState),
   addFontFamily: addFontFamily(updateEditorState, getEditorState),
   // currentFontSize: currentFontSize(getEditorState), // TODO: is not being used anywhere (check and remove)
+  
+  // addFontFamily: addFontFamily(updateEditorState, getEditorState),
+  // addFontFamily: addFontFamily(updateEditorState, getEditorState),
+  // addFontFamily: addFontFamily(updateEditorState, getEditorState),
   customStyleFn,
   exporter,
+  styles,
 });
 
-export default colorPickerUtil;
+export default customStyleUtil;
 export { DYNAMIC_STYLES_PREFIX };

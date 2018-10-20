@@ -26,22 +26,6 @@ import createLinkifyPlugin 			from 'draft-js-linkify-plugin'
 import createMentionPlugin, 
 { defaultSuggestionsFilter } 		from 'draft-js-mention-plugin'; // eslint-disable-line import/no-unresolved
 import MultiDecorator 				from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
-
-import createInlineToolbarPlugin, { Separator } from 'draft-js-inline-toolbar-plugin';
-import {
-  ItalicButton,
-  BoldButton,
-  UnderlineButton,
-  CodeButton,
-  HeadlineOneButton,
-  HeadlineTwoButton,
-  HeadlineThreeButton,
-  UnorderedListButton,
-  OrderedListButton,
-  BlockquoteButton,
-  CodeBlockButton,
-} from 'draft-js-buttons';
-
 import { canUseDOM } 				from '../../../../utils/executionEnvironment'
 import { BASE_PATH } 				from '../../../../config/api'
 import * as DraftFuncs 				from '../../../../components/social/home/form/DraftFuncs'
@@ -65,12 +49,6 @@ const { hasCommandModifier } = KeyBindingUtil;
 
 
 import MyLoadable    from '../../../../components/MyLoadable'
-const Dropzone  = MyLoadable({loader: () => import('react-fine-uploader/dropzone')}),
-Thumbnail 		= MyLoadable({loader: () => import('react-fine-uploader/thumbnail')}),
-RetryButton 	= MyLoadable({loader: () => import('react-fine-uploader/retry-button')}),
-ProgressBar 	= MyLoadable({loader: () => import('react-fine-uploader/progress-bar')}),
-PauseResumeButton = MyLoadable({loader: () => import('react-fine-uploader/pause-resume-button')}),
-FileInput 		= MyLoadable({loader: () => import('react-fine-uploader/file-input')})
 
 
 const emojiPlugin 					= createEmojiPlugin({
@@ -87,70 +65,6 @@ linkifyPlugin 						= createLinkifyPlugin({
 
 ///////////
 
-class HeadlinesPicker extends Component {
-  	componentDidMount() {
-    	setTimeout(() => { window.addEventListener('click', this.onWindowClick); });
-  	}
-
-  	componentWillUnmount() {
-    	window.removeEventListener('click', this.onWindowClick);
-  	}
-
-  	onWindowClick = () =>
-	    // Call `onOverrideContent` again with `undefined`
-	    // so the toolbar can show its regular content again.
-	    this.props.onOverrideContent(undefined);
-
-  	render() {
-	    const buttons = [HeadlineOneButton, HeadlineTwoButton, HeadlineThreeButton];
-	    return (
-			<div>
-				{buttons.map((Button, i) => // eslint-disable-next-line
-				  <Button key={i} {...this.props} />
-				)}
-			</div>
-	    );
-  	}
-}
-
-class HeadlinesButton extends Component {
-	// When using a click event inside overridden content, mouse down
-	// events needs to be prevented so the focus stays in the editor
-	// and the toolbar remains visible  onMouseDown = (event) => event.preventDefault()
-	onMouseDown = (event) => event.preventDefault()
-
-  	onClick = () =>
-	    // A button can call `onOverrideContent` to replace the content
-	    // of the toolbar. This can be useful for displaying sub
-	    // menus or requesting additional information from the user.
-	    this.props.onOverrideContent(HeadlinesPicker);
-
-  	render() {
-	    return (
-	      	<div onMouseDown={this.onMouseDown} className={editorStyles.headlineButtonWrapper}>
-		        <button onClick={this.onClick} className={editorStyles.headlineButton}>
-		          H
-		        </button>
-	      	</div>
-	    );
-  	}
-}
-
-const inlineToolbarPlugin = createInlineToolbarPlugin({
-  structure: [
-    BoldButton,
-    ItalicButton,
-    UnderlineButton,
-    CodeButton,
-    Separator,
-    HeadlinesButton,
-    UnorderedListButton,
-    OrderedListButton,
-    BlockquoteButton,
-    CodeBlockButton
-  ]
-});
-const { InlineToolbar } = inlineToolbarPlugin;
 
 const TextEditor  = onClickOutside(createReactClass({
 
@@ -163,7 +77,7 @@ const TextEditor  = onClickOutside(createReactClass({
             switchColorHandle: PropTypes.func.isRequired,
             setCurrentFontSize: PropTypes.func.isRequired,
             hasEditorFocus: PropTypes.bool.isRequired,
-            setEditorFocus: PropTypes.func.isRequired,
+            // setEditorFocus: PropTypes.func.isRequired,
             editorState: PropTypes.object.isRequired,
             setEditorState: PropTypes.func.isRequired,
             setEditorBackground: PropTypes.func.isRequired,
@@ -224,7 +138,6 @@ const TextEditor  = onClickOutside(createReactClass({
         	topPlace: false,
         	EmojiSuggestions: null,
         	hasCommandModifier: null,
-        	fileInput: null,
 			emojibtn: false,
       		MentionSuggestions: null,
       		mentions: mentions,
@@ -382,6 +295,30 @@ const TextEditor  = onClickOutside(createReactClass({
 	      	this.props.setCurrentColor(BLACK);
 	    }
 
+	    if(currentStyles.has('BOLD')) {
+	    	this.props.setCurrentBoldState(true)
+	    } else {
+	    	this.props.setCurrentBoldState(false)
+	    }
+
+	    if(currentStyles.has('ITALIC')) {
+	    	this.props.setCurrentItalicState(true)
+	    } else {
+	    	this.props.setCurrentItalicState(false)
+	    }
+
+	    if(currentStyles.has('UNDERLINE')) {
+	    	this.props.setCurrentUnderlineState(true)
+	    } else {
+	    	this.props.setCurrentUnderlineState(false)
+	    }
+
+	    // if(currentStyles.has('CODE')) {
+	    // 	this.props.setCurrentCodeState(true)
+	    // } else {
+	    // 	this.props.setCurrentCodeState(false)
+	    // }
+
 	    // TODO: Remove if not needed
 	    // const COLOR_PREFIX = DYNAMIC_STYLES_PREFIX + 'COLOR_';
 	    const regex = /_(.+)/;
@@ -409,7 +346,7 @@ const TextEditor  = onClickOutside(createReactClass({
 			  ]
 			}*/
 
-	    //TODO
+	    //TODO :: understand
 	    const dynamicStyles = currentStyles
 	      	.filter(val => val.startsWith(DYNAMIC_STYLES_PREFIX))
 	      	.map(val => {
@@ -470,10 +407,6 @@ const TextEditor  = onClickOutside(createReactClass({
 
     toggleInlineStyle(style) {
         this._toggleInlineStyle(style)
-    },
-
-    onEmojiOpen(e) {
-    	console.log('emojiopen with', e)
     },
 
 	toggleEmoji() {
@@ -556,7 +489,6 @@ const TextEditor  = onClickOutside(createReactClass({
 			}); //end uploader's init
 
 			self.uploader 	= uploader;
-			const fileInput = <FileInput multiple accept='image/*' uploader={ uploader } />
 
 
 			////
@@ -564,7 +496,6 @@ const TextEditor  = onClickOutside(createReactClass({
 			
 			self.setState({
 				initialized: true,
-				fileInput: fileInput,
 				hasCommandModifier: hasCommandModifier
 			})
 			self.registerEvents();
@@ -644,11 +575,10 @@ const TextEditor  = onClickOutside(createReactClass({
 	      	editorState,
 	      	customStylesUtils,
 	      	editorBackground,
-	      	setEditorRef, } 		= this.props,
+	      	setEditorRef, cardId } 		= this.props,
 		
 		{ 
-			/*editorState,*/ 
-		  fileInput, 
+			/*editorState,*/
 		  initialized,
 		  suggestions
 		} 						= this.state,
@@ -661,7 +591,6 @@ const TextEditor  = onClickOutside(createReactClass({
 			emojiPlugin, 
 			hashtagPlugin, 
 			linkifyPlugin, 
-			inlineToolbarPlugin, 
 			blockStylesPlugin
 		]
     	

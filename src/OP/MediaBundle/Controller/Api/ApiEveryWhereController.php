@@ -10,6 +10,7 @@ use OP\PostBundle\Document\EveryWhere,
     FOS\RestBundle\Routing\ClassResourceInterface,
     OP\PostBundle\FormHandler\NewPostFormHandler,
     OP\PostBundle\DocumentManager\RateManager,
+    JMS\Serializer\SerializerInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     \OP\PostBundle\DataTransformer\ToArrayTransformer,
     OP\SocialBundle\DocumentManager\NotificationManager;
@@ -63,7 +64,7 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
      *
      * @return object
      */
-    public function addAction(Request $request, $photoId, PictureManager $pMan, NotificationManager $notifMan)
+    public function addAction(Request $request, $photoId, PictureManager $pMan, NotificationManager $notifMan, SerializerInterface $serializer)
     {
 
         $res  = new JsonResponse();
@@ -71,7 +72,6 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
         if($ever = $pMan->createEveryWhere($photoId, $user)) {
             // $this->notify($ever, $notifMan);
             // $dispatcher = $this->get('event_dispatcher');
-            $serializer = $this->get('jms_serializer');
             // $dispatcher->dispatch(OPPostEvents::EVERYWHERE_CREATE, new EveryWhereEvent($ever));
             return $res->setData(array('ever'=>$serializer->toArray($ever)));
         }
@@ -82,7 +82,7 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
 
     /**
      * update Clike document.
-     * @Annotations\Post("/ever/update/{objId}")
+     * @Annotations\Put("/ever/update/{objId}")
      *
      * @param string $id The document ID
      * @param Request $request
@@ -94,21 +94,33 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
         $session = $request->getSession();
         $res     = new JsonResponse();
         $dm      = $this->getDocumentManager();
-        $rate    = $dm->getRepository('OPPostBundle:Rate')->findPostLiker($objId, $this->_getUser()->getId());
-        if(!$rate) return;
-        $session->set('prevRateValue', $rate->getRate());   //store rate value in session
+        $ever    = $dm->getRepository('OPMediaBundle:EveryWhere')->find($objId);
 
-        $form       = $this->createForm(RateType::class, $rate);
-        if($rate    = $handler->process($form, true)){
-            $refId  = $rate->getRefValid();
-            $type   = $rate->getType();
+        if(!$rate) 
+            return new JsonResponse([
+                "error" => [
+                    "errors"=> [
+                        [
+                            "domain"=> "global",
+                            "reason"=> "notFound",
+                            "message"=> "Not Found"
+                        ]
+                    ],
+                    "code"=> 404,
+                    "message"=> "Not Found"
+                ]
+            ]);
 
-            if($type === 'post') $object = $this->getPost($refId, $transformer);
-            if($type === 'leftcomment') $object = $this->getLeftComment($refId);
-            if($type === 'rightcomment') $object = $this->getRightComment($refId);
-            return $res->setData(array('post'=>$object));
-        }else{
-            return $res->setData(array('post'=>null));
+        $session->set('prevEveryWhere', $ever);   //store rate value in session
+
+        if($ever = $pMan->updateEveryWhere($ever)) {
+            // $this->notify($ever, $notifMan);
+            // $dispatcher = $this->get('event_dispatcher');
+            // $dispatcher->dispatch(OPPostEvents::EVERYWHERE_CREATE, new EveryWhereEvent($ever));
+            return $res->setData(array('ever'=>$serializer->toArray($ever)));
+        }
+        else { 
+            return $res->setData(array('ever'=>null));        
         }
     }
 

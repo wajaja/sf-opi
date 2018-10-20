@@ -43,12 +43,15 @@
     .vce-call-ic{
         width: 14px !important;
         height: 14px !important;
+        vertical-align: top;
         display: inline-block;
-        top: 1px;
+        top: 0px;
+        margin-right: 15px;
     }
     .vde-call-ic{
         width: 20px !important;
         height: 20px !important;
+        vertical-align: top;
         top: -3px;
     }
     .oln-usr-hd-back{
@@ -501,17 +504,25 @@
         vertical-align: top;
         position: relative;
         line-height: 12px;
+        margin-right: 8px;
     }
-    .call-lst-msg-sdr{
-        display: block;
+    .call-lst-msg-sdr, .sdr-plus{
         font-size: 11px;
-        border-radius: 50%;
         overflow: hidden;
         font-weight: 600;
+        text-transform: capitalize;
+        display: inline-block;
         img{
             width: 34px;
             height: 34px;
             border-radius: 50%;
+        }
+        span{
+            margin-right: 5px;
+            text-transform: capitalize;
+            &:last-child{
+                margin-right: 0px;
+            }
         }
     }
     .thr-elem{
@@ -526,8 +537,9 @@
     }
     .chat-abs-r{
         position: absolute;
-        right: 5px;
-        top: 5px;
+        right: 15px;
+        top: 10px;
+        transform: translate(0%, 60%);
     }
     .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
         position: fixed;

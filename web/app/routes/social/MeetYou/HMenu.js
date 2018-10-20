@@ -5,8 +5,13 @@ import {
     ColorPicker,
     BackgroundColorPicker,
     FontSelector,
-    FontSizeChanger 
+    FontSizeSelector 
 } from '../../../components';
+
+import FiltersPicker    from './components/FiltersPicker'
+import CropButton       from './components/CropButton'
+import Transparence     from './components/Transparence'
+import TextAlign        from './components/TextAlign'
 
 
 class HMenu extends Component {
@@ -49,7 +54,15 @@ class HMenu extends Component {
 
   render() {
     const {
-      activeType
+      activeType,
+      currentCodeState,
+      currentColor,
+      currentFontFamily,
+      currentFontSize,
+      currentBoldState,
+      currentItalicState,
+      currentUnderlineState,
+      onToggleDefaultInlineStyles
     } = this.props;
 
     let actives = activeType === 'edittext' ? ['police', 'paragraph'] : ['image'] ;
@@ -61,39 +74,33 @@ class HMenu extends Component {
             <div className="translate-lft-btn">
                 <div className="ico l" onClick={(e) => this.scrollToLeft()}></div>
             </div>
-            <Scrollbars
-                universal
-                autoHide
+            <div
                 className="HMenu-a"
                 ref={el => (this.scrollbars = el)}
-                renderTrackHorizontal={props => <div {...props} className="hidden-track-horizontal"/>}
-                renderThumbHorizontal={props => <div {...props} className="hidden-thumb-horizontal"/>}
                 style={{ height: 80 }}>
-                <div className={`sub-m ${name} ${actives.includes("police") ? " active" : ""}`}>
+                <div className={`sub-m police ${actives.includes("police") ? " active" : ""}`}>
+                    <div className="item-top">
+                        <div className="fontFamily" data-title="fontFamily">
+                            <FontSelector 
+                                {...this.props}
+                                currentFontFamily={this.props.currentFontFamily}
+                                setCurrentFontFamily={this.props.setCurrentFontFamily}
+                                addFontFamily={this.props.customStylesUtils.addFontFamily}
+                                editorRef={this.props.editorRef}
+                                />
+                        </div>
+                        <div className="fontSize" data-title="fontSize">
+                            <FontSizeSelector 
+                                {...this.props}
+                                currentFontSize={this.props.currentFontSize}
+                                handleCurrentFontSizeChange={this.props.handleCurrentFontSizeChange}
+                                addFontSize={this.props.customStylesUtils.addFontSize}
+                                setCurrentFontSize={this.props.setCurrentFontSize}
+                                hasEditorFocus={this.props.editorFocus}
+                                />
+                        </div>
+                    </div>
                     <ul className="sub-menub-lst">
-                        <li className="item">
-                            <div className="fontFamily" data-title="fontFamily">
-                                <FontSelector 
-                                    {...this.props}
-                                    currentFontFamily={this.props.currentFontFamily}
-                                    setCurrentFontFamily={this.props.setCurrentFontFamily}
-                                    addFontFamily={this.props.customStylesUtils.addFontFamily}
-                                    editorRef={this.props.editorRef}
-                                    />
-                            </div>
-                        </li>
-                        <li className="item">
-                            <div className="fontSize" data-title="fontSize">
-                                <FontSizeChanger 
-                                    {...this.props}
-                                    currentFontSize={this.props.currentFontSize}
-                                    handleCurrentFontSizeChange={this.props.handleCurrentFontSizeChange}
-                                    addFontSize={this.props.customStylesUtils.addFontSize}
-                                    setCurrentFontSize={this.props.setCurrentFontSize}
-                                    hasEditorFocus={this.props.editorFocus}
-                                    />
-                            </div>
-                        </li>
                         <li className="item">
                             <div className="textColor" data-title="textColor">
                                 <ColorPicker 
@@ -101,21 +108,7 @@ class HMenu extends Component {
                                     color={this.props.currentColor}
                                     colorHandle={this.props.colorHandle}
                                     handleColorChange={() =>
-                                      handleCurrentColorChange(this.props.customStylesUtils)
-                                    }
-                                    setEditorBackground={this.props.setEditorBackground}
-                                    setCurrentColor={this.props.setCurrentColor}
-                                    />
-                            </div>
-                        </li>
-                        <li className="item">
-                            <div className="textBackColor" data-title="textBackColor">
-                                <BackgroundColorPicker 
-                                    {...this.props}
-                                    color={this.props.currentColor}
-                                    colorHandle={this.props.colorHandle}
-                                    handleColorChange={() =>
-                                      handleCurrentColorChange(this.props.customStylesUtils)
+                                      this.props.handleCurrentColorChange(this.props.customStylesUtils)
                                     }
                                     setEditorBackground={this.props.setEditorBackground}
                                     setCurrentColor={this.props.setCurrentColor}
@@ -125,90 +118,115 @@ class HMenu extends Component {
                         <li className="item">
                             <div className="bold" data-title="bold">
                                 <div 
-                                    className={this.props.currentBoldState ? `ico active` : `ico`} 
-                                    onClick={this.props.onBoldChange}></div>
+                                    className={currentBoldState ? `ico active` : `ico`} 
+                                    onClick={() => onToggleDefaultInlineStyles('BOLD', !currentBoldState)}></div>
                             </div>
                         </li>
                         <li className="item">
                             <div className="italic" data-title="italic">
                                 <div 
-                                    className={this.props.currentItalicState ? `ico active` : `ico`} 
-                                    onClick={this.props.onItalicChange}></div>
+                                    className={currentItalicState ? `ico active` : `ico`} 
+                                    onClick={() => onToggleDefaultInlineStyles('ITALIC', !currentItalicState)}></div>
                             </div>
                         </li>
                         <li className="item">
                             <div className="underline" data-title="underline">
                                 <div 
-                                    className={this.props.currentUnderlineState ? `ico active` : `ico`} 
-                                    onClick={this.props.onUnderlineChange}></div>
+                                    className={currentUnderlineState ? `ico active` : `ico`} 
+                                    onClick={() => onToggleDefaultInlineStyles('UNDERLINE', !currentUnderlineState)}></div>
+                            </div>
+                        </li>
+                        <li className="item" style={{display: 'none'}}>
+                            <div className="code" data-title="code">
+                                <div 
+                                    className={currentCodeState ? `ico active` : `ico`} 
+                                    onClick={() => onToggleDefaultInlineStyles('CODE', !currentCodeState)}></div>
                             </div>
                         </li>
                     </ul>
-                    {!!active && <div className="inactive"></div>}
+                    {!!actives.includes("police") && <div className="inactive"></div>}
                 </div>
-                <div className={`sub-m ${name} ${actives.includes("paragraph") ? " active" : ""}`}>
+                <div className={`sub-m paragraph ${actives.includes("paragraph") ? " active" : ""}`}>
                     <ul className="sub-menub-lst">
                         <li className="item">
                             <div className="alignLeft" data-title="alignLeft">
+                                <TextAlign 
+                                    value="left" 
+                                    toggleTextAlign={this.props.toggleTextAlign}
+                                    currentTextAlign={this.props.currentTextAlign}
+                                    />
                             </div>
                         </li>
                         <li className="item">
                             <div className="alignCenter" data-title="alignCenter">
+                                <TextAlign 
+                                    value="center" 
+                                    toggleTextAlign={this.props.toggleTextAlign}
+                                    currentTextAlign={this.props.currentTextAlign}
+                                    />
                             </div>
                         </li>
                         <li className="item">
                             <div className="alignRight" data-title="alignRight">
+                                <TextAlign 
+                                    value="right" 
+                                    toggleTextAlign={this.props.toggleTextAlign}
+                                    currentTextAlign={this.props.currentTextAlign}
+                                    />
                             </div>
                         </li>
                         <li className="item">
                             <div className="alignJustify" data-title="alignJustify">
+                                <TextAlign 
+                                    value="justify" 
+                                    toggleTextAlign={this.props.toggleTextAlign}
+                                    currentTextAlign={this.props.currentTextAlign}
+                                    />
                             </div>
                         </li>
-                        <li className="item">
-                            <div className="textColor" data-title="textColor">
-                            </div>
-                        </li>
-                        <li className="item">
+                        <li className="item" style={{display: 'none'}}>
                             <div className="lineHeight" data-title="lineHeight">
                             </div>
                         </li>
-                        <li className="item">
+                        <li className="item" style={{display: 'none'}}>
                             <div className="textSpacing" data-title="textSpacing">
                             </div>
                         </li>
                     </ul>
-                    {!!active && <div className="inactive"></div>}
+                    {!!actives.includes("paragraph") && <div className="inactive"></div>}
                 </div>
-                <div className={`sub-m ${name} ${actives.includes("image") ? " active" : ""}`}>
+                <div className={`sub-m image ${actives.includes("image") ? " active" : ""}`}>
                     <ul className="sub-menub-lst">
                         <li className="item">
                             <div className="filter" data-title="filter">
                                 <FiltersPicker 
-                                    filter={this.props.IimageFilter} 
+                                    filter={this.props.filter} 
                                     onFilterChange={this.props.onFilterChange}
                                     />
                             </div>
                         </li>
                         <li className="item">
                             <div className="crop" data-title="crop">
-                            </div>
-                        </li>
-                        <li className="item">
-                            <div className="rotate90" data-title="rotate90">
-                            </div>
-                        </li>
-                        <li className="item">
-                            <div className="rotate180" data-title="rotate180">
+                                <CropButton 
+                                    selectedCard={this.props.selectedCard}
+                                    selectedCardId={this.props.selectedCardId}
+                                    saveCroppedImage={this.props.saveCroppedImage}
+                                    rotateLeft={this.props.rotateLeft}
+                                    rotateRight={this.props.rotateRight} />
                             </div>
                         </li>
                         <li className="item">
                             <div className="transparency" data-title="transparency">
+                                <Transparence
+                                    currentTransparency={this.props.currentTransparency}
+                                    updateCurrentTransparancy={this.props.updateCurrentTransparancy}
+                                    />
                             </div>
                         </li>
                     </ul>
-                    {!!active && <div className="inactive"></div>}
+                    {!!actives.includes("image") && <div className="inactive"></div>}
                 </div>
-            </Scrollbars>
+            </div>
             <div className="translate-rght-btn">
                 <div className="ico r" onClick={(e) => this.scrollToRight()}></div>
             </div>
@@ -218,3 +236,18 @@ class HMenu extends Component {
 }
 
 export default HMenu;
+
+// <li className="item">
+//                             <div className="textBackColor" data-title="textBackColor">
+//                                 <BackgroundColorPicker 
+//                                     {...this.props}
+//                                     color={this.props.currentColor}
+//                                     colorHandle={this.props.colorHandle}
+//                                     handleColorChange={() =>
+//                                       handleCurrentColorChange(this.props.customStylesUtils)
+//                                     }
+//                                     setEditorBackground={this.props.setEditorBackground}
+//                                     setCurrentColor={this.props.setCurrentColor}
+//                                     />
+//                             </div>
+//                         </li>

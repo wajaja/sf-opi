@@ -27,11 +27,12 @@ class InvitationRepository extends DocumentRepository
             ->field('metadata.isConfirmed')->equals(false)
             ->field('metadata.isMasked')->equals(false)
             ->field('sendingDate')->gt($lastReadingDate)
-            ->select('sender', 'sendingDate');
+            ->select('sender', 'sendingDate')
+            ;
 
         $invitations = $qb->getQuery()
                          ->execute()->toArray();
-        return 2;
+        return count($invitations);
     }
 
     public function loadInvitations($user, $initIds, $limit) {
@@ -58,7 +59,8 @@ class InvitationRepository extends DocumentRepository
         $qb //->field('receiver.id')->equals($user_id)
             ->field('metadata.isConfirmed')->equals(false)
             ->field('metadata.isMasked')->equals(false)
-            ->select('sender', 'sendingDate');
+            // ->select('sender', 'sendingDate')
+            ;
 
         $invitations = $qb->getQuery()
                          ->execute()->toArray();

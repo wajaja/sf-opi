@@ -32,8 +32,11 @@ const DndEditor  = createReactClass({
 
         return  <TextEditor 
                     {...this.props}
+                    cardId={this.props.cardId}
                     updateCardData={this.props.updateCardData}
-
+                    setCurrentBoldState={this.props.setCurrentBoldState}
+                    setCurrentItalicState={this.props.setCurrentItalicState}
+                    setCurrentUnderlineState={this.props.setCurrentUnderlineState}
                     customStylesUtils={this.props.customStylesUtils}
                     currentColor={this.props.currentColor}
                     setCurrentColor={this.props.setCurrentColor}
@@ -56,3 +59,5 @@ const DndEditor  = createReactClass({
         
     }
 })
+
+export default DndEditor;

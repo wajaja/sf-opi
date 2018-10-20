@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes            from 'prop-types';
 import { DragSource, DropTarget } from 'react-dnd';
 import { Rnd }              from "react-rnd";
@@ -6,6 +6,7 @@ import { getEmptyImage }    from 'react-dnd-html5-backend';
 import ItemTypes            from './ItemTypes';
 import DndEditor            from './DndEditor';
 import Image                from './Image';
+import Cropper              from '../../../../components/media/Cropper'
 
 
 const cardSource = {
@@ -13,7 +14,7 @@ const cardSource = {
         const { id, order, type, url, content } = props;
         const draggedCard = { id, order, type, url, content };
         let card;
-        if (props.selectedCard.id === props.id) {
+        if (props.selectedCardId === props.id) {
             card = props.selectedCard;
         } else {
           card = draggedCard;
@@ -58,11 +59,11 @@ export default class Card extends Component {
         item: PropTypes.object,
         id: PropTypes.number.isRequired,
         order: PropTypes.number.isRequired,
-        url: PropTypes.string.isRequired,
+        // url: PropTypes.string.isRequired,
         onMove: PropTypes.func.isRequired,
         onDragStart: PropTypes.func.isRequired,
         onDragComplete: PropTypes.func.isRequired,
-        // selectedCard: PropTypes.object.isRequired,
+        selectedCardId: PropTypes.number.isRequired,
     };
 
     constructor(props) {
@@ -100,12 +101,13 @@ export default class Card extends Component {
     }
 
     //callback from react-rnd
-    onResize(e, direction, ref, delta, position) {
+    onResize = (e, direction, ref, delta, position) => {
         console.log(ref.offsetWidth, ref.style.width);
         const changes = {
+            ...position,
+            ...this.props.card,
             width: ref.style.width,
             height: ref.style.height,
-            ...position
         };
         this.setState(changes);
 
@@ -130,16 +132,14 @@ export default class Card extends Component {
                         position={{ x: this.state.x, y: this.state.y }}
                         onResize={this.onResize}>
                         <div className="card-inner">
-                            {this.props.type === 'image' && 
-                                <Image 
-                                    url={url} 
-                                    updateCardData={this.props.updateCardData}
-                                    {...this.props}
-                                    />}
-                            {this.props.type === 'edittex' && 
+                            {this.props.type === 'richtext' && 
                               <DndEditor  
+                                cardId={this.props.cardId}
                                 content={content}
                                 updateCardData={this.props.updateCardData}
+                                setCurrentBoldState={this.props.setCurrentBoldState}
+                                setCurrentItalicState={this.props.setCurrentItalicState}
+                                setCurrentUnderlineState={this.props.setCurrentUnderlineState}
 
                                 customStylesUtils={this.props.customStylesUtils}
                                 currentColor={this.props.currentColor}
@@ -167,3 +167,46 @@ export default class Card extends Component {
         return this.renderCache;
     }
 }
+
+
+
+
+
+        // {this.props.type === 'image' && 
+        //     <Fragment>
+        //         {!this.props.cropping &&   
+        //             <Image 
+        //                 url={url} 
+        //                 updateCardData={this.props.updateCardData}
+        //                 {...this.props}
+        //                 />
+        //         }
+        //         {!!this.props.cropping && 
+        //             <Cropper 
+        //                 crop={crop}
+        //                 image={image}
+        //                 data={{
+        //                     x: 10,
+        //                     y: 10,
+        //                     width: 800,
+        //                     height: 800
+        //                 }}
+        //                 cropBoxData={{
+        //                     left: 5,
+        //                     top: 20,
+        //                     width: 450,
+        //                     height: 450
+        //                 }}
+        //                 style={{height: 400, width: '100%'}}
+        //                 minContainerWidth={200}
+        //                 minContainerHeight={100}
+        //                 dataUrl={dataUrl} 
+        //                 viewport={viewport}
+        //                 aspectRatio={1/1}
+        //                 setCropperRef={this.props.setCropperRef}
+        //                 getResult={this.getResult}
+        //                 onCropComplete={this.onCropComplete}
+        //                 />
+        //         }
+        //     </Fragment>
+        // }

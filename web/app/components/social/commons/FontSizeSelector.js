@@ -1,6 +1,21 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent, Fragment } from 'react';
 import onClickOutside from "react-onclickoutside";
+import Select         from 'react-select';
+
+const customStyles = {
+  control: base => ({
+    ...base,
+    width: 60,
+    minWidth: 67,
+    height: 28,
+    minHeight: 30
+  }),
+  option: (styles, { data }) => {
+    // Apply the same font to the option as well, which it intends to apply in the editor
+    return { ...styles, fontFamily: data.label };
+  },
+};
 
 class FontSizeSelector extends PureComponent {
   static propTypes = {
@@ -44,10 +59,10 @@ class FontSizeSelector extends PureComponent {
 
     console.log(selectedValue);
 
-    // const fontSize = sliderState.values[0];
-    // setCurrentFontSize(fontSize);
-    // this.strPixieFontSize = `${fontSize}px`;
-    // addFontSize(this.strPixieFontSize);
+    const fontSize = sliderState.values[0];
+    setCurrentFontSize(fontSize);
+    const strPixieFontSize = `${fontSize}px`;
+    addFontSize(strPixieFontSize);
   };
 
   componentWillReceiveProps(nextProps) {
@@ -69,18 +84,17 @@ class FontSizeSelector extends PureComponent {
     const { hasEditorFocus, currentFontSize } = this.props;
     const { active } = this.state;
 
+          // <div className={active ? `ico active` : `ico`} onClick={this.onClick}></div>
     return (
       <Fragment>
-          <div className={active ? `ico active` : `ico`} onClick={this.onClick}></div>
-          {active && <Select
+          <Select
               styles={customStyles}
               options={this.state.options}
-              placeholder={`Apply Font`}
+              placeholder={`12`}
               onChange={this.updateFontSize}
               value={currentFontSize}
               onFocus={this.handleFocus}
               />
-          }
       </Fragment>
     );
   }

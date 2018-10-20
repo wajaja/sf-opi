@@ -203,7 +203,6 @@ class ActivityListener
         $session    = $request->getSession();
         $msg        = $exception->getMessage();
 
-
         //Customize html page render exception
         if('html' === $request->getRequestFormat()) {
             if($exception instanceof NotFoundHttpException || 

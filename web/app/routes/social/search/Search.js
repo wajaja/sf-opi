@@ -117,7 +117,6 @@ const Search  = createReactClass({
      */
     componentDidMount() {
         const { user, postIds, dispatch, } = this.props;
-        findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll)
 
         // dispatch(PostsActions.load(user.id, postIds));   //redux saga
         // import('./../utils/OpinionStream').then(OpinionStream => {

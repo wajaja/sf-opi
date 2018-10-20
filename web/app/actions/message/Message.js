@@ -310,7 +310,7 @@ export function listMessage(page) {
 	return (dispatch, getState) => 
 		new Promise(function (resolve, reject) {
 			dispatch(_listMessagesReq())
-			axios.get(`${BASE_PATH}/api/messages/list/${page}`)
+			axios.get(`${BASE_PATH}/api/messages/load/${page}`)
 				 .then(function (res) {
 					dispatch(_listMessages(res.data, page))
 					console.log(res.data)
@@ -331,7 +331,6 @@ export const _createMessageResponse = (threadId, message) => ({ type: CREATE_MES
 
 
 export function createMessage(threadId, data) {
-	console.log('createMessage')
 	return (dispatch, getState) => {
 		dispatch(_createMessageRequest(threadId))
 		return new Promise((resolve, reject) => {

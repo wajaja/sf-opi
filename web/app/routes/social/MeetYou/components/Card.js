@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default ({ title, children }) => {
-  return <div className="CardOpt">
+export default ({ title, className, children }) => {
+  return <div className={className}>
     	{children}
   </div>
 };

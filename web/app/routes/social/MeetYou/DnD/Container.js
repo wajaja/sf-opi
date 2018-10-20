@@ -52,18 +52,21 @@ export default class Container extends PureComponent {
 	  //   });
   	}
 
+  	//react dnd
   	onCardMove(dragItem, hoverId, pointerOffset) {
-	    const dragId = dragItem.draggedCard.id;
+  		console.log(dragItem, hoverId, pointerOffset)
+	    const dragId = dragItem.draggedCardId;
 
 	    const cards = this.props.cards.slice();
 
 	    const dragIndex = cards.findIndex(el => el.id === dragId);
 	    const hoverIndex = cards.findIndex(el => el.id === hoverId);
-	    const dragCard = cards[dragIndex];
-	    const hoverCard = cards[hoverIndex];
 
-	    const midX = hoverCard.bounds.left + (hoverCard.bounds.right - hoverCard.bounds.left) / 2;
-	    const insertIndex = pointerOffset.x < midX ? hoverIndex : hoverIndex + 1;
+	    // const dragCard = cards[dragIndex];
+	    // const hoverCard = cards[hoverIndex];
+
+	    // const midX = hoverCard.bounds.left + (hoverCard.bounds.right - hoverCard.bounds.left) / 2;
+	    // const insertIndex = pointerOffset.x < midX ? hoverIndex : hoverIndex + 1;
 
 	    // if (
 	    //   this.previousDragId === dragId &&
@@ -81,11 +84,12 @@ export default class Container extends PureComponent {
 	    //   hoveredCardIndex: hoverIndex,
 	    //   hoveredCardId: hoverId,
 	    // });
-	    this.props.onCardMove({
-			insertIndex,
-			hoveredCardIndex: hoverIndex,
-			hoveredCardId: hoverId,
-	    })
+
+	  //   this.props.onCardMove({
+			// insertIndex,
+			// hoveredCardIndex: hoverIndex,
+			// hoveredCardId: hoverId,
+	  //   })
   	}
 
   	onCardDragComplete(dragItem) {
@@ -119,12 +123,12 @@ export default class Container extends PureComponent {
   	}
 
   	onCardSelectionChange(cardId, cmdKeyActive, shiftKeyActive) {
-	    let selectedCardId = [];
+	    let selectedCardId;
 	    let activeCardId;
 
 	    const cards = this.props.cards.slice();
-	    let previousSelectedCardsIds = this.props.selectedCardId.slice();
-	    let previousActiveCardId = this.props.activeCardId;
+	    // let previousSelectedCardsIds = this.props.selectedCardId.slice();
+	    // let previousActiveCardId = this.props.activeCardId;
 
 	    // not used because we are not planning to deal with multiple selection 
 	    // if (cmdKeyActive) {
@@ -141,20 +145,19 @@ export default class Container extends PureComponent {
 	    //   const upperIndex = Math.max(activeCardIndex, cardIndex);
 	    //   selectedCardId = cards.slice(lowerIndex, upperIndex + 1).map(c => c.id);
 	    // } else {
-	      selectedCardId = [cardId];
+	      selectedCardId = cardId;
 	      activeCardId = cardId;
 	    // }
 
 	    // const selectedCard = cards.filter(c => selectedCardId.includes(c.id));
 
 	    const changes = {
-	      selectedCard,
-	      selectedCardId,
+	      	selectedCardId,
 	    };
 	    if (activeCardId) {
 	      changes.activeCardId = activeCardId;
 	    }
-	    this.setState(changes);
+	    // this.setState(changes);
 	    this.props.onCardSelectionChange(changes);
   	}
 
@@ -173,10 +176,6 @@ export default class Container extends PureComponent {
 	    return (
 	        <div
 				className="dnd-container"
-				style={{
-					width: this.props.canvasWidth + 'px',
-              		height: this.props.canvasHeight + 'px'
-				}}
 				ref={el => { this.container = el}}>
           		{cards.map && cards.map((card, i) => {
 		            const isDragging = draggedCardId === card.id;
@@ -204,6 +203,7 @@ export default class Container extends PureComponent {
 		              hoveredCardId === card.id || false
 		              // shouldInsertLineOnRightOfPrevCard ||
 		              //shouldInsertLineOnLeftOfNextCard;
+		              console.log(i);
 
             		return (
 	              		<div key={'card-div-' + card.id} style={{ position: 'relative' }}>
@@ -216,22 +216,29 @@ export default class Container extends PureComponent {
 								isSelected={selectedCardId === card.id}>
 		                  		<Card
 				                    key={'card-' + card.id}
-				                    id={card.id}
+				                    id={card.id}  //
+				                    unique={card.unique}  //eg: 1_0
 				                    order={card.order}
 				                    type={card.type}
 				                    url={card.url}
+				                    selectedCardId={selectedCardId}
+				                    editorStates={this.props.editorStates}
+				                   	imageFilter={this.props.filter}
 				                    onMove={this.onCardMove}
 				                    updateCardData={this.props.updateCardData}
 				                    onDragStart={this.onCardDragStart}
 				                    onDragComplete={this.onCardDragComplete}
 				                    updateCardSize={this.props.updateCardSize}
 				                    onSelectionChange={this.onCardSelectionChange}
-
+				                    setCurrentBoldState={this.props.setCurrentBoldState}
+				                    setCurrentItalicState={this.props.setCurrentItalicState}
+				                    setCurrentUnderlineState={this.props.setCurrentUnderlineState}
 
 				                    customStylesUtils={this.props.customStylesUtils}
                                     currentColor={this.props.currentColor}
                                     setCurrentColor={this.props.setCurrentColor}
                                     colorHandle={this.props.colorHandle}
+                                    setCropperRef={this.props.setCropperRef}
                                     // switchColorHandle={switchColorHandle}
                                     setCurrentFontSize={this.props.setCurrentFontSize}
                                     hasEditorFocus={this.props.editorFocus}

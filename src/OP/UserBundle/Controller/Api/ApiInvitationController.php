@@ -16,6 +16,8 @@ use FOS\UserBundle\Model\UserInterface,
     FOS\RestBundle\Controller\FOSRestController,
     OP\UserBundle\Repository\OpinionUserManager,
     FOS\UserBundle\Event\FilterUserResponseEvent,
+    OP\UserBundle\DocumentManager\InvitationManager,
+    \OP\UserBundle\DataTransformer\ObjectToArrayTransformer,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\SocialBundle\DocumentManager\MailManager,
@@ -71,9 +73,9 @@ class ApiInvitationController extends FOSRestController implements ClassResource
                              ->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
                              ->findRequestInvitations($user->getId(), false); //not confimerd
         
-        if(!$invitations) return $res->setData(array('invitations' => []));
+        if(!$invitations) return new JsonResponse([]);
             
-        return $res->setData(array('invitations' => $this->invitationsToArray($invitations)));
+        return new JsonResponse($this->invitationsToArray($invitations));
     }
 
     /**
@@ -91,7 +93,7 @@ class ApiInvitationController extends FOSRestController implements ClassResource
 
         $nbInvitations = $this->getDocumentManager()
                               ->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
-                              ->countUnseenInvitations($user, $lastReading);
+                              ->countAlerts($user, $lastReading);
 
         return  $nbInvitations;
     }
@@ -100,14 +102,28 @@ class ApiInvitationController extends FOSRestController implements ClassResource
      *@Annotations\Get("invitations/alert/hide")
      *
     */
-    public function hideAlertAction() {
-        $this->updateLastView();
+    public function hideAlertAction(InvitationManager $invitMan, ObjectToArrayTransformer $trans) {
+        $invitMan->updateLastView();
         $dm = $this->getDocumentManager();
         $user_id = $this->_getUser()->getId();
         $invitations = $dm->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
                           ->findUserInvitations($user_id, false);
         //$invitations = $this->invitationsToArray($invitations);
-        return $invitations;
+        return new JsonResponse($trans->invitationsToArray($invitations));
+    }
+
+    /**
+     *@Annotations\Get("invitations/load")
+     *
+    */
+    public function loadAction(InvitationManager $invitMan, ObjectToArrayTransformer $trans) {
+        $invitMan->updateLastView();
+        $dm = $this->getDocumentManager();
+        $user_id = $this->_getUser()->getId();
+        $invitations = $dm->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
+                          ->findUserInvitations($user_id, false);
+        //$invitations = $this->invitationsToArray($invitations);
+        return new JsonResponse($trans->invitationsToArray($invitations));
     }
 
     /**

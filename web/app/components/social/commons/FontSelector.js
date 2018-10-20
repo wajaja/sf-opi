@@ -8,7 +8,10 @@ import onClickOutside from "react-onclickoutside";
 const customStyles = {
   control: base => ({
     ...base,
-    width: 200,
+    width: 'unset',
+    minWidth: 120,
+    height: 26,
+    minHeight: 30
   }),
   option: (styles, { data }) => {
     // Apply the same font to the option as well, which it intends to apply in the editor
@@ -160,7 +163,7 @@ class FontSelector extends React.Component {
 
       if (window.requestAnimationFrame) {
         requestAnimationFrame(() => {
-          editorRef.focus();
+          editorRef && editorRef.focus();
 
           requestAnimationFrame(() => {
             setCurrentFontFamily(label);
@@ -190,10 +193,10 @@ class FontSelector extends React.Component {
       ? find(fonts, ['label', this.props.currentFontFamily])
       : find(fonts, ['label', 'Arial']);
 
+          // <div className={active ? `ico active` : `ico`} onClick={this.onClick}></div>
     return (
         <Fragment>
-          <div className={active ? `ico active` : `ico`} onClick={this.onClick}></div>
-          {active && <Select
+          <Select
               styles={customStyles}
               options={fonts}
               placeholder={`Apply Font`}
@@ -201,7 +204,6 @@ class FontSelector extends React.Component {
               value={value}
               onFocus={this.handleFocus}
               />
-          }
         </Fragment>
     );
   }

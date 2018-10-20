@@ -78,6 +78,8 @@ class MeetYouController extends Controller
                 'MeetYou'    => [
                     'availableImages'=> [],
                     'query'=> '',
+                    'senders'=> [],
+                    'receivers'=> [],
                     'textAttrs' => [
                         'font' =>  'Georgia',
                         'fontSize' =>  17,

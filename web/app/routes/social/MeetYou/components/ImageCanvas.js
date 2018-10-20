@@ -122,7 +122,25 @@ const ImageCanvas = createReactClass({
                         return <CanvasImage 
                                   image={card}
                                   onMouseDown={this.handleClickOnImage} />
-                    else if(card.type === 'edittex')
+                    else if(card.type === 'text')
+                        return <CanvasText
+                                  ref="bodyBox"
+                                  part="body"
+                                  cancelEditing={this.props.onCancelEdit}
+                                  setEditing={this.props.onEdit}
+                                  setFocus={this.props.onFocus.bind(this, 'body')}
+                                  moveRect={this.props.onTextRectMove.bind(this)}
+                                  textAttrs={this.props.body.textAttrs}
+                                  textArr={card.textArr}
+                                  text={this.props.body.text}
+                                  selection={this.getCursors()}
+                                  onAreaSelection={(start, end) => { this.textEditor.setSelection(start, end, this.refs.txt); this.forceUpdate(); }}
+                                  onSetCursor={(pos) => { this.textEditor.setCursor(pos, this.refs.txt); this.forceUpdate(); }}
+                                  onEditEnter={() => this.refs.txt.focus()}
+                                  focusedPart={this.props.isFocused}
+                                  isEditing={this.props.isEditing} />
+                    })}  
+                    else if(card.type === 'edittext' && this.props.saved === true)
                         return <TextBox
                                   ref="bodyBox"
                                   part="body"

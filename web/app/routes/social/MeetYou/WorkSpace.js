@@ -20,17 +20,6 @@ import {
 const _Page = createReactClass({
     getInitialState() {
         return {
-            cards: [
-                {
-                  id: 1,
-                  order: 0,
-                  type: '', // image || edittex
-                  textArr: [],
-                  url: '',
-                  content: '',
-                  unique: '1-0' //1-0 page1-card0
-                }
-            ],
             images: [],
             textAttrs: this.props.textAttrs,
             filter: this.props.filter,
@@ -75,22 +64,6 @@ const _Page = createReactClass({
         );
     },
 
-    //changes => {width: ref.style.width, height: ref.style.height, ...position}
-    updateCardSize(cardId, changes) {
-        const arr = fromJS(this.state.cards);
-        const index = arr.findIndex(c => c.id === cardId)
-        const newArr = arr.update(index, item => Object.assign({}, item, { ...changes }))
-        this.setState({cards: newArr.toJS()});
-    },
-
-    //changes => {textArr, }
-    updateCardData(cardId, changes) {
-        const arr = fromJS(this.state.cards);
-        const index = arr.findIndex(c => c.id === cardId)
-        const newArr = arr.update(index, item => Object.assign({}, item, { ...changes }))
-        this.setState({cards: newArr.toJS()});
-    },
-
     onCardDragStart(changes) {
         this.setState({
             ...this.state,
@@ -116,56 +89,73 @@ const _Page = createReactClass({
         const {canvasWidth, canvasHeight} = this.props;
         return(
             <Fragment>
-              <DropContainer
-                  {...this.props}
-                  images={this.props.images}
-                  cards={this.props.page.cards}
-                  canvasWidth={canvasWidth}
-                  canvasHeight={canvasHeight}
-                  moveImage={this.props.moveImage}
-                  updateCardSize={this.updateCardSize}
-                  textEditors={this.props.textEditors}
+                <div 
+                    className="page-b"
+                    style={{
+                        width: canvasWidth + 'px',
+                        height: canvasHeight + 'px'
+                    }}>
+                    {!!this.props.editing && 
+                        <DropContainer
+                            {...this.props}
+                            pageId={this.props.pageId}
+                            filter={this.props.filter}
+                            images={this.props.images}
+                            cards={this.props.cards}
+                            canvasWidth={canvasWidth}
+                            canvasHeight={canvasHeight}
+                            moveImage={this.props.moveImage}
+                            onCardSelectionChange={this.props.onCardSelectionChange }
+                            updateCardSize={this.props.updateCardSize}
+                            textEditors={this.props.textEditors}
+                            setCurrentBoldState={this.props.setCurrentBoldState}
+                            setCurrentItalicState={this.props.setCurrentItalicState}
+                            setCurrentUnderlineState={this.props.setCurrentUnderlineState}
 
-                    customStylesUtils={this.props.customStylesUtils}
-                    currentColor={this.props.currentColor}
-                    setCurrentColor={this.props.setCurrentColor}
-                    colorHandle={this.props.colorHandle}
-                    // switchColorHandle={switchColorHandle}
-                    setCurrentFontSize={this.props.setCurrentFontSize}
-                    hasEditorFocus={this.props.editorFocus}
-                    setEditorFocus={this.props.setEditorFocus}
-                    editorState={this.props.editorState}
-                    setEditorState={this.props.setEditorState}
-                    editorBackground={this.props.editorBackground}
-                    setEditorBackground={this.props.setEditorBackground}
-                    setCurrentFontFamily={this.props.setCurrentFontFamily}
-                    currentFontFamily={this.props.currentFontFamily}
-                    setEditorRef={this.props.setEditorRef}
-                    editorRef={this.props.editorRef}
-                  />
-              <ImageCanvas
-                  canvasWidth={canvasWidth}
-                  canvasHeight={canvasHeight}
-                  image={this.props.selectedUrl}
-                  textArr={this.props.textArr}
-                  body={{
-                      text: this.props.text, 
-                      textAttrs: this.props.text,
-                  }}
-                  filter={this.props.filter}
-                  size={this.props.size}
-                  isFocused={this.props.isFocused}
-                  isEditing={this.props.isEditing}
-                  onFocus={this.props.onFocus}
-                  onEdit={this.props.onEdit}
-                  textArr={this.props.textArr}
-                  onBlur={this.props.onBlur}
-                  cards={this.props.cards}
-                  updateTextArr={this.props.updateTextArr}
-                  onCancelEdit={this.props.onCancelEdit}
-                  onTextRectMove={this.props.onTextRectMove}
-                  onRedraw={this.props.onRedraw}
-                  onTextChange={this.props.onTextChange} />
+                            customStylesUtils={this.props.customStylesUtils}
+                            currentColor={this.props.currentColor}
+                            setCurrentColor={this.props.setCurrentColor}
+                            colorHandle={this.props.colorHandle}
+                            // switchColorHandle={switchColorHandle}
+                            setCurrentFontSize={this.props.setCurrentFontSize}
+                            hasEditorFocus={this.props.editorFocus}
+                            setEditorFocus={this.props.setEditorFocus}
+                            editorState={this.props.editorState}
+                            setEditorState={this.props.setEditorState}
+                            editorBackground={this.props.editorBackground}
+                            setEditorBackground={this.props.setEditorBackground}
+                            setCurrentFontFamily={this.props.setCurrentFontFamily}
+                            currentFontFamily={this.props.currentFontFamily}
+                            setEditorRef={this.props.setEditorRef}
+                            editorRef={this.props.editorRef}/>
+                    }
+                    {!this.props.editing && 
+                        <ImageCanvas
+                          canvasWidth={canvasWidth}
+                          canvasHeight={canvasHeight}
+                          image={this.props.selectedUrl}
+                          textArr={this.props.textArr}
+                          cards={this.props.cards}
+                          body={{
+                              text: this.props.text, 
+                              textAttrs: this.props.text,
+                          }}
+                          filter={this.props.filter}
+                          size={this.props.size}
+                          isFocused={this.props.isFocused}
+                          isEditing={this.props.isEditing}
+                          onFocus={this.props.onFocus}
+                          onEdit={this.props.onEdit}
+                          textArr={this.props.textArr}
+                          onBlur={this.props.onBlur}
+                          cards={this.props.cards}
+                          updateTextArr={this.props.updateTextArr}
+                          onCancelEdit={this.props.onCancelEdit}
+                          onTextRectMove={this.props.onTextRectMove}
+                          onRedraw={this.props.onRedraw}
+                          onTextChange={this.props.onTextChange} />
+                    }
+                </div>
             </Fragment>
         )
     }
@@ -205,14 +195,13 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state, ownProps) => {
     const meetYou = state.MeetYou.present,
     page = meetYou.pages 
-           ? meetYou.pages[ownProps.order] 
+           ? meetYou.pages[ownProps.pageId] 
            : {
                 size: 'wide',
                 drawing: false,
                 focused: false,
                 editing: false
            };
-
     return {
         page: page,
         textAttrs: meetYou.textAttrs,
@@ -246,34 +235,36 @@ class WorkSpace extends React.Component {
                 {this.state.pages.map && this.state.pages.map((page, i) => {
                     return(
                         <div key={i} className="page-a">
-                            <div className="page-b">
-                                <Page 
-                                    order={i}
-                                    data={page.data}
-                                    {...this.props}
+                            <Page 
+                                key={i}
+                                pageId={i}
+                                data={page.data}
+                                {...this.props}
+                                onCardSelectionChange={this.props.onCardSelectionChange }
+                                customStylesUtils={this.props.customStylesUtils}
+                                currentColor={this.props.currentColor}
+                                setCurrentColor={this.props.setCurrentColor}
+                                colorHandle={this.props.colorHandle}
+                                setCurrentBoldState={this.props.setCurrentBoldState}
+                                setCurrentItalicState={this.props.setCurrentItalicState}
+                                setCurrentUnderlineState={this.props.setCurrentUnderlineState}
+                                // switchColorHandle={switchColorHandle}
+                                setCurrentFontSize={this.props.setCurrentFontSize}
+                                hasEditorFocus={this.props.editorFocus}
+                                setEditorFocus={this.props.setEditorFocus}
+                                editorState={this.props.editorState}
+                                setEditorState={this.props.setEditorState}
+                                editorBackground={this.props.editorBackground}
+                                setEditorBackground={this.props.setEditorBackground}
+                                setCurrentFontFamily={this.props.setCurrentFontFamily}
+                                currentFontFamily={this.props.currentFontFamily}
+                                setEditorRef={this.props.setEditorRef}
+                                editorRef={this.props.editorRef}
 
-                                    customStylesUtils={this.props.customStylesUtils}
-                                    currentColor={this.props.currentColor}
-                                    setCurrentColor={this.props.setCurrentColor}
-                                    colorHandle={this.props.colorHandle}
-                                    // switchColorHandle={switchColorHandle}
-                                    setCurrentFontSize={this.props.setCurrentFontSize}
-                                    hasEditorFocus={this.props.editorFocus}
-                                    setEditorFocus={this.props.setEditorFocus}
-                                    editorState={this.props.editorState}
-                                    setEditorState={this.props.setEditorState}
-                                    editorBackground={this.props.editorBackground}
-                                    setEditorBackground={this.props.setEditorBackground}
-                                    setCurrentFontFamily={this.props.setCurrentFontFamily}
-                                    currentFontFamily={this.props.currentFontFamily}
-                                    setEditorRef={this.props.setEditorRef}
-                                    editorRef={this.props.editorRef}
-
-                                    currentItalicState={this.props.currentItalicState}
-                                    currentBoldState={this.props.currentBoldState}
-                                    currentFontSize={this.props.currentFontSize}
-                                    />
-                            </div>
+                                currentItalicState={this.props.currentItalicState}
+                                currentBoldState={this.props.currentBoldState}
+                                currentFontSize={this.props.currentFontSize}
+                                />
                         </div>
                     )
                 })}

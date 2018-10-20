@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {connect} from 'react-redux';
 import  createReactClass from 'create-react-class';
 import {
@@ -11,6 +11,7 @@ import {
 import Card from './components/Card';
 import SearchBar from './components/SearchBar';
 import ImagePicker from './components/ImagePicker';
+import TextPicker   from './DnD/TextPicker'
 
 const LeftSidebar = createReactClass({
 
@@ -23,21 +24,52 @@ const LeftSidebar = createReactClass({
     render() {
         const { 
             access_token, query, availableImages, 
-            selectedImage, onSelectImage, onSearch, 
+            selectedImage, pushEditor, onSearch, 
             onSearchReset, onQueryChange,
-            leftPanel } = this.props
+            leftPanel, onSelectImage  } = this.props
         return (
             <div className="Sidebar">
-                <Card title="Images">
-                    <SearchBar
-                        query={query}
-                        onSearch={onSearch}
-                        onSearchReset={onSearchReset}
-                        onQueryChange={onQueryChange} />
-                    <ImagePicker
-                        images={availableImages}
-                        selected={selectedImage}
-                        onSelect={onSelectImage} />
+                <Card className={`CardOpt ${leftPanel === 'text' ? ' active' : ''}  `} title="Images">
+                    {leftPanel === 'text' && 
+                        <Fragment>
+                            <TextPicker
+                                pushEditor={pushEditor} />
+                        </Fragment>
+                    }
+                    {leftPanel === 'image' && 
+                        <Fragment>
+                            <SearchBar
+                                query={query}
+                                onSearch={onSearch}
+                                onSearchReset={onSearchReset}
+                                onQueryChange={onQueryChange} />
+                            <ImagePicker
+                                images={availableImages}
+                                selected={selectedImage}
+                                onSelect={onSelectImage} />
+                        </Fragment>
+                    }
+                    {leftPanel === 'background' && 
+                        <Fragment>
+                            <ImagePicker
+                                images={availableImages}
+                                selected={selectedImage}
+                                onSelect={onSelectImage} />
+                        </Fragment>
+                    }
+                    {leftPanel === 'modele' && 
+                        <Fragment>
+                            <SearchBar
+                                query={query}
+                                onSearch={onSearch}
+                                onSearchReset={onSearchReset}
+                                onQueryChange={onQueryChange} />
+                            <ImagePicker
+                                images={availableImages}
+                                selected={selectedImage}
+                                onSelect={onSelectImage} />
+                        </Fragment>
+                    }
                 </Card>
                 {access_token && 
                     <div id="_8" className="online_8">

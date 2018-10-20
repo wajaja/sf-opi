@@ -3,7 +3,7 @@
 namespace OP\MessageBundle\Controller\Api;
 
 use FOS\RestBundle\Controller\{
-    Annotations\Get, Annotations\View, Annotations\Post,
+    Annotations\Get, Annotations\View, Annotations\Post, Annotations\Put,
     Annotations\RouteResource, FOSRestController };
 use OP\MessageBundle\Event\{MessageEvent, OPMessageEvents};
 use OP\MessageBundle\Document\Thread,
@@ -14,8 +14,10 @@ use OP\MessageBundle\Document\Thread,
     OP\MessageBundle\FormModel\ReplyMessage,
     OP\MessageBundle\Form\ReplyMessageFormType,
     OP\MessageBundle\DocumentManager\ThreadManager,
+    OP\MessageBundle\DocumentManager\MessageManager,
     OP\MessageBundle\FormHandler\MessageFormHandler,
     FOS\RestBundle\Routing\ClassResourceInterface,
+    OP\UserBundle\Repository\OpinionUserManager,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\MessageBundle\DataTransformer\ObjectToArrayTransformer,
     Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -46,20 +48,33 @@ class ApiMessageController extends FOSRestController implements ClassResourceInt
         $inbox = [
             'messages'  => [],
             'loading'   => false,
-            'list'      => $threadsData['threads'],
+            'list'      => $threadsData['threads'],  //TODO push thread_id in every metadata row :!!!!!!!
             'threads'   => array(''=>''),
-            'threadsIds' => $thread_man->findParticipantInboxThreadsIds($user)
+            'threadsIds' => $threadMan->findParticipantInboxThreadsIds($user)
         ];
 
         return new JsonResponse($inbox);
     }
 
     /**
-     * @Get("/messages/list/{page}")
+     * @Get("/messages/load")
      *
      * @param type $username
      */
-    public function listAction(Request $request, int $page, ThreadManager $threadMan)
+    public function loadAction(Request $request, ThreadManager $threadMan)
+    {
+        $user         = $this->_getUser();
+        $threadsData  = $threadMan->loadList($user, 10, 1); //User, limit, page
+
+        return new JsonResponse($threadsData);
+    }
+
+    /**
+     * @Get("/messages/load/{page}")
+     *
+     * @param type $username
+     */
+    public function loadPageAction(Request $request, int $page, ThreadManager $threadMan)
     {
         $user         = $this->_getUser();
         $threadsData  = $threadMan->loadList($user, 10, $page); //User, limit, page
@@ -71,35 +86,52 @@ class ApiMessageController extends FOSRestController implements ClassResourceInt
     *@Get("messages/alert/show")
     *Get following activities
     */
-    public function getAlertAction(Request $request)
+    public function getAlertAction(Request $request, MessageManager $man)
     {
-        // Instantiate a new client
-        $client = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
-        $response = new JsonResponse();
-        $user = $this->_getUser();
-        $lastReading = $user->getLastInvitationView() ? 
-                            $user->getLastInvitationView() :
-                            $user->getLastActivity();
-
-        $nbInvitations = $this->getDocumentManager()
-                              ->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
-                              ->countUnseenInvitations($user, $lastReading);
-
-        return  $nbInvitations;
+        return  new JsonResponse($man->countAlerts($this->_getUser()));
     }
 
     /**
      *@Get("messages/alert/hide")
      *
     */
-    public function hideAlertAction() {
-        $this->updateLastView();
-        $dm = $this->getDocumentManager();
-        $user_id = $this->_getUser()->getId();
-        $invitations = $dm->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
-                          ->findUserInvitations($user_id, false);
+    public function hideAlertAction(MessageManager $man, OpinionUserManager $userManager) {
+        $this->updateLastView($userManager);
         //$invitations = $this->invitationsToArray($invitations);
-        return $invitations;
+        return  new JsonResponse(['success' => true]);
+    }
+
+     /**
+     * @Put("/messages/read/{id}")
+     *
+     */
+    public function readAction(Request $request, $id, ThreadManager $threadMan)
+    {
+        $user   = $this->_getUser();
+        $dm     = $this->getDocumentManager();
+        $thread = $dm->getRepository('OPMessageBundle:Thread')->find($id);
+        $threadMan->markAsReadByParticipant($thread, $user);
+
+        return $response = new JsonResponse(['success' => true]);
+    }
+
+    /**
+     * @Put("/messages/unread/{id}")
+     *
+     */
+    public function unreadAction(Request $request, $id, ThreadManager $threadMan)
+    {
+        $user   = $this->_getUser();
+        $dm     = $this->getDocumentManager();
+        $thread = $dm->getRepository('OPMessageBundle:Thread')->find($id);
+        $threadMan->markAsUnreadByParticipant($thread, $user);
+        return $response = new JsonResponse(['success' => true]);
+    }
+
+    protected function updateLastView($userManager) {
+        $user = $this->_getUser();
+        $user->setLastMessageView(new \Datetime(null, new \DateTimeZone("UTC")));
+        $userManager->updateUser($user);
     }
 
     public function _getUser()

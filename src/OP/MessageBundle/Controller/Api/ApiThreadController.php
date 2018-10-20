@@ -5,6 +5,7 @@ namespace OP\MessageBundle\Controller\Api;
 use Ratchet\Wamp\Topic,
     OP\MessageBundle\Document\Thread,
     OP\MessageBundle\Event\ThreadEvent,
+    OP\MessageBundle\Security\Authorizer,
     OP\UserBundle\Security\UserProvider,
     JMS\Serializer\SerializationContext,
     OP\MessageBundle\Event\MessageEvent,
@@ -18,6 +19,7 @@ use Ratchet\Wamp\Topic,
     OP\MessageBundle\FormModel\NewThreadMessage,
     FOS\RestBundle\Controller\Annotations\Get,
     FOS\RestBundle\Controller\Annotations\Post,
+    FOS\RestBundle\Controller\Annotations\Delete,
     OP\MediaBundle\Construct\ImageConstructor,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Routing\ClassResourceInterface,
@@ -45,7 +47,7 @@ class ApiThreadController extends FOSRestController implements ClassResourceInte
     }
     
     /**
-     * @Get("/messages/notifications/unseen")
+     * @Get("/messages/alert/unseen")
      *
      * @return Integer
      */
@@ -65,7 +67,7 @@ class ApiThreadController extends FOSRestController implements ClassResourceInte
     }
 
     /**
-    * @Get("/messages/notifications/seeing")
+    * @Get("/messages/alert/seeing")
     */
     public function seeingAction(Request $request, Provider $provider, ThreadConstructor $threadConstr, OpinionUserManager $userManager) {
         $res = new JsonResponse();
@@ -146,11 +148,15 @@ class ApiThreadController extends FOSRestController implements ClassResourceInte
     public function showAction(Request $request, $id, ThreadManager $threadMan, MessageManager $msgMan, ObjectToArrayTransformer $transformer)
     {
         $messages       = [];
-        $res            = new JsonResponse();
+        $user           = $this->_getUser();
         $thread         = $threadMan->findThreadById($id);
         $msgs           = $msgMan->getMessagesByThreadId($id, [], 15);
 
-        if (!$thread) return $res->setData(array('thread'=> null));
+        if (!$thread) return new JsonResponse(['thread'=> null]);
+
+        if($thread->isDeletedByParticipant($user)) {
+            return new JsonResponse(['thread' => 'deleted']);
+        }
 
         foreach ($msgs as $m) {
             $messages[] = $transformer->messageObjectToArray($m);
@@ -163,12 +169,38 @@ class ApiThreadController extends FOSRestController implements ClassResourceInte
         }
         array_multisort($message, SORT_ASC, $messages);
 
-        return $res->setData(
-            array(
-                'messages' => $messages,
-                'thread'=> $transformer->threadObjectToArray($thread)
-            )
-        );
+        return new JsonResponse([
+            'messages' => $messages,
+            'thread'=> $transformer->threadObjectToArray($thread)
+        ]);
+    }
+
+    /**
+     * Finds a Post post.
+     *
+     * @Delete("threads/remove/{id}")
+     *
+     * @param string $id The post ID
+     * @param Request $request The request object
+     *
+     * @return object
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If post doesn't exists
+     */
+    public function removeAction(Request $request, $id, ThreadManager $threadMan, Authorizer $auth)
+    {
+        $user = $this->_getUser();
+        $thread = $threadMan->findThreadById($id);
+
+        if (!$thread) {
+            return new JsonResponse(['success'=> null]);
+        } 
+        else if($auth->canSeeThread($thread)) {
+            $thread->setIsDeletedByParticipant($user, true);
+            $this->getDocumentManager()->flush();
+        }
+
+        return new JsonResponse(['success' => true]);
     }
 
     /**

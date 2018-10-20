@@ -44,6 +44,14 @@ class ObjectToArrayTransformer
         ];
     }
 
+    public function invitationsToArray(array $invs) {
+        $return = [];
+        foreach ($invs as $inv) {
+            $return[] = $this->invitationToArray($inv);
+        }
+        return $return;
+    }
+
     public function getMutualFriends($from, $to) {
         $return = [];
         $um     = $this->um;

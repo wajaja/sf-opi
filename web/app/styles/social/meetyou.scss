@@ -12,6 +12,45 @@ body {
   background: #eee;
   margin: 0;
 }
+.MeetYou{
+    .frm-contrib-ctnr{
+        right: 10px;
+        top: 106px;
+        background: #fff;
+        width: 300px;
+        max-height: 100vh;
+        background: unset;
+        border: unset;
+        .frm-contrib-ctnr-b{
+            border: 1px solid #c7d2d8;
+            margin-bottom: 11px;
+        }
+        .frm-select-hd{
+            padding: 10px;
+        }
+        .pst-frm-select-bd{
+            height: 220px;
+            margin: 0 0 5px 6px;
+        }
+        .pst-slct-usr-dv{
+            padding: 5px 2px;
+            height: 56px;
+        }
+        .pst-slct-usr-pic{
+            width: 40px;
+            height: 40px;
+            margin-right: 8px;
+        }
+        .pst-slct-usr-lk-nm{
+            font-weight: 600;
+            color: #068290;
+        }
+        .pst-slct-usr-sp-usrnm{
+            left: 53px;
+            bottom: 19px;
+        }
+    }
+}
 
 .Container {
   height: 100%;
@@ -25,8 +64,8 @@ body {
     position: fixed;
     left: 10px;
     top: 2px;
-    display: flex;
     width: 320px;
+    z-index: 1; /* TODO important */
 }
 
 .Main {
@@ -50,12 +89,33 @@ body {
     font-size: 13px;
   }
 }
-
+.card-outer{
+    border: 1px solid #c3d0f7;
+}
 .CardOpt {
     background: rgba(19, 21, 21, 0.81);
     padding: 15px 10px;
     margin-bottom: 10px;
     margin-top: 130px;
+    height: 100vh;
+    position: relative;
+    /* display: none; */
+    // display: flex;
+    // .active{
+    //     display: block !important;
+    // }
+    .add-edtx-btn, .add-tx-btn{
+        background: #000;
+        width: 100px;
+        height: 100px;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        text-transform: capitalize;
+        flex: auto;
+        margin: 5px 5px;
+        cursor: pointer;
+    }
     form{
         padding: 5px 10px;
         position: relative;
@@ -104,8 +164,11 @@ body {
 }
 
 .ImageCanvas {
-  position: relative;
-  height: 100%;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
   .konvajs-content{
     position: relative;
     left: 0;
@@ -135,6 +198,8 @@ body {
 .ImagePicker {
   /* overflow-y: scroll; */
   height: calc(100vh - 74px - 32px);
+  display: flex;
+  width: 100%;
   /* padding-top: 4px; */
 
   &-image {
@@ -208,8 +273,14 @@ body {
 }
 
 .FiltersPicker {
-  width: 100%;
-  font-size: 16px;
+    font-size: 13px;
+    position: absolute;
+    top: 35px;
+    z-index: 7;
+    width: 200px;
+    left: -16px;
+    min-height: 28px;
+    padding: 2px 5px;
 }
 
 .TextPropsPicker {
@@ -466,22 +537,64 @@ body {
     }
     .Menubar-rght{
         right: 0;
-        width: 220px;
-        position: absolute;
-        border-left: 1px solid #d8e0e4;
+        width: 270px;
+        height: 100%;
+        /* position: absolute; */
+        /* border-left: 1px solid #d8e0e4; */
+        color: #fff;
+        text-transform: capitalize;
+        margin-right: 20px;
+        transform: translate(0%, 20%);
+        li.item{
+            margin-right: 3px;
+        }
+        button.send, button.download{
+            background-color: #0da9bb;
+            border-color: #0294a5;
+        }
+        button.send{
+            .btn-ico{
+                background: transparent url(http://opinion.com/images/1608828-48.png) 50% 50% no-repeat;
+            }
+        }
+        button.download{
+            .btn-ico{
+                background: transparent url(http://opinion.com/images/172461-48.png) 50% 50% no-repeat;
+            }
+        }
+        button{
+            min-width: 60px;
+            text-transform: capitalize;
+            &>div{
+                display: inline-block;
+                vertical-align: top;
+            }
+            .btn-ico{
+                width: 24px;
+                height: 19px;
+                opacity: 0.7;
+                background-size: contain !important;
+                margin-right: 5px;
+            }
+        }
     }
 
+    .sub-menub-lst{
 
-    .sub-menub{
-        position: relative;
-        padding: 5px;
-        display: block;
-        height: 100%;
+    }
+
+    .police{
         ul{
-            padding: 0;
-            display: flex;
-            height: 100%;
+            height: unset !important;
+            position: relative;
+            bottom: 5px;
         }
+    }
+
+    ul{
+        display: flex;
+        padding: 0;
+        height: 100%;
         li{
             list-style: none;
             flex: auto;
@@ -491,39 +604,146 @@ body {
             position: relative;
         }
     }
+    .sub-menub{
+        position: relative;
+        padding: 5px;
+        display: block;
+        height: 100%;
+    }
 
     .ico{
-        width: 48px;
+        width: 45px;
         cursor: pointer;
-        position: absolute;
-        right: 0;
-        left: 0;
+        position: relative;
+        /* right: 0;
+        left: 0; */
         margin: auto;
-        background: cover;
+        background-size: cover;
+        padding: 5px;
     }
-    .edittext{
-        height: 48px;
-        background: transparent url(http://opinion.com/images/2290864-48-ed.png) 50% 50% no-repeat;
+    .Menubar-lft{
+        .edittext{
+            height: 45px;
+            background: transparent url(http://opinion.com/images/2290864-48-ed.png) 50% 50% no-repeat;
+        }
+        .image{
+            height: 48px;
+            background: transparent url(http://opinion.com/images/2305629-48.png) 50% 50% no-repeat;
+        }
+        .modele{
+            width: 64px;
+            height: 62px;
+            top: -6px;
+            /* margin: auto; */
+            background: transparent url(http://opinion.com/images/if_app_window_107230.png) 50% 50% no-repeat;
+            opacity: 0.7;
+            background-size: contain;
+        }
+        .fill{
+            width: 40px;
+            height: 40px;
+            top: 5px;
+            margin: auto;
+            background: transparent url(http://opinion.com/images/352891-48.png) 50% 50% no-repeat;
+            opacity: 0.7;
+        }
     }
-    .image{
-        height: 48px;
-        background: transparent url(http://opinion.com/images/2305629-48.png) 50% 50% no-repeat;
+    .textColor{
+        .ico{
+            width: 24px;
+            height: 19px;
+            background: transparent url(http://opinion.com/images/352385-48.png) 50% 50% no-repeat;
+            opacity: 0.7;
+        }
     }
-    .modele{
-        width: 48px;
-        height: 48px;
-        top: 10px;
-        margin: auto;
-        background: transparent url(http://opinion.com/images/if_app_window_107230.png) 50% 50% no-repeat;
+    .bold{
+        .ico{
+            width: 18px;
+            height: 16px;
+            /* top: 10px; */
+            /* margin: auto; */
+            background: transparent url(http://opinion.com/images/3671764-48.png) 50% 50% no-repeat;
+            opacity: 0.7;
+        }
+    }
+    .italic{
+        .ico{
+            width: 19px;
+            height: 19px;
+            /* top: 10px; */
+            /* margin: auto; */
+            background: transparent url(http://opinion.com/images/if_italic_2561454.png) 50% 50% no-repeat;
+            opacity: 0.7;
+        }
+    }
+    .underline{
+        .ico{
+            width: 22px;
+            height: 21px;
+            /* top: 10px; */
+            /* margin: auto; */
+            background: transparent url(http://opinion.com/images/352397-48.png) 50% 50% no-repeat;
+            opacity: 0.7;
+        }
+    }
+    .paragraph {
+        .ico{
+            opacity: 0.7;
+            cursor: pointer;
+            position: absolute;
+            bottom: 5px;
+            background-size: cover;
+        }
+    }
+    .alignLeft .ico{
+        width: 29px;
+        height: 30px;
+        background: transparent url(http://opinion.com/images/103726-48.png) 50% 50% no-repeat;
+    }
+    .alignCenter .ico{
+        width: 29px;
+        height: 30px;
+        background: transparent url(http://opinion.com/images/103724-48.png) 50% 50% no-repeat;
+    }
+    .alignRight .ico{
+        width: 29px;
+        height: 30px;
+        background: transparent url(http://opinion.com/images/103727-48.png) 50% 50% no-repeat;
+    }
+    .alignJustify .ico{
+        width: 29px;
+        height: 30px;
+        background: transparent url(http://opinion.com/images/103725-48.png) 50% 50% no-repeat;
+    }
+    .filter .ico{
+        width: 29px;
+        height: 30px;
+        background: transparent url(http://opinion.com/images/1214961-48.png) 50% 50% no-repeat;
         opacity: 0.7;
+        cursor: pointer;
+        position: relative;
+        background-size: cover;
     }
-    .fill{
-        width: 44px;
-        height: 44px;
-        top: 10px;
+    .crop .ico{
+        width: 29px;
+        height: 30px;
+        background: transparent url(http://opinion.com/images/3427267-48.png) 50% 50% no-repeat;
+        opacity: 0.7;
+        cursor: pointer;
+        position: relative;
+        background-size: cover;
+    }
+    .transparency .ico{
+        width: 29px;
+        height: 30px;
         margin: auto;
         background: transparent url(http://opinion.com/images/352891-48.png) 50% 50% no-repeat;
         opacity: 0.7;
+    }
+    .ico.active{
+        background-color: #b9c1c3;
+        border: 1px solid #a7afb1;
+        /* margin-bottom: 10px; */
     }
 }
 
@@ -534,20 +754,72 @@ body {
         height: 100%;
         width: 100%;
         display: flex;
+        .translate-lft-btn{
+            .ico{
+                position: absolute !important;
+                width: 15px !important;
+                height: 100%;
+            }
+        }
     }
     .HMenu-a{
         position: relative;
-        overflow: hidden;
+        // overflow: hidden;
         width: 100%;
-        &>div{
+        display: flex;
+        /* &>div{
             display: flex;
-        }
+        } */
     }
     .sub-m{
-        flex: auto;
+        flex: 0 0 250px;
         border-right: 1px solid #dee3e6;
+        position: relative;
+        height: 100%;
+        .inactive{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            z-index: 9;
+            background: #c5cbce;
+            opacity: 0.4;
+        }
+        &.image{
+            .item{
+                &>div{
+                    position: absolute;
+                    bottom: 10px;
+                    margin: 0 10px;
+                }
+            }
+        }
+        .crop-btn-ctnr {
+            position: absolute;
+            top: 25px;
+            left: -40px;
+            background: #fff;
+            z-index: 6;
+            border: 1px solid #cad5da;
+            padding: 13px 15px;
+            width: 250px;
+        }
         &:last-child{
             border-radius: none;
+        }
+        .item-top{
+            height: 35px;
+            display: flex;
+            position: relative;
+            margin: 6px 0 10px;
+            &>div{
+                flex: auto;
+                margin: 0 6px;
+                font-size: 13px;
+            }
+            .fontSize{
+                width: 15px;
+            }
         }
     }
 }
@@ -567,4 +839,12 @@ body {
     margin-left: auto;
     height: 100%;
     margin-top: 100px;
+}
+.page-a{
+    position: relative;
+    .page-b{
+        position: relative;
+        background: #fff;
+        border: 1px solid #b1bdc3;
+    }
 }

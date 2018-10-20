@@ -45,16 +45,24 @@ class EditMenu extends React.Component {
                         <div className="sub-menub">
                             <ul className="sub-menub-lst">
                                 <li className="item">
-                                    <div className="ico edittext"></div>
+                                    <div 
+                                        className="ico edittext" 
+                                        onClick={() => this.props.switchLefSide('text')}></div>
                                 </li>
                                 <li className="item">
-                                    <div className="ico image"></div>
+                                    <div 
+                                        className="ico image"
+                                        onClick={() => this.props.switchLefSide('image')}></div>
                                 </li>
                                 <li className="item">
-                                    <div className="ico modele"></div>
+                                    <div 
+                                        className="ico fill"
+                                        onClick={() => this.props.switchLefSide('fill')}></div>
                                 </li>
                                 <li className="item">
-                                    <div className="ico fill"></div>
+                                    <div 
+                                        className="ico modele"
+                                        onClick={() => this.props.switchLefSide('modele')}></div>
                                 </li>
                             </ul>
                         </div>
@@ -62,24 +70,37 @@ class EditMenu extends React.Component {
                     <div className="Menubar-ctr">
                         <HMenu 
                             {...this.props}
+                            toggleTextAlign={this.props.toggleTextAlign}
+                            currentTransparency={this.props.currentTransparency}
+                            imageFilter={this.props.imageFilter}
                             translate={this.state.translateX} 
                             activeType={activeType}
+                            editorRef={this.props.editorRef}
                             />
                     </div>
                     <div className="Menubar-rght">
                         <div className="sub-menub">
                             <ul className="sub-menub-lst">
                                 <li className="item">
-                                    <div className="send">send</div>
+                                    <button 
+                                        className="btn btn-sm send"
+                                        onClick={this.props.openAdminSender}>
+                                        <div className="btn-ico"></div>
+                                        <div className="txt">send</div>
+                                    </button>
                                 </li>
                                 <li className="item">
-                                    <div className="post">post</div>
+                                    <button 
+                                        className="btn btn-sm btn-primary post"
+                                        onClick={this.props.createPost}>post</button>
                                 </li>
                                 <li className="item">
-                                    <div className="share">share</div>
-                                </li>
-                                <li className="item">
-                                    <div className="download">download</div>
+                                    <button 
+                                        className="btn btn-sm download"
+                                        onClick={this.props.download}>
+                                        <div className="btn-ico"></div>
+                                        <div className="txt">download</div>
+                                    </button>
                                 </li>
                             </ul>
                         </div>

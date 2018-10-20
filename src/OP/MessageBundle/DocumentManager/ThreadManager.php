@@ -57,6 +57,7 @@ class ThreadManager extends BaseThreadManager
     {
         $objects      = $this->findParticipantInboxThreads($user, $limit, $page);
         foreach ($objects as $o) {
+            if($o->isDeletedByParticipant($user))  continue;
             $datas[] = $this->transformer->threadObjectToArray($o);
         }
 
