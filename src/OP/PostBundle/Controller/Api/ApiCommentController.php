@@ -50,8 +50,7 @@ class ApiCommentController extends FOSRestController implements ClassResourceInt
         foreach ($records as $record) {               
             $comments[] = $transformer->commentToArray($record);
         }
-        $res = new JsonResponse();
-        return $res->setData(array('comments'=>$comments));
+        return new JsonResponse($comments);
     }
 
     /**
@@ -129,23 +128,24 @@ class ApiCommentController extends FOSRestController implements ClassResourceInt
     public function showAction(Request $request, $id, ToArrayTransformer $transformer, RealTimePost $realtime_post)
     {
         $dm = $this->getDocumentManager();
-        $post = $dm->getRepository('OPPostBundle:Post')->simpleFindById($id);
-        if (!$post) {
-            throw $this->createNotFoundException('Unable to find Post post.');
+        $comment = $dm->getRepository('OPPostBundle:Comment')->find($id);
+        if (!$comment) {
+            return new JsonResponse([
+                "error" => [
+                    "errors"=> [
+                        [
+                            "domain"=> "global",
+                            "reason"=> "notFound",
+                            "message"=> "Not Found"
+                        ]
+                    ],
+                    "code"=> 404,
+                    "message"=> "Not Found"
+                ]
+            ]);
         }
-        
-        $realtime_post->publish($this->_getUser()->getId(), "initiale message de from");
-        $post_arr = $transformer->postToArray($post);
-        
-        // $redis = $this->get('snc_redis.default');
-        // $onlines = $redis->sinter('valll');
-        // $users = [];
-        // foreach ($onlines as $online) {
-        //     $users[] = unserialize($online);
-        // }
-//        $response = new JsonResponse();
-////        return $response->setData(array('postAuthor'=>$postArray));
-        return $this->render('OPPostBundle:Post:post_show.html.twig', array('post'=>$post_arr));
+
+        return new JsonResponse([$transformer->commentObjectToArray($comment)]);
     }
 
     /**
@@ -182,7 +182,7 @@ class ApiCommentController extends FOSRestController implements ClassResourceInt
     /**
      * Deletes a Post post.
      *
-     * @Annotations\Post("/comments/remove/{id}")
+     * @Annotations\Delete("/comments/remove/{id}")
      *
      * @param Request $request The request object
      * @param string $id       The post ID

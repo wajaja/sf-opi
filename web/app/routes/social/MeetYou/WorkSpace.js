@@ -95,66 +95,30 @@ const _Page = createReactClass({
                         width: canvasWidth + 'px',
                         height: canvasHeight + 'px'
                     }}>
-                    {!!this.props.editing && 
-                        <DropContainer
-                            {...this.props}
-                            pageId={this.props.pageId}
-                            filter={this.props.filter}
-                            images={this.props.images}
-                            cards={this.props.cards}
-                            canvasWidth={canvasWidth}
-                            canvasHeight={canvasHeight}
-                            moveImage={this.props.moveImage}
-                            onCardSelectionChange={this.props.onCardSelectionChange }
-                            updateCardSize={this.props.updateCardSize}
-                            textEditors={this.props.textEditors}
-                            setCurrentBoldState={this.props.setCurrentBoldState}
-                            setCurrentItalicState={this.props.setCurrentItalicState}
-                            setCurrentUnderlineState={this.props.setCurrentUnderlineState}
-
-                            customStylesUtils={this.props.customStylesUtils}
-                            currentColor={this.props.currentColor}
-                            setCurrentColor={this.props.setCurrentColor}
-                            colorHandle={this.props.colorHandle}
-                            // switchColorHandle={switchColorHandle}
-                            setCurrentFontSize={this.props.setCurrentFontSize}
-                            hasEditorFocus={this.props.editorFocus}
-                            setEditorFocus={this.props.setEditorFocus}
-                            editorState={this.props.editorState}
-                            setEditorState={this.props.setEditorState}
-                            editorBackground={this.props.editorBackground}
-                            setEditorBackground={this.props.setEditorBackground}
-                            setCurrentFontFamily={this.props.setCurrentFontFamily}
-                            currentFontFamily={this.props.currentFontFamily}
-                            setEditorRef={this.props.setEditorRef}
-                            editorRef={this.props.editorRef}/>
-                    }
-                    {!this.props.editing && 
-                        <ImageCanvas
-                          canvasWidth={canvasWidth}
-                          canvasHeight={canvasHeight}
-                          image={this.props.selectedUrl}
-                          textArr={this.props.textArr}
-                          cards={this.props.cards}
-                          body={{
-                              text: this.props.text, 
-                              textAttrs: this.props.text,
-                          }}
-                          filter={this.props.filter}
-                          size={this.props.size}
-                          isFocused={this.props.isFocused}
-                          isEditing={this.props.isEditing}
-                          onFocus={this.props.onFocus}
-                          onEdit={this.props.onEdit}
-                          textArr={this.props.textArr}
-                          onBlur={this.props.onBlur}
-                          cards={this.props.cards}
-                          updateTextArr={this.props.updateTextArr}
-                          onCancelEdit={this.props.onCancelEdit}
-                          onTextRectMove={this.props.onTextRectMove}
-                          onRedraw={this.props.onRedraw}
-                          onTextChange={this.props.onTextChange} />
-                    }
+                    <ImageCanvas
+                      canvasWidth={canvasWidth}
+                      canvasHeight={canvasHeight}
+                      image={this.props.selectedUrl}
+                      textArr={this.props.textArr}
+                      cards={this.props.cards}
+                      body={{
+                          text: this.props.text, 
+                          textAttrs: this.props.text,
+                      }}
+                      filter={this.props.filter}
+                      size={this.props.size}
+                      isFocused={this.props.isFocused}
+                      isEditing={this.props.isEditing}
+                      onFocus={this.props.onFocus}
+                      onEdit={this.props.onEdit}
+                      textArr={this.props.textArr}
+                      onBlur={this.props.onBlur}
+                      cards={this.props.cards}
+                      updateTextArr={this.props.updateTextArr}
+                      onCancelEdit={this.props.onCancelEdit}
+                      onTextRectMove={this.props.onTextRectMove}
+                      onRedraw={this.props.onRedraw}
+                      onTextChange={this.props.onTextChange} />
                 </div>
             </Fragment>
         )
@@ -234,40 +198,76 @@ class WorkSpace extends React.Component {
             <Fragment>
                 {this.state.pages.map && this.state.pages.map((page, i) => {
                     return(
-                        <div key={i} className="page-a">
-                            <Page 
-                                key={i}
-                                pageId={i}
-                                data={page.data}
-                                {...this.props}
-                                onCardSelectionChange={this.props.onCardSelectionChange }
-                                customStylesUtils={this.props.customStylesUtils}
-                                currentColor={this.props.currentColor}
-                                setCurrentColor={this.props.setCurrentColor}
-                                colorHandle={this.props.colorHandle}
-                                setCurrentBoldState={this.props.setCurrentBoldState}
-                                setCurrentItalicState={this.props.setCurrentItalicState}
-                                setCurrentUnderlineState={this.props.setCurrentUnderlineState}
-                                // switchColorHandle={switchColorHandle}
-                                setCurrentFontSize={this.props.setCurrentFontSize}
-                                hasEditorFocus={this.props.editorFocus}
-                                setEditorFocus={this.props.setEditorFocus}
-                                editorState={this.props.editorState}
-                                setEditorState={this.props.setEditorState}
-                                editorBackground={this.props.editorBackground}
-                                setEditorBackground={this.props.setEditorBackground}
-                                setCurrentFontFamily={this.props.setCurrentFontFamily}
-                                currentFontFamily={this.props.currentFontFamily}
-                                setEditorRef={this.props.setEditorRef}
-                                editorRef={this.props.editorRef}
+                        <Fragment key={i}>
+                            <div  className="page-a">
+                                <Page 
+                                    pageId={i}
+                                    data={page.data}
+                                    {...this.props}
+                                    onCardSelectionChange={this.props.onCardSelectionChange }
+                                    customStylesUtils={this.props.customStylesUtils}
+                                    currentColor={this.props.currentColor}
+                                    setCurrentColor={this.props.setCurrentColor}
+                                    colorHandle={this.props.colorHandle}
+                                    setCurrentBoldState={this.props.setCurrentBoldState}
+                                    setCurrentItalicState={this.props.setCurrentItalicState}
+                                    setCurrentUnderlineState={this.props.setCurrentUnderlineState}
+                                    // switchColorHandle={switchColorHandle}
+                                    setCurrentFontSize={this.props.setCurrentFontSize}
+                                    hasEditorFocus={this.props.editorFocus}
+                                    setEditorFocus={this.props.setEditorFocus}
+                                    editorState={this.props.editorState}
+                                    setEditorState={this.props.setEditorState}
+                                    editorBackground={this.props.editorBackground}
+                                    setEditorBackground={this.props.setEditorBackground}
+                                    setCurrentFontFamily={this.props.setCurrentFontFamily}
+                                    currentFontFamily={this.props.currentFontFamily}
+                                    setEditorRef={this.props.setEditorRef}
+                                    editorRef={this.props.editorRef}
 
-                                currentItalicState={this.props.currentItalicState}
-                                currentBoldState={this.props.currentBoldState}
-                                currentFontSize={this.props.currentFontSize}
-                                />
-                        </div>
+                                    currentItalicState={this.props.currentItalicState}
+                                    currentBoldState={this.props.currentBoldState}
+                                    currentFontSize={this.props.currentFontSize}
+                                    />
+                            </div>
+                        </Fragment>
                     )
                 })}
+                {!!this.props.editing && 
+                    <DropContainer
+                        {...this.props}
+                        pageId={this.props.pageId}
+                        filter={this.props.filter}
+                        images={this.props.images}
+                        cards={this.props.cards}
+                        zoneWidth={600}
+                        zoneHeight={500}
+                        moveImage={this.props.moveImage}
+                        onCardSelectionChange={this.props.onCardSelectionChange }
+                        updateCardSize={this.props.updateCardSize}
+                        textEditors={this.props.textEditors}
+                        setCurrentBoldState={this.props.setCurrentBoldState}
+                        setCurrentItalicState={this.props.setCurrentItalicState}
+                        setCurrentUnderlineState={this.props.setCurrentUnderlineState}
+
+                        customStylesUtils={this.props.customStylesUtils}
+                        currentColor={this.props.currentColor}
+                        setCurrentColor={this.props.setCurrentColor}
+                        colorHandle={this.props.colorHandle}
+                        // switchColorHandle={switchColorHandle}
+                        setCurrentFontSize={this.props.setCurrentFontSize}
+                        hasEditorFocus={this.props.editorFocus}
+                        setEditorFocus={this.props.setEditorFocus}
+                        editorState={this.props.editorState}
+                        setEditorState={this.props.setEditorState}
+                        editorBackground={this.props.editorBackground}
+                        setEditorBackground={this.props.setEditorBackground}
+                        setCurrentFontFamily={this.props.setCurrentFontFamily}
+                        currentFontFamily={this.props.currentFontFamily}
+                        setEditorRef={this.props.setEditorRef}
+                        selectedCardId={this.props.selectedCardId}
+                        editorRef={this.props.editorRef}/>
+                }
             </Fragment>
         )
     }

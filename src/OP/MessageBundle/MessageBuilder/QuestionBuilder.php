@@ -11,7 +11,7 @@ use OP\MessageBundle\Document\Response;
  *
  * @author Cedrick
  */
-class QuestionBuilder
+class QuestionBuilder extends AbstractMessageBuilder
 {
     /**
      * The response we are building

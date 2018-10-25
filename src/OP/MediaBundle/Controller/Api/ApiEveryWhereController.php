@@ -17,7 +17,7 @@ use OP\PostBundle\Document\EveryWhere,
 use FOS\RestBundle\Controller\{Annotations, FOSRestController, Annotations\RouteResource};
 
 /**
- * @RouteResource("rates", pluralize=false)
+ * @RouteResource("everywhere", pluralize=false)
  */
 class ApiEveryWhereController extends FOSRestController implements ClassResourceInterface
 {
@@ -89,14 +89,14 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
      *
      * @return
      */
-    public function updateAction($objId, Request $request, NewPostFormHandler $handler, ToArrayTransformer $transformer)
+    public function updateAction($objId, Request $request, NewPostFormHandler $handler, PictureManager $pMan, ToArrayTransformer $transformer, SerializerInterface $serializer)
     {
         $session = $request->getSession();
         $res     = new JsonResponse();
         $dm      = $this->getDocumentManager();
         $ever    = $dm->getRepository('OPMediaBundle:EveryWhere')->find($objId);
 
-        if(!$rate) 
+        if(!$ever) 
             return new JsonResponse([
                 "error" => [
                     "errors"=> [
@@ -136,30 +136,13 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If post doesn't exists
      */
-    public function deleteAction(Request $request, $id, RateManager $manager, ToArrayTransformer $transformer)
+    public function deleteAction(Request $request, $id, PictureManager $pMan)
     {
 
-        $res    = new JsonResponse();
-        $dm     = $this->getDocumentManager();
-        $type   = $request->query->get('type');
-        $objId = $request->query->get('objId');
-
-        $rate   = $dm->getRepository('OPPostBundle:Rate')
-                     ->findPostLiker($objId, $this->_getUser()->getId());
-        if (!$rate) return;
-
-        $refId  = $rate->getRefValid();
-        $type   = $rate->getType();
-
-        $manager->deleteRate($rate);
-
-        if($type === 'post') 
-            $object = $this->getPost($refId, $transformer);
-        else if($type === 'leftcomment') 
-            $object = $this->getLeftComment($refId);
-        else if($type === 'rightcomment') 
-            $object = $this->getRightComment($refId);
-        return $res->setData(array('post'=>$object));
+        $dm      = $this->getDocumentManager();
+        $ever    = $dm->getRepository('OPMediaBundle:EveryWhere')->find($id);
+        $pMan->deleteEveryWhere($ever);
+        return new JsonResponse(["success" => true]);
     }
 
     private function getStreamClient() {

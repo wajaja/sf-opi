@@ -143,7 +143,23 @@ class GroupManager extends BaseManager
         $qb 
             ->limit($limit)
             ->field('id')->notIn($initIds)
-            ->field('membersIds')->equals($member->getId());
+            ->field('members')->equals($member);
+
+        $groups = $qb->getQuery()->execute()
+                    ->toArray();
+        return $groups;
+
+    }
+
+    public function publicGroups($member, $initIds, $limit = 10) {
+
+        $qb = $this->repository->createQueryBuilder();
+
+        $qb 
+            ->limit($limit)
+            ->field('id')->notIn($initIds)
+            // ->field('membersIds')->equals($member->getId())
+            ;
 
         $groups = $qb->getQuery()->execute()
                     ->toArray();

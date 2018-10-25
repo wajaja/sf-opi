@@ -95,7 +95,7 @@ class MessageFormHandler extends AbstractMessageFormHandler
         if ($response instanceof Response) {
             $body = $response->getContent();
             return $this->composer->postQuestion($response)
-                        ->setUnique($message->getUnique())
+                        ->setUnique($response->getUnique())
                         ->setAuthor($this->getAuthenticatedUser())
                         ->setContent($this->buildHTML($body))
                         ->getResponse();

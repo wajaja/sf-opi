@@ -48,7 +48,7 @@ abstract class AbstractMessageFormHandler
      * @param Form $form
      * @return Message|false the sent message if the form is bound and valid, false otherwise
      */
-    public function processSecret(Form $form, $thread=null)
+    public function processSecret(Form $form, $response=null)
     {
         //request method
         if (!in_array($this->request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
@@ -60,14 +60,16 @@ abstract class AbstractMessageFormHandler
             $data = json_decode($this->request->getContent(), true);
             $this->request->request->replace(is_array($data) ? $data : array());
             $form->submit($data);
-            return $this->processValidForm($form, $thread);
+            return $this->processValidForm($form, null);
             // echo $a;
         }
+
+
 
         //handle request if not json data
         $form->handleRequest($this->request);
         if($form->isValid()) {
-            return $this->processValidForm($form, $thread);
+            return $this->processValidForm($form, null);
         }
 
         return false;
@@ -125,10 +127,10 @@ abstract class AbstractMessageFormHandler
             $document = $this->sender->send($message);
         }
 
-        elseif($form->getName() === 'response') {
+        elseif($form->getName() === 'secret') {
 
-            $document = $this->composeResponse($form->getData(), null);
-            $this->questionManager->saveResponse($document);           
+            $response = $this->composeResponse($form->getData(), null);
+            $document = $this->questionManager->saveResponse($response);           
 
         }
         else {/**do nothing */}

@@ -20,10 +20,11 @@ import {
 import AdminSender              from './AdminSender'
 
 import '../../../styles/social/meetyou.scss'
+import WorkSpace                from './WorkSpace'
 
 import MyLoadable    from '../../../components/MyLoadable'
-const EditMenu = MyLoadable({loader: () => import('./EditMenu')}),
-WorkSpace = MyLoadable({loader: () => import('./WorkSpace')})
+const EditMenu = MyLoadable({loader: () => import('./EditMenu')})
+// WorkSpace = MyLoadable({loader: () => import('./WorkSpace')})
 
 
 const MeetYou = createReactClass({
@@ -90,46 +91,9 @@ const MeetYou = createReactClass({
         this.setState({ editorState });
     },
 
-    setEditorBackground(background) {
-        if (!background) {
-            throw new Error('need to give some background');
-        }
-
-        let hexColorRegex = /^#[0-9A-F]{6}$/i;
-        let isHexColor = hexColorRegex.test(background);
-
-        // background is not an image
-        if (isHexColor) {
-            this.setState({
-                editorBackground: background,
-            });
-
-            // setLSItem('editorBackground', background);
-        }
-    },
-
     setEditorRef(ref) {
         this.setState({ editorRef: ref });
     },
-
-    setCurrentColor(color) {
-        if (!color) {
-            throw new Error('You need to pass in some color');
-        }
-
-        this.setState({
-            currentColor: color,
-        });
-    },
-
-    handleCurrentColorChange(customStylesUtils) {
-        const self = this
-        return function (color) {
-            self.setCurrentColor(color.hex);
-            customStylesUtils.addColor(color.hex);
-        }
-    },
-        
 
     // componentDidMount() {
     //     document
@@ -155,64 +119,7 @@ const MeetYou = createReactClass({
     //     });
     // };
 
-    handleCurrentFontSizeChange(fontSize) {
-        this.setState({ currentFontSize: fontSize });
-        this.customStylesUtils.addFontSize(fontSize);
-    },
-
-    setCurrentFontFamily(fontFamily){
-        this.setState({
-          currentFontFamily: fontFamily,
-        });
-
-        // this.customStylesUtils.addFontFamily(fontFamily);
-    },
-
-    setCurrentFontSize(fontSize){
-        if (!fontSize) {
-            throw new Error('You need to pass font size');
-        }
-
-        this.setState({
-            currentFontSize: fontSize,
-        });
-    },
-
-    setCurrentBoldState(state){
-        this.setState({currentBoldState: state})
-    },
-    setCurrentItalicState(state){
-        this.setState({currentItalicState: state})
-    },
-    setCurrentUnderlineState(state){
-        this.setState({currentUnderlineState: state})
-    },
-
-    onToggleDefaultInlineStyles(style, state) {
-        if(style === 'BOLD') {
-            this.setState({currentBoldState: state})
-        } else if(style === 'ITALIC') {
-            this.setState({currentItalicState: state})
-        } else if(style === 'UNDERLINE') {
-            this.setState({setCurrentUnderlineState: state})
-        } else if(style === 'CODE') {
-            this.setState({currentCodeState: state})
-        }
-        this._toggleInlineStyle(style);
-    },
-
-    _toggleInlineStyle(inlineStyle) {
-        this.setEditorState(
-            RichUtils.toggleInlineStyle(
-              this.state.editorState,
-              inlineStyle
-            )
-        );
-    },
-
-    setEditorState(state) {
-        this.setState({editorState: state})
-    },
+    
 
 
     setCropperRef(cropper) {
@@ -238,10 +145,6 @@ const MeetYou = createReactClass({
 
     updateCurrentTransparancy(value) {
         this.setState({updateCurrentTransparancy: value})
-    },
-
-    setEditorBackground(color) {
-        this.setState({editorBackground: color})
     },
 
     setCurrentColor(color) {

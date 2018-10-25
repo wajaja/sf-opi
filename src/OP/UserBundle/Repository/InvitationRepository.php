@@ -80,10 +80,11 @@ class InvitationRepository extends DocumentRepository
 
     public function findRequestInvitations($user_id, $isConfirmed) {
         $qb = $this->createQueryBuilder('\OP\UserBundle\Document\Invitation\Invitation');
-        $qb ->field('metadata.isConfirmed')->equals(false)
+        $qb 
+            ->field('metadata.isConfirmed')->equals(false)
             ->field('metadata.isMasked')->equals(false)
-            ->field('receiver.$id')->equals(new \MongoId($user_id))
-            ->hydrate(false)
+            ->field('receiver.$id')->equals(new \MongoId("59ffa6acd8d25a1204002e5f"))
+            // ->hydrate(false)
             ;
 
         $i = $qb->getQuery()->execute()->toArray();

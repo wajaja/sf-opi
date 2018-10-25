@@ -167,6 +167,10 @@ class ToArrayTransformer extends ObjectToArrayTransformer
     }
 
     public function likeToArray($like) {
-        
+        return [
+            'id' => (string)$like['_id'],
+            'refValid' => $like['refValid'],
+            'author' => $this->getAuthor($like['author'])
+        ];
     }
 }

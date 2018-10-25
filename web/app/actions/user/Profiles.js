@@ -136,10 +136,11 @@ export function loadTimeline(username, page) {
         const _newRefs = getState().Profiles[username].newsRefs,
         initIds = _newRefs.map((ref) => ref.id)
         return new Promise((resolve, reject) => {
-            axios.get(`${BASE_PATH}/api/timeline/${username}?page=${page}`).then(
+            axios.get(`${BASE_PATH}/api/timeline/load/${username}?page=${page}`).then(
                 (res) => {
                     console.log(res.data)
-                    const { news, newsRefs } = res.data;
+                    //add authors & lastStreamId
+                    const { news, newsRefs, lastStreamId, authors } = res.data;
                     dispatch(_loadTimelineResponse(username, news, newsRefs))
                     dispatch(NewsFeedActions.addPosts(news))
                     resolve(res.data)
@@ -215,7 +216,7 @@ export function loadRelationship(username, page) {
             axios.get(`${BASE_PATH}/api/friends/load/${username}?page=${page}`).then(
                 (res) => {
                     console.log(res.data)
-                    const { friends } = res.data;
+                    const friends = res.data;
                     dispatch(_loadFriendsResponse(username, friends))
                     resolve(res.data)
                 },
@@ -270,6 +271,21 @@ export function loadFollowers(username, page) {
                     reject(error)
                 })
         })
+    }
+}
+
+export const USER_INFO = 'PROFILES::USER_INFO'
+
+export const USER_INFO_RESPONSE = 'PROFILES::USER_INFO_RESPONSE'
+
+//See in usersSaga for op detail
+export const _userInfoResponse = (username, info) => ({
+    type: USER_INFO_RESPONSE, username, info,
+}) 
+
+export function userInfo(username) {
+    return (dispatch, getState) => {
+        dispatch({type: 'PROFILES::USER_INFO_REQUEST', username })
     }
 }
 

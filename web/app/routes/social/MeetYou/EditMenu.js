@@ -37,7 +37,7 @@ class EditMenu extends React.Component {
         let activeType = !!selectedCard ? selectedCard.type : ''
         return (
             <div 
-                className="Menubar" 
+                className="Menubar top" 
                 onMouseOver={(e) => this.setState({hover: false})}
                 onMouseOver={(e) => this.setState({hover: true})}>
                 <div className="Menubar-a">
@@ -67,7 +67,7 @@ class EditMenu extends React.Component {
                             </ul>
                         </div>
                     </div>
-                    <div className="Menubar-ctr">
+                    <div className="Menubar-ctr top">
                         <HMenu 
                             {...this.props}
                             toggleTextAlign={this.props.toggleTextAlign}

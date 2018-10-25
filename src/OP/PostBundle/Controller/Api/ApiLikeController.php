@@ -44,7 +44,7 @@ class ApiLikeController extends FOSRestController implements ClassResourceInterf
         $dm         = $this->getDocumentManager();
         $refer      = $request->get('refer');
         $db_likes   = $dm->getRepository('OPPostBundle:Like')
-                             ->loadLikes($postId, $refer);
+                             ->loadBy($postId, $refer);
 
         $likes = [];
         foreach ($db_likes as $db_like) {
@@ -90,15 +90,14 @@ class ApiLikeController extends FOSRestController implements ClassResourceInterf
     public function addAction(Request $request, NewPostFormHandler $formHandler, EventDispatcherInterface $dispatcher, NotificationManager $notifMan)
     {
 
-        $res     = new JsonResponse();
         $form    = $this->createForm(LikeType::class, new Like());        
         if($data = $formHandler->process($form, false)) {
             $this->notify($data['like'], $notifMan);  //['like'] is object, ['data'] an array
             $dispatcher->dispatch(OPPostEvents::LIKE_CREATE, new LikeEvent($data['data']));
-            return $res->setData(array('data'=>$data['data']));
+            return new JsonResponse($data['data']);// $res->setData(array('data'=>));
         }
         else { 
-            return $res->setData(array('type'=>null));        
+            return new JsonResponse(null);        
         }
     }
 
@@ -125,10 +124,10 @@ class ApiLikeController extends FOSRestController implements ClassResourceInterf
         $like   = $dm->getRepository('OPPostBundle:Like')->findLikeByRefId($refId, $type, $user);
 
         if (!$like) 
-            return $res->setData(array('data'=>null));
+            return new JsonResponse(null);
 
         $data = $manager->deleteLike($like);
-        return $res->setData(array('data'=>$data['data']));
+        return new JsonResponse($data['data']);
     }
 
     private function getStreamClient() {

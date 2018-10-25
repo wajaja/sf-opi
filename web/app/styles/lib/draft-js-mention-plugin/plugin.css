@@ -16,8 +16,17 @@
 }
 
 .draftJsMentionPlugin__mention__29BEd:active {
-  color: #222;
-  background: #455261;
+    color: #222;
+    background: #455261;
+}
+/*Meetyou styles*/
+.MeetYou .draftJsMentionPlugin__mention__29BEd{
+    color: #0286a5;
+    background: unset;
+}
+.MeetYou .draftJsMentionPlugin__mention__29BEd{
+    color: #0286a5;
+    background: unset;
 }
 .draftJsMentionPlugin__mentionSuggestionsEntry__3mSwm {
   padding: 7px 10px 3px 10px;

@@ -59,8 +59,10 @@ class QuestionManager
      */
     public function saveResponse(Response $response, $andFlush = true)
     {
-        $this->request->getSession()->start();
-
+        // $session = $this->request->getSession();
+        // if(!$session->isStarted()){
+        //     $session->start();
+        // }
         $questionId = $this->request->get('questionId'); //important !!!!!
         if($questionId == null) {
             $question = $this->createQuestion();
@@ -73,7 +75,7 @@ class QuestionManager
         $contents   = $this->request->request->all();       
         $data       = json_decode($this->request->getContent(), true);        
         $content    =   !$this->request->getFormat('application/json') ? 
-                            $contents['response']['content']: $data['content'];
+                            $contents['response']['content'] : $data['content'];
 
         $response->setQuestion($question);
         $response->setContent($content);
@@ -84,7 +86,8 @@ class QuestionManager
         // $response = $this->addImage($response);
 
         $this->dm->persist($response);
-        $this->dm->flush();
+        $this->dm->flush($response);   //TODO ignore error
+        return $response;
     }
 
     /**
@@ -109,9 +112,10 @@ class QuestionManager
         $postId     = $this->request->get('postId');
         $refer      = $this->request->get('refer');
 
+        $post = null;
         if($refer === 'photo') {
             $post = $this->dm->getRepository('OPMediaBundle:Image')->find($postId);
-        } else {
+        } else if($refer === 'post'){
             $post = $this->dm->getRepository('OPPostBundle:Post')->find($postId);
         }
         if (!$post) return; //$response->setData(array('post'=>null));
@@ -157,7 +161,7 @@ class QuestionManager
         $session    = $this->request->getSession();
         $manager    = $this->uploader->get($galleryDir);
         $files      = $manager->getFiles();
-        $imagesIds  = array_values((array)$session->get('_'.$galleryId)); //list of persisted 
+        $imagesIds  = array_values((array)$session->get('_'.$galleryDir)); //list of persisted 
 
         if(!$questionId) {
             $dirId  = 'galleryquestion'.'_'.$postId;

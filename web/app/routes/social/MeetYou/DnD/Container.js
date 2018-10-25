@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import CardWrapper from './CardWrapper';
-import CardDragLayer from './CardDragLayer';
-import Card from './Card';
+import { DragDropContext } 		from 'react-dnd';
+import HTML5Backend 			from 'react-dnd-html5-backend';
+import CardWrapper 				from './CardWrapper';
+import CardDragLayer 			from './CardDragLayer';
+import TextEditor 				from '../components/TextEditor'
+import Card 					from './Card';
 
 const TOTAL_ITEMS = 0;
 
@@ -173,89 +174,56 @@ export default class Container extends PureComponent {
 	    } = this.props;
 
 	    // <CardDragLayer /> useless in our case
+	    // id={card.id}  //
+		   //                  unique={card.unique}  //eg: 1_0
+		   //                  order={card.order}
+		   //                  type={card.type}
+		   //                  url={card.url}
 	    return (
 	        <div
 				className="dnd-container"
+				style={{
+					marginTop: "30px",
+					minHeight: "200px",
+					position: 'sticky',
+    				bottom: '10px',
+					//width: this.props.zoneWidth + "px",
+					//maxHeight: this.props.zoneHeight + "px"
+				}}
 				ref={el => { this.container = el}}>
-          		{cards.map && cards.map((card, i) => {
-		            const isDragging = draggedCardId === card.id;
-		            // const prevCard = i > 0 ? cards[i - 1] : null;
-		            // const nextCard = i < cards.length ? cards[i + 1] : null;
+				<div className="dnd-container-a">
+              		<TextEditor
+	                    selectedCardId={selectedCardId}
+	                    editorStates={this.props.editorStates}
+	                   	imageFilter={this.props.filter}
+	                    onMove={this.onCardMove}
+	                    updateCardData={this.props.updateCardData}
+	                    onDragStart={this.onCardDragStart}
+	                    onDragComplete={this.onCardDragComplete}
+	                    updateCardSize={this.props.updateCardSize}
+	                    onSelectionChange={this.onCardSelectionChange}
+	                    setCurrentBoldState={this.props.setCurrentBoldState}
+	                    setCurrentItalicState={this.props.setCurrentItalicState}
+	                    setCurrentUnderlineState={this.props.setCurrentUnderlineState}
 
-		            // const isDraggingPrevCard = !!prevCard && draggedCardId.includes(prevCard.id);
-		            // const isDraggingNextCard = !!nextCard && draggedCardId.includes(nextCard.id);
-
-		            // const shouldInsertLineOnLeft =
-		            //   !isDragging && !isDraggingPrevCard && hoveredCardIndex === i && insertIndex === i;
-
-		            // const shouldInsertLineOnRight =
-		            //   !isDragging && !isDraggingNextCard && hoveredCardIndex === i && insertIndex === i + 1;
-
-		            // const shouldInsertLineOnRightOfPrevCard =
-		            //   !!prevCard && !isDraggingPrevCard && hoveredCardIndex === i - 1 && insertIndex === i;
-		            // const shouldInsertLineOnLeftOfNextCard =
-		            //   !!nextCard &&
-		            //   !isDraggingNextCard &&
-		            //   hoveredCardIndex === i + 1 &&
-		            //   insertIndex === i + 1;
-
-		            const isHovered =
-		              hoveredCardId === card.id || false
-		              // shouldInsertLineOnRightOfPrevCard ||
-		              //shouldInsertLineOnLeftOfNextCard;
-		              console.log(i);
-
-            		return (
-	              		<div key={'card-div-' + card.id} style={{ position: 'relative' }}>
-		                	{/*shouldInsertLineOnLeft*/ false && <div className="insert-line-left" />}
-		                	<CardWrapper
-								key={'card-wrapper-' + card.id}
-								isDragging={isDragging}
-								isActive={activeCardId === card.id}
-								isHovered={isHovered}
-								isSelected={selectedCardId === card.id}>
-		                  		<Card
-				                    key={'card-' + card.id}
-				                    id={card.id}  //
-				                    unique={card.unique}  //eg: 1_0
-				                    order={card.order}
-				                    type={card.type}
-				                    url={card.url}
-				                    selectedCardId={selectedCardId}
-				                    editorStates={this.props.editorStates}
-				                   	imageFilter={this.props.filter}
-				                    onMove={this.onCardMove}
-				                    updateCardData={this.props.updateCardData}
-				                    onDragStart={this.onCardDragStart}
-				                    onDragComplete={this.onCardDragComplete}
-				                    updateCardSize={this.props.updateCardSize}
-				                    onSelectionChange={this.onCardSelectionChange}
-				                    setCurrentBoldState={this.props.setCurrentBoldState}
-				                    setCurrentItalicState={this.props.setCurrentItalicState}
-				                    setCurrentUnderlineState={this.props.setCurrentUnderlineState}
-
-				                    customStylesUtils={this.props.customStylesUtils}
-                                    currentColor={this.props.currentColor}
-                                    setCurrentColor={this.props.setCurrentColor}
-                                    colorHandle={this.props.colorHandle}
-                                    setCropperRef={this.props.setCropperRef}
-                                    // switchColorHandle={switchColorHandle}
-                                    setCurrentFontSize={this.props.setCurrentFontSize}
-                                    hasEditorFocus={this.props.editorFocus}
-                                    setEditorFocus={this.props.setEditorFocus}
-                                    editorState={this.props.editorState}
-                                    setEditorState={this.props.setEditorState}
-                                    editorBackground={this.props.editorBackground}
-                                    setEditorBackground={this.props.setEditorBackground}
-                                    setCurrentFontFamily={this.props.setCurrentFontFamily}
-                                    currentFontFamily={this.props.currentFontFamily}
-                                    setEditorRef={this.props.setEditorRef}
-                                    editorRef={this.props.editorRef}/>
-		                	</CardWrapper>
-		                	{/*shouldInsertLineOnRight */ false && <div className="insert-line-right" />}
-		              	</div>
-	            	);
-	        	})}
+	                    customStylesUtils={this.props.customStylesUtils}
+                        currentColor={this.props.currentColor}
+                        setCurrentColor={this.props.setCurrentColor}
+                        colorHandle={this.props.colorHandle}
+                        setCropperRef={this.props.setCropperRef}
+                        // switchColorHandle={switchColorHandle}
+                        setCurrentFontSize={this.props.setCurrentFontSize}
+                        hasEditorFocus={this.props.editorFocus}
+                        setEditorFocus={this.props.setEditorFocus}
+                        editorState={this.props.editorState}
+                        setEditorState={this.props.setEditorState}
+                        editorBackground={this.props.editorBackground}
+                        setEditorBackground={this.props.setEditorBackground}
+                        setCurrentFontFamily={this.props.setCurrentFontFamily}
+                        currentFontFamily={this.props.currentFontFamily}
+                        setEditorRef={this.props.setEditorRef}
+                        editorRef={this.props.editorRef}/>
+                </div>
         	</div>
     	);
   	}

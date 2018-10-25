@@ -15,8 +15,9 @@ class LikeManager extends AbstractManager
     {
 
         $all    = $this->request->request->all();
-        $refer   = $all['params']['refer'];
-        $postId  = $all['params']['postId'];
+
+        $refer   = $this->request->get('refer');
+        $postId  = $this->request->get('postId');
         $userId = $this->getAuthenticatedUser()->getId();
 
         $like->setType($refer);
@@ -38,7 +39,7 @@ class LikeManager extends AbstractManager
             $data = [];
 
         $this->dm->persist($data['like']);
-        $this->dm->flush();
+        $this->dm->flush($data['like']);
         return $data;
     }
 
@@ -67,7 +68,7 @@ class LikeManager extends AbstractManager
             $data = [];;
 
         $this->dm->remove($data['like']);
-        $this->dm->flush();
+        $this->dm->flush($data['like']);
         return $data;
     }
 

@@ -19,6 +19,7 @@ use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Form\Factory\FactoryInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     FOS\RestBundle\Routing\ClassResourceInterface,
+    JMS\Serializer\SerializerInterface,
     Symfony\Component\HttpFoundation\RedirectResponse,
     FOS\RestBundle\Controller\Annotations\RouteResource,
     Symfony\Component\Routing\Generator\UrlGeneratorInterface,
@@ -41,7 +42,7 @@ class ApiGroupController extends FOSRestController implements ClassResourceInter
     /**
      * @Annotations\Post("/groups/new")
      */
-    public function newAction(Request $request, NewFormHandler $handler, EventDispatcherInterface $dispatcher, GroupManager $groupManager)
+    public function newAction(Request $request, NewFormHandler $handler, EventDispatcherInterface $dispatcher, GroupManager $groupManager, SerializerInterface $serializer)
     {
         /** @var $groupManager \FOS\UserBundle\Model\GroupManagerInterface */
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
@@ -52,7 +53,12 @@ class ApiGroupController extends FOSRestController implements ClassResourceInter
         $dispatcher->dispatch(FOSUserEvents::GROUP_CREATE_INITIALIZE, new GroupEvent($group, $request));
 
         $form       = $formFactory->createForm(['csrf_protection' => false]);
+        $response   = new JsonResponse([false]);
         $contentType= $request->headers->get('Content-Type');
+
+        if('application/x-www-form-urlencoded' === $contentType)
+            $response = new RedirectResponse($this->generateUrl('fos_user_group_new'));
+
         $form->setData($group);
         if($group   = $handler->process($form, false)) {      
             $event  = new FormEvent($form, $request);
@@ -64,35 +70,20 @@ class ApiGroupController extends FOSRestController implements ClassResourceInter
                     $url = $this->generateUrl('fos_user_group_show', array('groupId' => $group->getId()));
                     $response = new RedirectResponse($url);
                 } else {
-                    $response   = new JsonResponse();
-                    $serializer = $this->get('jms_serializer');
-                    $response->setData(array('group'=>$serializer->toArray($group)));
+                     $response = new JsonResponse(['group'=>$serializer->toArray($group)]);
                 }  
             }
 
             $dispatcher->dispatch(FOSUserEvents::GROUP_CREATE_COMPLETED, new FilterGroupResponseEvent($group, $request, $response));  //add default pic
             //!!! update after default profilePic added
             $groupManager->updateGroup($group);
-
-            return $response;
-        } else {
-            // if('application/x-www-form-urlencoded' === $contentType) {
-            //     $url = $this->generateUrl('fos_user_group_show', array('groupId' => $group->getId()));
-            //     $response = new RedirectResponse($url);
-            // } else {
-            //     $response   = new JsonResponse();
-            //     $serializer = $this->get('jms_serializer');
-            //     $response->setData(array('group'=>$serializer->toArray($group)));
-            // }  
         }
-
-        return $this->render('@FOSUser/Group/new.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        
+        return $response;
     }
 
     /**
-     * @Annotations\Post("/groups/{id}")
+     * @Annotations\Put("/groups/edit/{id}")
      */
     public function editAction(Request $request, $id)
     {
@@ -146,7 +137,7 @@ class ApiGroupController extends FOSRestController implements ClassResourceInter
     }
 
     /**
-     * @Annotations\Delete("/groups/{id}")
+     * @Annotations\Delete("/groups/delete/{id}")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -163,7 +154,37 @@ class ApiGroupController extends FOSRestController implements ClassResourceInter
     }
 
     /**
-     * @Annotations\Get("/groups/{id}")
+     * @Annotations\Get("/groups/list")
+     */
+    public function listAction(Request $request, GroupManager $gMan, SerializerInterface $serializer)
+    {
+        $user   = $this->_getUser();
+        $datas  = $gMan->memberGroups($user, [], 10);
+        $groups = [];
+        foreach ($datas as $data) {
+            $groups[] = $serializer->toArray($data);
+        }
+
+        return new JsonResponse($groups);
+    }
+
+    /**
+     * @Annotations\Get("/groups/public")
+     */
+    public function publicAction(Request $request, GroupManager $gMan, SerializerInterface $serializer)
+    {
+        $user   = $this->_getUser();
+        $datas  = $gMan->publicGroups($user, [], 10);
+        $groups = [];
+        foreach ($datas as $data) {
+            $groups[] = $serializer->toArray($data);
+        }
+
+        return new JsonResponse($groups);
+    }
+
+    /**
+     * @Annotations\Get("/groups/show/{id}")
      */
     public function showAction(Request $request, $id)
     {
@@ -174,22 +195,6 @@ class ApiGroupController extends FOSRestController implements ClassResourceInter
 
         return $response->setData(array('group' => $serializer->toArray($data)));
     }
-
-    /**
-    * @Annotations\Get("/check_email")
-    *
-    * @return Integer
-    */
-    public function checkEmailAction(Request $request, OpinionUserManager $uManager)
-    {
-        $res     = new JsonResponse();
-        $email   = $request->query->get('email');
-        $session = $request->getSession();
-        $session->isStarted() ?: $session->start();
-
-        return $res->setData(array('status'=> $request->getBasePath()));
-    }
-
 
     protected function findGroupBy($key, $value)
     {

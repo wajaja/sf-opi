@@ -183,11 +183,7 @@ export const _handleDeleteRateResponse = (objId, type, response) => ({ type: DEL
 export function deleteRate(objId, type) {
     return (dispatch, getState) => {
         dispatch(_handleDeleteRateRequest(objId, type))
-        axios.delete(`${BASE_PATH}/api/rates/delete`, { 
-            params : {
-                type: type,
-                objId: objId,
-            }})
+        axios.delete(`${BASE_PATH}/api/rates/delete?type=${type}&objId=${objId}`)
         .then(res => {
             if(type == 'post') dispatch(PostsActions._updatePostResponse(objId, res.data.post));
             if(type == 'leftcomment') dispatch(LeftsActions._updatePostResponse(objId, res.data.post));

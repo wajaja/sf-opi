@@ -6,7 +6,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\{
     Extension\Core\Type\TextareaType, AbstractType,
     Extension\Core\Type\TextType, FormBuilderInterface,
-    Extension\Core\Type\FileType, Extension\Core\Type\HiddenType,
+    Extension\Core\Type\FileType, Extension\Core\Type\HiddenType
 };
 
 
@@ -32,6 +32,6 @@ class ResponseType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'response_type';
+        return 'secret';
     }
 }

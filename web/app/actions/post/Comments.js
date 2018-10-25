@@ -33,7 +33,7 @@ export const submitSideComment = (allie_id, side, data) =>
 				}
 			})
 			.then(function (res) {
-				 	const comment = res.data.comment;
+				 	const comment = res.data;
 					// dispatch(CommentsActions.pushComment(comment));
 					// dispatch(AuthorsActions.pushAuthor(comment.author))
 					dispatch({type: 'SUBMIT_SIDE_RESPONSE', allie_id, side})
@@ -70,7 +70,7 @@ export const submitComment = (postId, refer, data) =>
 				}
 			})
 			.then(function (res) {
-				 	const comment = res.data.comment;
+				 	const comment = res.data;
 					// dispatch(CommentsActions.pushComment(comment));
 					// dispatch(AuthorsActions.pushAuthor(comment.author))
 					dispatch({type: 'SUBMIT_COMMENT_RESPONSE', postId, comment})
@@ -101,7 +101,7 @@ export function load(postId, refer) {
 				}})
 			.then(
 				function (res) {
-			 	const comments = res.data.comments;
+			 	const comments = res.data;
 			 	_.forEach(comments, function(comment, i) {
 					dispatch(_pushComment(comment));
 					dispatch(Authors.pushAuthor(comment.author))
@@ -161,7 +161,7 @@ export const _getComment = (comment) => ({type: GET_COMMENT_RESPONSE, comment})
 
 export function getComment(id) {
 	return (dispatch, getState) => {
-		axios.post(`${BASE_PATH}/api/comments/get/${id}`)
+		axios.post(`${BASE_PATH}/api/comments/show/${id}`)
 			 .then(function (res) {
 			 	console.log(res.data)
 				// dispatch(_addComment(res.data))
@@ -199,7 +199,7 @@ export function updateComment(id, data, rmv_filenames) {
 					removedFilenames: rmv_filenames
 				}})
 			 .then(function (res) {
-				dispatch(_updateCommentResponse(id, res.data.comment))
+				dispatch(_updateCommentResponse(id, res.data))
 			}, function(err) { 
 				if(err.response) {
 					console.log(err.response.data);	
@@ -225,7 +225,7 @@ export function deleteComment(comment) {
 	return (dispatch, getState) => {
 		const id = comment.id;
 		dispatch(_deleteCommentRequest(id))
-		axios.post(`${BASE_PATH}/api/comments/remove/${id}`)
+		axios.delete(`${BASE_PATH}/api/comments/remove/${id}`)
 			 .then(function (res) {
 				dispatch(_deleteCommentResponse(id))
 			}, function(err) { 
@@ -333,12 +333,12 @@ export const _updateLeftResponse = (id, comment) =>({type: UPDATE_LEFT_RESPONSE,
 export function updateLeft(id, data, rmv_filenames) {
 	return (dispatch, getState) => {
 		dispatch(_updateLeftRequest(id))
-		axios.put(`${BASE_PATH}/api/comments/edit/${id}`, data, { 
+		axios.put(`${BASE_PATH}/api/lefts/edit/${id}`, data, { 
     			params : {
 					removedFilenames: rmv_filenames
 				}})
 			 .then(function (res) {
-				dispatch(_updateLeftResponse(id, res.data.comment))
+				dispatch(_updateLeftResponse(id, res.data))
 			}, function(err) { 
 				if(err.response) {
 					console.log(err.response.data);	
@@ -364,7 +364,7 @@ export function deleteLeft(comment) {
 	return (dispatch, getState) => {
 		const id = comment.id;
 		dispatch(_deleteLeftRequest(id))
-		axios.post(`${BASE_PATH}/api/comments/remove/${id}`)
+		axios.post(`${BASE_PATH}/api/lefts/remove/${id}`)
 			 .then(function (res) {
 				dispatch(_deleteLeftResponse(id))
 			}, function(err) { 
@@ -432,12 +432,12 @@ export const _updateRightResponse = (id, comment) =>({type: UPDATE_RIGHT_RESPONS
 export function updateRight(id, data, rmv_filenames) {
 	return (dispatch, getState) => {
 		dispatch(_updateRightRequest(id))
-		axios.put(`${BASE_PATH}/api/comments/edit/${id}`, data, { 
+		axios.put(`${BASE_PATH}/api/rights/edit/${id}`, data, { 
     			params : {
 					removedFilenames: rmv_filenames
 				}})
 			 .then(function (res) {
-				dispatch(_updateRightResponse(id, res.data.comment))
+				dispatch(_updateRightResponse(id, res.data))
 			}, function(err) { 
 				if(err.response) {
 					console.log(err.response.data);	
@@ -463,7 +463,7 @@ export function deleteRight(comment) {
 	return (dispatch, getState) => {
 		const id = comment.id;
 		dispatch(_deleteRightRequest(id))
-		axios.post(`${BASE_PATH}/api/comments/remove/${id}`)
+		axios.post(`${BASE_PATH}/api/rights/remove/${id}`)
 			 .then(function (res) {
 				dispatch(_deleteRightResponse(id))
 			}, function(err) { 

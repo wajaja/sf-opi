@@ -96,7 +96,7 @@ body {
     background: rgba(19, 21, 21, 0.81);
     padding: 15px 10px;
     margin-bottom: 10px;
-    margin-top: 130px;
+    margin-top: 105px;
     height: 100vh;
     position: relative;
     /* display: none; */
@@ -461,40 +461,49 @@ body {
 }
 
 .div-txt-edit{
-    position: absolute;
-    bottom: 30px;
+    position: relative;
     min-height: 70px;
     width: 100%;
-    border: 1px solid #bdcace;
-    border-radius: 6px;
+    border: 1px solid #c3cfd6;
+    background: #fff;
+    // margin-top: 10px;
     .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
         bottom: 35px;
         left: 0px;
     }
+    .editor-outer {
+        padding: 3px;
+        border: 1px solid #9db0bf;
+    }
     .expandingArea{
-      min-height: 55px;
+      /* min-height: 55px;
       border-radius: 6px;
-      padding: 4px 7px;
+      padding: 4px 7px; */
     }
     .btm{
-      position: relative;
-      width: 150px;
-      left: 0;
-      right: 0;
-      margin-left: auto;
-      margin-right: auto;
-      height: 32px;
+        position: relative;
+        top: -40px;
+        .emoji-dv > div {
+            position: absolute;
+            bottom: 0;
+        }
+        .draftJsEmojiPlugin__emojiSelectButton__3sPol{
+            top: unset;
+        }
     }
     .emoji-dv{
-      display: inline-block;
-      position: relative;
-      vertical-align: top;
-      margin: 0 10px 0 0;
-      width: 40px;
-      min-height: 28px;
+      position: absolute;
+      right: 100px;
       & > div{
-        top: -2px;
+        top: -5px;
       }
+    }
+    .save-dv{
+        position: absolute;
+        right: 22px;
+        button{
+            padding: 3px 13px;
+        }
     }
     .sbm-dv{
         display: inline-block;
@@ -516,15 +525,18 @@ body {
   }
 }
 .Menubar{
-    position: fixed;
-    left: 10px;
-    right: 10px;
-    margin: auto;
-    background: #fff;
-    z-index: 15;
-    border: 1px solid #d7d8da;
-    height: 80px;
-    top: 55px;
+    &.top{
+        position: fixed;
+        left: 10px;
+        right: 10px;
+        margin: auto;
+        background: #fff;
+        z-index: 15;
+        border: 1px solid #d7d8da;
+        height: 55px;
+        top: 55px;
+        border-color: transparent #c0c5d0 #c0c5d0 #c0c5d0;
+    }
     .Menubar-a{
       display: flex;
       position: relative;
@@ -544,7 +556,7 @@ body {
         color: #fff;
         text-transform: capitalize;
         margin-right: 20px;
-        transform: translate(0%, 20%);
+        transform: translate(0%, 1%);
         li.item{
             margin-right: 3px;
         }
@@ -612,7 +624,7 @@ body {
     }
 
     .ico{
-        width: 45px;
+        width: 35px;
         cursor: pointer;
         position: relative;
         /* right: 0;
@@ -623,16 +635,16 @@ body {
     }
     .Menubar-lft{
         .edittext{
-            height: 45px;
+            height: 35px;
             background: transparent url(http://opinion.com/images/2290864-48-ed.png) 50% 50% no-repeat;
         }
         .image{
-            height: 48px;
+            height: 38px;
             background: transparent url(http://opinion.com/images/2305629-48.png) 50% 50% no-repeat;
         }
         .modele{
-            width: 64px;
-            height: 62px;
+            width: 54px;
+            height: 52px;
             top: -6px;
             /* margin: auto; */
             background: transparent url(http://opinion.com/images/if_app_window_107230.png) 50% 50% no-repeat;
@@ -640,8 +652,8 @@ body {
             background-size: contain;
         }
         .fill{
-            width: 40px;
-            height: 40px;
+            width: 31px;
+            height: 31px;
             top: 5px;
             margin: auto;
             background: transparent url(http://opinion.com/images/352891-48.png) 50% 50% no-repeat;
@@ -690,8 +702,8 @@ body {
         .ico{
             opacity: 0.7;
             cursor: pointer;
-            position: absolute;
-            bottom: 5px;
+            /* position: absolute;
+            bottom: 5px; */
             background-size: cover;
         }
     }
@@ -748,8 +760,10 @@ body {
 }
 
 .Menubar-ctr{
-    width: calc(100% - 541px); /*541 = 319 + 222*/
-    position: relative;
+    &.top{
+        width: calc(100% - 541px); /*541 = 319 + 222*/
+        position: relative;
+    }
     .HMenu{
         height: 100%;
         width: 100%;
@@ -847,4 +861,32 @@ body {
         background: #fff;
         border: 1px solid #b1bdc3;
     }
+}
+.EditorSurface{
+    min-height: 75px;
+}
+.EditorMenubar-ctr{
+    margin-top: 7px;
+    position: relative;
+    .HMenu-a{
+        border-top: 1px solid #dee3e6;
+    }
+    .sub-m{
+        height: 75px;
+        padding: 3px;
+    }
+    .paragraph{
+        .ico{
+            position: absolute;
+            bottom: 2px;
+        }
+    }
+}
+
+/* very important & applyed to span,  on customStyles Draftjs */
+[data-text="true"]{
+    font-family: inherit !important;  //!important;
+}
+.HtmlContent * {
+    font-family: inherit;
 }

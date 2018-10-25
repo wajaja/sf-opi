@@ -61,14 +61,13 @@ class InvitationManager
         $country      = !$address ? null : $address->getCountry();
         $clientIp     = $user->getClientIp();
         $invitations  = $user->getInvitations();
-        $requestedIds = $this->getMyRequestReceiversIds($user);
         $friendIds    = $user->getMyFriendsIds() ? $user->getMyFriendsIds() : [];
         $followers    = $user->getMyFollowers() ? $user->getMyFollowers() : [];
         $blockedIds   = $user->getBlockedsIds() ? $user->getBlockedsIds() : [];
 
         $datas  = $this->userManager
                     ->loadSuggestions($initIds, $friendIds, $blockedIds, $followers, 
-                                         $requestedIds, $city, $country, $clientIp, $limit);
+                                         [], $city, $country, $clientIp, $limit);
 
         foreach ($datas as $d) {
             $_id = (string)$d['_id'];

@@ -22,8 +22,7 @@ use OP\MessageBundle\Document\Question,
     OP\MessageBundle\DataTransformer\ObjectToArrayTransformer,
     Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @RouteResource("questions", pluralize=false)
+/*
  */
 class ApiQuestionController extends FOSRestController implements ClassResourceInterface
 {
@@ -115,23 +114,25 @@ class ApiQuestionController extends FOSRestController implements ClassResourceIn
      *
      * @return object
      */
-    public function createAction(Request $request, $postId, ThreadManager $threadMan, MessageFormHandler $formHandler, EventDispatcherInterface $dispatcher, ObjectToArrayTransformer $transformer)
+    public function createAction(Request $request, MessageFormHandler $formHandler, EventDispatcherInterface $dispatcher, ObjectToArrayTransformer $transformer)
     {
 
-        $res            = new JsonResponse();
-        $form           = $this->createForm(ResponseType::class, new Response());
-        if($response    = $formHandler->process($form, false)) {
-            $dispatcher->dispatch(OPMessageEvents::RESPONSE_SEND, new ResponseEvent($response));
-            return $res->setData(array('secret'=>$transformer->responseObjectToArray($response)));
+        // $res       = new JsonResponse();
+        $form      = $this->createForm(ResponseType::class, new Response());
+        if($secret = $formHandler->processSecret($form, false)) {
+            $dispatcher->dispatch(OPMessageEvents::RESPONSE_SEND, new ResponseEvent($secret));
+            return new JsonResponse([$transformer->responseObjectToArray($secret)]);
         }
-        else { return $res->setData(array('response'=>null)); }
+        else { 
+            return new JsonResponse(['response'=>null]); 
+        }
     }
 
 
     /**
      * Finds a Post post.
      *
-     * @Get("questions/show/{id}")
+     * @Get("/questions/show/{id}")
      *
      * @param string $id The post ID
      * @param Request $request The request object
@@ -142,13 +143,25 @@ class ApiQuestionController extends FOSRestController implements ClassResourceIn
      */
     public function showAction(Request $request, $id, ObjectToArrayTransformer $transformer)
     {
-        $res            = new JsonResponse();
         $dm             = $this->getDocumentManager();
         $question       = $dm->getRepository('OPMessageBundle:Question')
                              ->simpleFindById($id);
-        if (!$question) return;
+        if (!$question) 
+            return new JsonResponse([
+                "error" => [
+                    "errors"=> [
+                        [
+                            "domain"=> "global",
+                            "reason"=> "notFound",
+                            "message"=> "Not Found"
+                        ]
+                    ],
+                    "code"=> 404,
+                    "message"=> "Not Found"
+                ]
+            ]);
 
-        return $res->setData(array('question'=>$transformer->questionToArray($question)));
+        return new JsonResponse(['question'=>$transformer->questionToArray($question)]);
     }
 
     /**

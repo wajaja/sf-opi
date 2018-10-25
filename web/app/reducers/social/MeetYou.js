@@ -1,5 +1,5 @@
 import { getPopularImages } from '../../routes/social/MeetYou/utils/unsplash';
-import undoable, { distinctState } from 'redux-undo'
+import undoable, { distinctState, includeAction } from 'redux-undo'
 
 const images = getPopularImages();
 
@@ -87,7 +87,9 @@ function MeetYou(state = initialState, action) {
 }
 
 const undoableMeetYou = undoable(MeetYou, {
-    filter: distinctState()
+    filter: distinctState(),
+    // filter: includeAction([SOME_ACTION, SOME_OTHER_ACTION]),
+    limit: 10
 })
 
 export default undoableMeetYou

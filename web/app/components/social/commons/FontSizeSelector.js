@@ -59,7 +59,7 @@ class FontSizeSelector extends PureComponent {
 
     console.log(selectedValue);
 
-    const fontSize = sliderState.values[0];
+    const fontSize = selectedValue.value;
     setCurrentFontSize(fontSize);
     const strPixieFontSize = `${fontSize}px`;
     addFontSize(strPixieFontSize);

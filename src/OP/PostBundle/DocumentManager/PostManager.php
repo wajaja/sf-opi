@@ -85,6 +85,7 @@ class PostManager extends BasePostManager
                 $id   = $t['object'];
                 $post = $dm->getRepository('OPPostBundle:Post')->findSimplePostById($id);
                 //post not found or masked
+                //TODO blocked user
                 if(!$post || in_array($user_id, $post['maskersForUserIds'])) {
                     continue;
                 } else {             

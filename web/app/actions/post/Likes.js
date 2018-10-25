@@ -47,12 +47,7 @@ export const like = (postId, refer) =>
     (dispatch, getState) => 
         new Promise(function (resolve, reject) {
             dispatch({type: 'LIKE_REQUEST', postId, refer})
-            axios.post(`${BASE_PATH}/api/likes/add`, {
-                params :{
-                    postId: postId,
-                    refer: refer
-                }
-            })
+            axios.post(`${BASE_PATH}/api/likes/add?postId=${postId}&refer=${refer}`)
             .then(function (res) {
                     const data = res.data.data;
                     if(refer === 'post') {
@@ -104,13 +99,9 @@ export const deleteLike = (postId, refer) =>
     (dispatch, getState) => 
         new Promise(function (resolve, reject) {
             dispatch({type: 'LIKE_REQUEST', postId, refer})
-            axios.delete(`${BASE_PATH}/api/likes/delete`, { 
-                params : {
-                    refer: refer,
-                    postId: postId,
-                }})
+            axios.delete(`${BASE_PATH}/api/likes/delete?postId=${postId}&refer=${refer}`)
             .then(function (res) {
-                    const data = res.data.data; //data = {id as postId, liked, nbLikers, refer}
+                    const data = res.data; //data = {id as postId, liked, nbLikers, refer}
                     if(refer === 'post') {
                         dispatch(PostsActions.updateOnLike(data.id, data))
                     } else if(refer === 'picture') {
@@ -140,13 +131,10 @@ export const _loadLikesResponse = (likes) => ({type: LOAD_LIKES_RESPONSE, likes}
 export function load(postId, refer) {
     return (dispatch, getState) => {
         dispatch(_loadLikesRequest(postId))
-        axios.get(`${BASE_PATH}/api/likes/load/${postId}`, { 
-                params : {
-                    refer: refer
-                }})
+        axios.get(`${BASE_PATH}/api/likes/load/${postId}?refer=${refer}`)
             .then(
                 function (res) {
-                const likes = res.data.likes;
+                const likes = res.data;
                 _.forEach(likes, function(like, i) {
                     dispatch(_pushLike(like));
                     dispatch(Authors.pushAuthor(like.author))

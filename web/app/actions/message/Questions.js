@@ -59,7 +59,7 @@ export const _getQuestion = (question) => ({type: GET_QUESTION_RESPONSE, questio
 
 export function getQuestion(questionId, refer) {
 	return (dispatch, getState) => {
-		axios.post(`${BASE_PATH}/api/questions/get/${questionId}`, { 
+		axios.post(`${BASE_PATH}/api/questions/show/${questionId}`, { 
     			params : {
 					refer: refer
 				}})

@@ -8,7 +8,6 @@ use OP\UserBundle\Document\User,
     FOS\UserBundle\FOSUserEvents,
 //     FOS\RestBundle\View\View,
     FOS\UserBundle\Event as Events,
-    JMS\Serializer\DeserializationContext,
     Nelmio\ApiDocBundle\Annotation as Doc,
     FOS\RestBundle\Controller\Annotations, 
     Symfony\Component\HttpFoundation\Request,
@@ -19,6 +18,7 @@ use OP\UserBundle\Document\User,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
+    OP\UserBundle\DocumentManager\InvitationManager,
     Symfony\Component\Security\Core\User\UserInterface,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -67,32 +67,32 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
         return $res->setData(array('users'=>$users));
     }
 
-    /**
-    * @Annotations\Get("/search/ff/")
-    * 
-    * @Annotations\View(serializerGroups={"Default"})
-    */
-    public function getFriendsOrFollowersAction(ToArrayTransformer $transformer, OpinionUserManager $uMan) {
+    // /**
+    // * @Annotations\Get("/search/ff/")
+    // * 
+    // * @Annotations\View(serializerGroups={"Default"})
+    // */
+    // public function getFriendsOrFollowersAction(ToArrayTransformer $transformer, OpinionUserManager $uMan) {
         
-        $users = [];
-        $res   = new JsonResponse();
-        $datas = $uMan->friendsOrFollowers();
+    //     $users = [];
+    //     $res   = new JsonResponse();
+    //     $datas = $uMan->friendsOrFollowers();
 
-        foreach ($datas as $u) {
-            $users [] = 
-                array(
-                    'id'        => (String)$u['_id'],
-                    'email'     => $u['email'],
-                    'username'  => $u['username'],
-                    'firstname' => isset($u['firstname']) ?: null,
-                    'lastname'  => isset($u['lastname']) ?: null,
-                    'profilePic'=> $transformer->getProfilePic(
-                        !isset($u['profilePic']) ?: (String)$u['profilePic']['$id'])
-                );
-        }
+    //     foreach ($datas as $u) {
+    //         $users [] = 
+    //             array(
+    //                 'id'        => (String)$u['_id'],
+    //                 'email'     => $u['email'],
+    //                 'username'  => $u['username'],
+    //                 'firstname' => isset($u['firstname']) ?: null,
+    //                 'lastname'  => isset($u['lastname']) ?: null,
+    //                 'profilePic'=> $transformer->getProfilePic(
+    //                     !isset($u['profilePic']) ?: (String)$u['profilePic']['$id'])
+    //             );
+    //     }
 
-        return $res->setData(array('users'=>$users));
-    }
+    //     return $res->setData(array('users'=>$users));
+    // }
 
     /**
     * @Annotations\Get("/search/online/")
@@ -139,71 +139,51 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
      * Note: Could be refactored to make     of the User Resolver in Symfony 3.2 onwards
      * more at : http://symfony.com/blog/new-in-symfony-3-2-user-value-resolver-for-controllers
      */
-    public function loadSuggestionsAction(Request $request, ToArrayTransformer $transformer, OpinionUserManager $uMan)
+    public function loadSuggestionsAction(Request $request, ToArrayTransformer $transformer, InvitationManager $invitMan)
     {
-        $suggestions  = [];
-        $res          = new JsonResponse();
-        $initIds      = $request->query->get('initIds');   //initiale data from clients
-        $session      = $request->getSession();
-        $dm           = $this->getDocumentManager();
-        $user         = $this->_getUser();
-        $requestedIds = $this->getMyRequestReceiversIds($user);
-        $friendIds    = $session->get('friends_ids');
-        $blockedIds   = $session->get('blockeds_ids');
+        $user    = $this->_getUser();
+        $initIds = $request->query->get('initIds');   //initiale data from clients
 
-        $datas  = $uMan->loadSuggestions($initIds, $friendIds, $blockedIds, $requestedIds);
+        $datas  = $invitMan->getSuggestionForUser($user, [], 10);
 
-        foreach ($datas as $u) {
-            $suggestions [] = 
-                array(
-                    'id'        => (String)$u['_id'],
-                    'email'     => $u['email'],
-                    'username'  => $u['username'],
-                    'firstname' => isset($u['firstname']) ?: null,
-                    'lastname'  => isset($u['lastname']) ?: null,
-                    'profilePic'=> $transformer->getProfilePic(
-                        !isset($u['profilePic']) ?: (String)$u['profilePic']['$id'])
-                );
-        }
-
-        return $res->setData(array('suggestions' => $suggestions ));
+        return new JsonResponse($datas);
     }
 
     /**
      * @Annotations\Get("/search/invitations")
      * 
-     * @Annotations\View(serializerGroups={"Default","Details"})
+     * @Annotations\View(serializerGroups={"Default"})
      * Note: Could be refactored to make     of the User Resolver in Symfony 3.2 onwards
      * more at : http://symfony.com/blog/new-in-symfony-3-2-user-value-resolver-for-controllers
      */
-    public function loadInvitationsAction(Request $request)
+    public function loadInvitationsAction(Request $request, SerializerInterface $serializer)
     {
-        $initIds      = [];
-        $session      = $this->container->get('session');
-        $dm           = $this->getDocumentManager();
         $user         = $this->_getUser();
-        $requestedIds = $this->getMyRequestInitationsIds($user);
-        $invitations  = $this->getDocumentManager()
-                             ->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
-                             ->findRequestInvitations($user->getId(), false); //not confimerd
-        
-        if(!$invitations) return $res->setData(array('invitations' => []));
+        $dm           = $this->getDocumentManager();
+        // $requestedIds = $this->getMyRequestInvitationsIds($user);
+        $ins  = $this->getDocumentManager()
+                     ->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
+                     ->findRequestInvitations($user->getId(), false); //false => not confimerd
+
+        if(!$ins) 
+            return new JsonResponse([]);
             
         $datas = [];
-        foreach($invitations as $invitation){
-            $i                  = [];
-            $i['id']            = $invitation->getId();
-            $i['receiver_id']   = $invitation->getReceiver()->getId();
-            $i['sender_id']     = $invitation->getSender()->getId();
+        foreach($ins as $in){
+            $datas [] = [
+                'id'     => $in->getId(),
+                'sender'  => $serializer->toArray($in->getSender()),
+                'receiver' => $serializer->toArray($in->getReceiver())
+            ];
         }
 
-        $datas [] = $user;
+        return new JsonResponse($datas);
     }
 
 
 
 
-    protected function getMyRequestReceiversIds($user) {
+    protected function getMyRequestInvitationsIds($user) {
         $ids         = [];
         $invitations = $this->getDocumentManager()
                             ->getRepository('\OP\UserBundle\Document\Invitation\Invitation')

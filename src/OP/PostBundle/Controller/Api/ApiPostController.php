@@ -18,6 +18,7 @@ use GetStream\Stream\Client,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException,
     FOS\RestBundle\Controller\Annotations\RouteResource;
 
 
@@ -77,11 +78,11 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
     public function showAction(Request $request, $id, ToArrayTransformer $transformer)
     {
         $post       = [];
-        $response   = new JsonResponse();
         $dm         = $this->getDocumentManager();
         $userId     = $this->_getUser()->getId();
         $data       = $dm->getRepository('OPPostBundle:Post')->findSimplePostById($id);
         //post not found or masked
+        //TODO check in blockeds users to restrict 
         if(!$data || in_array($userId, $data['maskersForUserIds'])) {
             // nothing to do continue;
         }
@@ -90,7 +91,7 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
                                                  $transformer->postToArray($data);
         }
         
-        return $response->setData(array('post'=>$post));
+        return new JsonResponse($post);
     }
 
     /**
@@ -107,7 +108,7 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
         if (!$post) return;
 
         $post = $transf->postChildToArray($post);
-        return $res->setData(array('post'=>$post));
+        return $res->setData(array('post'=> $post));
     }
 
     /**
@@ -197,11 +198,17 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
      */
     public function editAction(Request $request, $id, NewPostFormHandler $formHandler, EventDispatcherInterface $dispatcher, ToArrayTransformer $transformer)
     {     
-        $dm      = $this->getDocumentManager();
+        $dm   = $this->getDocumentManager();
+        $user = $this->_getUser();
         $db_post = $dm->getRepository('OPPostBundle:Post')->find($id);
         if (!$db_post) {
             throw $this->createNotFoundException('Unable to find Post post.');
         }
+
+        if($db_post->getAuthor()->getId() !== $user->getId()) {
+            return $this->createAccessDeniedException('You cannot edit this post!');
+        }
+
         $form = $this->createForm(PostType::class, $db_post);
         $response = new JsonResponse();
         if($request->isXmlHttpRequest()){
@@ -248,7 +255,7 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
     /**
      * Deletes a Post post.
      *
-     * @Annotations\Post("/posts/remove/{id}")
+     * @Annotations\Delete("/posts/remove/{id}")
      *
      * @param Request $request The request object
      * @param string $id       The post ID
@@ -259,15 +266,20 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
      */
     public function removeAction(Request $request, $id)
     {
-        $response = new JsonResponse();
-        $dm = $this->getDocumentManager();
+        $user = $this->_getUser();
+        $dm   = $this->getDocumentManager();
         $post = $dm->getRepository('OPPostBundle:Post')->find($id);
         if (!$post) {
             throw $this->createNotFoundException('Unable to find Post post.');
         }
+
+        if($post->getAuthor()->getId() !== $user->getId()) {
+            return $this->createAccessDeniedException('You cannot delete this post!');
+        }
+
         $dm->remove($post);
         $dm->flush();
-        return $response->setData(array('data'=>true));
+        return new JsonResponse([true]);
     }
     
     /**

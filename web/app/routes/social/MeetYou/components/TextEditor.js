@@ -8,17 +8,20 @@ import { fromJS } 					from 'immutable'
 import { connect } 					from 'react-redux'
 import ReactDOM, { findDOMNode }	from 'react-dom'
 import { Link } 					from 'react-router-dom'
-import EmojiPicker 					from 'emojione-picker'
+import emojione         			from 'emojione'
 import createEmojiPlugin 			from 'draft-js-emoji-plugin'
 import Status 						from 'react-fine-uploader/status'
 import createStickerPlugin 			from 'draft-js-sticker-plugin';
 import onClickOutside 				from 'react-onclickoutside'
+import { Rnd }              from "react-rnd";
 import { 
     RichUtils, getDefaultKeyBinding, 
     KeyBindingUtil, EditorState,
     CompositeDecorator, convertToRaw,
     Modifier, ContentState
 } 									from 'draft-js'
+import { stateToHTML } 				from 'draft-js-export-html';
+import createStyles 				from 'draft-js-custom-styles';
 import Editor, 
 	  { createEditorStateWithText } from 'draft-js-plugins-editor' // eslint-disable-line import/no-unresolved
 import createHashtagPlugin 			from 'draft-js-hashtag-plugin'
@@ -29,7 +32,21 @@ import MultiDecorator 				from 'draft-js-plugins-editor/lib/Editor/MultiDecorato
 import { canUseDOM } 				from '../../../../utils/executionEnvironment'
 import { BASE_PATH } 				from '../../../../config/api'
 import * as DraftFuncs 				from '../../../../components/social/home/form/DraftFuncs'
-import { BuildTextArr, ErrorStack } from '../../../../components'
+import { 
+	BuildTextArr, ErrorStack,
+	ColorPicker,
+    BackgroundColorPicker,
+    FontSelector,
+    FontSizeSelector,
+    BuildHtmlString  
+} from '../../../../components'
+
+import FiltersPicker    from './FiltersPicker'
+import CropButton       from './CropButton'
+import Transparence     from './Transparence'
+import TextAlign        from './TextAlign'
+import HtmlContent 		from './HtmlContent'
+
 import { 
 	ReplyForm as FormActions,
 	Authors as AuthorsActions
@@ -39,7 +56,7 @@ import {
 //
 // import '../css/Draftjs-custom.css';
 import createBlockStylesPlugin from '../plugins/blockStyles';
-import { DYNAMIC_STYLES_PREFIX } from '../utils/customStylesUtils';
+import createCustomStylesUtils, { DYNAMIC_STYLES_PREFIX } from '../utils/customStylesUtils';
 
 //import { getLSItem } from '../utils/localStorage';
 import { reverseString } from '../utils/stringUtils';
@@ -63,25 +80,46 @@ linkifyPlugin 						= createLinkifyPlugin({
   	)
 });
 
-///////////
 
+
+
+
+///////////
+const customStyleMap = {
+ 	MARK: {
+   		backgroundColor: 'Yellow',
+   		fontStyle: 'italic',
+ 	},
+};
+// Passing the customStyleMap is optional
+const { 
+	styles, 
+	customStyleFn, 
+	exporter 
+} = createStyles([
+	'font-size', 
+	'color', 
+	'text-transform', 
+	'font-family',
+	'text-align'
+	], DYNAMIC_STYLES_PREFIX, customStyleMap);
 
 const TextEditor  = onClickOutside(createReactClass({
 
 	getDefaultProps() {
         return {
-            customStylesUtils: PropTypes.object.isRequired,
-            currentColor: PropTypes.string.isRequired,
-            setCurrentColor: PropTypes.func.isRequired,
+            // customStylesUtils: PropTypes.object.isRequired,
+            // currentColor: PropTypes.string.isRequired,
+            // setCurrentColor: PropTypes.func.isRequired,
             colorHandle: PropTypes.string.isRequired,
             switchColorHandle: PropTypes.func.isRequired,
-            setCurrentFontSize: PropTypes.func.isRequired,
+            // setCurrentFontSize: PropTypes.func.isRequired,
             hasEditorFocus: PropTypes.bool.isRequired,
             // setEditorFocus: PropTypes.func.isRequired,
             editorState: PropTypes.object.isRequired,
-            setEditorState: PropTypes.func.isRequired,
-            setEditorBackground: PropTypes.func.isRequired,
-            setCurrentFontFamily: PropTypes.func.isRequired,
+            // setEditorState: PropTypes.func.isRequired,
+            // setEditorBackground: PropTypes.func.isRequired,
+            // setCurrentFontFamily: PropTypes.func.isRequired,
         }
     },
 
@@ -109,24 +147,28 @@ const TextEditor  = onClickOutside(createReactClass({
 
     	this.mentionPlugin = createMentionPlugin({
 			mentions,  //mentions
-			mentionComponent: (props) => (
-			    <span
-			      	className={props.className}
-			      	onClick={() => alert(props.mention.get('link'))}
-			    	>
-			      {props.decoratedText}
-			    </span>
-			),
+			mentionComponent: (props) => {
+				//const { children, className, mention, theme, entityKey, decoratedText } = props;
+				return(
+				    <span
+				      	className={props.className}
+				      	onClick={() => alert(props.mention.get('link'))}
+				    	>
+				      {props.children}
+				    </span>
+				)
+			}
 			///// positionSuggestions,
 
 		});
 
+		this.updateEditorState = editorState => this.setState({ editorState });
+
 		return {
-			uploader: null,
-			submittedFiles: [],
-            completedFiles: {},
-            successFiles: [],
-            failedFiles: [],
+			x: 10,
+			y: 10,
+			width: 200,
+			height: 30,
             unique: this.getUniqueForm(),
             emojibtn: false,
 			files: [],
@@ -137,126 +179,87 @@ const TextEditor  = onClickOutside(createReactClass({
         	plugins: null,
         	topPlace: false,
         	EmojiSuggestions: null,
-        	hasCommandModifier: null,
 			emojibtn: false,
       		MentionSuggestions: null,
       		mentions: mentions,
       		suggestions: mentions,
-			editorState: EditorState.createEmpty(compositeDecorator)
+			editorState: EditorState.createEmpty(compositeDecorator),
+
+			currentFontSize: 12,
+            currentTextAlign: 'left',
+            filter: this.props.filter,
+            currentTransparency: this.props.currentTransparency || 0,
+            editorBackground: '#ffffff',
+            editorRef: null,
+            currentColor: '#000000',
+            selectedPage: 1,
+            editing: true,
+            content: '' //htmlString from editor state
 		}
 	},
-
-	uploader : undefined,
-
-	submittedFiles(files) {
-		this.setState({files: files});
-	},
-
-	handleFormClick (e) {
-		const { dispatch } = this.props;
-		if(findDOMNode(this).contains(e.target)) {
-			this.setState({focus: true})
-            //dispatch(AppActions.postFormFocus(true));
-        } else {
-        	//this.setState({focus: true})
-		}
-	},
-
-	deleteFile(id, e) {
-    	e.preventDefault();
-    	const self 		= this,
-		uploader 		= this.uploader,
-    	commentId 		= this.props.comment.id,
-    	filename 		= this.state.completedFiles[id]['filename'];
-
-    	uploader.methods.cancel(id);			//just to remove data in form
-    	axios.post(`${BASE_PATH}/api/_gal_undercomment/delete`, { 
-    			params : {
-					filename: filename,
-					commentId: commentId
-				}
-			}).then(function (res) {
-				console.log(res.data);
-			}, function(err) {
-				console.log('err :', err);
-		})
-    },
-
-    cancelFile(id, e) {
-    	e.preventDefault();
-    	this.uploader.methods.cancel(id);
-    },
 
     //method from 'react-onclickoutside' module
 	handleClickOutside(e) {
     	e.preventDefault();
-		this.composeData();
+		//this.composeData();
 		//TODO
-		this.props.setEditorFocus(false);
+		this.setEditorFocus(false);
 	},
 
- //    addText(e) {
-	// },
+	getEditorState(){
+    	return this.state.editorState;
+  	},
 
-    composeData() {
-    	const { editorState, unique, successFiles } = this.state
-    	console.log(convertToRaw(editorState.getCurrentContent()));
-		BuildTextArr(convertToRaw(editorState.getCurrentContent())).then(textArr => {
-			console.log('textArr', textArr);
-			this.props.updateCardData(this.props.id, {textArr: textArr});
-		});
+	composeData() {
+    	const { editorState, unique } = this.state
+    	this.setState({editing: false})
+		// BuildHtmlString(convertToRaw(editorState.getCurrentContent())).then(htmlString => {
+		// 	// const formData = {
+		// 	// 	rmv_arr : '',
+		// 	// 	unique  : unique,
+		// 	// 	content : htmlString,
+		// 	// 	successFiles: successFiles
+		// 	// }
+
+		// 	this.setState({content: htmlString})
+		// });
 	},
-
- //    composeData() {
- //    	const { editorState, unique, successFiles } = this.state
-	// 	BuildHtmlString(convertToRaw(editorState.getCurrentContent())).then(htmlString => {
-	// 		const formData	= {
-	// 				rmv_arr: '',
-	// 				unique : unique,
-	// 				content: htmlString,
-	// 			}
-
-	// 		this.sendPost(formData)
-	// 	});
-	// },
 
 	getUniqueForm () {
 		return Math.random().toString(36).substr(2, 9);
 	},
 
-	sendPost(data) {
+	sendEditor(data) {
 		const self 					= this,
 		{ dispatch, comment:{id} } 	= this.props,
 		uploader					= this.uploader;
-
-		this.props.onReply(id, data)
-		
 		self.setState({
 			focus: false, 
 			content: {},
             failedFiles: [],
 			isLoading: true,
 			unique: this.getUniqueForm(),
-            successFiles: [],
-			submittedFiles: [],
 			editorState: EditorState.push(this.state.editorState, ContentState.createFromText(''))
 		})
-
-		uploader.methods.reset();
-		uploader.methods.setParams({commentId: id})
 	},
 
 	_handleKeyCommand(command) {
-        const {editorState} = this.state;
-        const newState = RichUtils.handleKeyCommand(editorState, command);
-        //handle submit command
-        if (command === 'submit') {
-			this.submitComment();
-		}
+        const { editorState } = this.state;
+
+        //Poetry editor source
+        let newState;
+        if (command === "yo-strikethrough") {
+          	newState = RichUtils.toggleInlineStyle(editorState, "STRIKETHROUGH")
+      	} else {
+        	//handle submit command
+        	newState = RichUtils.handleKeyCommand(editorState, command);
+      	}
+
         if (newState) {
             this.onChange(newState);
             return true;
         }
+
         return false;
     },
 
@@ -276,14 +279,18 @@ const TextEditor  = onClickOutside(createReactClass({
         this.editor.focus()
     },
 
+    setEditorFocus(newVal){
+    	this.setState({focus: newVal})
+    },
+
     onChange(editorState) {
-        this.setState({
-        	editorState: editorState
-        })
+        // this.setState({
+        // 	editorState: editorState
+        // })
 
         //TODO
-        this.props.setEditorState(editorState);
-        this.props.setEditorFocus(true);
+        this.updateEditorState(editorState);
+        this.setEditorFocus(true);
     	this.syncCurrentDynamicStylesWithSources(editorState);
     },
 
@@ -292,25 +299,25 @@ const TextEditor  = onClickOutside(createReactClass({
 	    const BLACK = '#000000';
 
 	    if (!currentStyles.size) {
-	      	this.props.setCurrentColor(BLACK);
+	      	this.setCurrentColor(BLACK);
 	    }
 
 	    if(currentStyles.has('BOLD')) {
-	    	this.props.setCurrentBoldState(true)
+	    	this.setCurrentBoldState(true)
 	    } else {
-	    	this.props.setCurrentBoldState(false)
+	    	this.setCurrentBoldState(false)
 	    }
 
 	    if(currentStyles.has('ITALIC')) {
-	    	this.props.setCurrentItalicState(true)
+	    	this.setCurrentItalicState(true)
 	    } else {
-	    	this.props.setCurrentItalicState(false)
+	    	this.setCurrentItalicState(false)
 	    }
 
 	    if(currentStyles.has('UNDERLINE')) {
-	    	this.props.setCurrentUnderlineState(true)
+	    	this.setCurrentUnderlineState(true)
 	    } else {
-	    	this.props.setCurrentUnderlineState(false)
+	    	this.setCurrentUnderlineState(false)
 	    }
 
 	    // if(currentStyles.has('CODE')) {
@@ -365,23 +372,23 @@ const TextEditor  = onClickOutside(createReactClass({
 	      	}, {});
 
 	    	if (has(dynamicStyles, 'fontSize')) {
-	      		this.props.setCurrentFontSize(
+	      		this.setCurrentFontSize(
 	        		parseInt(dynamicStyles['fontSize'].replace('px', ''), 10),
 	      		);
 	    	} else {
-	      		this.props.setCurrentFontSize(11);
+	      		this.setCurrentFontSize(11);
 	    	}
 
 	    	if (has(dynamicStyles, 'fontFamily')) {
-	      		this.props.setCurrentFontFamily(dynamicStyles['fontFamily']);
+	      		this.setCurrentFontFamily(dynamicStyles['fontFamily']);
 	    	} else {
-		      	this.props.setCurrentFontFamily('Arial'); // this will only hold true if default font of editor is set to 'arial'
+		      	this.setCurrentFontFamily('Arial'); // this will only hold true if default font of editor is set to 'arial'
 		      	// hackish way (DONE RIGHT NOW) — put default font from css ('Arial' word repeated across technologies (css, js))
 		      	// TODO: right way — haven't found it yet; try again with customStylesUtils
 	    	}
 
 	    	if (has(dynamicStyles, 'color')) {
-	      		this.props.setCurrentColor(dynamicStyles['color']);
+	      		this.setCurrentColor(dynamicStyles['color']);
 	    	}
   	},
 
@@ -392,12 +399,13 @@ const TextEditor  = onClickOutside(createReactClass({
 
     myKeyBindingFn(e: SyntheticKeyboardEvent): string {
     	//handle submitting form on enter pressed
-    	if(e.keyCode === 13) {
-    		return 'submit';
-    	}
-	  	if (e.keyCode === 83 /* `S` key */ && this.state.hasCommandModifier(e)) {
-	    	return 'myeditor-save';
+    	// if(e.keyCode === 13) {
+    	// 	return 'submit';
+    	// }
+	  	if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
+	    	return "yo-strikethrough"; // 'myeditor-save';
 	  	}
+
 	  	return getDefaultKeyBinding(e);
 	},
 
@@ -408,11 +416,6 @@ const TextEditor  = onClickOutside(createReactClass({
     toggleInlineStyle(style) {
         this._toggleInlineStyle(style)
     },
-
-	toggleEmoji() {
-		const self = this;
-		self.setState({emojibtn: !self.state.emojibtn})
-	},
 
 	onSearchChange({ value }) {
 	    // An import statment would break server-side rendering.
@@ -441,87 +444,11 @@ const TextEditor  = onClickOutside(createReactClass({
 	},
 
 	initialize () {
-		const self = this
-		const FineUploaderTraditional =	require('fine-uploader-wrappers/traditional').default;
 		window.document.addEventListener('click', this.handleDocClick, false);
-
-		Promise.all([
-			import('fine-uploader-wrappers/traditional')
-		]).then(function([
-				_traditional
-		]) {
-			const FineUploaderTraditional =	_traditional.default;
-			const uploader = new FineUploaderTraditional({
-				options: {
-					debug: true,
-				  	request: {
-				        endpoint: 'http://opinion.com' + BASE_PATH + Routing.generate('_uploader_upload_galleryundercomment'),
-				        customHeaders: {
-				        	Authorization: "Bearer " + self.props.access_token
-				        }
-				    },
-				    autoUpload: true,
-				    success: true,
-				    iframeSupport: {
-				        localBlankPagePath: ""
-				    },
-				    cors: {
-				        expected: true 
-				    },
-				    resume: {
-				        enabled: true
-				    },
-				    deleteFile: {
-				      	forceConfirm: false,
-				        enabled: true,  
-				        method: "POST", 
-				        endpoint: 'http://opinion.com' + BASE_PATH + Routing.generate('api_remove_uploader_in_gallery_post')
-				    },
-				  	validation: {
-				        itemLimit: 50,
-				        sizeLimit: 300000000,
-				        allowedExtensions: ['jpeg', 'jpg', 'gif', 'png']
-				    },
-				    callbacks: {
-				      	onComplete: function(id, name, response) {  }
-				    }
-				}
-			}); //end uploader's init
-
-			self.uploader 	= uploader;
-
-
-			////
-	    	const { hasCommandModifier } 	= KeyBindingUtil
-			
-			self.setState({
-				initialized: true,
-				hasCommandModifier: hasCommandModifier
-			})
-			self.registerEvents();
-		})
 	},
-
-	registerEvents() {
-    	// this.uploader.on('submitDelete', (id) {
-    	// 	self.uploader.setDeleteFileParams({filename: self.uploader.getName(id)}, id);
-    	// })
-	},
-
-	componentWillMount() {
-		if(canUseDOM) {
-			this.initialize();
-		}
-	},
-
-    handleDocClick(e) {     
-        if(!ReactDOM.findDOMNode(this.emojiDiv).contains(e.target) && this.state.emojibtn) {
-        	this.toggleEmoji()
-        }
-    },
 
     componentWillUnmount () {
-        window.document.removeEventListener('click', this.handleDocClick, false);
+        //window.document.removeEventListener('click', this.handleDocClick, false);
     },
 
 	componentDidMount() {
@@ -562,25 +489,178 @@ const TextEditor  = onClickOutside(createReactClass({
         }
     },
 
-    shouldComponentUpdate(nextProps, nextState) {
-    	return (this.state !== nextState);
+    // shouldComponentUpdate(nextProps, nextState) {
+    // 	return (this.state !== nextState);
+    // },
+
+    //callback from react-rnd
+    onResize(e, direction, ref, delta, position){
+        console.log(ref.offsetWidth, ref.style.width);
+        const changes = {
+            ...position,
+            width: ref.style.width,
+            height: ref.style.height,
+        };
+        this.setState(changes);
+
+        this.props.updateCardSize(this.props.id, changes)
+    },
+
+    // handleCurrentFontSizeChange(fontSize) {
+    //     this.addFontSize(fontSize);
+    //     this.setCurrentFontSize(fontSize)
+    // },
+
+    toggleFontSize(fontSize) {
+    	const newEditorState = styles.fontSize.toggle(this.state.editorState, fontSize);
+ 
+    	return this.updateEditorState(newEditorState);
+  	},
+ 
+  	removeFontSize(){
+	    const newEditorState = styles.fontSize.remove(this.state.editorState);
+	 
+	    return this.updateEditorState(newEditorState);
+  	},
+ 
+  	addFontSize(val) {
+    	const newEditorState = styles.fontSize.add(this.state.editorState, val);
+    	this.setCurrentFontSize(val);
+		return this.updateEditorState(newEditorState);
+  	},
+
+    setCurrentFontFamily(fontFamily){
+        this.setState({
+          currentFontFamily: fontFamily,
+        });
+    },
+ 
+  	addFontFamily(val) {
+    	const newEditorState = styles.fontFamily.add(this.state.editorState, val);
+ 		this.setCurrentFontFamily(val);
+    	return this.updateEditorState(newEditorState);
+  	},
+
+    setEditorBackground(background) {
+        if (!background) {
+            throw new Error('need to give some background');
+        }
+
+        let hexColorRegex = /^#[0-9A-F]{6}$/i;
+        let isHexColor = hexColorRegex.test(background);
+
+        // background is not an image
+        if (isHexColor) {
+            this.setState({
+                editorBackground: background,
+            });
+
+            // setLSItem('editorBackground', background);
+        }
+    },
+
+    setCurrentFontSize(fontSize){
+        if (!fontSize) {
+            throw new Error('You need to pass font size');
+        }
+
+        this.setState({
+            currentFontSize: fontSize,
+        });
+    },
+
+    setCurrentBoldState(state){
+        this.setState({currentBoldState: state})
+    },
+    setCurrentItalicState(state){
+        this.setState({currentItalicState: state})
+    },
+    setCurrentUnderlineState(state){
+        this.setState({currentUnderlineState: state})
+    },
+
+    handleCurrentColorChange(color) {
+        const self = this
+        self.addColor(color.hex);
+        self.setCurrentColor(color.hex);
+    },
+
+    addColor(val) {
+    	const newEditorState = styles.color.add(this.state.editorState, val);
+ 
+    	return this.updateEditorState(newEditorState);
+  	},
+
+  	removeColor(val) {
+  		return function() {
+	    	const newEditorState = styles.color.remove(this.state.editorState, val);
+	 
+	    	return this.updateEditorState(newEditorState);
+	    }
+  	},
+
+  	setCurrentColor(color) {
+        if (!color) {
+            throw new Error('You need to pass in some color');
+        }
+
+        this.setState({
+            currentColor: color,
+        });
+    },
+
+    onToggleDefaultInlineStyles(style, state) {
+        if(style === 'BOLD') {
+            this.setState({currentBoldState: state})
+        } else if(style === 'ITALIC') {
+            this.setState({currentItalicState: state})
+        } else if(style === 'UNDERLINE') {
+            this.setState({setCurrentUnderlineState: state})
+        } else if(style === 'CODE') {
+            this.setState({currentCodeState: state})
+        }
+        this._toggleInlineStyle(style);
+    },
+
+    toggleTextAlign(val) {
+    	const newEditorState = styles.textAlign.add(this.state.editorState, val);
+ 		this.setState({currentTextAlign: val})
+ 		console.log('toggleTextAlign');
+    	return this.updateEditorState(newEditorState);
+  	},
+
+    _toggleInlineStyle(inlineStyle) {
+        this.setEditorState(
+            RichUtils.toggleInlineStyle(
+              this.state.editorState,
+              inlineStyle
+            )
+        );
+    },
+
+    setEditorState(state) {
+        this.setState({editorState: state})
+    },
+
+    pushShapes(shapes) {
+    	console.log(shapes);
+    	this.setState({editing: true})
     },
 
 	render() {
+		//this.customStylesUtils = createCustomStylesUtils(this.setEditorState, this.getEditorState);
 		const self   			= this,
-		uploader 				= this.uploader,
 		{ 
-			user, comment,
+			user,
 			hasEditorFocus,
-	      	editorState,
-	      	customStylesUtils,
 	      	editorBackground,
 	      	setEditorRef, cardId } 		= this.props,
 		
 		{ 
 			/*editorState,*/
 		  initialized,
-		  suggestions
+		  suggestions,
+		  editorState
 		} 						= this.state,
 		mentionPlugin 	= this.mentionPlugin,
 		{ 
@@ -592,47 +672,234 @@ const TextEditor  = onClickOutside(createReactClass({
 			hashtagPlugin, 
 			linkifyPlugin, 
 			blockStylesPlugin
-		]
+		];
+
+		let actives = ['image'];
+
+		const options = {
+			inlineStyles: exporter(this.state.editorState),
+			entityStyleFn: (entity) => {
+			    const entityType = entity.get('type').toLowerCase();
+		      	const data = entity.getData();
+			    if (entityType === 'emoji') {
+			      	return {
+			        	element: 'span',
+			        	attributes: {
+			          		class: 'emoji'
+			        	},
+			        	style: {
+			          		// Put styles here...
+			          		backgroundImage: `url(${$(emojione.toImage(data.emojiUnicode)).attr("src")})`
+			        	},
+			    	};
+			    } else if(entityType === 'mention') {
+			    	const mention = data.mention.toJS();
+			    	return {
+			        	element: 'a',
+			        	attributes: {
+			        		href: mention.link,
+			          		class: "mention",
+			        	},
+			        	style: {
+			          		// Put styles here...
+			          		whiteSpace: 'nowrap' //because we need the mention in one line
+			        	},
+			    	};
+			    }
+			},
+		}
+
+
+    	const html = stateToHTML(this.state.editorState.getCurrentContent(), options);
+    	console.log(html);
     	
     	///////return
  		return(
- 			<div className="div-txt-edit" onClick={this.handleFormClick} ref={(el) => {this.formEl = el}}>
- 				<form className="form-txt-edit" method="post" >
-	                <div className="expandingArea">
-                        <div className="meetyou autoExpand-meet">
-				            {initialized && <div onClick={this.focus} >
-				                <Editor 
-			                        // blockStyleFn={getBlockStyle}
-			                        // customStyleMap={styleMap}
-			                        ref={(elem) => {this.editor = elem}}
-			                        spellCheck={true}
-			                        plugins={plugins}
-			                        placeholder="your text"
-			                        onChange={this.onChange}
-			                        editorState={editorState}
-			                        keyBindingFn={this.myKeyBindingFn} 
-			                        handleKeyCommand={this.handleKeyCommand}
+ 			<div className="div-txt-edit" ref={(el) => {this.formEl = el}}>
+ 				<div 
+ 					className="EditorSurface"
+ 					style={{
+ 						padding: "1px",
+ 						height: parseInt(this.state.height, 10) + 10 + "px"
+ 					}}>
+	 				<form className="form-txt-edit" method="post" >
+		                <div className="expandingArea">
+	                        <div className="meetyou autoExpand-meet">
+					            <Rnd
+				                    className="editor-outer"
+				                    disableDragging={true}
+				                    ref={node => (this.node = node)}
+				                    size={{ width: this.state.width, height: this.state.height }}
+				                    position={{ x: this.state.x, y: this.state.y }}
+				                    onClick={this.focus}
+				                    onResize={this.onResize}>
+					                <Editor 
+				                        // blockStyleFn={getBlockStyle}
+				                        // customStyleMap={styleMap}
+				                        ref={(elem) => {this.editor = elem}}
+				                        spellCheck={true}
+				                        plugins={plugins}
+				                        placeholder="your text"
+				                        onChange={this.onChange}
+				                        customStyleMap={customStyleMap} //also used in draft-js-custom-styles
+				                        editorState={editorState}
+				                        keyBindingFn={this.myKeyBindingFn} 
+				                        handleKeyCommand={this.handleKeyCommand}
 
-			                        stripPastedStyles={true}
-			                        customStyleFn={customStylesUtils.customStyleFn}
-			                    />
-			                    <EmojiSuggestions 
-			                    	onOpen={this.onEmojiOpen}
-			                    	/>
-			                    <MentionSuggestions
-							        onSearchChange={this.onSearchChange}
-							        suggestions={suggestions}
-							        />
-				            </div>
-				        	}
+				                        stripPastedStyles={true}
+				                        customStyleFn={customStyleFn}
+				                    />
+				                    {!this.state.editing && <HtmlContent 
+				                    	width={this.state.width}
+				                    	height={this.state.height}
+				                    	html={html}
+				                    	pushShapes={this.pushShapes}
+				                    	getHtmlCardRect={(rect) => this.setState({htmlCardRect: rect})}
+				                    	content={this.state.content} />
+				                    }
+				                    <EmojiSuggestions 
+				                    	onOpen={this.onEmojiOpen}
+				                    	/>
+				                    <MentionSuggestions
+								        onSearchChange={this.onSearchChange}
+								        suggestions={suggestions}
+								        />
+					            </Rnd>
+					        </div>
 				        </div>
-	                    <div className="btm">
+				    </form>
+				</div>
+				<div className="EditorMenubar-ctr Menubar">
+					<div className="HMenu Menubar-ctr">
+						<div className="btm">
 							<div className="emoji-dv" ref={(el)=> {this.emojiDiv = el}}>
 			                    <EmojiSelect />
 			                </div>
+			               	<div className="save-dv">
+			                    <button 
+			                    	type="button"
+			                    	className="btn btn-primary btn-sm"
+			                    	onClick={this.composeData}>ok</button>
+			                </div>
 		                </div>
-			        </div>
-			    </form>
+						<div className="HMenu-a">
+		                    <div className={`sub-m police ${actives.includes("police") ? " active" : ""}`}>
+			                    <div className="item-top">
+			                        <div className="fontFamily" data-title="fontFamily">
+			                            <FontSelector 
+			                                {...this.props}
+			                                currentFontFamily={this.state.currentFontFamily}
+			                                setCurrentFontFamily={this.setCurrentFontFamily}
+			                                addFontFamily={(val) =>this.addFontFamily(val)}
+			                                editorRef={this.editorRef}
+			                                />
+			                        </div>
+			                        <div className="fontSize" data-title="fontSize">
+			                            <FontSizeSelector 
+			                                {...this.props}
+			                                currentFontSize={this.state.currentFontSize}
+			                                addFontSize={(val) => this.addFontSize(val)}
+			                                setCurrentFontSize={this.setCurrentFontSize}
+			                                hasEditorFocus={this.editorFocus}
+			                                />
+			                        </div>
+			                    </div>
+			                    <ul className="sub-menub-lst">
+			                        <li className="item">
+			                            <div className="textColor" data-title="textColor">
+			                                <ColorPicker 
+			                                    {...this.props}
+			                                    color={this.state.currentColor}
+			                                    colorHandle={this.colorHandle}
+			                                    handleColorChange={this.handleCurrentColorChange}
+			                                    setEditorBackground={this.setEditorBackground}
+			                                    setCurrentColor={this.setCurrentColor}
+			                                    />
+			                            </div>
+			                        </li>
+			                        <li className="item">
+			                            <div className="bold" data-title="bold">
+			                                <div 
+			                                    className={this.state.currentBoldState ? `ico active` : `ico`} 
+			                                    onClick={() => this.onToggleDefaultInlineStyles('BOLD', !this.state.currentBoldState)}></div>
+			                            </div>
+			                        </li>
+			                        <li className="item">
+			                            <div className="italic" data-title="italic">
+			                                <div 
+			                                    className={this.state.currentItalicState ? `ico active` : `ico`} 
+			                                    onClick={() => this.onToggleDefaultInlineStyles('ITALIC', !this.state.currentItalicState)}></div>
+			                            </div>
+			                        </li>
+			                        <li className="item">
+			                            <div className="underline" data-title="underline">
+			                                <div 
+			                                    className={this.state.currentUnderlineState ? `ico active` : `ico`} 
+			                                    onClick={() => this.onToggleDefaultInlineStyles('UNDERLINE', !this.state.currentUnderlineState)}></div>
+			                            </div>
+			                        </li>
+			                        <li className="item" style={{display: 'none'}}>
+			                            <div className="code" data-title="code">
+			                                <div 
+			                                    className={this.state.currentCodeState ? `ico active` : `ico`} 
+			                                    onClick={() => this.onToggleDefaultInlineStyles('CODE', !this.state.currentCodeState)}></div>
+			                            </div>
+			                        </li>
+			                    </ul>
+			                    {!!actives.includes("police") && <div className="inactive"></div>}
+			                </div>
+			                <div className={`sub-m paragraph ${actives.includes("paragraph") ? " active" : ""}`}>
+			                    <ul className="sub-menub-lst">
+			                        <li className="item">
+			                            <div className="alignLeft" data-title="alignLeft">
+			                                <TextAlign 
+			                                    value="left" 
+			                                    toggleTextAlign={(val) => this.toggleTextAlign(val)}
+			                                    currentTextAlign={this.state.currentTextAlign}
+			                                    />
+			                            </div>
+			                        </li>
+			                        <li className="item">
+			                            <div className="alignCenter" data-title="alignCenter">
+			                                <TextAlign 
+			                                    value="center" 
+			                                    toggleTextAlign={(val) => this.toggleTextAlign(val)}
+			                                    currentTextAlign={this.state.currentTextAlign}
+			                                    />
+			                            </div>
+			                        </li>
+			                        <li className="item">
+			                            <div className="alignRight" data-title="alignRight">
+			                                <TextAlign 
+			                                    value="right" 
+			                                    toggleTextAlign={(val) => this.toggleTextAlign(val)}
+			                                    currentTextAlign={this.state.currentTextAlign}
+			                                    />
+			                            </div>
+			                        </li>
+			                        <li className="item">
+			                            <div className="alignJustify" data-title="alignJustify">
+			                                <TextAlign 
+			                                    value="justify" 
+			                                    toggleTextAlign={(val) => this.toggleTextAlign(val)}
+			                                    currentTextAlign={this.state.currentTextAlign}
+			                                    />
+			                            </div>
+			                        </li>
+			                        <li className="item" style={{display: 'none'}}>
+			                            <div className="lineHeight" data-title="lineHeight">
+			                            </div>
+			                        </li>
+			                        <li className="item" style={{display: 'none'}}>
+			                            <div className="textSpacing" data-title="textSpacing">
+			                            </div>
+			                        </li>
+			                    </ul>
+			                    {!!actives.includes("paragraph") && <div className="inactive"></div>}
+			                </div>
+		                </div>
+		            </div>
+				</div>
 			</div>
 		)
 	}

@@ -12,7 +12,7 @@ export function loadList(userId) {
             axios.get(`${BASE_PATH}/api/groups/list`).then(
                 (res) => {
                     console.log(res.data)
-                    const { groups } = res.data;
+                    const groups = res.data
                     dispatch(_loadListResponse(groups))
                     resolve(res.data)
                 },
@@ -42,7 +42,7 @@ export const _loadSuggestionResponse = (groups) => ({type: LOAD_SUGGESTION_RESPO
 export function loadSuggestion(userId) {
     return (dispatch, getState) => {
         return new Promise((resolve, reject) => {
-            axios.get(`${BASE_PATH}/api/groups/suggestion`).then(
+            axios.get(`${BASE_PATH}/api/groups/public`).then(
                 (res) => {
                     console.log(res.data)
                     const { groups } = res.data;
@@ -81,7 +81,7 @@ export function loadGroup(id) {
             axios.get(`${BASE_PATH}/api/groups/show/${id}`).then(
                 (res) => {
                     console.log(res.data)
-                    const { group, newsRefs, photos } = res.data;
+                    const { group, newsRefs, news, photos } = res.data;
                     dispatch(_loadGroupResponse(id, group, newsRefs, photos))
                     resolve(res.data)
                 },

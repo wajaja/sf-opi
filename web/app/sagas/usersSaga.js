@@ -96,22 +96,22 @@ export function* UserSaga() {
  * @param id upload id
  * @returns {Function}
  */
- function* loadInfo(userId) {
+ function* loadInfo(username) {
     try {
-       	const res 	= yield call(axios.get, `${BASE_PATH}/api/users/info/${userId}`,),
-        info 		= res.data.info
-        yield put({type: 'USERS::LOAD_INFO_RESPONSE', userId, info})
+       	const res 	= yield call(axios.get, `${BASE_PATH}/api/users/info/${username}`),
+        info 		= res.data
+        yield put({type: 'PROFILES::USER_INFO_RESPONSE', username, info})
     } catch(e) {
     	console.log(e)
     }
 }
 
 
-function* findInInfoStore(id) {
+function* findInInfoStore(username) {
 	const infos = yield select(getInfos),
     info = infos.filter(function(info, i) {
 		        for(var prop in info) {
-		            return info[prop].id === id;
+		            return info[prop].username === username;
 		        }
 			}).map(function(info, i) {
 		        for(var prop in info) {
@@ -122,11 +122,11 @@ function* findInInfoStore(id) {
 	return info;
 }
 
-function* callLoadInfoRequest({userId}) {
-	let info = yield call(findInInfoStore, userId)
+function* callLoadInfoRequest({username}) {
+	let info = yield call(findInInfoStore, username)
 	console.log(info);
 	if(!info) {
-		info = yield call(loadInfo, userId)
+		info = yield call(loadInfo, username)
 	} else {
 		// yield put({type: 'USERS::LOAD_INFO_RESPONSE', userId, info})
 	}
@@ -139,5 +139,5 @@ Allows concurrent fetches of user.
 export function* UsersSaga() {
 	//allow multiple instance to be started currently
 	//yield takeEvery("USER::GET_ME", callGetMe); 
-	yield takeLatest("USERS::LOAD_INFO_REQUEST", callLoadInfoRequest); 
+	yield takeLatest("PROFILES::USER_INFO_REQUEST", callLoadInfoRequest); 
 }

@@ -104,7 +104,7 @@ class ApiThreadController extends FOSRestController implements ClassResourceInte
     /**
      * Displays a form to create a new Message document.
      *
-     * @Post("threads/create")
+     * @Post("/threads/create")
      *
      * @return array
      */

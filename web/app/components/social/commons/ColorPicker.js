@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
-import { ChromePicker } from 'react-color';
+import { PhotoshopPicker } from 'react-color';
 import onClickOutside from "react-onclickoutside";
 
 // TODO: this could be a functional component
@@ -24,15 +24,12 @@ class ColorPicker extends Component {
   };
 
   handleUserChangingColor = (color, event) => {
-    const {
-      handleColorChange,
-      setCurrentColor,
-    } = this.props;
+    const { handleColorChange, setCurrentColor, } = this.props;
 
-    handleColorChange()(color);
+    handleColorChange(color);
 
-    // setEditorBackground(color.hex);
-    setCurrentColor(color.hex);
+      // setEditorBackground(color.hex);
+      //setCurrentColor(color.hex);
   };
 
   handleClickOutside = evt => {
@@ -52,8 +49,9 @@ class ColorPicker extends Component {
     return (
         <Fragment>
           <div className={active ? `ico active` : `ico`} onClick={this.onClick}></div>
-          {active && <ChromePicker
-              disableAlpha={true}
+          {active && 
+            <PhotoshopPicker
+              disableAlpha={false}
               onChange={this.handleUserChangingColor}
               color={color}/>
           }

@@ -86,6 +86,8 @@ function toArray(obj) {
 //////
 const BuildHtmlString  = async function(content) {
 
+    console.log(content);
+
     let htmlString = '';
 
     if(content && content.blocks) {

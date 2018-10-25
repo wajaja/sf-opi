@@ -88,7 +88,7 @@ export function deletePost(post) {
 	return (dispatch, getState) => {
 		const postId = post.id;
 		dispatch(_deletePostRequest(postId))
-		axios.post(`${BASE_PATH}/api/posts/remove/${postId}`)
+		axios.delete(`${BASE_PATH}/api/posts/remove/${postId}`)
 			 .then(function (res) {
 			 	console.log(res.data);
 				dispatch(_deletePostResponse(postId))
@@ -151,7 +151,7 @@ export function load(id) {
 			dispatch(_loadRequest());
 			return axios.get(`${BASE_PATH}/api/posts/show/${id}`).then(
 			 	function(res) {
-		 			const post = res.data.post,
+		 			const post = res.data,
 	 				{ id, type } = post
 	 				if(!!id) {
 			 			dispatch(_loadResponse(post))

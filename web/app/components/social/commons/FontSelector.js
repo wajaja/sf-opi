@@ -163,8 +163,6 @@ class FontSelector extends React.Component {
 
       if (window.requestAnimationFrame) {
         requestAnimationFrame(() => {
-          editorRef && editorRef.focus();
-
           requestAnimationFrame(() => {
             setCurrentFontFamily(label);
             addFontFamily(label);

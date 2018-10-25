@@ -127,7 +127,7 @@ const Search  = createReactClass({
         return (
             <div className="frm-contrib-ctnr-b">
                 <form 
-                    autocomplete="off"
+                    autoComplete="off"
                     action={`/search?q=${encodeURIComponent(this.state.value)}&tag=all`} 
                     className="form-search" 
                     onSubmit={this.handleSubmit} 

@@ -9,6 +9,7 @@ use Pagerfanta\Pagerfanta,
     FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Event\FormEvent,
     Pagerfanta\Adapter\ArrayAdapter,
+    JMS\Serializer\SerializerInterface,
     JMS\Serializer\SerializationContext,
     OP\UserBundle\Security\UserProvider,
     Nelmio\ApiDocBundle\Annotation as Doc,
@@ -28,6 +29,7 @@ use Pagerfanta\Pagerfanta,
     FOS\RestBundle\Controller\Annotations\RouteResource,
     OP\PostBundle\DocumentManager\PostManager,
     OP\UserBundle\DataTransformer\ObjectToArrayTransformer,
+    OP\UserBundle\Repository\OpinionUserManager,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
@@ -50,26 +52,26 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
      * Note: Could be refactored to make     of the User Resolver in Symfony 3.2 onwards
      * more at : http://symfony.com/blog/new-in-symfony-3-2-user-value-resolver-for-controllers
      */
-    public function getUserAction(Request $request, $username, PictureManager $imageMan)
+    public function getUserAction(Request $request, $username, PictureManager $imageMan, SerializerInterface $serializer, PostManager $postMan)
     {
         $user       = $this->_getUser(); 
-        $serializer = $this->get('jms_serializer');
         $profile    = $this->get('fos_user.user_manager')->findUserByUsername($username);
         if(!is_object($profile)){
             throw $this->createNotFoundException();
         }
         $utcDate    = new \Datetime(null, new \DateTimeZone("UTC"));
-        $postsData  = $this->loadInitialPosts($profile, 1, $utcDate);
+        $postsData  = $this->loadInitialPosts($profile, 1, $utcDate, $postMan);
 
         $context = new SerializationContext();
         $context->setSerializeNull(true);
         $groups = array('WithMutual', 'Profile');
         $context->setGroups($groups);
-        return  new JsonResponse(['news'      => $postsData['posts'],
-                                  'newsRefs'  => $postsData['newsRefs'],
-                                  'user'      => $serializer->toArray($profile, $context),
-                                  'photos'    => $imageMan->loadProfileImages($profile, [], 9) //user, initIds, limit
-                                ]);
+        return  new JsonResponse([
+            'news'      => $postsData['posts'],
+            'newsRefs'  => $postsData['newsRefs'],
+            'user'      => $serializer->toArray($profile, $context),
+            'photos'    => $imageMan->loadProfileImages($profile, [], 9) //user, initIds, limit
+        ]);
 
     }
 
@@ -213,12 +215,10 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
      *
      * @return Integer
      */
-    public function loadFriendsAction(Request $request, $username, ObjectToArrayTransformer $transformer)
+    public function loadFriendsAction(Request $request, $username, ObjectToArrayTransformer $transformer, SerializerInterface $serializer, OpinionUserManager $u_man)
     {
-        $response   = new JsonResponse();
+        
         $friends    = [];
-        $u_man      = $this->get('fos_user.user_manager');
-        $serializer = $this->get('jms_serializer');
         $user       = $this->_getUser();
         $page       = !!$request->query->get('page') ? $request->query->get('page') : 1;
         $profile    = $u_man->findUserByUsername($username);
@@ -239,7 +239,56 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
             $friends[] = $serializer->toArray($u, $context);
         }
 
-        return $response->setData(array('friends' => $friends));
+        return new JsonResponse($friends);
+    }
+
+    /**
+     * @Get("/followers/load/{username}")
+     *
+     * @return Integer
+     */
+    public function loadFollowersAction(Request $request, $username, ObjectToArrayTransformer $transformer, SerializerInterface $serializer, OpinionUserManager $u_man)
+    {
+        
+        $friends    = [];
+        $user       = $this->_getUser();
+        $page       = !!$request->query->get('page') ? $request->query->get('page') : 1;
+        $profile    = $u_man->findUserByUsername($username);
+        $results    = $profile->getMyFollowers()->toArray();
+        //Warning: it will use the "==" comparison, not the strict comparison ("===")
+        $results    = array_unique($results, SORT_REGULAR);
+        //paginate
+        $adapter = new ArrayAdapter($results);
+        $pager   = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(20);
+        $pager->setCurrentPage($page);
+
+        foreach ($pager->getCurrentPageResults() as $u) {
+            $context = new SerializationContext();
+            $context->setSerializeNull(true);
+            $groups = array('WithMutual', 'Detail');
+            $context->setGroups($groups);
+            $friends[] = $serializer->toArray($u, $context);
+        }
+
+        return new JsonResponse($friends);
+    }
+
+    /**
+     * @Get("/users/info/{username}")
+     *
+     * @return Integer
+     */
+    public function userInfoAction(Request $request, $username, SerializerInterface $serializer, OpinionUserManager $u_man)
+    {
+        $profile = $u_man->findUserByUsername($username);
+        $context = new SerializationContext();
+        $context->setSerializeNull(true);
+        $groups = array('WithMutual', 'Infos');
+        $context->setGroups($groups);
+        $profile = $serializer->toArray($profile, $context);
+
+        return new JsonResponse($profile);
     }
 
     /**
@@ -249,7 +298,6 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
      */
     public function loadTimelineAction(Request $request, $username, PostManager $pMan)
     {
-        $response = new JsonResponse();
         $query    = $request->query;
         $utc      = new \Datetime(null, new \DateTimeZone("UTC"));
         $u_man    = $this->get('fos_user.user_manager');
@@ -258,13 +306,13 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
         $profile  = $u_man->findUserByUsername($username);
         $results  = $this->loadTimelime($profile, $page, $date, $pMan);
 
-        return $response->setData(array('posts' => $results));
+        return new JsonResponse($results);
     }
 
     protected function loadTimelime(User $user, $page=1, $date, $manager) {
         $authors  = $newsRefs = [];
         $posts          = $manager->loadTimelime($user, $page, $date);
-        foreach ($posts as $p) {
+        foreach ($posts['posts'] as $p) {
             $authors[]  = $p['author'];
             $newsRefs[] = [
                 'id'    => $p['id'],
@@ -273,8 +321,9 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
         }
 
         return [
-            'posts'     => $posts,
+            'news'     => $posts,
             'authors'   => $authors,
+            'lastStreamId' => $posts['lastStreamId'],
             'newsRefs'  => $newsRefs
         ];
     }

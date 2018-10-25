@@ -84,4 +84,17 @@ class LikeRepository extends DocumentRepository
                    ->getSingleResult();
         return $like;
     }
+
+    public function loadBy($refId, $type) {
+        $qb = $this->createQueryBuilder('\OP\PostBundle\Document\Like');
+        $qb ->field('refValid')->equals($refId)
+            ->hydrate(false)
+            // ->field('type')->equals($type)  //do not uncomment this
+        ;
+
+        $likes = $qb->getQuery()
+                   ->execute()
+                   ->toArray();
+        return $likes;
+    }
 }

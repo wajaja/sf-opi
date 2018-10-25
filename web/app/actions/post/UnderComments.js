@@ -64,7 +64,7 @@ export const _getComment = (comment) => ({type: GET_UNDERCOMMENT_RESPONSE, comme
 
 export function getComment(commentId) {
 	return (dispatch, getState) => {
-		axios.post(`${BASE_PATH}/api/undercomments/get/${commentId}`)
+		axios.get(`${BASE_PATH}/api/undercomments/show/${commentId}`)
 			 .then(function (res) {
 			 	console.log(res.data)
 				// dispatch(_addComment(res.data))
