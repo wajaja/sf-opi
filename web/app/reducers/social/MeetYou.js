@@ -1,10 +1,11 @@
 import { getPopularImages } from '../../routes/social/MeetYou/utils/unsplash';
 import undoable, { distinctState, includeAction } from 'redux-undo'
 
-const images = getPopularImages();
+// const images = getPopularImages();
 
 export const initialState = {
     availableImages: [],
+    availableBackgrounds: [],
     query: "",
     drawing: null,
     filter: 'light_contrast',
@@ -79,6 +80,8 @@ function MeetYou(state = initialState, action) {
             return Object.assign({}, state, { drawing: action.drawing });
         case 'RECEIVE_IMAGES':
             return Object.assign({}, state, { availableImages: action.images });
+        case 'LOAD_BACKGROUNDS_RESPONSE':
+            return Object.assign({}, state, { availableBackgrounds: action.images });
         case 'SET_QUERY':
             return Object.assign({}, state, { query: action.query });
         default:

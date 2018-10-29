@@ -174,20 +174,46 @@ const MeetYou = createReactClass({
     },
 
     //changes => {width: ref.style.width, height: ref.style.height, ...position}
-    updateCardSize(cardId, changes) {
+    updateCardSize(cardId, size) {
         const arr = fromJS(this.state.cards);
         const index = arr.findIndex(c => c.id === cardId)
-        const newArr = arr.update(index, item => Object.assign({}, item, { ...changes }))
-        this.setState({cards: newArr.toJS()});
+        if(!index) {
+            const card = { 
+                id: cardId,
+                type: "type", //TODO arbitratary
+                size: size,
+            }
+            let newArray = this.state.cards.slice()
+            newArray.splice(0, 0, card) // inserts at 1st index position, remove 0
+            this.setState({cards: newArray })
+        } else {
+            const newArr = arr.update(index, item => Object.assign({}, item, {size: size}))
+            this.setState({cards: newArr.toJS()});
+        }
     },
 
     //changes => {textArr, }
-    updateCardData(cardId, changes) {
-        console.log('updateCardData', cardId, changes)
+    updateCard({cardId, type, node, size, shapes, editorState, background, defaultStyle}) {
+        const card = {
+            id: cardId,
+            type: type,
+            size: size,
+            node: node,
+            shapes: shapes,
+            background: background,
+            editorState: editorState,
+            defaultStyle: defaultStyle
+        }
         const arr = fromJS(this.state.cards);
         const index = arr.findIndex(c => c.id === cardId)
-        const newArr = arr.update(index, item => Object.assign({}, item, { ...changes }))
-        this.setState({cards: newArr.toJS()});
+        if(!index) {
+            let newArray = this.state.cards.slice()
+            newArray.splice(0, 0, card) // inserts at 1st index position, remove 0
+            this.setState({cards: newArray })
+        } else {
+            const newArr = arr.update(index, item => Object.assign({}, item, {...card}))
+            this.setState({cards: newArr.toJS()});
+        }
     },
 
     toggleTextAlign(align) {
@@ -218,6 +244,14 @@ const MeetYou = createReactClass({
     onCardSelectionChange(cardId, metaKey, shiftKey){
         if(this.state.selectedCardId !== cardId)
             this.setState({selectedCardId: cardId});
+    },
+
+    onMoveZindex(val) {
+        console.log('onMoveZindex', val);
+        const selectedCardId = this.state.selectedCardId
+
+        const selectedCard = this.state.cards[selectedCardId];
+        //always redraw layer
     },
 
     render() {
@@ -251,7 +285,7 @@ const MeetYou = createReactClass({
                     {...this.state} 
                     selectedCard={this.state.selectedCard}
                     editing={this.state.editing}
-
+                    onMoveZindex={this.onMoveZindex}
                     setCurrentColor={this.setCurrentColor}
                     colorHandle={colorHandle}
                     // switchColorHandle={switchColorHandle}
@@ -297,6 +331,7 @@ const MeetYou = createReactClass({
                     leftPanel={this.state.leftPanel}
                     auth_data={this.props.auth_data}
                     pushEditor={this.pushEditor}
+                    onMoveZindex={this.onMoveZindex}
                     access_token={this.props.access_token}
                     getImageFromCache={this.props.getImageFromCache}
                     changeView={this.props.changeView}
@@ -332,13 +367,14 @@ const MeetYou = createReactClass({
                             currentUnderlineState={this.state.currentUnderlineState}
                             // switchColorHandle={switchColorHandle}
                             updateCardSize={this.updateCardSize}
-                            updateCardData={this.updateCardData}
+                            updateCard={this.updateCard}
                             setCurrentFontSize={this.setCurrentFontSize}
                             hasEditorFocus={editorFocus}
                             setEditorFocus={this.setEditorFocus}
                             editorState={editorState}
                             setEditorState={this.setEditorState}
                             editorBackground={editorBackground}
+                            onMoveZindex={this.onMoveZindex }
                             setEditorBackground={this.setEditorBackground}
                             setCurrentFontFamily={this.setCurrentFontFamily}
                             setCurrentBoldState={this.setCurrentBoldState}
@@ -385,6 +421,7 @@ const mapStateToProps = (state, ownProps) => {
         senders: meetYou.senders,
         receivers: meetYou.receivers,
         textAttrs: meetYou.textAttrs,
+        availableImages: meetYou.availableImages
     }
 };
 

@@ -106,15 +106,19 @@ body {
     // }
     .add-edtx-btn, .add-tx-btn{
         background: #000;
-        width: 100px;
+        width: 138px;
         height: 100px;
         color: #fff;
         padding: 10px;
         text-align: center;
+        vertical-align: top;
         text-transform: capitalize;
         flex: auto;
         margin: 5px 5px;
         cursor: pointer;
+        display: inline-block;
+        font-size: 14px;
+        padding: 20px 5px;
     }
     form{
         padding: 5px 10px;
@@ -196,11 +200,15 @@ body {
 }
 
 .ImagePicker {
-  /* overflow-y: scroll; */
-  height: calc(100vh - 74px - 32px);
-  display: flex;
-  width: 100%;
-  /* padding-top: 4px; */
+    width: 100%;
+    flex-shrink: 2;
+    line-height: 0;
+    -webkit-column-count: 2;
+    -webkit-column-gap: 0px;
+    -moz-column-count: 2;
+    -moz-column-gap: 0px;
+    column-count: 2;
+    column-gap: 0px;
 
   &-image {
     cursor: pointer;
@@ -212,11 +220,12 @@ body {
     }
 
     img {
-      max-width: 100%;
-      display: block;
-      //border-radius: 3px;
-      opacity: 1;
-      transition: 5s ease-in-out all;
+        max-width: 194px;
+        max-height: 90px;
+        display: block;
+        opacity: 1;
+        transition: 5s ease-in-out all;
+        border: 1px solid #73797b;
     }
 
     .OptionWrapper--selected {
@@ -352,8 +361,8 @@ body {
   }
 
   &, &-w, &-w > * {
-    width: 100%;
-    height: 100%;
+    width: 130px;
+    height: 90px;
   }
 
   &--size-normal &-w:before {
@@ -472,7 +481,7 @@ body {
         left: 0px;
     }
     .editor-outer {
-        padding: 3px;
+        padding: 1px;               //Important cause it will have consequance into generated Card Image
         border: 1px solid #9db0bf;
     }
     .expandingArea{
@@ -489,6 +498,12 @@ body {
         }
         .draftJsEmojiPlugin__emojiSelectButton__3sPol{
             top: unset;
+        }
+    }
+    .public-DraftStyleDefault-block{
+        font-family: Arial;
+        &>span{
+            font-family: inherit;
         }
     }
     .emoji-dv{
@@ -639,13 +654,14 @@ body {
             background: transparent url(http://opinion.com/images/2290864-48-ed.png) 50% 50% no-repeat;
         }
         .image{
-            height: 38px;
+            height: 37px;
+            top: 1px;
             background: transparent url(http://opinion.com/images/2305629-48.png) 50% 50% no-repeat;
         }
         .modele{
-            width: 54px;
-            height: 52px;
-            top: -6px;
+            width: 40px;
+            height: 45px;
+            top: -2px;
             /* margin: auto; */
             background: transparent url(http://opinion.com/images/if_app_window_107230.png) 50% 50% no-repeat;
             opacity: 0.7;
@@ -654,9 +670,17 @@ body {
         .fill{
             width: 31px;
             height: 31px;
-            top: 5px;
+            top: 4px;
             margin: auto;
             background: transparent url(http://opinion.com/images/352891-48.png) 50% 50% no-repeat;
+            opacity: 0.7;
+        }
+        .shape{
+            width: 38px;
+            height: 39px;
+            top: 0px;
+            margin: auto;
+            background: transparent url(http://opinion.com/images/if_pentagon_1597480.png) 50% 50% no-repeat;
             opacity: 0.7;
         }
     }
@@ -666,6 +690,11 @@ body {
             height: 19px;
             background: transparent url(http://opinion.com/images/352385-48.png) 50% 50% no-repeat;
             opacity: 0.7;
+        }
+        .photoshop-picker {
+            position: absolute;
+            bottom: 180px;
+            left: 0;
         }
     }
     .bold{
@@ -757,9 +786,54 @@ body {
         border: 1px solid #a7afb1;
         /* margin-bottom: 10px; */
     }
+    .last .ico{
+        width: 23px;
+        height: 23px;
+        background: transparent url(http://opinion.com/images/183252-48.png) 50% 50% no-repeat;
+        opacity: 0.7;
+        cursor: pointer;
+        position: relative;
+        background-size: cover;
+    }
+    .next .ico{
+        width: 23px;
+        height: 23px;
+        background: transparent url(http://opinion.com/images/183254-48.png) 50% 50% no-repeat;
+        opacity: 0.7;
+        cursor: pointer;
+        position: relative;
+        background-size: cover;
+    }
+    .move-zIn-top .ico{
+        width: 20px;
+        height: 20px;
+        background: transparent url(http://opinion.com/images/1063916-48.png) 50% 50% no-repeat;
+        opacity: 0.7;
+        cursor: pointer;
+        position: relative;
+        background-size: cover;
+    }
+    .move-zIn-bottom .ico{
+        width: 20px;
+        height: 20px;
+        background: transparent url(http://opinion.com/images/1063885-48.png) 50% 50% no-repeat;
+        opacity: 0.7;
+        cursor: pointer;
+        position: relative;
+        background-size: cover;
+    }
 }
 
 .Menubar-ctr{
+    .undo-ctrn{
+        button{
+            background: none;
+            border: none;
+            outline: none;
+            position: relative;
+            top: 9px;
+        }
+    }
     &.top{
         width: calc(100% - 541px); /*541 = 319 + 222*/
         position: relative;
@@ -852,7 +926,7 @@ body {
     margin-right: auto;
     margin-left: auto;
     height: 100%;
-    margin-top: 100px;
+    margin-top: 62px;
 }
 .page-a{
     position: relative;
@@ -860,6 +934,7 @@ body {
         position: relative;
         background: #fff;
         border: 1px solid #b1bdc3;
+        display: inline-block;
     }
 }
 .EditorSurface{

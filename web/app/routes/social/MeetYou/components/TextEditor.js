@@ -170,13 +170,11 @@ const TextEditor  = onClickOutside(createReactClass({
 			width: 200,
 			height: 30,
             unique: this.getUniqueForm(),
-            emojibtn: false,
-			files: [],
-			content: '',
 			focus: false,
 			initialized: false,
 			isLoading: false,
         	plugins: null,
+        	type: 'richtext',
         	topPlace: false,
         	EmojiSuggestions: null,
 			emojibtn: false,
@@ -185,16 +183,23 @@ const TextEditor  = onClickOutside(createReactClass({
       		suggestions: mentions,
 			editorState: EditorState.createEmpty(compositeDecorator),
 
+			//default styles
 			currentFontSize: 12,
+			currentFontFamily: 'Arial',
             currentTextAlign: 'left',
-            filter: this.props.filter,
-            currentTransparency: this.props.currentTransparency || 0,
-            editorBackground: '#ffffff',
-            editorRef: null,
+            editorBackground: 'transparent',
             currentColor: '#000000',
+            currentLineHeight: 18,
+            filter: this.props.filter,
+            currentTextDirectionality: 'LTR', // 'RTL'
+            currentTransparency: this.props.currentTransparency || 0,
+
+            editorRef: null,
             selectedPage: 1,
             editing: true,
-            content: '' //htmlString from editor state
+            processing: false,
+            content: '' //htmlString from editor state,
+
 		}
 	},
 
@@ -212,7 +217,10 @@ const TextEditor  = onClickOutside(createReactClass({
 
 	composeData() {
     	const { editorState, unique } = this.state
-    	this.setState({editing: false})
+    	this.setState({
+    		editing: false,
+    		processing: true
+    	})
 		// BuildHtmlString(convertToRaw(editorState.getCurrentContent())).then(htmlString => {
 		// 	// const formData = {
 		// 	// 	rmv_arr : '',
@@ -496,14 +504,17 @@ const TextEditor  = onClickOutside(createReactClass({
     //callback from react-rnd
     onResize(e, direction, ref, delta, position){
         console.log(ref.offsetWidth, ref.style.width);
+        const size = { 
+         	width: ref.style.width,
+            height: ref.style.height,
+        }
         const changes = {
             ...position,
-            width: ref.style.width,
-            height: ref.style.height,
+            ...size,
         };
         this.setState(changes);
 
-        this.props.updateCardSize(this.props.id, changes)
+        this.props.updateCardSize(this.props.selectedCardId, size)
     },
 
     // handleCurrentFontSizeChange(fontSize) {
@@ -642,9 +653,30 @@ const TextEditor  = onClickOutside(createReactClass({
         this.setState({editorState: state})
     },
 
-    pushShapes(shapes) {
-    	console.log(shapes);
-    	this.setState({editing: true})
+    updateCard({node, shapes}) {
+    	this.props.updateCard({
+    		size: { 
+    			width: parseInt(this.state.width), 
+    			height: parseInt(this.state.height) 
+    		},
+    		defaultStyle: {
+	    		fontSize: this.state.defaultFontSize || '12px',
+				lineHeight: this.state.currentLineHeight,
+				fontFamily: this.state.defaultFontFamily || 'Arial',
+				textAlignment: this.state.currentTextAlign,
+				textDirectionality: this.state.currentTextDirectionality
+			},
+    		editorState: this.state.editorState,
+    		background: this.state.editorBackground || 'transparent',
+    		cardId: this.props.selectedCardId, 
+    		type: 'richtext', 
+    		node, 
+    		shapes,
+    	})
+    	this.setState({
+    		editing: false,
+    		processing: false
+    	})
     },
 
 	render() {
@@ -728,6 +760,12 @@ const TextEditor  = onClickOutside(createReactClass({
 					            <Rnd
 				                    className="editor-outer"
 				                    disableDragging={true}
+				                    style={{
+				                    	fontSize: '12px',
+										fontFamily: this.state.defaultFontFamily || 'Arial',
+							            background: this.state.editorBackground,
+							            lineHeight: this.state.currentLineHeight + 'px'
+				                    }}
 				                    ref={node => (this.node = node)}
 				                    size={{ width: this.state.width, height: this.state.height }}
 				                    position={{ x: this.state.x, y: this.state.y }}
@@ -740,6 +778,8 @@ const TextEditor  = onClickOutside(createReactClass({
 				                        spellCheck={true}
 				                        plugins={plugins}
 				                        placeholder="your text"
+				                        textAlignment={this.state.currentTextAlign}
+				                        textDirectionality={this.state.currentTextDirectionality}
 				                        onChange={this.onChange}
 				                        customStyleMap={customStyleMap} //also used in draft-js-custom-styles
 				                        editorState={editorState}
@@ -749,13 +789,28 @@ const TextEditor  = onClickOutside(createReactClass({
 				                        stripPastedStyles={true}
 				                        customStyleFn={customStyleFn}
 				                    />
-				                    {!this.state.editing && <HtmlContent 
+				                    {this.state.processing && <HtmlContent 
 				                    	width={this.state.width}
 				                    	height={this.state.height}
 				                    	html={html}
-				                    	pushShapes={this.pushShapes}
+				                    	updateCard={this.updateCard}
 				                    	getHtmlCardRect={(rect) => this.setState({htmlCardRect: rect})}
-				                    	content={this.state.content} />
+				                    	size={{ 
+				                    		width: parseInt(this.state.width), 
+				                    		height: parseInt(this.state.height) 
+				                    	}}
+				                    	defaultStyle={{
+								    		fontSize: this.state.defaultFontSize || '12px',
+											lineHeight: this.state.currentLineHeight,
+											fontFamily: this.state.defaultFontFamily || 'Arial',
+											textAlignment: this.state.currentTextAlign,
+											textDirectionality: this.state.currentTextDirectionality
+										}}
+							    		editorState={this.state.editorState}
+							    		background={this.state.editorBackground || 'transparent'}
+							    		cardId={this.props.selectedCardId} 
+							    		type="richtext"
+				                    	/>
 				                    }
 				                    <EmojiSuggestions 
 				                    	onOpen={this.onEmojiOpen}

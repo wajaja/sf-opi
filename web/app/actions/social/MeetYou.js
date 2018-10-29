@@ -2,31 +2,6 @@ import axios            from 'axios'
 import { BASE_PATH }    from '../../config/api'
 import _                from 'lodash'
 
-export const setFont = (font) => ({
-  type: 'SET_FONT',
-  font
-});
-
-export const setFontSize = (size) => ({
-  type: 'SET_FONT_SIZE',
-  size
-});
-
-export const setBold = (bold) => ({
-  type: 'SET_BOLD',
-  bold
-});
-
-export const setItalic = (italic) => ({
-  type: 'SET_ITALIC',
-  italic
-});
-
-export const setColor = (color) => ({
-  type: 'SET_COLOR',
-  color
-});
-
 export const setFilter = (filter) => ({
   type: 'SET_FILTER',
   filter
@@ -84,9 +59,15 @@ export const searchImages = (query) => ({
   query
 });
 
+//LOAD initialImage 
 export const resetSearch = () => ({
-  type: 'RESET_SEARCH'
+      type: 'RESET_SEARCH'
 });
+
+
+export const loadBackgrounds = () => ({
+    type: 'LOAD_BACKGROUNDS'
+})
 
 
 export const UPDATE_SENDERS = 'MEETYOU::UPDATE_SENDERS'

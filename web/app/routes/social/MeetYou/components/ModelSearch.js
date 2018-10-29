@@ -16,9 +16,9 @@ export default createReactClass({
     }
   },
 
-  componentDidMount() {
-    this.props.onSearchReset();
-  },
+  // componentDidMount() {
+  //   this.props.onSearchReset();
+  // },
 
   search(e) {
     e.preventDefault();

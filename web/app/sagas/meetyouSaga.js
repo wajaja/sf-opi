@@ -14,6 +14,11 @@ function* getPopularImagesSaga() {
     yield put({ type: 'RECEIVE_IMAGES', images });
 }
 
+function* loadBackgrounds() {
+     const images = yield call(unsplash.loadBackgrounds);
+    yield put({ type: 'LOAD_BACKGROUNDS_RESPONSE', images });
+}
+
 function* searchImagesSaga({ query }) {
     const images = yield call(unsplash.searchImages, query);
     yield put({ type: 'RECEIVE_IMAGES', images });
@@ -23,4 +28,5 @@ export default function* rootSaga() {
     yield fork(initImagesSaga);
     yield fork(takeEvery, 'SEARCH_IMAGES', searchImagesSaga);
     yield fork(takeEvery, 'RESET_SEARCH', getPopularImagesSaga);
+    yield fork(takeEvery, 'LOAD_BACKGROUNDS', loadBackgrounds)
 }

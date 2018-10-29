@@ -27,7 +27,7 @@ const _Page = createReactClass({
             drawing: this.props.drawing,
             text: this.props.text,
             focused: this.props.focused,
-            editing: this.props.editing
+            editing: this.props.editing,
         }
     },
 
@@ -113,7 +113,6 @@ const _Page = createReactClass({
                       onEdit={this.props.onEdit}
                       textArr={this.props.textArr}
                       onBlur={this.props.onBlur}
-                      cards={this.props.cards}
                       updateTextArr={this.props.updateTextArr}
                       onCancelEdit={this.props.onCancelEdit}
                       onTextRectMove={this.props.onTextRectMove}

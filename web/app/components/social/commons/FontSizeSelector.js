@@ -20,7 +20,7 @@ const customStyles = {
 class FontSizeSelector extends PureComponent {
   static propTypes = {
     hasEditorFocus: PropTypes.bool.isRequired,
-    currentFontSize: PropTypes.number.isRequired,
+    // currentFontSize: PropTypes.number.isRequired,
     addFontSize: PropTypes.func.isRequired,
     setCurrentFontSize: PropTypes.func.isRequired,
   };
@@ -90,10 +90,11 @@ class FontSizeSelector extends PureComponent {
           <Select
               styles={customStyles}
               options={this.state.options}
-              placeholder={`12`}
+              placeholder={currentFontSize}
               onChange={this.updateFontSize}
               value={currentFontSize}
               onFocus={this.handleFocus}
+              menuPlacement="top"
               />
       </Fragment>
     );

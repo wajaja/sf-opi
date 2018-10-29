@@ -201,6 +201,7 @@ class FontSelector extends React.Component {
               onChange={this.handleChange}
               value={value}
               onFocus={this.handleFocus}
+              menuPlacement="top"
               />
         </Fragment>
     );

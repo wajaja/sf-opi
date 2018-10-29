@@ -10,6 +10,12 @@ export default createReactClass({
     onSelect: PropTypes.func
   },
 
+  getInitialState() {
+    return{
+
+    }
+  },
+
   handleSelect(image) {
     this.props.onSelect && this.props.onSelect(image);
   },

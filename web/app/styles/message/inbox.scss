@@ -423,10 +423,9 @@ input.nw-msg-recip-modal{
 }
 .msg-container{
     .bdy-txt{
-        /*text-align: left;*/
+        text-align: left; //TODO
     }
     .msg-img-ul{
-        /* display: flex; */
         line-height: 0;
         -webkit-column-count: 3;
         -webkit-column-gap: 0px;
@@ -434,7 +433,9 @@ input.nw-msg-recip-modal{
         -moz-column-gap: 0px;
         column-count: 3;
         column-gap: 0px;
-        
+        &.dv-one-img {
+            display: flex;
+        }
     }
     .li-msg-img{
         cursor: pointer;

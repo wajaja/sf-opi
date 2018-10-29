@@ -64,6 +64,11 @@ class EditMenu extends React.Component {
                                         className="ico modele"
                                         onClick={() => this.props.switchLefSide('modele')}></div>
                                 </li>
+                                <li className="item">
+                                    <div 
+                                        className="ico shape"
+                                        onClick={() => this.props.switchLefSide('shape')}></div>
+                                </li>
                             </ul>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Scrollbars }     from 'react-custom-scrollbars'
+import { ActionCreators } from 'redux-undo';
 
 import {
     ColorPicker,
@@ -51,6 +52,17 @@ class HMenu extends Component {
     this.setState({ selected: String(value) });
   };
 
+    onUndoClick = (type) => {
+        if(type === 'last')
+            this.props.dispatch(ActionCreators.undo()) // undo the last action
+        else 
+            this.props.dispatch(ActionCreators.redo()) // undo the last action
+    }
+
+    onMoveZindex = (val) => {
+        this.props.onMoveZindex(val)
+    }
+
 
   render() {
     const {
@@ -65,7 +77,10 @@ class HMenu extends Component {
       onToggleDefaultInlineStyles
     } = this.props;
 
-    let actives = activeType === 'edittext' ? ['police', 'paragraph'] : ['image'] ;
+    let actives = activeType === 'edittext' ? ['police', 'paragraph'] : ['image'];
+    let nextPossible = true;
+    let lastPossible = true;
+    let cardActive = true;
 
     // const { name, items } = el;
     // let active  = actives.includes(name);
@@ -78,6 +93,30 @@ class HMenu extends Component {
                 className="HMenu-a"
                 ref={el => (this.scrollbars = el)}
                 >
+                <div className="sub-m undo-ctrn">
+                    <ul className="sub-menub-lst">
+                        <li className="item">
+                            <button type="button"  disabled={!lastPossible} className="last">
+                                <div className="ico" onClick={() => this.onUndoClick('last')}></div>
+                            </button>
+                        </li>
+                        <li className="item">
+                            <button type="button"  disabled={!nextPossible} className="next">
+                                <div className="ico" onClick={() => this.onUndoClick('next')}></div>
+                            </button>
+                        </li> 
+                        <li className="item">
+                            <button type="button"  disabled={!cardActive} className="move-zIn-top">
+                                <div className="ico" onClick={() => this.onMoveZindex(1)}></div>
+                            </button>
+                        </li> 
+                        <li className="item">
+                            <button type="button"  disabled={!cardActive} className="move-zIn-bottom">
+                                <div className="ico" onClick={() => this.onMoveZindex(-1)}></div>
+                            </button>
+                        </li>                        
+                    </ul>
+                </div>
                 <div className={`sub-m image ${actives.includes("image") ? " active" : ""}`}>
                     <ul className="sub-menub-lst">
                         <li className="item">

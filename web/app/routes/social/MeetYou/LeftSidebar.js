@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import {connect} from 'react-redux';
 import  createReactClass from 'create-react-class';
 import {
-    selectImage, searchImages, resetSearch, setQuery
+    selectImage, searchImages, resetSearch, setQuery, loadBackgrounds
 }                       from '../../../actions/social/MeetYou';
 import { 
     Chat,
@@ -12,6 +12,10 @@ import Card from './components/Card';
 import SearchBar from './components/SearchBar';
 import ImagePicker from './components/ImagePicker';
 import TextPicker   from './DnD/TextPicker'
+import ShapePicker  from './DnD/ShapePicker'
+import BackgroundPicker from './components/BackgroundPicker'
+import ModelSearch      from './components/ModelSearch'
+import ModelPicker      from './components/ModelPicker'
 
 const LeftSidebar = createReactClass({
 
@@ -25,8 +29,8 @@ const LeftSidebar = createReactClass({
         const { 
             access_token, query, availableImages, 
             selectedImage, pushEditor, onSearch, 
-            onSearchReset, onQueryChange,
-            leftPanel, onSelectImage  } = this.props
+            onSearchReset, onQueryChange, availableBackgrounds, onLoadBackgrounds,
+            leftPanel, onSelectImage, onSelectShape, selectedShape  } = this.props
         return (
             <div className="Sidebar">
                 <Card className={`CardOpt ${leftPanel === 'text' ? ' active' : ''}  `} title="Images">
@@ -41,9 +45,9 @@ const LeftSidebar = createReactClass({
                             <SearchBar
                                 query={query}
                                 onSearch={onSearch}
-                                onSearchReset={onSearchReset}
-                                onQueryChange={onQueryChange} />
+                                onSearchReset={onSearchReset} />
                             <ImagePicker
+                                type="image"
                                 images={availableImages}
                                 selected={selectedImage}
                                 onSelect={onSelectImage} />
@@ -51,23 +55,32 @@ const LeftSidebar = createReactClass({
                     }
                     {leftPanel === 'background' && 
                         <Fragment>
-                            <ImagePicker
-                                images={availableImages}
+                            <BackgroundPicker
+                                type="background"
+                                onLoadBackgrounds={onLoadBackgrounds}
+                                images={availableBackgrounds}
                                 selected={selectedImage}
                                 onSelect={onSelectImage} />
                         </Fragment>
                     }
                     {leftPanel === 'modele' && 
                         <Fragment>
-                            <SearchBar
+                            <ModelSearch
                                 query={query}
                                 onSearch={onSearch}
                                 onSearchReset={onSearchReset}
                                 onQueryChange={onQueryChange} />
-                            <ImagePicker
+                            <ModelPicker
                                 images={availableImages}
                                 selected={selectedImage}
                                 onSelect={onSelectImage} />
+                        </Fragment>
+                    }
+                    {leftPanel === 'shape' && 
+                        <Fragment>
+                            <ShapePicker
+                                selected={selectedShape}
+                                onSelect={onSelectShape} />
                         </Fragment>
                     }
                 </Card>
@@ -101,15 +114,23 @@ const LeftSidebar = createReactClass({
     }
 })
 
-const mapStateToProps = (state) => ({
-    availableImages: state.MeetYou.availableImages,
-    selected: state.MeetYou.selectedImage,
-    query: state.MeetYou.query
-});
+const mapStateToProps = (state) => {
+    const meetYou = state.MeetYou.present;
+    return {
+        availableBackgrounds: meetYou.availableBackgrounds,
+        availableImages: meetYou.availableImages,
+        selected: meetYou.selectedImage,
+        query: meetYou.query
+    }
+};
 
 const mapDispatchToProps = (dispatch) => ({
     onSelectImage(image) {
         dispatch(selectImage(image));
+    },
+
+    onSelectShape(shape) {
+        dispatch(selectShape(shape));
     },
 
     onSearch(query) {
@@ -117,7 +138,11 @@ const mapDispatchToProps = (dispatch) => ({
     },
 
     onSearchReset() {
-        dispatch(resetSearch());
+        dispatch(resetSearch());  //loadInitial Image
+    },
+
+    onLoadBackgrounds() {
+        dispatch(loadBackgrounds());  //loadInitial Image
     },
 
     onQueryChange(query) {

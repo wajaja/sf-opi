@@ -24,8 +24,6 @@ export default class Container extends PureComponent {
 
 	    this.state = {
 			selectedCard: {},
-			selectedCardId: 0,
-			draggedCardId: {},
 			insertIndex: -1,
 			cards: props.cards
 	    };
@@ -197,7 +195,8 @@ export default class Container extends PureComponent {
 	                    editorStates={this.props.editorStates}
 	                   	imageFilter={this.props.filter}
 	                    onMove={this.onCardMove}
-	                    updateCardData={this.props.updateCardData}
+	                    cardId={this.props.selectedCardId}
+	                    updateCard={this.props.updateCard}
 	                    onDragStart={this.onCardDragStart}
 	                    onDragComplete={this.onCardDragComplete}
 	                    updateCardSize={this.props.updateCardSize}
