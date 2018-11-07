@@ -7,10 +7,11 @@ export const setFilter = (filter) => ({
   filter
 });
 
-export const selectImage = (image) => ({
-  type: 'SELECT_IMAGE',
-  image
-});
+// export const selectImage = (image) => ({
+//   type: 'SELECT_IMAGE',
+//   image,
+  
+// });
 
 export const setSize = (size) => ({
   type: 'SET_SIZE',
@@ -69,6 +70,42 @@ export const loadBackgrounds = () => ({
     type: 'LOAD_BACKGROUNDS'
 })
 
+export const UPDATE_CARD = 'MEETYOU::UPDATE_CARDS'
+
+export function updateCard(card, pageId) {
+    return { type: UPDATE_CARD, card, pageId} 
+}
+
+export const UPDATE_CARD_POS = 'MEETYOU::UPDATE_CARD_POS'
+
+export function updateCardPos(cardId, pageId, position) {
+    return { type: UPDATE_CARD_POS, cardId, pageId, position} 
+}
+
+export const UPDATE_CARD_SIZE = 'MEETYOU::UPDATE_CARD_SIZE'
+
+export function updateCardSize(cardId, pageId, size) {
+    return { type: UPDATE_CARD_SIZE, cardId, pageId, size} 
+}
+
+
+export const MOVE_ZINDEX = 'MEETYOU::MOVE_ZINDEX'
+
+export function onMoveZindex(card, pageId, val) {
+    return { type: MOVE_ZINDEX, card, pageId, val} 
+}
+
+export const ADD_CARD = 'MEETYOU::ADD_CARD'
+
+export function addCard(card, pageId) {
+    return { type: ADD_CARD, card, pageId} 
+}
+
+export const REMOVE_CARD = 'MEETYOU::REMOVE_CARD'
+
+export function removeCard(card, pageId) {
+    return { type: REMOVE_CARD, card, pageId} 
+}
 
 export const UPDATE_SENDERS = 'MEETYOU::UPDATE_SENDERS'
 

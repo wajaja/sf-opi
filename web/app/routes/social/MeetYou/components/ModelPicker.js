@@ -16,9 +16,9 @@ export default createReactClass({
     }
   },
 
-  componentDidMount() {
-      this.props.onLoadBackgrounds();
-  },
+  // componentDidMount() {
+  //     this.props.onLoadBackgrounds();
+  // },
 
   handleSelect(image) {
     this.props.onSelect && this.props.onSelect(image);

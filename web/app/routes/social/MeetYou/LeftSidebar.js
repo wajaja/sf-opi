@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import {connect} from 'react-redux';
 import  createReactClass from 'create-react-class';
 import {
-    selectImage, searchImages, resetSearch, setQuery, loadBackgrounds
+    selectImage, searchImages, resetSearch, setQuery, loadBackgrounds, addCard
 }                       from '../../../actions/social/MeetYou';
 import { 
     Chat,
@@ -16,6 +16,10 @@ import ShapePicker  from './DnD/ShapePicker'
 import BackgroundPicker from './components/BackgroundPicker'
 import ModelSearch      from './components/ModelSearch'
 import ModelPicker      from './components/ModelPicker'
+import PathPicker       from './components/PathPicker'
+import { SIZES }      from './components/computeImageDimensions'
+
+const svgData = require('./utils/svgImages').default
 
 const LeftSidebar = createReactClass({
 
@@ -28,9 +32,9 @@ const LeftSidebar = createReactClass({
     render() {
         const { 
             access_token, query, availableImages, 
-            selectedImage, pushEditor, onSearch, 
+            selectedImage, pushEditor, onSearch, onSelectVector,
             onSearchReset, onQueryChange, availableBackgrounds, onLoadBackgrounds,
-            leftPanel, onSelectImage, onSelectShape, selectedShape  } = this.props
+            leftPanel, onSelectImage, onSelectShape, selectedShape, onSelectBackground  } = this.props
         return (
             <div className="Sidebar">
                 <Card className={`CardOpt ${leftPanel === 'text' ? ' active' : ''}  `} title="Images">
@@ -44,23 +48,30 @@ const LeftSidebar = createReactClass({
                         <Fragment>
                             <SearchBar
                                 query={query}
+                                type={leftPanel}
                                 onSearch={onSearch}
-                                onSearchReset={onSearchReset} />
+                                onSearchReset={onSearchReset}
+                                onLoadBackgrounds={onLoadBackgrounds} />
                             <ImagePicker
                                 type="image"
                                 images={availableImages}
-                                selected={selectedImage}
                                 onSelect={onSelectImage} />
                         </Fragment>
                     }
-                    {leftPanel === 'background' && 
+                    {leftPanel === 'fill' && 
                         <Fragment>
+                            <SearchBar
+                                query={query}
+                                type={leftPanel}
+                                onSearch={onSearch}
+                                onSearchReset={onSearchReset}
+                                onLoadBackgrounds={onLoadBackgrounds} />
                             <BackgroundPicker
                                 type="background"
                                 onLoadBackgrounds={onLoadBackgrounds}
                                 images={availableBackgrounds}
                                 selected={selectedImage}
-                                onSelect={onSelectImage} />
+                                onSelect={onSelectBackground} />
                         </Fragment>
                     }
                     {leftPanel === 'modele' && 
@@ -81,6 +92,14 @@ const LeftSidebar = createReactClass({
                             <ShapePicker
                                 selected={selectedShape}
                                 onSelect={onSelectShape} />
+                        </Fragment>
+                    }
+                    {leftPanel === 'path' && 
+                        <Fragment>
+                            <PathPicker
+                                datas={svgData}
+                                selected={selectedShape}
+                                handleSelect={onSelectVector} />
                         </Fragment>
                     }
                 </Card>
@@ -124,30 +143,105 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    onSelectImage(image) {
-        dispatch(selectImage(image));
-    },
+const mapDispatchToProps = (dispatch, ownProps) => {
+    let nextId = ownProps.cards.length,
+    selectedPage= ownProps.selectedPage,
+    size = SIZES[ownProps.page.size]; //[300, 400]
+    return {
+        onSelectImage(image) {
+            dispatch(
+                addCard({
+                    x: 20,
+                    y: (size[1] - (160 / 2)), //400 - 160 / 2
+                    width: 200,  //TODO 
+                    height: 160,
+                    size:{
+                        width: undefined,
+                        height: undefined,
+                    },
+                    transparency: 20,
+                    filter: 'editorState',
+                    id: nextId,
+                    type: 'image',  
+                    name: 'image' + nextId,
+                     ...image
+                }, selectedPage)
+            );
+        },
+        /////////
+        onSelectVector(data) {
+            dispatch(
+                addCard({
+                    x: 120,
+                    y: 50, //400 - 160 / 2
+                    id: nextId,
+                    width: 200,  //TODO 
+                    height: 160,
+                    size:{
+                        width: 200,
+                        height: 160,
+                    },
+                    transparency: 20,
+                    filter: 'null',
+                    type: 'vectorImage',  
+                    name: 'vectorImage' + nextId,
+                    data: data
+                }, selectedPage)
+            );
+        },
 
-    onSelectShape(shape) {
-        dispatch(selectShape(shape));
-    },
 
-    onSearch(query) {
-        dispatch(searchImages(query));
-    },
+        onSelectBackground(image) {
+            dispatch(
+                addCard({
+                    x: -20,
+                    y: -50, //(size[1] - (160 / 2)), //400 - 160 / 2
+                    width: 200,  //TODO 
+                    height: size[1],
+                    size:{
+                        width: 200,
+                        height: size[1],
+                    },
+                    transparency: 20,
+                    filter: 'editorState',
+                    id: nextId,
+                    type: 'patternImage',  
+                    name: 'patternImage' + nextId,
+                     ...image
+                }, selectedPage)
+            );
+        },
 
-    onSearchReset() {
-        dispatch(resetSearch());  //loadInitial Image
-    },
+        onSelectShape(shape) {
+            dispatch(
+                addCard({
+                    x: 20,
+                    y: (size[1] - (160 / 2)), //400 - 160 / 2
+                    id: nextId,
+                    type: 'shape',  
+                    name: 'shape' + nextId,
 
-    onLoadBackgrounds() {
-        dispatch(loadBackgrounds());  //loadInitial Image
-    },
+                     ...shape
+                }, selectedPage)
+            );
+        },
 
-    onQueryChange(query) {
-        dispatch(setQuery(query));
+        onSearch(query) {
+            dispatch(searchImages(query));
+        },
+
+        onSearchReset() {
+            dispatch(resetSearch());  //loadInitial Image
+        },
+
+        onLoadBackgrounds() {
+            dispatch(loadBackgrounds());  //loadInitial Image
+        },
+
+        onQueryChange(query) {
+            dispatch(setQuery(query));
+        }
     }
-});
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftSidebar);

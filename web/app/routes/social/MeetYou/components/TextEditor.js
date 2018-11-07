@@ -168,7 +168,7 @@ const TextEditor  = onClickOutside(createReactClass({
 			x: 10,
 			y: 10,
 			width: 200,
-			height: 30,
+			height: 50,
             unique: this.getUniqueForm(),
 			focus: false,
 			initialized: false,
@@ -503,9 +503,12 @@ const TextEditor  = onClickOutside(createReactClass({
 
     //callback from react-rnd
     onResize(e, direction, ref, delta, position){
-        console.log(ref.offsetWidth, ref.style.width);
+        let width = ref.style.width;
+
+        if(width > 500) width = 500;
+
         const size = { 
-         	width: ref.style.width,
+         	width: width,
             height: ref.style.height,
         }
         const changes = {
@@ -514,7 +517,7 @@ const TextEditor  = onClickOutside(createReactClass({
         };
         this.setState(changes);
 
-        this.props.updateCardSize(this.props.selectedCardId, size)
+        //this.props.updateCardSize(this.props.selectedCardId, size)
     },
 
     // handleCurrentFontSizeChange(fontSize) {
@@ -653,24 +656,13 @@ const TextEditor  = onClickOutside(createReactClass({
         this.setState({editorState: state})
     },
 
-    updateCard({node, shapes}) {
-    	this.props.updateCard({
-    		size: { 
-    			width: parseInt(this.state.width), 
-    			height: parseInt(this.state.height) 
-    		},
-    		defaultStyle: {
-	    		fontSize: this.state.defaultFontSize || '12px',
-				lineHeight: this.state.currentLineHeight,
-				fontFamily: this.state.defaultFontFamily || 'Arial',
-				textAlignment: this.state.currentTextAlign,
-				textDirectionality: this.state.currentTextDirectionality
-			},
-    		editorState: this.state.editorState,
-    		background: this.state.editorBackground || 'transparent',
-    		cardId: this.props.selectedCardId, 
+    ///REVIEW
+    updateCard({image, shapes}) {
+        // !!!!!!!!!!!
+    	this.props.updateEditorCard({
+    		cardId: this.props.editedCardId, 
     		type: 'richtext', 
-    		node, 
+    		image, 
     		shapes,
     	})
     	this.setState({
@@ -763,12 +755,13 @@ const TextEditor  = onClickOutside(createReactClass({
 				                    style={{
 				                    	fontSize: '12px',
 										fontFamily: this.state.defaultFontFamily || 'Arial',
-							            background: this.state.editorBackground,
-							            lineHeight: this.state.currentLineHeight + 'px'
+							            background: "#ffffff",
+							            lineHeight: this.state.currentLineHeight + 'px',
+                                        transform: 'unset !important'
 				                    }}
 				                    ref={node => (this.node = node)}
 				                    size={{ width: this.state.width, height: this.state.height }}
-				                    position={{ x: this.state.x, y: this.state.y }}
+				                    position={{ x: 2, y: 2 }}
 				                    onClick={this.focus}
 				                    onResize={this.onResize}>
 					                <Editor 

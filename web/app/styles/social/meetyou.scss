@@ -12,6 +12,10 @@ body {
   background: #eee;
   margin: 0;
 }
+
+.darkClass{
+    background: rgba(0, 0, 0, 0.84) !important;
+}
 .MeetYou{
     .frm-contrib-ctnr{
         right: 10px;
@@ -199,7 +203,7 @@ body {
     background: #000;
 }
 
-.ImagePicker {
+.ImagePicker, .BackgroundPicker{
     width: 100%;
     flex-shrink: 2;
     line-height: 0;
@@ -473,16 +477,15 @@ body {
     position: relative;
     min-height: 70px;
     width: 100%;
-    border: 1px solid #c3cfd6;
-    background: #fff;
-    // margin-top: 10px;
+    border: 1px solid #161617;
+    background: #212323;
     .draftJsEmojiPlugin__emojiSelectPopover__1J1s0{
         bottom: 35px;
         left: 0px;
     }
     .editor-outer {
-        padding: 1px;               //Important cause it will have consequance into generated Card Image
-        border: 1px solid #9db0bf;
+        padding: 13px 3px;    //Important cause it will have consequence into generated RichTextCard Image
+        /*border: 1px solid #9db0bf;*/
     }
     .expandingArea{
       /* min-height: 55px;
@@ -683,6 +686,14 @@ body {
             background: transparent url(http://opinion.com/images/if_pentagon_1597480.png) 50% 50% no-repeat;
             opacity: 0.7;
         }
+
+        .path{
+            width: 26px;
+            height: 26px;
+            background: transparent url(http://opinion.com/images/2203530-48.png) 50% 50% no-repeat;
+            opacity: 0.7;
+            top: 7px;
+        }
     }
     .textColor{
         .ico{
@@ -861,7 +872,7 @@ body {
     }
     .sub-m{
         flex: 0 0 250px;
-        border-right: 1px solid #dee3e6;
+        /*border-right: 1px solid #dee3e6;*/
         position: relative;
         height: 100%;
         .inactive{
@@ -892,9 +903,6 @@ body {
             padding: 13px 15px;
             width: 250px;
         }
-        &:last-child{
-            border-radius: none;
-        }
         .item-top{
             height: 35px;
             display: flex;
@@ -913,6 +921,7 @@ body {
 }
 .work-space{
     position: absolute;
+    /*background: rgba(6, 6, 6, 0.8196078431372549);*/
     width: 100%;
     height: 100vh;
     top: 6px;
@@ -933,22 +942,26 @@ body {
     .page-b{
         position: relative;
         background: #fff;
-        border: 1px solid #b1bdc3;
+        /*border: 1px solid #b1bdc3;*/
         display: inline-block;
     }
 }
 .EditorSurface{
     min-height: 75px;
+    position: relative;
 }
 .EditorMenubar-ctr{
     margin-top: 7px;
     position: relative;
     .HMenu-a{
-        border-top: 1px solid #dee3e6;
+        border-top: 1px solid #424242;
     }
     .sub-m{
         height: 75px;
         padding: 3px;
+        &:last-child{
+            border-left: 1px solid #504f4f;
+        }
     }
     .paragraph{
         .ico{

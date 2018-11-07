@@ -1,9 +1,9 @@
 import React from 'react';
 
-const SIZES = {
-  tall: [400, 600],
+export const SIZES = {
+  tall: [500, 400],
   square: [400, 400],
-  wide: [400, 200]
+  wide: [300, 400]
 };
 
 export default (Component) => {

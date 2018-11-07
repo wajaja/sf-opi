@@ -34,6 +34,7 @@ class ColorPicker extends Component {
 
   handleClickOutside = evt => {
     // ..handling code goes here...
+    console.log('handleClickOutside');
     if(this.state.active)
       this.setState({active: false})
   };

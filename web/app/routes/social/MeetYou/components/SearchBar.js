@@ -16,37 +16,40 @@ export default createReactClass({
     }
   },
 
-  componentDidMount() {
-    this.props.onSearchReset();
-  },
+    componentDidMount() {
+        if(this.props.type === 'image')
+            this.props.onSearchReset();
+        else if(this.props.type === 'background') 
+            this.props.onLoadBackgrounds();
+    },
 
-  search(e) {
-    e.preventDefault();
+    search(e) {
+        e.preventDefault();
 
-    const value = this.state.query;
+        const value = this.state.query;
 
-    if (value && value.length > 0) {
-      this.props.onSearch(value);
-    } else {
-      this.props.onSearchReset();
+        if (this.props.type === 'image' && value && value.length > 0) {
+          this.props.onSearch(value);
+        } else if(this.props.type === 'background') {
+          this.props.onSearchReset();
+        }
+    },
+
+    setQuery(e) {
+        e.preventDefault();
+        const value = e.target.value;
+        this.setState({query: value})
+        //this.props.onQueryChange && this.props.onQueryChange(value);
+    },
+
+    render() {
+        return <form onSubmit={this.search}>
+            <input 
+                type="text" 
+                className="SearchBar" 
+                placeholder="Search images" 
+                onChange={this.setQuery} 
+                value={this.state.query} />
+        </form>;
     }
-  },
-
-  setQuery(e) {
-    e.preventDefault();
-    const value = e.target.value;
-    this.setState({query: value})
-    //this.props.onQueryChange && this.props.onQueryChange(value);
-  },
-
-  render() {
-    return <form onSubmit={this.search}>
-      <input 
-        type="text" 
-        className="SearchBar" 
-        placeholder="Search images" 
-        onChange={this.setQuery} 
-        value={this.state.query} />
-    </form>;
-  }
 });

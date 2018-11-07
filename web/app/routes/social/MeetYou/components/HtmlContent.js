@@ -74,8 +74,8 @@ const HtmlContent  = createReactClass( {
 
 
         let paragraphs = this.parentNode.getElementsByTagName('p');
-            let self = this;
-            let shapes = [];
+        let self = this;
+        let shapes = [];
 
         _.forEach(paragraphs, function(parg, i) {
             let pargChilds = parg.childNodes
@@ -128,15 +128,16 @@ const HtmlContent  = createReactClass( {
                 }
             }
         })
+        self.shapes = shapes;
+        //
+        
 
-        this.props.updateCard({node: this.parentNode, shapes});
-
-        //block test
-        // const size = this.props.size;
-        // this.canvas =  document.createElement('canvas');
-        // this.canvas.width  = size.width;
-        // this.canvas.height = size.height;
-        // this.drawImage(this.props.size);
+        /*block test*/
+        const size = this.props.size;
+        this.canvas =  document.createElement('canvas');
+        this.canvas.width  = size.width;
+        this.canvas.height = size.height;
+        this.drawImage(this.props.size);
     },
 
     drawImage(size){
@@ -177,9 +178,8 @@ const HtmlContent  = createReactClass( {
             this.setState({
                 image: img
             }, () => {
-                console.log('successsss', img);
+                this.props.updateCard({image: img, shapes: self.shapes});
             });
-            console.log('cavavacacacvacavcavcavacvacavac');
             /*Call this method when you've finished 
             * using an object URL to let the browser know not 
             to keep the reference to the file any longer
@@ -254,13 +254,15 @@ const HtmlContent  = createReactClass( {
             <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
                 <style>
                     html, body {
-                        padding:0;
+                        padding: 13px 3px;
                         margin: 0;
                         width: 100%;
                         height: 100%;
                     }
 
                     body {
+                        display: block;
+                        margin: auto;
                         -webkit-font-smoothing: antialiased;
                         -moz-osx-font-smoothing: grayscale;
                         font-size: ${fontSize};
@@ -302,6 +304,7 @@ const HtmlContent  = createReactClass( {
             return (
                 <div 
                     style={{
+                        display: "none",  ///!IMPORTANT
                         width: width + "px", 
                         height: height  + "px",
                         position: 'relative',
@@ -310,13 +313,6 @@ const HtmlContent  = createReactClass( {
                     }}
                     className="HtmlContent">
                     <div ref={(el) => this.parentNode = el} dangerouslySetInnerHTML={{ __html: html }}/>
-                    <canvas
-                        id="canvas"
-                        width={width} 
-                        height={height}
-                        style={{cursor:" pointer"}}
-                        ref={ref => (this.canvas = ref)}
-                      />
                 </div>
             )
 
@@ -325,3 +321,10 @@ const HtmlContent  = createReactClass( {
 })
 
 export default HtmlContent
+                    // <canvas
+                    //     id="canvas"
+                    //     width={width} 
+                    //     height={height}
+                    //     style={{cursor:" pointer"}}
+                    //     ref={ref => (this.canvas = ref)}
+                    //   />

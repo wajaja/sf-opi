@@ -12,6 +12,7 @@ import SizePicker           from './components/SizePicker';
 import DownloadButton       from './components/DownloadButton';
 import Foot                 from './Foot'
 import HMenu                from './HMenu'
+import PathColors           from './DnD/PathColors'
 
 class EditMenu extends React.Component {
 
@@ -69,18 +70,29 @@ class EditMenu extends React.Component {
                                         className="ico shape"
                                         onClick={() => this.props.switchLefSide('shape')}></div>
                                 </li>
+                                <li className="item">
+                                    <div 
+                                        className="ico path"
+                                        onClick={() => this.props.switchLefSide('path')}></div>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div className="Menubar-ctr top">
                         <HMenu 
                             {...this.props}
+                            selectedCard={selectedCard}
                             toggleTextAlign={this.props.toggleTextAlign}
                             currentTransparency={this.props.currentTransparency}
                             imageFilter={this.props.imageFilter}
                             translate={this.state.translateX} 
                             activeType={activeType}
                             editorRef={this.props.editorRef}
+                            />
+                        <PathColors
+                            {...this.props}
+                            selectedCard={selectedCard}
+                            setVectorImageColor={this.props.setVectorImageColor}
                             />
                     </div>
                     <div className="Menubar-rght">

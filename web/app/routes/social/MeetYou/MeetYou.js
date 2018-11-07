@@ -26,22 +26,22 @@ import MyLoadable    from '../../../components/MyLoadable'
 const EditMenu = MyLoadable({loader: () => import('./EditMenu')})
 // WorkSpace = MyLoadable({loader: () => import('./WorkSpace')})
 
+const compositeDecorator = new MultiDecorator([
+    new CompositeDecorator([
+        {
+            strategy: DraftFuncs.handleStrategy,
+            component: DraftFuncs.HandleSpan,
+        },
+        {
+            strategy: DraftFuncs.hashtagStrategy,
+            component: DraftFuncs.HashtagSpan,
+        },
+    ])
+])
 
 const MeetYou = createReactClass({
     getInitialState() {
 
-        const compositeDecorator = new MultiDecorator([
-            new CompositeDecorator([
-                {
-                    strategy: DraftFuncs.handleStrategy,
-                    component: DraftFuncs.HandleSpan,
-                },
-                {
-                    strategy: DraftFuncs.hashtagStrategy,
-                    component: DraftFuncs.HashtagSpan,
-                },
-            ])
-        ])
 
         this.customStylesUtils = () => {};
 
@@ -63,13 +63,16 @@ const MeetYou = createReactClass({
             editorState: EditorState.createEmpty(compositeDecorator),
 
             editorFocus: false,
+            selectedCard: null,
             selectedCardId: 0,
             // editorState: getEditorStateFromLS(),
             editorBackground: '#ffffff',
             editorRef: null,
             currentColor: '#000000',
-            selectedPage: 1,
+            selectedPage: 0,
             editing: true,
+            editedCardId: null,
+            isEditing: false,
         }
     },
 
@@ -95,17 +98,13 @@ const MeetYou = createReactClass({
         this.setState({ editorRef: ref });
     },
 
-    // componentDidMount() {
-    //     document
-    //       .querySelector('body')
-    //       .addEventListener('keydown', this.closeModalOnEscape);
-    // }
+    componentDidMount() {
+        document.body.classList.add('darkClass')
+    },
 
-    // componentWillUnmount() {
-    //     document
-    //       .querySelector('body')
-    //       .removeEventListener('keydown', this.closeModalOnEscape);
-    // }
+    componentWillUnmount() {
+        document.body.classList.remove('darkClass')
+    },
 
     // closeModalOnEscape = e => {
     //     if (e.keyCode === 27 && this.state.isModal) {
@@ -156,6 +155,71 @@ const MeetYou = createReactClass({
     },
 
     pushEditor(type) {
+        const { pages } = this.props,
+        { selectedPage, editorState, isEditing } = this.state;
+
+        if(isEditing && !editorState.getCurrentContent().hasText())
+            return
+
+        //
+        if(isEditing && editorState.getCurrentContent().hasText()) {
+            const editedCardId = this.state.editedCardId;
+            const card = pages[selectedPage].cards.filter(item => item.id === editedCardId)[0];
+            console.log('exist', card)
+            this.updateCard(card, this.props.selectedPage);
+            // return
+        }
+
+        const page = pages[selectedPage];
+        const cardId = page.cards.length;
+        this.setState({
+            isEditing: true,
+            editedCardId: cardId,
+            editorState: editorState
+        }, () => {
+            const _card = {
+                x: 120,
+                y: 130,
+                id: cardId,
+                url: null,
+                type: type,
+                size: {width: 80, height: 80},
+                node: null,
+                width: 80,
+                height: 80,
+                image: null,
+                shapes: [],
+                name: type + cardId,
+                background: this.state.background,
+                defaultStyle: this.state.defaultStyle,
+                editorState: EditorState.createEmpty(compositeDecorator),
+            }
+
+            // const nextCards = List([_card]).concat(fromJS(cards));
+            this.props.addCard(_card, selectedPage);
+        })
+    },
+
+    editRichText(cardId, editorState){
+
+        this.setState({
+            isEditing: true,
+            editedCardId: cardId,
+            editorState: editorState
+        })
+    },
+
+    // updateRichText(cardId, editorState){
+
+    //     this.setState({
+    //         isEditing: false,
+    //         editedCardId: null,
+    //     })
+
+    //     this.updateCard();
+    // },
+
+    addCard(type) {
         const { selectedPage, cards } = this.state;
         console.log("pushedType", type, cards);
         const _card = {
@@ -174,46 +238,93 @@ const MeetYou = createReactClass({
     },
 
     //changes => {width: ref.style.width, height: ref.style.height, ...position}
-    updateCardSize(cardId, size) {
-        const arr = fromJS(this.state.cards);
-        const index = arr.findIndex(c => c.id === cardId)
-        if(!index) {
-            const card = { 
-                id: cardId,
-                type: "type", //TODO arbitratary
-                size: size,
-            }
-            let newArray = this.state.cards.slice()
-            newArray.splice(0, 0, card) // inserts at 1st index position, remove 0
-            this.setState({cards: newArray })
-        } else {
-            const newArr = arr.update(index, item => Object.assign({}, item, {size: size}))
-            this.setState({cards: newArr.toJS()});
-        }
+    updateCardSize(cardId, changes) {
+        console.log(cardId, changes)
+        // const arr = fromJS(this.state.cards);
+        // const index = arr.findIndex(c => c.id === cardId)
+        // if(!index) {
+        //     const card = { 
+        //         id: cardId,
+        //         type: "type", //TODO arbitratary
+        //         size: size,
+        //     }
+        //     let newArray = this.state.cards.slice()
+        //     newArray.splice(0, 0, card) // inserts at 1st index position, remove 0
+        //     this.setState({cards: newArray })
+        // } else {
+        //     const newArr = arr.update(index, item => Object.assign({}, item, {size: size}))
+        //     this.setState({cards: newArr.toJS()});
+        // }
+        this.props.updateCardSize(cardId, this.state.selectedPage, changes);
+    },
+
+    //changes => {width: ref.style.width, height: ref.style.height, ...position}
+    updateCardPos(cardId, position) {
+        // const arr = fromJS(this.state.cards);
+        // const index = arr.findIndex(c => c.id === cardId)
+        // if(!index) {
+        //     const card = { 
+        //         id: cardId,
+        //         type: "type", //TODO arbitratary
+        //         size: size,
+        //     }
+        //     let newArray = this.state.cards.slice()
+        //     newArray.splice(0, 0, card) // inserts at 1st index position, remove 0
+        //     this.setState({cards: newArray })
+        // } else {
+        //     const newArr = arr.update(index, item => Object.assign({}, item, {size: size}))
+        //     this.setState({cards: newArr.toJS()});
+        // }
+        this.props.updateCardPos(cardId, this.state.selectedPage, position)
     },
 
     //changes => {textArr, }
-    updateCard({cardId, type, node, size, shapes, editorState, background, defaultStyle}) {
-        const card = {
-            id: cardId,
-            type: type,
-            size: size,
-            node: node,
-            shapes: shapes,
-            background: background,
-            editorState: editorState,
-            defaultStyle: defaultStyle
+    updateEditorCard({cardId, shapes, type, image}) {
+        const pageId = this.state.selectedPage,
+        pages = fromJS(this.props.pages);
+        const item = pages.get(pageId).get('cards')
+                    .filter(item => item.get('id') === cardId)
+                    .get(0)
+                    .merge({shapes, image})
+                    .toJS();
+        console.log(item);
+
+
+        // const card = {
+        //     x: x,
+        //     y: y,
+        //     id: cardId,
+        //     url: url,
+        //     type: type,
+        //     size: size,
+        //     node: node,
+        //     width: width,
+        //     height: height,
+        //     shapes: shapes,
+        //     name: type + cardId,
+        //     background: background,
+        //     editorState: editorState,
+        //     defaultStyle: defaultStyle
+        // }
+
+        if(type === 'richtext') {
+            this.setState({
+                isEditing: false,
+                editedCardId: null
+            })
         }
-        const arr = fromJS(this.state.cards);
-        const index = arr.findIndex(c => c.id === cardId)
-        if(!index) {
-            let newArray = this.state.cards.slice()
-            newArray.splice(0, 0, card) // inserts at 1st index position, remove 0
-            this.setState({cards: newArray })
-        } else {
-            const newArr = arr.update(index, item => Object.assign({}, item, {...card}))
-            this.setState({cards: newArr.toJS()});
-        }
+        // const arr = fromJS(this.state.cards);
+        // const index = arr.findIndex(c => c.id === cardId)
+        // if(!index) {
+        //     let newArray = this.state.cards.slice()
+        //     newArray.splice(0, 0, card) // inserts at 1st index position, remove 0
+        //     this.setState({cards: newArray })
+        // } else {
+        //     const newArr = arr.update(index, item => Object.assign({}, item, {...card}))
+        //     this.setState({cards: newArr.toJS()});
+        // }
+        //action creator
+        this.props.updateCard(item, pageId);
     },
 
     toggleTextAlign(align) {
@@ -247,11 +358,18 @@ const MeetYou = createReactClass({
     },
 
     onMoveZindex(val) {
-        console.log('onMoveZindex', val);
-        const selectedCardId = this.state.selectedCardId
-
-        const selectedCard = this.state.cards[selectedCardId];
         //always redraw layer
+        const page = this.props.pages[this.state.selectedPage];
+        let card = page.cards.filter(item => item.id === this.state.selectedCardId)[0];
+        this.props.onMoveZindex(card, this.state.selectedPage, val)
+    },
+
+    updateSelectedShape(card) {
+        this.setState({selectedCard: card})
+    },
+
+    setVectorImageColor({selectedCard, childOrder, color}){
+        console.log('setVectorImageColor....', selectedCard, childOrder, color)
     },
 
     render() {
@@ -268,21 +386,25 @@ const MeetYou = createReactClass({
             currentItalicState,
             currentBoldState,
             currentFontSize,
-            currentFontFamily
+            currentFontFamily,
+            selectedPage
         } = this.state;
 
         const {
             switchColorHandle,
             handleCurrentColorChange,
             setEditorRef,
+            pages
         } = this.props;
-
+        console.log(pages);
+        const page = pages[selectedPage];
 
         return (
             <div className="MeetYou Container">
                 <EditMenu 
                     {...this.props}
                     {...this.state} 
+                    cards={page.cards}
                     selectedCard={this.state.selectedCard}
                     editing={this.state.editing}
                     onMoveZindex={this.onMoveZindex}
@@ -312,6 +434,7 @@ const MeetYou = createReactClass({
                     updateCurrentTransparancy={this.updateCurrentTransparancy}
                     onToggleDefaultInlineStyles={this.onToggleDefaultInlineStyles}
 
+                    selectedCard={this.state.selectedCard}
                     selectedCardId={this.state.selectedCardId}
                     filter={this.state.filter}
                     saveCroppedImage={this.props.saveCroppedImage}
@@ -323,8 +446,11 @@ const MeetYou = createReactClass({
                     openAdminSender={this.openAdminSender}
                     createPost={this.createPost}
                     download={this.download}
+                    setVectorImageColor={this.setVectorImageColor}
                     />
                 <LeftSidebar
+                    page={page}
+                    cards={page.cards}
                     user={this.props.user}
                     history={this.props.history}
                     dispatch={this.props.dispatch}
@@ -332,6 +458,7 @@ const MeetYou = createReactClass({
                     auth_data={this.props.auth_data}
                     pushEditor={this.pushEditor}
                     onMoveZindex={this.onMoveZindex}
+                    selectedPage={this.state.selectedPage}
                     access_token={this.props.access_token}
                     getImageFromCache={this.props.getImageFromCache}
                     changeView={this.props.changeView}
@@ -353,7 +480,8 @@ const MeetYou = createReactClass({
                         <WorkSpace 
                             {...this.props}  
 
-                            cards={this.state.cards}
+                            //cards={this.state.cards}
+                            cards={page.cards}
                             editing={this.state.editing}
                             currentTextAlign={this.state.currentTextAlign}
                             currentFilter={this.props.filter}
@@ -367,7 +495,7 @@ const MeetYou = createReactClass({
                             currentUnderlineState={this.state.currentUnderlineState}
                             // switchColorHandle={switchColorHandle}
                             updateCardSize={this.updateCardSize}
-                            updateCard={this.updateCard}
+                            updateEditorCard={this.updateEditorCard}
                             setCurrentFontSize={this.setCurrentFontSize}
                             hasEditorFocus={editorFocus}
                             setEditorFocus={this.setEditorFocus}
@@ -393,9 +521,18 @@ const MeetYou = createReactClass({
                             currentFontSize={this.state.currentFontSize}
                             handleCurrentColorChange={this.handleCurrentColorChange}
 
+                            updateCardPos={this.updateCardPos}
+                            updateCardSize={this.updateCardSize}
+
                             setCropperRef={this.setCropperRef}
                             onCardSelectionChange={this.onCardSelectionChange}
                             onToggleDefaultInlineStyles={this.onToggleDefaultInlineStyles}
+
+                            isEditing={this.state.isEditing}
+                            editedCardId={this.state.editedCardId}
+                            editRichText={this.editRichText}
+                            updateRichText={this.updateRichText}
+                            updateSelectedShape={this.updateSelectedShape}
                             />
                     </div>
                 </div>
@@ -416,12 +553,13 @@ const mapStateToProps = (state, ownProps) => {
     const meetYou = state.MeetYou.present;
     return {
         user: state.User.user,
+        pages: meetYou.pages,
         filter: meetYou.filter,
         admin: state.User.user,
         senders: meetYou.senders,
         receivers: meetYou.receivers,
         textAttrs: meetYou.textAttrs,
-        availableImages: meetYou.availableImages
+        availableImages: meetYou.availableImages,
     }
 };
 

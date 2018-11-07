@@ -66,24 +66,15 @@ class HMenu extends Component {
 
   render() {
     const {
-      activeType,
-      currentCodeState,
-      currentColor,
-      currentFontFamily,
-      currentFontSize,
-      currentBoldState,
-      currentItalicState,
-      currentUnderlineState,
+      selectedCard,
       onToggleDefaultInlineStyles
     } = this.props;
 
-    let actives = activeType === 'edittext' ? ['police', 'paragraph'] : ['image'];
-    let nextPossible = true;
-    let lastPossible = true;
-    let cardActive = true;
+    let nextPossible = true; // relative to undo/redo
+    let lastPossible = true; // relative to undo/redo
+    const cardActive = !!selectedCard;
+    const imageActive = selectedCard && (selectedCard.type === 'image' || selectedCard.type === 'vectorImage')
 
-    // const { name, items } = el;
-    // let active  = actives.includes(name);
     return (
         <div className="HMenu">
             <div className="translate-lft-btn">
@@ -117,11 +108,12 @@ class HMenu extends Component {
                         </li>                        
                     </ul>
                 </div>
-                <div className={`sub-m image ${actives.includes("image") ? " active" : ""}`}>
+                <div className={`sub-m image ${imageActive ? " active" : ""}`}>
                     <ul className="sub-menub-lst">
                         <li className="item">
                             <div className="filter" data-title="filter">
                                 <FiltersPicker 
+                                    selectedCard={selectedCard}
                                     filter={this.props.filter} 
                                     onFilterChange={this.props.onFilterChange}
                                     />
@@ -130,7 +122,7 @@ class HMenu extends Component {
                         <li className="item">
                             <div className="crop" data-title="crop">
                                 <CropButton 
-                                    selectedCard={this.props.selectedCard}
+                                    selectedCard={selectedCard}
                                     selectedCardId={this.props.selectedCardId}
                                     saveCroppedImage={this.props.saveCroppedImage}
                                     rotateLeft={this.props.rotateLeft}
@@ -140,13 +132,17 @@ class HMenu extends Component {
                         <li className="item">
                             <div className="transparency" data-title="transparency">
                                 <Transparence
+                                    selectedCard={selectedCard}
                                     currentTransparency={this.props.currentTransparency}
                                     updateCurrentTransparancy={this.props.updateCurrentTransparancy}
                                     />
                             </div>
                         </li>
                     </ul>
-                    {!!actives.includes("image") && <div className="inactive"></div>}
+                    {!!selectedCard && 
+                      (selectedCard.type === "image" || selectedCard.type === "vectorImage") && 
+                      <div className="inactive"></div>
+                    }
                 </div>
             </div>
             <div className="translate-rght-btn">

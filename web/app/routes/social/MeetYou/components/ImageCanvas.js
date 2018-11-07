@@ -1,7 +1,7 @@
 import React              from 'react';
 import createReactClass   from 'create-react-class'
 import Konva              from 'konva';
-import { Stage, Layer, Transformer }   from 'react-konva'
+import { Stage, Layer, Transformer, Shape, Circle, Rect, Ellipse, Star }   from 'react-konva'
 import {
     Canvas, CanvasRect, 
     CanvasFilter, CanvasText, 
@@ -12,12 +12,12 @@ import {
 }                         from '../utils/pixels';
 import Spinner            from './Spinner';
 import TextBox            from './TextBox';
-import computeDimensions  from './computeImageDimensions';
 import loadImage          from './loadImage';
 import textEditor         from '../utils/textEditor';
 import PatternImage       from './PatternImage'
 import RichTextCard       from './RichTextCard'
-
+import CustomShape        from './CustomShape'
+import VectorImage        from './VectorImage'
 //const makeBlue = (alpha) => `rgba(87, 205, 255, ${alpha})`;
 
 // const FILTERS = {
@@ -28,35 +28,55 @@ import RichTextCard       from './RichTextCard'
 // };
 
 
-class Handler extends React.Component {
-    componentDidMount() {
-        this.checkNode();
+
+
+
+class TransformerComponent extends React.Component {
+  componentDidMount() {
+    this.checkNode();
+  }
+  componentDidUpdate() {
+    this.checkNode();
+  }
+  checkNode() {
+    // here we need to manually attach or detach Transformer node
+    const stage = this.transformer.getStage();
+    const { selectedShapeName } = this.props;
+
+    const selectedNode = stage.findOne('.' + selectedShapeName);
+    // do nothing if selected node is already attached
+    if (selectedNode === this.transformer.node()) {
+      return;
     }
 
-    componentDidUpdate() {
-        this.checkNode();
+    if (selectedNode) {
+      // attach to another node
+      this.transformer.attachTo(selectedNode);
+    } else {
+      // remove transformer
+      this.transformer.detach();
     }
-
-    checkNode() {
-        const stage = this.transformer.getStage();
-        const { selectedShapeName } = this.props;
-        const selectedNode = stage.findOne("." + selectedShapeName);
-        if (selectedNode) {
-            this.transformer.attachTo(selectedNode);
-        } else {
-            this.transformer.detach();
-        }
-        this.transformer.getLayer().batchDraw();
-    }
-    render() {
-        return (
-            <Transformer
-                ref={node => {
-                    this.transformer = node;
-                }}
-            />
-        );
-    }
+    this.transformer.getLayer().batchDraw();
+  }
+  render() {
+    const { selectedShapeName, selectedType } = this.props
+    return (
+        <Transformer
+            ref={node => {
+                this.transformer = node;
+            }}
+            anchorStroke='#d8e3ec' //#0e161d
+            anchorFill='transparent'
+            anchorSize={12}     //12
+            borderStroke='#0e161d' //#0e161d
+            centeredScaling={selectedType === `patternImage`}
+            anchorStrokeWidth={1}
+            borderStrokeWidth={.2}
+            rotateAnchorOffset={20}
+            resizeEnabled={selectedType !== 'richtext'} //disable resize on richtext
+        />
+    );
+  }
 }
 
 ////////////
@@ -130,11 +150,38 @@ const ImageCanvas = createReactClass({
         this.props.updateTextArr(textArr);
     },
 
-    handleStageClick(e){
-        console.log('handleStageClick');
-        this.setState({
-            selectedShapeName: e.target.name()
-        });
+    handleStageMouseDown(e){
+        // clicked on stage - cler selection
+        console.log('handleStageMouseDown');
+        if (e.target === e.target.getStage()) {
+            this.setState({
+                selectedShapeName: ''
+            });
+            this.props.updateSelectedShape(null)
+            return;
+        }
+        // clicked on transformer - do nothing
+        const clickedOnTransformer = e.target.getParent().className === 'Transformer';
+        if (clickedOnTransformer) {
+            return;
+        }
+
+        // find clicked rect by its name
+        const name = e.target.name();
+        const rect = this.props.cards.find(r => r.name === name);
+        if (rect) {
+          this.setState({
+            selectedShapeName: name,
+            selectedType: rect.type
+          });
+          this.props.updateSelectedShape(rect)
+        } else {
+          this.setState({
+            selectedShapeName: '',
+            selectedType: ''
+          });
+          this.props.updateSelectedShape(null)
+        }
     },
 
     render() {
@@ -148,43 +195,116 @@ const ImageCanvas = createReactClass({
         if(!this.props.cards.length) {
             return <div />
         }
-
-        console.log(this.props.cards[0]);
-        const { background, node, editorState, size, x, y, id, type, shapes, defaultStyle } = this.props.cards[0];
         ///allways call redraw function
         return(
             <Stage
-                width={canvasWidth}
-                height={canvasHeight}
-                onClick={this.handleStageClick}>
+                width={canvasWidth}  // + 200
+                height={canvasHeight} // + 200
+                onMouseDown={this.handleStageMouseDown}>
                 <Layer
                     x={0}
                     y={0}
                     width={canvasWidth}
                     height={canvasHeight}>
-                    {type === 'richtext' && 
-                        <RichTextCard
-                            x={x}
-                            y={y}
-                            id={id}
-                            size={size}
-                            node={node}
-                            type="richtext"
-                            shapes={shapes}
-                            background={background}
-                            editorState={editorState}
-                            defaultStyle={defaultStyle}
-                            editing={this.props.editing}
-                            selectedCardId={this.props.selectedCardId}
-                            moveRect={this.props.onTextRectMove.bind(this)}
-                            textAttrs={this.props.body.textAttrs}
-                            isEditing={this.props.editedCard === 0} />
-                    }
-                    {type === 'patternImage' && 
-                        <PatternImage
-                             />
-                    }
-                    <Handler selectedShapeName={this.state.selectedShapeName} />          
+                    {this.props.cards.map && this.props.cards.map((card, i) => {
+                        console.log('iterate ....', i)
+                        if(card.type === 'image') 
+                            return <CanvasImage 
+                                      key={i}
+                                      // image={card}
+                                      id={card.id}
+                                      url={card.url}
+                                      tags={card.tags}
+                                      size={card.size}
+                                      type={card.type}
+                                      name={card.name}
+                                      width={card.width}
+                                      height={card.height}
+                                      filter={card.filter}
+                                      updateCardPos={this.props.updateCardPos}
+                                      updateCardSize={this.props.updateCardSize}
+                                      onMouseDown={this.handleClickOnImage} />
+
+                        else if(card.type === 'richtext')
+                            return <RichTextCard
+                                        key={i}
+                                        x={card.x}
+                                        y={card.y}
+                                        id={card.id}
+                                        type="richtext"
+                                        size={card.size}
+                                        node={card.node}
+                                        image={card.image}
+                                        name={card.type + card.id} //richtext1
+                                        shapes={card.shapes}
+                                        editing={this.props.editing}
+                                        background={card.background}
+                                        editorState={card.editorState}
+                                        defaultStyle={card.defaultStyle}
+                                        textAttrs={this.props.body.textAttrs}
+                                        editRichText={this.props.editRichText}
+                                        updateCardPos={this.props.updateCardPos}
+                                        updateCardSize={this.props.updateCardSize}
+                                        selectedCardId={this.props.selectedCardId}
+                                        moveRect={this.props.onTextRectMove.bind(this)}
+                                        isEditing={this.props.editedCardId === card.id} />
+
+                        else if(card.type === 'patternImage')
+                            return <PatternImage
+                                        key={i}
+                                        x={card.x}
+                                        y={card.y}
+                                        id={card.id}
+                                        url={card.url}
+                                        tags={card.tags}
+                                        size={card.size}
+                                        type={card.type}
+                                        name={card.name}
+                                        width={card.width}
+                                        height={card.height}
+                                        filter={card.filter}
+                                        onMouseDown={this.handleClickOnImage}
+                                        updateCardPos={this.props.updateCardPos}
+                                        updateCardSize={this.props.updateCardSize}
+                                        />
+                        else if(card.type === 'shape')
+                            return <CustomShape
+                                        key={i}
+                                        x={card.x}
+                                        y={card.y}
+                                        id={card.id}
+                                        type={card.type}
+                                        name={card.name}
+                                        width={card.width}
+                                        height={card.height}
+                                        filter={card.filter}
+                                        //onMouseDown={this.handleClickOnImage}
+                                        updateCardPos={this.props.updateCardPos}
+                                        updateCardSize={this.props.updateCardSize}
+                                        {...card}
+                                        />
+                        else if(card.type === 'vectorImage')
+                            return <VectorImage
+                                        key={i}
+                                        x={card.x}
+                                        y={card.y}
+                                        id={card.id}
+                                        type={card.type}
+                                        name={card.name}
+                                        width={card.width}
+                                        height={card.height}
+                                        filter={card.filter}
+                                        originalData={card.data}
+                                        childs={card.data.childs}
+                                        viewBox={card.data.attrs.viewBox}
+                                        //onMouseDown={this.handleClickOnImage}
+                                        updateCardPos={this.props.updateCardPos}
+                                        updateCardSize={this.props.updateCardSize}
+                                        />
+                    })}
+                    <TransformerComponent 
+                        selectedShapeName={this.state.selectedShapeName}
+                        selectedType={this.state.selectedType} />          
                 </Layer>
             </Stage>
         )
@@ -192,45 +312,3 @@ const ImageCanvas = createReactClass({
 });
 
 export default ImageCanvas;
-// <Filter name={filter} frame={mainFrame} />
-// {this.props.cards.map && this.props.cards.map((card, i) => {
-// if(card.type === 'image') 
-//     return <CanvasImage 
-//               image={card}
-//               onMouseDown={this.handleClickOnImage} />
-// else if(card.type === 'text')
-//     return <CanvasText
-//               ref="bodyBox"
-//               part="body"
-//               cancelEditing={this.props.onCancelEdit}
-//               setEditing={this.props.onEdit}
-//               setFocus={this.props.onFocus.bind(this, 'body')}
-//               moveRect={this.props.onTextRectMove.bind(this)}
-//               textAttrs={this.props.body.textAttrs}
-//               textArr={card.textArr}
-//               text={this.props.body.text}
-//               selection={this.getCursors()}
-//               onAreaSelection={(start, end) => { this.textEditor.setSelection(start, end, this.refs.txt); this.forceUpdate(); }}
-//               onSetCursor={(pos) => { this.textEditor.setCursor(pos, this.refs.txt); this.forceUpdate(); }}
-//               onEditEnter={() => this.refs.txt.focus()}
-//               focusedPart={this.props.isFocused}
-//               isEditing={this.props.isEditing} />
-// })}  
-// else if(card.type === 'edittext' && this.props.saved === true)
-//     return <TextBox
-//               ref="bodyBox"
-//               part="body"
-//               cancelEditing={this.props.onCancelEdit}
-//               setEditing={this.props.onEdit}
-//               setFocus={this.props.onFocus.bind(this, 'body')}
-//               moveRect={this.props.onTextRectMove.bind(this)}
-//               textAttrs={this.props.body.textAttrs}
-//               textArr={card.textArr}
-//               text={this.props.body.text}
-//               selection={this.getCursors()}
-//               onAreaSelection={(start, end) => { this.textEditor.setSelection(start, end, this.refs.txt); this.forceUpdate(); }}
-//               onSetCursor={(pos) => { this.textEditor.setCursor(pos, this.refs.txt); this.forceUpdate(); }}
-//               onEditEnter={() => this.refs.txt.focus()}
-//               focusedPart={this.props.isFocused}
-//               isEditing={this.props.isEditing} />
-// })}  

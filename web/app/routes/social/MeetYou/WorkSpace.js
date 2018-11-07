@@ -3,9 +3,7 @@ import createReactClass    from 'create-react-class'
 import Spinner             from './components/Spinner';
 import computeDimensions   from './components/computeImageDimensions';
 import ImageCanvas          from './components/ImageCanvas';
-import DropContainer        from './DnD/Container'
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import Container        from './DnD/Container'
 import { fromJS }       from 'immutable'
 import { connect }          from 'react-redux'
 
@@ -108,7 +106,6 @@ const _Page = createReactClass({
                       filter={this.props.filter}
                       size={this.props.size}
                       isFocused={this.props.isFocused}
-                      isEditing={this.props.isEditing}
                       onFocus={this.props.onFocus}
                       onEdit={this.props.onEdit}
                       textArr={this.props.textArr}
@@ -117,7 +114,15 @@ const _Page = createReactClass({
                       onCancelEdit={this.props.onCancelEdit}
                       onTextRectMove={this.props.onTextRectMove}
                       onRedraw={this.props.onRedraw}
-                      onTextChange={this.props.onTextChange} />
+                      isEditing={this.props.isEditing}
+                      editedCardId={this.props.editedCardId}
+                      editRichText={this.props.editRichText}
+                      updateRichText={this.props.updateRichText}
+                      onTextChange={this.props.onTextChange} 
+                      updateCardPos={this.props.updateCardPos}
+                      // updateCardSize={this.props.updateCardSize}
+                      updateSelectedShape={this.props.updateSelectedShape}
+                      />
                 </div>
             </Fragment>
         )
@@ -173,9 +178,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 
-const Page = DragDropContext(HTML5Backend)(
-    connect(mapStateToProps, mapDispatchToProps)(computeDimensions(_Page))
-);
+const Page = connect(mapStateToProps, mapDispatchToProps)(computeDimensions(_Page))
+
 
 /////
 class WorkSpace extends React.Component {
@@ -227,14 +231,25 @@ class WorkSpace extends React.Component {
                                     currentItalicState={this.props.currentItalicState}
                                     currentBoldState={this.props.currentBoldState}
                                     currentFontSize={this.props.currentFontSize}
+
+                                    updateCardPos={this.props.updateCardPos}
+                                    updateCardSize={this.props.updateCardSize}
+
+                                    isEditing={this.props.isEditing}
+                                    editedCardId={this.props.editedCardId}
+                                    editRichText={this.props.editRichText}
+                                    updateRichText={this.props.updateRichText}
+                                    updateSelectedShape={this.props.updateSelectedShape}
                                     />
                             </div>
                         </Fragment>
                     )
                 })}
+                ////////////
                 {!!this.props.editing && 
-                    <DropContainer
+                    <Container
                         {...this.props}
+                        editedCardId={this.props.editedCardId}
                         pageId={this.props.pageId}
                         filter={this.props.filter}
                         images={this.props.images}
@@ -243,7 +258,7 @@ class WorkSpace extends React.Component {
                         zoneHeight={500}
                         moveImage={this.props.moveImage}
                         onCardSelectionChange={this.props.onCardSelectionChange }
-                        updateCardSize={this.props.updateCardSize}
+                        updateEditorCard={this.props.updateEditorCard}
                         textEditors={this.props.textEditors}
                         setCurrentBoldState={this.props.setCurrentBoldState}
                         setCurrentItalicState={this.props.setCurrentItalicState}

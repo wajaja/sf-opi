@@ -6,7 +6,17 @@ import { Stage, Layer, Shape, Circle, Rect, Ellipse, Star } from 'react-konva';
 class ShapePicker extends Component {
 
     handleSelect = (val) => {
-        this.props.handleSelect && this.props.handleSelect(val);
+        let c = {}  
+        if(val === 'rect')
+            c = { cName: "Rect", width: 70, height: 70, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
+        else if(val === 'circle')
+            c = { cName: "Circle", radius: 70, width: 70, height: 70, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
+        else if(val === 'ellipse')
+            c = { cName: "Ellipse", radius: {x: 50, y: 65}, width: 70, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
+        else if(val === 'star')
+            c = { cName: "Star", numPoints: 6, innerRadius: 18, outerRadius: 25, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
+
+        this.props.handleSelect && this.props.handleSelect(c);
     }
 
     render() {
@@ -17,8 +27,8 @@ class ShapePicker extends Component {
               <Rect
                 x={30}
                 y={30}
-                width={80}
-                height={80}
+                width={50}
+                height={50}
                 fill="#ffffff"
                 stroke="black"
                 strokeWidth={1}
@@ -26,23 +36,23 @@ class ShapePicker extends Component {
                 onClick={this.handleSelect.bind(this, 'rect')}
               />
               <Circle 
-                x={230} 
-                y={80} 
+                x={160} 
+                y={40} 
                 radius={50} 
-                width={80}
-                height={80}
+                width={50}
+                height={50}
                 stroke="black"
                 strokeWidth={1}
                 fill="#ffffff" 
                 onClick={this.handleSelect.bind(this, 'circle')}
                 />
               <Ellipse
-                x={95}
-                y={230}
-                width={90}
+                x={55}
+                y={160}
+                width={50}
                 radius={{
-                      x: 50,
-                      y: 40
+                      x: 40,
+                      y: 30
                 }}
                 stroke="black"
                 strokeWidth={1}
@@ -50,11 +60,11 @@ class ShapePicker extends Component {
                 onClick={this.handleSelect.bind(this, 'ellipse')}
               />
               <Star
-                x={240}
-                y={220}
+                x={180}
+                y={150}
                 numPoints={6}
-                innerRadius={23}
-                outerRadius={40}
+                innerRadius={18}
+                outerRadius={25}
                 fill="#ffffff"
                 stroke="black"
                 strokeWidth={1}

@@ -88,15 +88,15 @@ class MeetYouController extends Controller
                         'italic' =>  true
                     ],
                     'filter' => 'none',
-                    'selectedCardId' => "1_1",
-                    'activePage' => 1
+                    'selectedCardId' => 1,
+                    'activePage' => 0
                     ,'pages' => [
                         [
                             'size'=> 'wide',
                             'text' => 'Invitation',
                             'selected' => 'selectedImage',
                             'cards' => [
-                                [
+                                /*[
                                     'id' => 1,
                                     'order' => 0,
                                     'type' => '', // image || edittex
@@ -104,7 +104,7 @@ class MeetYouController extends Controller
                                     'url' => '',
                                     'content' => '',
                                     'unique' => '1-0' //1-0 page1-card0
-                                ]
+                                ]*/
                             ]
                         ]
                     ]

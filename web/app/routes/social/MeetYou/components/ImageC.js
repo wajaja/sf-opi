@@ -8,57 +8,93 @@ import { centerCrop } from '../utils/pixels';
 // and then we will set it to native image instanse
 // only when image is loaded
 class ImageC extends React.Component {
-  state = {
-    image: null
-  };
-  componentDidMount() {
-    const image = new window.Image();
-    image.src = 'http://konvajs.github.io/assets/yoda.jpg';
-    image.onload = () => {
-      // setState will redraw layer
-      // because "image" property is changed
-      this.setState({
-        image: image
-      });
-    };
-  }
 
-  render() {
-    let { frame, main, image } = this.props,
-    canvasWidth = frame[2],
-    canvasHeight = frame[3];
+    constructor(props) {
+        super(props)
 
-    const area = {width: image.naturalWidth, height: image.naturalHeight};
-    const canvas = {width: canvasWidth, height: canvasHeight};
-
-    const {xPad, yPad, zoneWidth, zoneHeight} = centerCrop(area, canvas);
-
-
-    if(main) {
-      return (
-        <Image 
-          sx={xPad}
-          sy={yPad}
-          swidth={zoneWidth}
-          sheight={zoneHeight}
-          x={frame[0]}
-          y={frame[1]}
-          width={canvasWidth}
-          height={canvasHeight}
-          image={this.state.image} />
-      )
+        this.state = {
+            x: props.x,
+            y: props.y,
+            width: 200,
+            height: 160,
+            image: null,
+            scaleY: 1,
+            scaleX: 1,
+        };
     }
 
+    componentDidMount() {
+        const image = new window.Image();
+        image.src = this.props.url;
+        image.onload = () => {
+            const scale = 160 / image.naturalHeight
+            // setState will redraw layer
+            // because "image" property is changed
+            this.setState({
+                // scaleX: scaleY,
+                // scaleY: scaleY, //initiale scale value
+                image: image,
+                width: scale * image.naturalWidth,
+                height: scale * image.naturalHeight,
+            });
+        };
+    }
 
-    return (
-      <Image 
-        x={frame[0]}
-        y={frame[1]}
-        width={frame[2]}
-        height={frame[3]}
-        image={this.state.image} />
-    )
-  }
+    handleDragEnd = e => {
+        // correctly save node position
+        this.setState({
+            // text3: Konva.Util.getRandomColor(),
+            x: e.target.x(),
+            y: e.target.y()
+        });
+
+        this.props.updateCardPos(
+            this.props.id, 
+            {
+                x: e.target.x(),
+                y: e.target.y()
+            }
+        )
+    };
+
+    handleTransformEnd = e => {
+        // correctly save node position
+        const changes = {
+            size : {
+                width: e.target.width(),
+                height: e.target.height()
+            },
+            rotation: e.target.rotation(),
+            scaleX: e.target.scaleX(),
+            scaleY: e.target.scaleY()
+        }
+        this.setState({
+            // text3: Konva.Util.getRandomColor(),
+            ...changes
+        });
+
+        this.props.updateCardSize(
+            this.props.id, 
+            changes
+        )
+    }
+
+    render() {
+      return <Image 
+              draggable
+              x={this.state.x}
+              y={this.state.y}
+              onDragEnd={this.handleDragEnd}
+              onTransformEnd={this.handleTransformEnd}
+              width={this.state.width}
+              height={this.state.height}
+              image={this.state.image} 
+              name={this.props.name}
+
+              scaleX={this.state.scaleX}
+              scaleY={this.state.scaleY}
+              />
+      }
 }
 
 // // here is another way to update the image

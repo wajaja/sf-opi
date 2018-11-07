@@ -1,5 +1,9 @@
+import { fromJS, Map, merge } from     'immutable'  
 import { getPopularImages } from '../../routes/social/MeetYou/utils/unsplash';
 import undoable, { distinctState, includeAction } from 'redux-undo'
+import {
+    MeetYou as MeetYouActions,
+} from '../../actions/social'       
 
 // const images = getPopularImages();
 
@@ -23,19 +27,9 @@ export const initialState = {
         {
             size: 'square',
             editing: false,
-            cards: [
-                {
-                  id: 1,
-                  order: 0,
-                  type: '', // image || edittex
-                  textArr: [],
-                  url: '',
-                  content: '',
-                  unique: '1-0' //1-0 page1-card0
-                }
-            ],
-            selectedCardId: "1_1",
-            activePage: 1
+            cards: [ ],
+            selectedCardId: null,
+            activePage: 0
         }
     ]
 };
@@ -43,27 +37,6 @@ export const initialState = {
 function MeetYou(state = initialState, action) {
     let textAttrs;
     switch (action.type) {
-        case 'SET_FONT':
-            textAttrs = Object.assign({}, state.textAttrs, { font: action.font });
-            return Object.assign({}, state, { textAttrs });
-        case 'SET_FONT_SIZE':
-            textAttrs = Object.assign({}, state.textAttrs, { fontSize: action.size });
-            return Object.assign({}, state, { textAttrs });
-        case 'SET_BOLD':
-            textAttrs = Object.assign({}, state.textAttrs, { bold: action.bold });
-            return Object.assign({}, state, { textAttrs });
-        case 'SET_ITALIC':
-            textAttrs = Object.assign({}, state.textAttrs, { italic: action.italic });
-            return Object.assign({}, state, { textAttrs });
-        case 'SET_COLOR':
-            textAttrs = Object.assign({}, state.textAttrs, { color: action.color });
-            return Object.assign({}, state, { textAttrs });
-        case 'SET_FILTER':
-            return Object.assign({}, state, { filter: action.filter });
-        case 'SELECT_IMAGE':
-            return Object.assign({}, state, { selectedImage: action.image });
-        case 'SET_SIZE':
-            return Object.assign({}, state, { size: action.size });
         case 'SET_TEXT':
             return Object.assign({}, state, { text: action.text });
         case 'SET_TEXT_RECT':
@@ -84,6 +57,69 @@ function MeetYou(state = initialState, action) {
             return Object.assign({}, state, { availableBackgrounds: action.images });
         case 'SET_QUERY':
             return Object.assign({}, state, { query: action.query });
+
+        case MeetYouActions.UPDATE_CARD: {
+            let { card, pageId } = action,
+            pages = fromJS(state).get('pages');
+
+            let list = pages.get(pageId).get('cards')
+                        .map(item => item.get('id') === card.id ? fromJS(card) : item);
+            let _page = pages.get(pageId).set('cards', list);
+            return Object.assign({}, state, {pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() });
+        }
+
+        //
+        case MeetYouActions.UPDATE_CARD_POS: {
+            let { cardId, position, pageId } = action,
+            pages = fromJS(state).get('pages');
+
+            let list = pages.get(pageId).get('cards')
+                        .map(item => item.get('id') === cardId ? item.merge(position) : item);
+            let _page = pages.get(pageId).set('cards', list);
+            return Object.assign({}, state, {pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() });
+        }
+
+        case MeetYouActions.UPDATE_CARD_SIZE: {
+            let { cardId, size, pageId } = action,
+            pages = fromJS(state).get('pages');
+
+            let list = pages.get(pageId).get('cards')
+                        .map(item => item.get('id') === cardId ? item.merge(size) : item);
+            let _page = pages.get(pageId).set('cards', list);
+            return Object.assign({}, state, {pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() });
+        }
+
+        case MeetYouActions.MOVE_ZINDEX: {
+            let { card, pageId, val } = action,
+            pages = fromJS(state).get('pages');
+
+            let list = pages.get(pageId).get('cards')
+                        .filter(item => item.get('id') !== card.id);
+            if(val === 1)
+                list.push(card); //moveTop
+            else 
+                fromJS(card).concat(list); // moveBottom
+
+            let _page = pages.get(pageId).set('cards', list);
+            return Object.assign({}, state, {pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() });
+        }
+
+        case MeetYouActions.ADD_CARD: {
+            let { card, pageId } = action,
+            pages = fromJS(state).get('pages');
+
+            let list = fromJS(state).get('pages').get(pageId).get('cards').push(card)
+            let _page = pages.get(pageId).set('cards', list);
+            return Object.assign({}, state, {pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() });
+        }
+
+        case MeetYouActions.REMOVE_CARD: {
+            let { card, pageId } = action,
+            list = fromJS(state).get('pages').get(pageId).get('cards')
+                        .map(item => item.get('id') === card.id ? fromJS(card) : item);
+            return Object.assign({}, state, {pages: list.toJS() });
+        }
+
         default:
             return state;
     }
