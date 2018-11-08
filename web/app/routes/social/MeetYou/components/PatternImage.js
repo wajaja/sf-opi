@@ -11,8 +11,9 @@ class PatternImage extends Component {
             y: props.y,
             width: props.width,
             height: props.width,
-            scaleY: 1,
-            scaleX: 1,
+            scaleY: props.scaleY,
+            scaleX: props.scaleX,
+            rotation: props.rotation,
             color: 'green',
             fillPatternImage: null
         };
@@ -35,6 +36,8 @@ class PatternImage extends Component {
                 fillPatternImage: image,
                 width: image.naturalWidth,
                 height: image.naturalHeight,
+            }, () => {
+                this.node.cache();
             });
         };
     }
@@ -96,19 +99,36 @@ class PatternImage extends Component {
         };
     }
 
+    componentDidUpdate(oldProps, oldState) {
+        if(this.props !== this.props) {
+            this.node.cache() //see https://konvajs.github.io/docs/react/Filters.html
+        }
+    }
+
     render() {
         return (
             <Rect
                 draggable
                 x={this.state.x}
                 y={this.state.y}
+
+                red={this.props.red}
+                green={this.props.green}
+                blue={this.props.blue}
+                alpha={this.props.alpha}
+                contrast={this.props.contrast}
+                ref={node => this.node = node}
+                filters={[Konva.Filters.RGBA, Konva.Filters.Contrast]}
+
+                scaleY={this.state.scaleY}
+                scaleX={this.state.scaleX}
+                rotation={this.state.rotation}
                 onDragEnd={this.handleDragEnd}
                 onTransformEnd={this.handleTransformEnd}
                 width={this.state.width}
                 height={this.state.height}
                 image={this.state.image} 
                 name={this.props.name}
-                ref={el => this.node = el}
 
                 shadowBlur={1}
                 zIndex={this.props.zIndex || -5}

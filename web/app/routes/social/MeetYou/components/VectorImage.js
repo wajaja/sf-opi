@@ -7,12 +7,20 @@ class VectorImage extends Component {
 
     constructor(props) {
         super(props)
+
+        const initialWidth = 260,
+        grSize = props.viewBox.split(' '),
+        width  = grSize[2],
+        scaleX = initialWidth / width;
+
         this.state = {
             x: props.x,
             y: props.y,
-            initialWidth: 260,
-            width: props.width,
-            height: props.height
+            scaleX: scaleX,
+            scaleY: scaleX,
+            rotation: props.rotation,
+            width: grSize[2],
+            height: grSize[3]
         }
     }
 
@@ -56,20 +64,18 @@ class VectorImage extends Component {
     }
 
     render() {
-        const { viewBox, name } = this.props,
-        grSize = viewBox.split(' '),
-        width  = grSize[2],
-        scaleX = this.state.initialWidth / width;
+        const { viewBox, name } = this.props
 
         return(
             <Group
                 x={this.state.x}
                 y={this.state.y}
                 draggable
-                scaleX={scaleX}
-                scaleY={scaleX}
-                width={width}
-                height={grSize[3]}
+                scaleX={this.state.scaleX}
+                scaleY={this.state.scaleX}
+                rotation={this.state.rotation}
+                width={this.state.width}
+                height={this.state.height}
                 name={name}
                 // onClick={this.handleSelect}
                 onDragEnd={this.handleDragEnd}

@@ -166,9 +166,16 @@ const ImageCanvas = createReactClass({
             return;
         }
 
+        let name;
         // find clicked rect by its name
-        const name = e.target.name();
+        const parent = e.target.getParent();
+        if(parent.nodeType === 'Group')
+            name = parent.name();
+        else
+           name = e.target.name();
+       
         const rect = this.props.cards.find(r => r.name === name);
+        console.log(rect, name);
         if (rect) {
           this.setState({
             selectedShapeName: name,
@@ -182,6 +189,41 @@ const ImageCanvas = createReactClass({
           });
           this.props.updateSelectedShape(null)
         }
+    },
+
+    handleStageKeyDown(e) {
+        const evt = e.evt,
+        DELTA = 4,
+        { selectedShape } = this.state;
+        if(selectedShape) {
+            if (evt.keyCode === 37) {
+                this.updateCardPos(selectedShape.id, {
+                    x: selectedShape.x - DELTA,
+                    y: selectedShape.y
+                })
+            } else if (evt.keyCode === 38) {
+                circle.y(circle.y() - DELTA);
+                this.updateCardPos(selectedShape.id, {
+                    x: selectedShape.x,
+                    y: selectedShape.y - DELTA
+                })
+            } else if (evt.keyCode === 39) {
+                circle.x(circle.x() + DELTA);
+                this.updateCardPos(selectedShape.id, {
+                    x: selectedShape.x + DELTA,
+                    y: selectedShape.y
+                })
+            } else if (evt.keyCode === 40) {
+                circle.y(circle.y() + DELTA);
+                this.updateCardPos(selectedShape.id, {
+                    x: selectedShape.x,
+                    y: selectedShape.y + DELTA
+                })
+            } else {
+                return;
+            }
+        }
+        evt.preventDefault();
     },
 
     render() {
@@ -200,6 +242,7 @@ const ImageCanvas = createReactClass({
             <Stage
                 width={canvasWidth}  // + 200
                 height={canvasHeight} // + 200
+                onKeyDown={this.handleStageKeyDown}
                 onMouseDown={this.handleStageMouseDown}>
                 <Layer
                     x={0}
@@ -212,6 +255,8 @@ const ImageCanvas = createReactClass({
                             return <CanvasImage 
                                       key={i}
                                       // image={card}
+                                      x={card.x}
+                                      y={card.y}
                                       id={card.id}
                                       url={card.url}
                                       tags={card.tags}
@@ -221,6 +266,9 @@ const ImageCanvas = createReactClass({
                                       width={card.width}
                                       height={card.height}
                                       filter={card.filter}
+                                      scaleX={card.scaleX}
+                                      scaleY={card.scaleY}
+                                      rotation={card.rotation}
                                       updateCardPos={this.props.updateCardPos}
                                       updateCardSize={this.props.updateCardSize}
                                       onMouseDown={this.handleClickOnImage} />
@@ -237,6 +285,9 @@ const ImageCanvas = createReactClass({
                                         image={card.image}
                                         name={card.type + card.id} //richtext1
                                         shapes={card.shapes}
+                                        scaleX={card.scaleX}
+                                        scaleY={card.scaleY}
+                                        rotation={card.rotation}
                                         editing={this.props.editing}
                                         background={card.background}
                                         editorState={card.editorState}
@@ -263,6 +314,9 @@ const ImageCanvas = createReactClass({
                                         width={card.width}
                                         height={card.height}
                                         filter={card.filter}
+                                        scaleX={card.scaleX}
+                                        scaleY={card.scaleY}
+                                        rotation={card.rotation}
                                         onMouseDown={this.handleClickOnImage}
                                         updateCardPos={this.props.updateCardPos}
                                         updateCardSize={this.props.updateCardSize}
@@ -278,6 +332,9 @@ const ImageCanvas = createReactClass({
                                         width={card.width}
                                         height={card.height}
                                         filter={card.filter}
+                                        scaleX={card.scaleX}
+                                        scaleY={card.scaleY}
+                                        rotation={card.rotation}
                                         //onMouseDown={this.handleClickOnImage}
                                         updateCardPos={this.props.updateCardPos}
                                         updateCardSize={this.props.updateCardSize}
@@ -294,6 +351,9 @@ const ImageCanvas = createReactClass({
                                         width={card.width}
                                         height={card.height}
                                         filter={card.filter}
+                                        scaleX={card.scaleX}
+                                        scaleY={card.scaleY}
+                                        rotation={card.rotation}
                                         originalData={card.data}
                                         childs={card.data.childs}
                                         viewBox={card.data.attrs.viewBox}

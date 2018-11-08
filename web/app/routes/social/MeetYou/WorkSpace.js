@@ -120,7 +120,7 @@ const _Page = createReactClass({
                       updateRichText={this.props.updateRichText}
                       onTextChange={this.props.onTextChange} 
                       updateCardPos={this.props.updateCardPos}
-                      // updateCardSize={this.props.updateCardSize}
+                      updateCardSize={this.props.updateCardSize}
                       updateSelectedShape={this.props.updateSelectedShape}
                       />
                 </div>

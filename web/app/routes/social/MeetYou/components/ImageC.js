@@ -18,8 +18,9 @@ class ImageC extends React.Component {
             width: 200,
             height: 160,
             image: null,
-            scaleY: 1,
-            scaleX: 1,
+            scaleY: props.scaleY,
+            scaleX: props.scaleX,
+            rotation: props.rotation
         };
     }
 
@@ -36,6 +37,8 @@ class ImageC extends React.Component {
                 image: image,
                 width: scale * image.naturalWidth,
                 height: scale * image.naturalHeight,
+            }, () => {
+                this.node.cache();
             });
         };
     }
@@ -79,11 +82,26 @@ class ImageC extends React.Component {
         )
     }
 
+    componentDidUpdate(oldProps, oldState) {
+        if(this.props !== this.props) {
+            this.node.cache() //see https://konvajs.github.io/docs/react/Filters.html
+        }
+    }
+
     render() {
       return <Image 
               draggable
               x={this.state.x}
               y={this.state.y}
+
+              red={this.props.red}
+              green={this.props.green}
+              blue={this.props.blue}
+              alpha={this.props.alpha}
+              contrast={this.props.contrast}
+              ref={node => this.node = node}
+              filters={[Konva.Filters.RGBA, Konva.Filters.Contrast]}
+
               onDragEnd={this.handleDragEnd}
               onTransformEnd={this.handleTransformEnd}
               width={this.state.width}
@@ -93,36 +111,9 @@ class ImageC extends React.Component {
 
               scaleX={this.state.scaleX}
               scaleY={this.state.scaleY}
+              rotation={this.state.rotation}
               />
       }
 }
-
-// // here is another way to update the image
-// class VaderImage extends React.Component {
-//   state = {
-//     image: new window.Image()
-//   };
-//   componentDidMount() {
-//     this.state.image.src = 'http://konvajs.github.io/assets/darth-vader.jpg';
-//     this.state.image.onload = () => {
-//       // calling set state here will do nothing
-//       // because properties of Konva.Image are not changed
-//       // so we need to update layer manually
-//       this.imageNode.getLayer().batchDraw();
-//     };
-//   }
-
-//   render() {
-//     return (
-//       <Image
-//         image={this.state.image}
-//         y={250}
-//         ref={node => {
-//           this.imageNode = node;
-//         }}
-//       />
-//     );
-//   }
-// }
-
+////////
 export default ImageC;

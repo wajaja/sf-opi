@@ -24,53 +24,77 @@ class ShapePicker extends Component {
           <Stage 
             width={320} height={300}>
             <Layer>
-              <Rect
-                x={30}
-                y={30}
-                width={50}
-                height={50}
-                fill="#ffffff"
-                stroke="black"
-                strokeWidth={1}
-                shadowBlur={1}
-                onClick={this.handleSelect.bind(this, 'rect')}
-              />
-              <Circle 
-                x={160} 
-                y={40} 
-                radius={50} 
-                width={50}
-                height={50}
-                stroke="black"
-                strokeWidth={1}
-                fill="#ffffff" 
-                onClick={this.handleSelect.bind(this, 'circle')}
-                />
-              <Ellipse
-                x={55}
-                y={160}
-                width={50}
-                radius={{
-                      x: 40,
-                      y: 30
-                }}
-                stroke="black"
-                strokeWidth={1}
-                fill="#ffffff"
-                onClick={this.handleSelect.bind(this, 'ellipse')}
-              />
-              <Star
-                x={180}
-                y={150}
-                numPoints={6}
-                innerRadius={18}
-                outerRadius={25}
-                fill="#ffffff"
-                stroke="black"
-                strokeWidth={1}
-                shadowBlur={1}
-                onClick={this.handleSelect.bind(this, 'star')}
-              />
+                <Rect
+                    x={30}
+                    y={30}
+                    width={40}
+                    height={40}
+                    fill="#ffffff"
+                    stroke="black"
+                    strokeWidth={1}
+                    shadowBlur={1}
+                    onClick={this.handleSelect.bind(this, 'rect')}
+                  />
+                  <Ring
+                    x={120}
+                    y={50}
+                    width={50}
+                    height={50}
+                    innerRadius={10}
+                    outerRadius={23}
+                    strokeWidth={4}
+                    fill="#ffffff"
+                    stroke="black"
+                    strokeWidth={1}
+                    shadowBlur={1}
+                    onClick={this.handleSelect.bind(this, 'ring')}
+                  />
+                  <Circle
+                    x={190}
+                    y={50}
+                    radius={50}
+                    width={45}
+                    height={45}
+                    stroke="black"
+                    strokeWidth={1}
+                    fill="#ffffff"
+                    onClick={this.handleSelect.bind(this, 'circle')}
+                  />
+                  <Ellipse
+                    x={53}
+                    y={120}
+                    width={30}
+                    radius={{
+                      x: 26,
+                      y: 20
+                    }}
+                    stroke="black"
+                    strokeWidth={1}
+                    fill="#ffffff"
+                    onClick={this.handleSelect.bind(this, 'ellipse')}
+                  />
+                  <Star
+                    x={123}
+                    y={120}
+                    numPoints={6}
+                    innerRadius={13}
+                    outerRadius={21}
+                    fill="#ffffff"
+                    stroke="black"
+                    strokeWidth={1}
+                    shadowBlur={1} 
+                     onClick={this.handleSelect.bind(this, 'start')}/>
+                  <RegularPolygon
+                    x={190}
+                    y={120}
+                    sides={6}
+                    radius={23}
+                    outerRadius={21}
+                    fill="#ffffff"
+                    stroke="black"
+                    strokeWidth={1}
+                    shadowBlur={1} 
+                    onClick={this.handleSelect.bind(this, 'regularpolygon')}/>
             </Layer>
           </Stage>
         );

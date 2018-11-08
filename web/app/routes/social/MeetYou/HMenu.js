@@ -13,6 +13,8 @@ import FiltersPicker    from './components/FiltersPicker'
 import CropButton       from './components/CropButton'
 import Transparence     from './components/Transparence'
 import TextAlign        from './components/TextAlign'
+import PathColors       from './DnD/PathColors'
+import StrockePicker    from './components/StrockePicker'
 
 
 class HMenu extends Component {
@@ -115,7 +117,7 @@ class HMenu extends Component {
                                 <FiltersPicker 
                                     selectedCard={selectedCard}
                                     filter={this.props.filter} 
-                                    onFilterChange={this.props.onFilterChange}
+                                    updateCardRGBA={this.props.updateCardRGBA}
                                     />
                             </div>
                         </li>
@@ -131,19 +133,23 @@ class HMenu extends Component {
                         </li>
                         <li className="item">
                             <div className="transparency" data-title="transparency">
-                                <Transparence
+                                <StrockePicker 
                                     selectedCard={selectedCard}
-                                    currentTransparency={this.props.currentTransparency}
-                                    updateCurrentTransparancy={this.props.updateCurrentTransparancy}
+                                    updateCardStroke={this.props.updateCardStroke}
                                     />
                             </div>
                         </li>
                     </ul>
-                    {!!selectedCard && 
-                      (selectedCard.type === "image" || selectedCard.type === "vectorImage") && 
+                    {!selectedCard && 
+                      (!!selectedCard && (selectedCard.type !== "image" || selectedCard.type !== "vectorImage")) && 
                       <div className="inactive"></div>
                     }
                 </div>
+                <PathColors
+                    {...this.props}
+                    selectedCard={selectedCard}
+                    setVectorImageColor={this.props.setVectorImageColor}
+                    />
             </div>
             <div className="translate-rght-btn">
                 <div className="ico r" onClick={(e) => this.scrollToRight()}></div>

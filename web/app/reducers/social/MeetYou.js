@@ -98,7 +98,8 @@ function MeetYou(state = initialState, action) {
             if(val === 1)
                 list.push(card); //moveTop
             else 
-                fromJS(card).concat(list); // moveBottom
+                list.insert(0, card)
+                // fromJS(card).concat(); // moveBottom
 
             let _page = pages.get(pageId).set('cards', list);
             return Object.assign({}, state, {pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() });

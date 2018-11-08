@@ -22,7 +22,11 @@ class RichTextCard extends React.Component {
             x: props.x,
             y: props.y,
             image: null,
+            scaleX: props.scaleX,
+            scaleY: props.scaleY,
+            rotation: props.rotation
         };
+
         this.imgX = 2;
         this.imgY = 0;
     }
@@ -97,6 +101,9 @@ class RichTextCard extends React.Component {
                 draggable
                 x={this.state.x}
                 y={this.state.y}
+                scaleX={this.state.scaleX}
+                scaleY={this.state.scaleY}
+                rotation={this.state.rotation}
                 onDragEnd={this.handleDragEnd}
                 onTransformEnd={this.handleTransformEnd}
                 fill={this.props.background || 'transparent'}

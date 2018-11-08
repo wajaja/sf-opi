@@ -153,6 +153,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 addCard({
                     x: 20,
                     y: (size[1] - (160 / 2)), //400 - 160 / 2
+                    scaleX: 1,
+                    scaleY: 1,
+                    red: 0,
+                    green: 0,
+                    blue: 0,
+                    alpha: 0,
+                    contrast: 0,
+                    rotation: 0,
                     width: 200,  //TODO 
                     height: 160,
                     size:{
@@ -175,6 +183,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                     x: 120,
                     y: 50, //400 - 160 / 2
                     id: nextId,
+                    scaleX: 1,
+                    scaleY: 1,
+                    rotation: 0,
                     width: 200,  //TODO 
                     height: 160,
                     size:{
@@ -190,12 +201,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             );
         },
 
-
+        //patterImage
         onSelectBackground(image) {
             dispatch(
                 addCard({
                     x: -20,
                     y: -50, //(size[1] - (160 / 2)), //400 - 160 / 2
+                    scaleX: 1,
+                    scaleY: 1,
+                    red: 0,
+                    green: 0,
+                    blue: 0,
+                    alpha: 0,
+                    contrast: 0,
+                    rotation: 0,
                     width: 200,  //TODO 
                     height: size[1],
                     size:{
@@ -218,6 +237,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                     x: 20,
                     y: (size[1] - (160 / 2)), //400 - 160 / 2
                     id: nextId,
+                    scaleX: 1,
+                    scaleY: 1,
+                    rotation: 0,
                     type: 'shape',  
                     name: 'shape' + nextId,
 

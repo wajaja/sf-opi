@@ -155,6 +155,7 @@ const MeetYou = createReactClass({
     },
 
     pushEditor(type) {
+        if(type === 'text') return
         const { pages } = this.props,
         { selectedPage, editorState, isEditing } = this.state;
 
@@ -183,6 +184,9 @@ const MeetYou = createReactClass({
                 id: cardId,
                 url: null,
                 type: type,
+                scaleX: 1,
+                scaleY: 1,
+                rotation: 0,
                 size: {width: 80, height: 80},
                 node: null,
                 width: 80,
@@ -278,6 +282,15 @@ const MeetYou = createReactClass({
         this.props.updateCardPos(cardId, this.state.selectedPage, position)
     },
 
+    updateCardStroke(card, strokeColor, strokeWidth) {
+        console.log(card, strokeColor, strokeWidth)
+        this.props.updateCardStroke(card, strokeColor, strokeWidth)
+    },
+
+    updateCardRGBA() {
+        this.props.updateCardRGBA(card, val, color)
+    },
+
     //changes => {textArr, }
     updateEditorCard({cardId, shapes, type, image}) {
         const pageId = this.state.selectedPage,
@@ -287,25 +300,6 @@ const MeetYou = createReactClass({
                     .get(0)
                     .merge({shapes, image})
                     .toJS();
-        console.log(item);
-
-
-        // const card = {
-        //     x: x,
-        //     y: y,
-        //     id: cardId,
-        //     url: url,
-        //     type: type,
-        //     size: size,
-        //     node: node,
-        //     width: width,
-        //     height: height,
-        //     shapes: shapes,
-        //     name: type + cardId,
-        //     background: background,
-        //     editorState: editorState,
-        //     defaultStyle: defaultStyle
-        // }
 
         if(type === 'richtext') {
             this.setState({
@@ -313,17 +307,6 @@ const MeetYou = createReactClass({
                 editedCardId: null
             })
         }
-        // const arr = fromJS(this.state.cards);
-        // const index = arr.findIndex(c => c.id === cardId)
-        // if(!index) {
-        //     let newArray = this.state.cards.slice()
-        //     newArray.splice(0, 0, card) // inserts at 1st index position, remove 0
-        //     this.setState({cards: newArray })
-        // } else {
-        //     const newArr = arr.update(index, item => Object.assign({}, item, {...card}))
-        //     this.setState({cards: newArr.toJS()});
-        // }
-        //action creator
         this.props.updateCard(item, pageId);
     },
 
@@ -361,7 +344,8 @@ const MeetYou = createReactClass({
         //always redraw layer
         const page = this.props.pages[this.state.selectedPage];
         let card = page.cards.filter(item => item.id === this.state.selectedCardId)[0];
-        this.props.onMoveZindex(card, this.state.selectedPage, val)
+        if(!!card) 
+            this.props.onMoveZindex(card, this.state.selectedPage, val)
     },
 
     updateSelectedShape(card) {
@@ -447,6 +431,8 @@ const MeetYou = createReactClass({
                     createPost={this.createPost}
                     download={this.download}
                     setVectorImageColor={this.setVectorImageColor}
+                    updateCardStroke={this.updateCardStroke}
+                    updateCardRGBA={this.updateCardRGBA}
                     />
                 <LeftSidebar
                     page={page}

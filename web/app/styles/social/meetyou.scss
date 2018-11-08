@@ -833,6 +833,15 @@ body {
         position: relative;
         background-size: cover;
     }
+    .strocke-card .ico{
+        width: 20px;
+        height: 20px;
+        background: transparent url(http://opinion.com/images/2857174-48.png) 50% 50% no-repeat;
+        opacity: 0.7;
+        cursor: pointer;
+        position: relative;
+        background-size: cover;
+    }
 }
 
 .Menubar-ctr{
@@ -871,7 +880,7 @@ body {
         } */
     }
     .sub-m{
-        flex: 0 0 250px;
+        flex: 0 0 200px;
         /*border-right: 1px solid #dee3e6;*/
         position: relative;
         height: 100%;
@@ -890,6 +899,17 @@ body {
                     position: absolute;
                     bottom: 10px;
                     margin: 0 10px;
+                }
+            }
+        }
+        &.vectorImage{
+            .item{
+                margin: 5px 3px;
+                background: #fff;
+                flex: 0 0 35px;
+                height: 35px;
+                &>div{
+                    height: 100%;
                 }
             }
         }

@@ -4,6 +4,8 @@ import onClickOutside from "react-onclickoutside";
 import { Twitter } from 'react-color';
 
 const PathColor = ({ onClick, color, pathOrder, activeOrder}) => {
+    if(color === 'none')
+        return <div />
 
     return (
         <li className="item">
@@ -61,7 +63,7 @@ class PathColors extends PureComponent {
         return (
             <div className={`sub-m vectorImage ${!!active ? " active" : ""}`}>
                 <ul className="sub-menub-lst">
-                    {this.props.childs.map((child, order) => {
+                    {childs.map((child, order) => {
                         if(child.name === 'path') 
                             return <PathColor
                                         key={order}
@@ -89,20 +91,20 @@ class PathColors extends PureComponent {
                                             strokeScaleEnabled={false}
                                             />
                                 else 
-                                    return <span />
+                                    return <span key={_order} />
                             })
                         }
                         else{
-                            return <span />
+                            return <span key={order} />
                         }
                     })}
                 </ul>
                 {!!active && <div className="inactive"></div>}
-                {reactColorActived && 
+                {this.state.reactColorActived && 
                     <Twitter 
                         triangle="top-left" //hide
                         onChange={this.handlePathColorChange}
-                        color={color}/>
+                        />
                 }
             </div>
         )
@@ -110,6 +112,7 @@ class PathColors extends PureComponent {
 }
 
 //FROM DOC
+                        // color={color}
 /* width - String, Pixel value for picker width. Default 276px
 colors - Array of Strings, Color squares to display. Default 
 ['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', 

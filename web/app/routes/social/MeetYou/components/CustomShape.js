@@ -23,6 +23,7 @@ class CustomShape extends React.Component {
             height: props.height,
             scaleY: 1,
             scaleX: 1,
+            rotation: 0,
         };
     }
 
@@ -80,6 +81,7 @@ class CustomShape extends React.Component {
 	      			onTransformEnd={this.handleTransformEnd}
 		            scaleX={this.state.scaleX}
 		            scaleY={this.state.scaleY}
+		            rotation={this.state.rotation}
 		            width={this.state.width}
 	                height={this.state.height}
 	      			/>

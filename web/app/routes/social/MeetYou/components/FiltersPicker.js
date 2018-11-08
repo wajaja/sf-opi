@@ -14,9 +14,9 @@ export default createReactClass({
     }
   },
 
-  updateFilter() {
-    const val = this.refs.select.value;
-    this.props.onFilterChange(val);
+  updateFilter(val, color) {
+        const val = this.refs.select.value;
+        this.props.updateCardRGBA(this.props.selectedCard, val, color);
   },
 
   onClick() {
@@ -29,17 +29,36 @@ export default createReactClass({
       <Fragment>
         <div className={active ? `ico active` : `ico`} onClick={this.onClick}></div>
         {active && 
-          <select 
-            className="FiltersPicker" 
-            value={this.props.filter} 
-            ref="select" 
-            onChange={this.updateFilter}>
-            <option value="none">None</option>
-            <option value="light_contrast">Light contrast</option>
-            <option value="heavy_contrast">Heavy contrast</option>
-            <option value="light_blur">Light blur</option>
-            <option value="heavy_blur">Heavy blur</option>
-          </select>
+            <div className="FiltersPicker" ref="select">
+                <div className="rg-ctnr">
+                    <div>Red</div>
+                    <input 
+                        type="range" min="0" 
+                        max="256" step="1" value="150" 
+                        onChange={(val) => this.updateFilter(val, 'red')}> 
+                </div>
+                <div className="rg-ctnr">
+                    <div>Green</div>
+                    <input 
+                        type="range" min="0" 
+                        max="256" step="1" value="150" 
+                        onChange={(val) => this.updateFilter(val, 'green')}> 
+                </div>
+                <div className="rg-ctnr">
+                    <div>Blue</div>
+                    <input 
+                        type="range" min="0" 
+                        max="256" step="1" value="150" 
+                        onChange={(val) => this.updateFilter(val, 'blue')}> 
+                </div>
+                <div className="rg-ctnr">
+                    <div>Alpha</div>
+                    <input 
+                        type="range" min="0" 
+                        max="256" step="1" value="150" 
+                        onChange={(val) => this.updateFilter(val, 'alpha')}> 
+                </div>
+            </div>
         }
       </Fragment>
     )
