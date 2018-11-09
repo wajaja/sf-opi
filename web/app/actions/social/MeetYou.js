@@ -13,36 +13,11 @@ export const setFilter = (filter) => ({
   
 // });
 
-export const setSize = (size) => ({
-  type: 'SET_SIZE',
-  size
-});
 
-export const setText = (text) => ({
-  type: 'SET_TEXT',
-  text
-});
 
 export const setTextRect = (rect) => ({
   type: 'SET_TEXT_RECT',
   rect
-});
-
-export const setFocus = (part) => ({
-  type: 'SET_FOCUS',
-  part
-});
-
-export const setEditing = () => ({
-  type: 'SET_EDITING'
-});
-
-export const setNoFocus = () => ({
-  type: 'SET_NO_FOCUS'
-});
-
-export const setNoEditing = () => ({
-  type: 'SET_NO_EDITING'
 });
 
 export const cacheDrawing = (drawing) => ({
@@ -88,6 +63,21 @@ export function updateCardSize(cardId, pageId, size) {
     return { type: UPDATE_CARD_SIZE, cardId, pageId, size} 
 }
 
+export const UPDATE_CARD_STROKE = 'MEETYOU::UPDATE_CARD_STROKE'
+//Applyed on vectorImage
+export function updateCardStroke(card, pageId, strokeColor, strokeWidth) {
+    return { type: UPDATE_CARD_STROKE, card, strokeColor, strokeWidth} 
+}
+
+export const UPDATE_CARD_RGBA = 'MEETYOU::UPDATE_CARD_RGBA'
+export function updateCardRGBA(card, pageId, val, type) {
+    return { type: UPDATE_CARD_RGBA, card, val, type} 
+}
+
+export const SET_VECTOR_IMAGE_COLOR = 'MEETYOU::SET_VECTOR_IMAGE_COLOR'
+export function setVectorImageColor(card, pageId, childOrder, color){
+    return { type: SET_VECTOR_IMAGE_COLOR, card, pageId, childOrder, color} 
+}
 
 export const MOVE_ZINDEX = 'MEETYOU::MOVE_ZINDEX'
 

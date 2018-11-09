@@ -288,12 +288,22 @@ body {
 .FiltersPicker {
     font-size: 13px;
     position: absolute;
-    top: 35px;
+    top: 38px;
     z-index: 7;
-    width: 200px;
-    left: -16px;
-    min-height: 28px;
-    padding: 2px 5px;
+    width: 420px;
+    left: -10px;
+    min-height: 90px;
+    background: #fff;
+    padding: 18px 10px;
+    border: 1px solid #9c9999;
+
+    column-count: 2;
+    .rg-ctnr{
+        width: 180px;
+        display: inline-block;
+        vertical-align: top;
+        margin-bottom: 20px;
+    }
 }
 
 .TextPropsPicker {
@@ -492,6 +502,11 @@ body {
       border-radius: 6px;
       padding: 4px 7px; */
     }
+    .autoExpand-meet{
+        height: 100%;
+        position: relative;
+        width: 100%;
+    }
     .btm{
         position: relative;
         top: -40px;
@@ -550,10 +565,10 @@ body {
         margin: auto;
         background: #fff;
         z-index: 15;
-        border: 1px solid #d7d8da;
-        height: 55px;
+        border: 1px solid;
+        height: 46px;
         top: 55px;
-        border-color: transparent #c0c5d0 #c0c5d0 #c0c5d0;
+        border-color: transparent;
     }
     .Menubar-a{
       display: flex;
@@ -567,14 +582,17 @@ body {
     }
     .Menubar-rght{
         right: 0;
-        width: 270px;
         height: 100%;
         /* position: absolute; */
-        /* border-left: 1px solid #d8e0e4; */
+        border-left: 1px solid #d8e0e4;
         color: #fff;
         text-transform: capitalize;
-        margin-right: 20px;
-        transform: translate(0%, 1%);
+        margin-right: 10px;
+        -webkit-transform: translate(0%, -7%);
+        transform: translate(0%, -7%);
+        padding-left: 15px;
+        background: #fff;
+        z-index: 3;
         li.item{
             margin-right: 3px;
         }
@@ -833,14 +851,18 @@ body {
         position: relative;
         background-size: cover;
     }
-    .strocke-card .ico{
-        width: 20px;
-        height: 20px;
-        background: transparent url(http://opinion.com/images/2857174-48.png) 50% 50% no-repeat;
-        opacity: 0.7;
-        cursor: pointer;
-        position: relative;
-        background-size: cover;
+    .strocke-card {
+        background: none;
+        border: 1px solid #b7b5b5;
+        .ico{
+            width: 20px;
+            height: 20px;
+            background: transparent url(http://opinion.com/images/2857174-48.png) 50% 50% no-repeat;
+            opacity: 0.7;
+            cursor: pointer;
+            position: relative;
+            background-size: cover;
+        }
     }
 }
 
@@ -909,6 +931,9 @@ body {
                 flex: 0 0 35px;
                 height: 35px;
                 &>div{
+                    border: 1px solid #cccaca;
+                }
+                div {
                     height: 100%;
                 }
             }
@@ -997,4 +1022,8 @@ body {
 }
 .HtmlContent * {
     font-family: inherit;
+}
+.strocke-wrp{
+    position: relative;
+    top: -3px;
 }

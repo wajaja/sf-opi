@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
-import { Twitter } from 'react-color';
+import { TwitterPicker } from 'react-color';
 import onClickOutside from "react-onclickoutside";
 
 
@@ -49,11 +49,11 @@ class StrockePicker extends Component {
           <button type="button" 
               disabled={!selectedCard} 
               className="strocke-card" 
-              onClick={() => this.onClick()}>
+              onClick={(e) => this.onClick(e)}>
               <div className="ico"></div>
           </button>
           {this.state.active && 
-            <Twitter
+            <TwitterPicker
               disableAlpha={false}
               colors={colors}
               onChange={this.handleUserChangingColor}

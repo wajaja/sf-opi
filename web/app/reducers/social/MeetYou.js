@@ -79,6 +79,50 @@ function MeetYou(state = initialState, action) {
             return Object.assign({}, state, {pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() });
         }
 
+        
+        case MeetYouActions.UPDATE_CARD_STROKE: {
+            let { card, stroke, strokeWidth, pageId } = action,
+            pages = fromJS(state).get('pages');
+
+            let list = pages
+                        .get(pageId)
+                        .get('cards')
+                        .map(item => item.get('id') === card.id ? item.merge({stroke, strokeWidth}) : item);
+            let _page = pages
+                        .get(pageId)
+                        .set('cards', list);
+            return Object.assign({}, state, {
+                pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() 
+            });
+        }
+
+        case MeetYouActions.SET_VECTOR_IMAGE_COLOR: {
+            let { card, pageId, childOrder, color } = action,
+            pages    = fromJS(state).get('pages');
+            let list = pages.get(pageId).get('cards')
+                        .map(item => item.get('id') === card.id ? item.get('data')
+                                                                      .get('childs')
+                                                                      .get(childOrder)
+                                                                      .get('attrs')
+                                                                      .set('fill', color) : item);
+            let _page = pages.get(pageId).set('cards', list);
+            return Object.assign({}, state, {
+                pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() 
+            });
+        }
+
+        case MeetYouActions.UPDATE_CARD_RGBA: {
+            let { card, val, type, pageId } = action,
+            pages = fromJS(state).get('pages');
+
+            let list = pages.get(pageId).get('cards')
+                        .map(item => item.get('id') === card.id ? item.merge({[type]: val}) : item);
+            let _page = pages.get(pageId).set('cards', list);
+            return Object.assign({}, state, {
+                pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() 
+            });
+        }
+
         case MeetYouActions.UPDATE_CARD_SIZE: {
             let { cardId, size, pageId } = action,
             pages = fromJS(state).get('pages');

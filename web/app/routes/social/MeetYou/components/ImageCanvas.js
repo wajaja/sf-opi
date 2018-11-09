@@ -255,6 +255,7 @@ const ImageCanvas = createReactClass({
                             return <CanvasImage 
                                       key={i}
                                       // image={card}
+                                      {...card}
                                       x={card.x}
                                       y={card.y}
                                       id={card.id}
@@ -276,6 +277,7 @@ const ImageCanvas = createReactClass({
                         else if(card.type === 'richtext')
                             return <RichTextCard
                                         key={i}
+                                        {...card}
                                         x={card.x}
                                         y={card.y}
                                         id={card.id}
@@ -303,6 +305,7 @@ const ImageCanvas = createReactClass({
                         else if(card.type === 'patternImage')
                             return <PatternImage
                                         key={i}
+                                        {...card}
                                         x={card.x}
                                         y={card.y}
                                         id={card.id}
@@ -324,6 +327,7 @@ const ImageCanvas = createReactClass({
                         else if(card.type === 'shape')
                             return <CustomShape
                                         key={i}
+                                        {...card}
                                         x={card.x}
                                         y={card.y}
                                         id={card.id}
@@ -343,6 +347,7 @@ const ImageCanvas = createReactClass({
                         else if(card.type === 'vectorImage')
                             return <VectorImage
                                         key={i}
+                                        {...card}
                                         x={card.x}
                                         y={card.y}
                                         id={card.id}

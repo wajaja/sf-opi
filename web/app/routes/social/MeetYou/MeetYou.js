@@ -193,6 +193,8 @@ const MeetYou = createReactClass({
                 height: 80,
                 image: null,
                 shapes: [],
+                stroke: "transparent",
+                strokeWidth: 1,
                 name: type + cardId,
                 background: this.state.background,
                 defaultStyle: this.state.defaultStyle,
@@ -282,13 +284,14 @@ const MeetYou = createReactClass({
         this.props.updateCardPos(cardId, this.state.selectedPage, position)
     },
 
+    
     updateCardStroke(card, strokeColor, strokeWidth) {
         console.log(card, strokeColor, strokeWidth)
         this.props.updateCardStroke(card, strokeColor, strokeWidth)
     },
 
-    updateCardRGBA() {
-        this.props.updateCardRGBA(card, val, color)
+    updateCardRGBA(card, val, type) {
+        this.props.updateCardRGBA(card, val, type)
     },
 
     //changes => {textArr, }
@@ -354,6 +357,7 @@ const MeetYou = createReactClass({
 
     setVectorImageColor({selectedCard, childOrder, color}){
         console.log('setVectorImageColor....', selectedCard, childOrder, color)
+        this.props.setVectorImageColor(selectedCard, childOrder, color)
     },
 
     render() {
@@ -386,7 +390,6 @@ const MeetYou = createReactClass({
         return (
             <div className="MeetYou Container">
                 <EditMenu 
-                    {...this.props}
                     {...this.state} 
                     cards={page.cards}
                     selectedCard={this.state.selectedCard}
@@ -464,8 +467,6 @@ const MeetYou = createReactClass({
                 <div className="work-space">
                     <div className="work-space-a">
                         <WorkSpace 
-                            {...this.props}  
-
                             //cards={this.state.cards}
                             cards={page.cards}
                             editing={this.state.editing}

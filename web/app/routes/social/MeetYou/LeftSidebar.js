@@ -8,17 +8,17 @@ import {
     Chat,
 }                       from '../../../components'
 
-import Card from './components/Card';
-import SearchBar from './components/SearchBar';
-import ImagePicker from './components/ImagePicker';
-import TextPicker   from './DnD/TextPicker'
-import ShapePicker  from './DnD/ShapePicker'
+import Card             from './components/Card';
+import SearchBar        from './components/SearchBar';
+import ImagePicker      from './components/ImagePicker';
+import TextPicker       from './DnD/TextPicker'
+import ShapePicker      from './DnD/ShapePicker'
 import BackgroundPicker from './components/BackgroundPicker'
 import ModelSearch      from './components/ModelSearch'
 import ModelPicker      from './components/ModelPicker'
 import PathPicker       from './components/PathPicker'
-import { SIZES }      from './components/computeImageDimensions'
-
+import { SIZES }        from './components/computeImageDimensions'
+import convertImgToBase64URL from './utils/imgToBase64URL'
 const svgData = require('./utils/svgImages').default
 
 const LeftSidebar = createReactClass({
@@ -143,38 +143,45 @@ const mapStateToProps = (state) => {
     }
 };
 
+////////////
 const mapDispatchToProps = (dispatch, ownProps) => {
     let nextId = ownProps.cards.length,
+    initialFilterVal = 256 / 2,             //256 defined in FilterPiker as max range
     selectedPage= ownProps.selectedPage,
     size = SIZES[ownProps.page.size]; //[300, 400]
     return {
         onSelectImage(image) {
-            dispatch(
-                addCard({
-                    x: 20,
-                    y: (size[1] - (160 / 2)), //400 - 160 / 2
-                    scaleX: 1,
-                    scaleY: 1,
-                    red: 0,
-                    green: 0,
-                    blue: 0,
-                    alpha: 0,
-                    contrast: 0,
-                    rotation: 0,
-                    width: 200,  //TODO 
-                    height: 160,
-                    size:{
-                        width: undefined,
-                        height: undefined,
-                    },
-                    transparency: 20,
-                    filter: 'editorState',
-                    id: nextId,
-                    type: 'image',  
-                    name: 'image' + nextId,
-                     ...image
-                }, selectedPage)
-            );
+            convertImgToBase64URL(image.url, function(base64Img) {
+                dispatch(
+                    addCard({
+                        x: 20,
+                        y: (size[1] - (160 / 2)), //400 - 160 / 2
+                        scaleX: 1,
+                        scaleY: 1,
+                        red: initialFilterVal,
+                        green: initialFilterVal,
+                        blue: initialFilterVal,
+                        alpha: initialFilterVal,
+                        contrast: initialFilterVal,
+                        rotation: 0,
+                        width: 200,  //TODO 
+                        height: 160,
+                        size:{
+                            width: undefined,
+                            height: undefined,
+                        },
+                        transparency: 20,
+                        filter: 'editorState',
+                        id: nextId,
+                        stroke: "transparent",
+                        strokeWidth: 1,
+                        type: 'image',  
+                        name: 'image' + nextId,
+                        tag: image.tag,
+                        url: base64Img
+                    }, selectedPage)
+                );
+            }, 'image/png'); //output format
         },
         /////////
         onSelectVector(data) {
@@ -193,6 +200,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                         height: 160,
                     },
                     transparency: 20,
+                    stroke: "transparent",
+                    strokeWidth: 1,
                     filter: 'null',
                     type: 'vectorImage',  
                     name: 'vectorImage' + nextId,
@@ -203,32 +212,37 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
         //patterImage
         onSelectBackground(image) {
-            dispatch(
-                addCard({
-                    x: -20,
-                    y: -50, //(size[1] - (160 / 2)), //400 - 160 / 2
-                    scaleX: 1,
-                    scaleY: 1,
-                    red: 0,
-                    green: 0,
-                    blue: 0,
-                    alpha: 0,
-                    contrast: 0,
-                    rotation: 0,
-                    width: 200,  //TODO 
-                    height: size[1],
-                    size:{
-                        width: 200,
+            convertImgToBase64URL(image.url, function(base64Img){
+                dispatch(
+                    addCard({
+                        x: -20,
+                        y: -50, //(size[1] - (160 / 2)), //400 - 160 / 2
+                        scaleX: 1,
+                        scaleY: 1,
+                        id: nextId,
+                        red: initialFilterVal,
+                        green: initialFilterVal,
+                        blue: initialFilterVal,
+                        alpha: initialFilterVal,
+                        contrast: initialFilterVal,
+                        rotation: 0,
+                        width: 200,  //TODO 
                         height: size[1],
-                    },
-                    transparency: 20,
-                    filter: 'editorState',
-                    id: nextId,
-                    type: 'patternImage',  
-                    name: 'patternImage' + nextId,
-                     ...image
-                }, selectedPage)
-            );
+                        size:{
+                            width: 200,
+                            height: size[1],
+                        },
+                        transparency: 20,
+                        stroke: "transparent",
+                        strokeWidth: 1,
+                        filter: 'editorState',
+                        type: 'patternImage',  
+                        name: 'patternImage' + nextId,
+                        tag: image.tag,
+                        url: base64Img
+                    }, selectedPage)
+                );
+            }, 'image/png'); //output format
         },
 
         onSelectShape(shape) {
@@ -242,7 +256,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                     rotation: 0,
                     type: 'shape',  
                     name: 'shape' + nextId,
-
+                    stroke: "transparent",
+                    strokeWidth: 1,
                      ...shape
                 }, selectedPage)
             );

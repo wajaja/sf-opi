@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Konva from 'konva';
-import { Stage, Layer, Shape, Circle, Rect, Ellipse, Star } from 'react-konva';
+import { Stage, Layer, Shape, 
+    Circle, Rect, Ellipse, Star,
+    RegularPolygon, Ring } from 'react-konva';
 
 
 class ShapePicker extends Component {
@@ -15,6 +17,10 @@ class ShapePicker extends Component {
             c = { cName: "Ellipse", radius: {x: 50, y: 65}, width: 70, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
         else if(val === 'star')
             c = { cName: "Star", numPoints: 6, innerRadius: 18, outerRadius: 25, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
+        else if(val === 'ring')
+            c = { cName: "Ring", numPoints: 6, innerRadius: 10, outerRadius: 13, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
+        else if(val === 'regularpolygon')
+            c = { cName: "RegularPolygon", sides: 6, radius: 21, outerRadius: 21, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
 
         this.props.handleSelect && this.props.handleSelect(c);
     }

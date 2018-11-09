@@ -25,6 +25,7 @@ class PatternImage extends Component {
 
     componentDidMount() {
         const image = new window.Image();
+        image.crossOrigin = "Anonymous"; //https://stackoverflow.com/questions/22097747/how-to-fix-getimagedata-error-the-canvas-has-been-tainted-by-cross-origin-data
         image.src = this.props.url;
         image.onload = () => {
             const scale = this.props.height / image.naturalHeight

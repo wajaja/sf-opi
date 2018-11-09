@@ -26,6 +26,7 @@ class ImageC extends React.Component {
 
     componentDidMount() {
         const image = new window.Image();
+        image.crossOrigin = "Anonymous";
         image.src = this.props.url;
         image.onload = () => {
             const scale = 160 / image.naturalHeight

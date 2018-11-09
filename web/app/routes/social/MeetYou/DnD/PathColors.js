@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import onClickOutside from "react-onclickoutside";
-import { Twitter } from 'react-color';
+import { TwitterPicker } from 'react-color';
 
 const PathColor = ({ onClick, color, pathOrder, activeOrder}) => {
     if(color === 'none')
@@ -44,7 +44,7 @@ class PathColors extends PureComponent {
 
     handlePathColorChange = (color, event) => {
         this.props.setVectorImageColor({
-            selectedCard, 
+            selectedCard: this.props.selectedCard, 
             childOrder: this.state.activeOrder, 
             color: color.hex
         });
@@ -99,9 +99,8 @@ class PathColors extends PureComponent {
                         }
                     })}
                 </ul>
-                {!!active && <div className="inactive"></div>}
                 {this.state.reactColorActived && 
-                    <Twitter 
+                    <TwitterPicker 
                         triangle="top-left" //hide
                         onChange={this.handlePathColorChange}
                         />
@@ -111,8 +110,8 @@ class PathColors extends PureComponent {
     }
 }
 
-//FROM DOC
-                        // color={color}
+////////FROM DOC
+// color={color}
 /* width - String, Pixel value for picker width. Default 276px
 colors - Array of Strings, Color squares to display. Default 
 ['#FF6900', '#FCB900', '#7BDCB5', '#00D084', '#8ED1FC', '#0693E3', '#ABB8C3', 

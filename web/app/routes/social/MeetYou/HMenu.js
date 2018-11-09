@@ -114,29 +114,32 @@ class HMenu extends Component {
                     <ul className="sub-menub-lst">
                         <li className="item">
                             <div className="filter" data-title="filter">
-                                <FiltersPicker 
+                                {!!selectedCard && <FiltersPicker 
                                     selectedCard={selectedCard}
                                     filter={this.props.filter} 
                                     updateCardRGBA={this.props.updateCardRGBA}
                                     />
+                                }
                             </div>
                         </li>
                         <li className="item">
                             <div className="crop" data-title="crop">
-                                <CropButton 
+                                {!!selectedCard && <CropButton 
                                     selectedCard={selectedCard}
                                     selectedCardId={this.props.selectedCardId}
                                     saveCroppedImage={this.props.saveCroppedImage}
                                     rotateLeft={this.props.rotateLeft}
                                     rotateRight={this.props.rotateRight} />
+                                }
                             </div>
                         </li>
                         <li className="item">
                             <div className="transparency" data-title="transparency">
-                                <StrockePicker 
+                                {!!selectedCard && <StrockePicker 
                                     selectedCard={selectedCard}
                                     updateCardStroke={this.props.updateCardStroke}
                                     />
+                                }
                             </div>
                         </li>
                     </ul>
