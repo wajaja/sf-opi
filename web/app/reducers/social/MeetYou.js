@@ -1,4 +1,4 @@
-import { fromJS, Map, merge } from     'immutable'  
+import { fromJS, Map, merge, setIn } from     'immutable'  
 import { getPopularImages } from '../../routes/social/MeetYou/utils/unsplash';
 import undoable, { distinctState, includeAction } from 'redux-undo'
 import {
@@ -81,16 +81,12 @@ function MeetYou(state = initialState, action) {
 
         
         case MeetYouActions.UPDATE_CARD_STROKE: {
-            let { card, stroke, strokeWidth, pageId } = action,
-            pages = fromJS(state).get('pages');
-
-            let list = pages
-                        .get(pageId)
-                        .get('cards')
-                        .map(item => item.get('id') === card.id ? item.merge({stroke, strokeWidth}) : item);
-            let _page = pages
-                        .get(pageId)
-                        .set('cards', list);
+            let { card, stroke, strokeWidth, pageId } = action
+            let pages = fromJS(state).get('pages'),
+            _card = fromJS(card).merge({stroke: stroke, strokeWidth: strokeWidth}),
+            list  = pages.get(pageId).get('cards')
+                        .map(item => item.get('id') === card.id ? _card : item);
+            let _page = pages.get(pageId).set('cards', list);
             return Object.assign({}, state, {
                 pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() 
             });
@@ -98,13 +94,10 @@ function MeetYou(state = initialState, action) {
 
         case MeetYouActions.SET_VECTOR_IMAGE_COLOR: {
             let { card, pageId, childOrder, color } = action,
-            pages    = fromJS(state).get('pages');
-            let list = pages.get(pageId).get('cards')
-                        .map(item => item.get('id') === card.id ? item.get('data')
-                                                                      .get('childs')
-                                                                      .get(childOrder)
-                                                                      .get('attrs')
-                                                                      .set('fill', color) : item);
+            pages = fromJS(state).get('pages'),
+            _card = setIn(fromJS(card), ['data', 'childs', childOrder, 'attrs', 'fill'], color), // { x: { y: { z: 738 }}}
+            list  = pages.get(pageId).get('cards')
+                        .map(item => item.get('id') === card.id ? _card : item);
             let _page = pages.get(pageId).set('cards', list);
             return Object.assign({}, state, {
                 pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() 
@@ -112,11 +105,12 @@ function MeetYou(state = initialState, action) {
         }
 
         case MeetYouActions.UPDATE_CARD_RGBA: {
-            let { card, val, type, pageId } = action,
-            pages = fromJS(state).get('pages');
+            let { card, val, color, pageId } = action,
+            pages = fromJS(state).get('pages'),
+            _card = setIn(fromJS(card), [color], val),
+            list  = pages.get(pageId).get('cards')
+                            .map(item => item.get('id') === card.id ? _card : item);
 
-            let list = pages.get(pageId).get('cards')
-                        .map(item => item.get('id') === card.id ? item.merge({[type]: val}) : item);
             let _page = pages.get(pageId).set('cards', list);
             return Object.assign({}, state, {
                 pages: pages.map((p, i) => i === pageId ?  _page : p).toJS() 
@@ -135,14 +129,14 @@ function MeetYou(state = initialState, action) {
 
         case MeetYouActions.MOVE_ZINDEX: {
             let { card, pageId, val } = action,
-            pages = fromJS(state).get('pages');
-
-            let list = pages.get(pageId).get('cards')
+            pages = fromJS(state).get('pages'),
+            list = pages.get(pageId).get('cards')
                         .filter(item => item.get('id') !== card.id);
-            if(val === 1)
-                list.push(card); //moveTop
-            else 
-                list.insert(0, card)
+
+            if(val === 'top')
+                list = list.push(card); //moveTop
+            else if(val === 'bottom')
+                list = list.insert(0, card);
                 // fromJS(card).concat(); // moveBottom
 
             let _page = pages.get(pageId).set('cards', list);

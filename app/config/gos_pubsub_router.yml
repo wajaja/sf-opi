@@ -1,0 +1,11 @@
+gos_pubsub_router:
+    routers:
+        redis: #available from container through gos_pubsub_router.redis
+            context:
+                tokenSeparator: ':' #redis channel are like : notification:user:user2 so the token separator is :
+            resources:
+                - "@OPPostBundle/Resources/config/pubsub/redis/notification.yml"
+                - "@OPMediaBundle/Resources/config/pubsub/redis/notification.yml"
+                - "@OPSocialBundle/Resources/config/pubsub/redis/notification.yml"
+                - "@OPMessageBundle/Resources/config/pubsub/redis/notification.yml"
+                - "@OPUserBundle/Resources/config/pubsub/redis/notification.yml"

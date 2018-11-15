@@ -1,0 +1,5 @@
+op_user:
+    ttl: 2592000
+    ttl_update: true
+    firewall: main #[main, api_login, refresh, api]
+    user_provider: op_user.user_provider

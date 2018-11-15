@@ -59,6 +59,16 @@ class ImageC extends React.Component {
                 y: e.target.y()
             }
         )
+
+        this.props.handleDragEnd()
+    };
+
+    handleDragStart = e => {
+        this.props.handleDragStart(e.target.x(), e.target.y(), 'Image')
+    };
+
+    handleDragMove = e => {
+        this.props.handleDragMove(e.target.x(), e.target.y(), 'Image')
     };
 
     handleTransformEnd = e => {
@@ -100,14 +110,19 @@ class ImageC extends React.Component {
               blue={this.props.blue}
               alpha={this.props.alpha}
               contrast={this.props.contrast}
+              stroke={this.props.stroke}
+              strokeWidth={this.props.strokeWidth}
               ref={node => this.node = node}
               filters={[Konva.Filters.RGBA, Konva.Filters.Contrast]}
 
               onDragEnd={this.handleDragEnd}
+              onDragMove={this.handleDragMove} 
+              onDragStart={this.handleDragStart}
               onTransformEnd={this.handleTransformEnd}
               width={this.state.width}
               height={this.state.height}
-              image={this.state.image} 
+              image={this.state.image}
+              imageSrc={this.props.url}  //usefull for serialization
               name={this.props.name}
 
               scaleX={this.state.scaleX}

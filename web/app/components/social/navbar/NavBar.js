@@ -39,7 +39,17 @@ const NavBar  = createReactClass({
                             	<Link to="/" className="op-gl-lk" id="op_gl_lk">
                             		<span className="op-gl-lk-ctnr"></span>
                             	</Link>
-                            </div>                            
+                            </div>  
+                            <div className="global-nav-right">
+                                <div className="global-nav-right-in">
+                                    <TabNav 
+                                        {...this.props} 
+                                        toggleNavNotifs={this.props.toggleNavNotifs}
+                                        toggleNavInvits={this.props.toggleNavInvits}
+                                        toggleNavMessage={this.props.toggleNavMessage}
+                                        />
+                                </div>
+                            </div>                          
                             <div className="div-form-nav" id="div-form-nav">
 
                                 <Search 
@@ -54,26 +64,13 @@ const NavBar  = createReactClass({
                                     />
 
                                 <div className="result-in-nav" id="result-in-nav"></div>
-
-                            </div>
-                            <div className="global-nav-right">
-                                <div className="global-nav-right-in">
-                                    <div className="home-in-nav">
-                                        <Link to="/" className="gb-nv-ho" id="gb_nv_ho"> 
-                                            <span className="h-ico"></span>
-                                        </Link>
-                                    </div>
-
-                                    <TabNav 
-                                        {...this.props} 
-                                        toggleNavNotifs={this.props.toggleNavNotifs}
-                                        toggleNavInvits={this.props.toggleNavInvits}
-                                        toggleNavMessage={this.props.toggleNavMessage}
-                                        />
-
-                                </div>
                             </div>
                             <div className="rgth-in-nav">
+                                <div className="home-in-nav">
+                                    <Link to="/" className="gb-nv-ho" id="gb_nv_ho"> 
+                                        <span className="h-ico"></span>
+                                    </Link>
+                                </div>
                                 <div className="profile-in-nav">
                                     <div  className="profile-div-in-nav usr-index-info" id="usr_index_info" data-usr-id={user.id}>
                                         <Link className="prf-dv-nv-lk usr-mdia-info"  to={`/${user.username}`} data-usr-pic={user.profilPic}>
@@ -81,12 +78,10 @@ const NavBar  = createReactClass({
                                         </Link>
                                     </div>
                                 </div> 
-
                                 <NavOptions 
                                     {...this.props}
                                     toggleNavParams={this.props.toggleNavParams}
                                     />
-
                             </div>
                         </div>
                     </div>

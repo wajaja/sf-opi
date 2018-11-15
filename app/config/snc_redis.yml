@@ -1,0 +1,73 @@
+snc_redis:
+    doctrine:
+        metadata_cache:
+            client: cache
+            entity_manager: default          # the name of your entity_manager connection
+            document_manager: default        # the name of your document_manager connection
+        result_cache:
+            client: cache
+            document_manager: [default, read]  # you may specify multiple entity_managers
+        query_cache:
+            client: cache
+            document_manager: default
+        second_level_cache:
+            client: cache
+            document_manager: default
+    monolog:
+        client: monolog
+        key: monolog
+    swiftmailer:
+        client: emails
+        key: swiftmailer
+    clients:
+        emails:
+            type: predis
+            alias: emails
+            dsn: redis://emails-spool-00.example.com
+            logging: false
+        monolog:
+            type: predis
+            alias: monolog
+            dsn: redis://localhost/1
+            logging: false
+        default:
+            type: predis
+            alias: default
+            dsn: "redis://localhost:6379"
+            logging: '%kernel.debug%'
+        cache:
+            type: predis
+            alias: cache
+            dsn: "redis://localhost:6379"
+            options:
+                replication: true
+                profile: 2.2
+                connection_timeout: 10
+                read_write_timeout: 30
+        session:
+            type: predis
+            alias: session
+            dsn: "redis://localhost:6379"
+        ws_client:
+            type: predis
+            alias: client_storage.driver #snc_redis.client_storage.driver
+            dsn: redis://127.0.0.1/2
+            logging: '%kernel.debug%'
+            options:
+                profile: 2.2
+                connection_timeout: 10
+                read_write_timeout: 30
+        # cluster:
+        #     type: predis
+        #     alias: cluster
+        #     dsn:
+        #         - redis://localhost/3?weight=10
+        #         - redis://localhost/4?weight=5
+        #         - redis://localhost/5?weight=1
+    session:
+        client: session
+        #prefix: opinion #default prefix is session see framework conf section
+        #use_as_default: true
+        #looking: true
+        #spin_lock_wait: 150000
+        ttl: 1200

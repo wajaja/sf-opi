@@ -343,10 +343,25 @@ class ActivityListener
 
     protected function updateUser($user)
     {
-        if ( ($user instanceof UserInterface) && !($user->isActiveNow()) ) {
-            $user->setLastActivity(new \DateTime());
-            $this->userManager->updateUser($user);
+        $newDate = new \Datetime(null, new \DateTimeZone("UTC"));
+        if ($user instanceof UserInterface) {
+            $timing  = $user->getTiming();
+            $lastAct = $user->getLastActivity();
 
+            //update user connexion timing
+            $newDateDateTimeStamp = $newDate->format("U");
+            $lastActDateTimeStamp = $lastAct->format("U");
+            $diff = (int) round($newDateDateTimeStamp - $lastActDateTimeStamp);
+            if($diff < (1000 * 300) ) { //1s * 300 = 6min
+                $_timing = (int) $timing + $diff;
+                $user->setTiming($_timing);
+            }
+
+            if(!($user->isActiveNow())) {
+                $user->setLastActivity($newDate);
+            }
+
+            $this->userManager->updateUser($user);
             $serializer = $this->container->get('jms_serializer');
 
             // $context    = new SerializationContext();

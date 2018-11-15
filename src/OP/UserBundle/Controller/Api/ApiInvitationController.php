@@ -84,8 +84,6 @@ class ApiInvitationController extends FOSRestController implements ClassResource
     */
     public function getAlertAction(Request $request)
     {
-        $response   = new JsonResponse();
-        $client     = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
         $user       = $this->_getUser();
         $lastReading = $user->getLastInvitationView() ? 
                             $user->getLastInvitationView() :
@@ -95,7 +93,7 @@ class ApiInvitationController extends FOSRestController implements ClassResource
                               ->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
                               ->countAlerts($user, $lastReading);
 
-        return  $nbInvitations;
+        return new JsonResponse([$nbInvitations]) ;
     }
 
     /**

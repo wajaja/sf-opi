@@ -58,6 +58,16 @@ class PatternImage extends Component {
                 y: e.target.y()
             }
         )
+
+        this.props.handleDragEnd()
+    };
+
+    handleDragStart = e => {
+        this.props.handleDragStart(e.target.x(), e.target.y(), 'PatternImage')
+    };
+
+    handleDragMove = e => {
+        this.props.handleDragMove(e.target.x(), e.target.y(), 'PatternImage')
     };
 
     handleTransformEnd = e => {
@@ -118,6 +128,8 @@ class PatternImage extends Component {
                 blue={this.props.blue}
                 alpha={this.props.alpha}
                 contrast={this.props.contrast}
+                stroke={this.props.stroke}
+                strokeWidth={this.props.strokeWidth}
                 ref={node => this.node = node}
                 filters={[Konva.Filters.RGBA, Konva.Filters.Contrast]}
 
@@ -125,10 +137,13 @@ class PatternImage extends Component {
                 scaleX={this.state.scaleX}
                 rotation={this.state.rotation}
                 onDragEnd={this.handleDragEnd}
+                onDragMove={this.handleDragMove} 
+                onDragStart={this.handleDragStart}
                 onTransformEnd={this.handleTransformEnd}
                 width={this.state.width}
                 height={this.state.height}
                 image={this.state.image} 
+                imageSrc={this.props.url}  //usefull for serialization
                 name={this.props.name}
 
                 shadowBlur={1}

@@ -1,0 +1,20 @@
+# Assetic Configuration
+assetic:
+    debug:          true
+    use_controller: true
+     #java:           /usr/bin/java
+    bundles:
+         #Default (all currently registered bundles):
+        - FrameworkBundle
+        - SecurityBundle
+        - TwigBundle
+        - MonologBundle
+        - SwiftmailerBundle
+        - DoctrineBundle
+        - AsseticBundle
+        - OPPostBundle
+        - OPUserBundle
+ #        - OPMediaBundle
+ #        - OPSocialBundle
+    filters:
+         cssrewrite: ~

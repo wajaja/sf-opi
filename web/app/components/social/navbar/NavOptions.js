@@ -34,7 +34,7 @@ const Options  = createReactClass({
 	                		>Logout
 	                	</Link>
 	                </li>
-	                <li className="chg-pwd">
+	                <li className="configLi">
 	                	<Link 
 	                		to="/change-pasword"
 	                		onClick={this.handlePassChange}

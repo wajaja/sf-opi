@@ -30,7 +30,6 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request)
     {
-        //         $client = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
         $session = $request->getSession();
         $session->isStarted() ?: $session->start();
 

@@ -494,7 +494,7 @@ body {
         left: 0px;
     }
     .editor-outer {
-        padding: 13px 3px;    //Important cause it will have consequence into generated RichTextCard Image
+        padding: 3px 3px;    //Important cause it will have consequence into generated RichTextCard Image
         /*border: 1px solid #9db0bf;*/
     }
     .expandingArea{
@@ -579,6 +579,10 @@ body {
     .Menubar-lft{
         flex: 0 0 319px;
         border-right: 1px solid #d8e0e4;
+        .sub-menub-lst{
+            position: relative;
+            bottom: 7px;
+        }
     }
     .Menubar-rght{
         right: 0;
@@ -620,7 +624,7 @@ body {
             .btn-ico{
                 width: 24px;
                 height: 19px;
-                opacity: 0.7;
+                
                 background-size: contain !important;
                 margin-right: 5px;
             }
@@ -685,7 +689,7 @@ body {
             top: -2px;
             /* margin: auto; */
             background: transparent url(http://opinion.com/images/if_app_window_107230.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
             background-size: contain;
         }
         .fill{
@@ -694,7 +698,7 @@ body {
             top: 4px;
             margin: auto;
             background: transparent url(http://opinion.com/images/352891-48.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
         }
         .shape{
             width: 38px;
@@ -702,14 +706,14 @@ body {
             top: 0px;
             margin: auto;
             background: transparent url(http://opinion.com/images/if_pentagon_1597480.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
         }
 
         .path{
             width: 26px;
             height: 26px;
             background: transparent url(http://opinion.com/images/2203530-48.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
             top: 7px;
         }
     }
@@ -718,7 +722,7 @@ body {
             width: 24px;
             height: 19px;
             background: transparent url(http://opinion.com/images/352385-48.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
         }
         .photoshop-picker {
             position: absolute;
@@ -733,7 +737,7 @@ body {
             /* top: 10px; */
             /* margin: auto; */
             background: transparent url(http://opinion.com/images/3671764-48.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
         }
     }
     .italic{
@@ -743,7 +747,7 @@ body {
             /* top: 10px; */
             /* margin: auto; */
             background: transparent url(http://opinion.com/images/if_italic_2561454.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
         }
     }
     .underline{
@@ -753,12 +757,12 @@ body {
             /* top: 10px; */
             /* margin: auto; */
             background: transparent url(http://opinion.com/images/352397-48.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
         }
     }
     .paragraph {
         .ico{
-            opacity: 0.7;
+            
             cursor: pointer;
             /* position: absolute;
             bottom: 5px; */
@@ -789,7 +793,7 @@ body {
         width: 29px;
         height: 30px;
         background: transparent url(http://opinion.com/images/1214961-48.png) 50% 50% no-repeat;
-        opacity: 0.7;
+        
         cursor: pointer;
         position: relative;
         background-size: cover;
@@ -798,7 +802,7 @@ body {
         width: 29px;
         height: 30px;
         background: transparent url(http://opinion.com/images/3427267-48.png) 50% 50% no-repeat;
-        opacity: 0.7;
+        
         cursor: pointer;
         position: relative;
         background-size: cover;
@@ -808,7 +812,7 @@ body {
         height: 30px;
         margin: auto;
         background: transparent url(http://opinion.com/images/352891-48.png) 50% 50% no-repeat;
-        opacity: 0.7;
+        
     }
     .ico.active{
         background-color: #b9c1c3;
@@ -819,7 +823,7 @@ body {
         width: 23px;
         height: 23px;
         background: transparent url(http://opinion.com/images/183252-48.png) 50% 50% no-repeat;
-        opacity: 0.7;
+        
         cursor: pointer;
         position: relative;
         background-size: cover;
@@ -828,7 +832,7 @@ body {
         width: 23px;
         height: 23px;
         background: transparent url(http://opinion.com/images/183254-48.png) 50% 50% no-repeat;
-        opacity: 0.7;
+        
         cursor: pointer;
         position: relative;
         background-size: cover;
@@ -837,7 +841,7 @@ body {
         width: 20px;
         height: 20px;
         background: transparent url(http://opinion.com/images/1063916-48.png) 50% 50% no-repeat;
-        opacity: 0.7;
+        
         cursor: pointer;
         position: relative;
         background-size: cover;
@@ -846,7 +850,7 @@ body {
         width: 20px;
         height: 20px;
         background: transparent url(http://opinion.com/images/1063885-48.png) 50% 50% no-repeat;
-        opacity: 0.7;
+        
         cursor: pointer;
         position: relative;
         background-size: cover;
@@ -858,7 +862,7 @@ body {
             width: 20px;
             height: 20px;
             background: transparent url(http://opinion.com/images/2857174-48.png) 50% 50% no-repeat;
-            opacity: 0.7;
+            
             cursor: pointer;
             position: relative;
             background-size: cover;
@@ -921,6 +925,23 @@ body {
                     position: absolute;
                     bottom: 10px;
                     margin: 0 10px;
+                }
+            }
+            .strk-ctnr{
+                bottom: -90px;
+                .option-ctnr{
+                    top: 33px;
+                    display: flex;
+                    width: 420px;
+                    position: absolute;
+                    background: #fff;
+                    padding: 0 5px 0 0;
+                    border: 1px solid;
+                    border-color: #ddd transparent transparent transparent;
+                    border-radius: 4px;
+                    &>div {
+                        flex: auto;
+                    }
                 }
             }
         }

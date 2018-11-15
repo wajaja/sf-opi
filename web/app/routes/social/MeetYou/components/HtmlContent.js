@@ -160,7 +160,7 @@ const HtmlContent  = createReactClass( {
         let cardMarkupWithStyles = this.createMarkup();
         let canvasImprintData = this.getImprintData(cardMarkupWithStyles);
 
-        console.log(width, height, canvasImprintData);
+        // console.log(width, height, canvasImprintData);
 
         let DOMURL = window.URL || window.webkitURL || window;
 
@@ -169,16 +169,16 @@ const HtmlContent  = createReactClass( {
 
         let svg = new Blob([canvasImprintData], { type: 'image/svg+xml' });
         let url = DOMURL.createObjectURL(svg);
-        console.log('url', url);
         img.onerror = (err) => {
             console.log(err)
         }
         img.onload = () => {
+            //TODO display loading  anim
             this.drawImg();
             this.setState({
                 image: img
             }, () => {
-                this.props.updateCard({image: img, shapes: self.shapes});
+                this.props.updateCard({image: img, shapes: this.shapes});
             });
             /*Call this method when you've finished 
             * using an object URL to let the browser know not 
@@ -254,7 +254,7 @@ const HtmlContent  = createReactClass( {
             <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
                 <style>
                     html, body {
-                        padding: 13px 3px;
+                        padding: 3px 3px;
                         margin: 0;
                         width: 100%;
                         height: 100%;
@@ -263,6 +263,7 @@ const HtmlContent  = createReactClass( {
                     body {
                         display: block;
                         margin: auto;
+                        color: #000000;
                         -webkit-font-smoothing: antialiased;
                         -moz-osx-font-smoothing: grayscale;
                         font-size: ${fontSize};
@@ -304,7 +305,7 @@ const HtmlContent  = createReactClass( {
             return (
                 <div 
                     style={{
-                        display: "none",  ///!IMPORTANT
+                        visibility: "hidden",  ///!IMPORTANT
                         width: width + "px", 
                         height: height  + "px",
                         position: 'relative',

@@ -214,11 +214,7 @@ class ApiRightController extends FOSRestController implements ClassResourceInter
         $dm->flush($comment);
         return $res->setData(array('data'=>$this->_getUser()->getId()));
     }
-
-    private function getStreamClient() {
-        return new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
-    }
-
+    
     public function _getUser()
     {
         return $this->user_provider->getHydratedUser();

@@ -2,10 +2,6 @@
 # http://symfony.com/doc/current/book/service_container.html
 imports:
     - { resource: legacy_aliases.yml }
-parameters:
-#    parameter_name: value
-    container.autowiring.strict_mode: true
-
 services:
     # this makes public all the services defined in this file
     _defaults: 
@@ -79,7 +75,47 @@ services:
         resource: '../../src/OP/PostBundle/Controller/Api/*'
         # exclude: '../../src/OP/SocialBundle/{Document,Repository,Tests,Test,Twig}'
         arguments: ['@OP\UserBundle\Security\UserProvider', '@doctrine.odm.mongodb.document_manager.public']
-
+        
+    mongo_client:
+        class: MongoClient
+        # if using a username and password
+        #arguments: ['mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017']
+        # if not using a username and password
+        arguments: ['mongodb://%mongodb_host%:27017']
+    session.handler.mongo:
+        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler
+        arguments: ['@mongo_client', '%mongo.session.options%']
+    # session.handler.memcache:
+    #     class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcacheSessionHandler
+    #     arguments: [ "@session.memcache", { expiretime: '%session_lifetime%' } ]
+    # session.memcache:
+    #     class: Memcache #OP\UserBundle\Utils\MemcacheWrapper #https://labs.madisoft.it/scaling-symfony-sessions-with-memcached/
+        # arguments:
+        #     - '%memcache_prefix%'
+        # calls:
+        #     - [ addServer, [ '%session_host%, '%session_port%' ]]
+    snc_redis.session.handler:
+        class: Snc\RedisBundle\Session\Storage\Handler\RedisSessionHandler
+        arguments: ["@snc_redis.session", "%session.storage.options%", "%snc_redis.session.prefix%", "%snc_redis.session.locking%", "%snc_redis.session.spin_lock_wait%"]
+    op_user.registration.form.type:
+        class: OP\UserBundle\Form\Type\RegistrationFormType
+        arguments: 
+            - '@op_user.user_manager'
+        tags:
+            - { name: form.type, alias: registration }
+    op_user.group.form.type:
+        class: OP\UserBundle\Form\Type\GroupFormType
+        arguments: 
+            - '@op_user.user_manager'
+        tags:
+            - { name: form.type, alias: group }
+    gos_web_socket.client_storage.driver.predis:
+        class: Gos\Bundle\WebSocketBundle\Client\Driver\PredisDriver
+        arguments:
+            - "@snc_redis.cache"
+            - '%web_socket_server.client_storage.prefix%' #(optionally)if you use prefix
+        
+            
     # OP\MessageBundle\Controller\Api\:
     #     resource: '../../src/OP/MessageBundle/Controller/Api/*'
         # exclude: '../../src/OP/MessageBundle/{Document,Repository,Tests,Test,Twig}'

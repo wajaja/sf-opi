@@ -105,7 +105,6 @@ const Setting  = createReactClass( {
         const tag = getUrlParameterByName('tag', this.props.location.search)
         //check if the current query search exist in allowed array of setting searchs
         if(!inArray(this.state.tagsArr, tag)){
-            console.log('no matched tag then redirect to general')
             this.props.history.push('/settings/?tag=general')
         }
 

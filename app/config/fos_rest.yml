@@ -1,0 +1,69 @@
+#fos_rest config
+fos_rest:
+    #disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    body_listener:
+        enabled: true
+        decoders:
+            jsontoform: fos_rest.decoder.jsontoform
+            json: fos_rest.decoder.json
+            # xml: fos_rest.decoder.xml
+        array_normalizer:
+            service: fos_rest.normalizer.camel_keys
+            forms: true    # Want form data to be normalized,
+    format_listener: true
+        # enabled: true
+        # rules:
+        #     - { path: ^/api/, priorities: [ json ], fallback_format: json, prefer_extension: true } #to have .json at the end of all our routes
+    view:
+        view_response_listener: 'force'    # makes it possible for us to return a View instance (set true in sensioFrameworkExtraBundle to handle fos_rest view )
+        formats:
+            xml: false
+            json : true
+            rss: false
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        mime_types:
+            json: ['application/json', 'application/x-json']
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    routing_loader:
+        default_format: json
+        include_format: false
+    exception:
+        enabled: true      # will generate a nice JSON error output, rather than a plain old HTML blow up.
+lexik_jwt_authentication:
+    # ssh private key path
+    private_key_path:    '%jwt_private_key_path%'
+    # ssh public key path
+    public_key_path:     '%jwt_public_key_path%'
+    # ssh key pass phrase
+    pass_phrase:         '%rest_pass_phrase%'
+    # token ttl
+    token_ttl:           3600
+    # key under which the user identity will be stored in the token payload
+    user_identity_field: username
+
+    # token encoding/decoding settings
+    encoder:
+        # token encoder/decoder service - default implementation based on the namshi/jose library
+        service:            lexik_jwt_authentication.encoder.default
+        # crypto engine used by the encoder service
+        crypto_engine:  openssl
+        # encryption algorithm used by the encoder service
+        signature_algorithm: RS256
+
+    # token extraction settings
+    # token_extractors:
+    #     authorization_header:      # look for a token as Authorization Header
+    #         enabled: true
+    #         prefix:  Bearer
+    #         name:    Authorization
+    #     cookie:                    # check token in a cookie
+    #         enabled: false
+    #         name:    BEARER
+    #     query_parameter:           # check token in query string parameter
+    #         enabled: false
+    #         name:    bearer

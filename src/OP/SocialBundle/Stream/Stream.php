@@ -13,12 +13,12 @@ class Stream
 
     //set cancert path to avoid the following exception
     //https://stackoverflow.com/questions/21187946/curl-error-60-ssl-certificate-issue-self-signed-certificate-in-certificate-cha
-	public function __construct(Container $container, RequestStack $requestStack){
+	public function __construct(Container $container, RequestStack $requestStack, string $getStreamKey, string $getStreamToken){
 		$this->container = $container;
         $this->request   = $requestStack->getCurrentRequest();
         //10.0 instead of 3.0 because we are in dev mode
         //TODO configure mode by using: $this->container->getParameter('kernel.environment');
-		$this->client 	 = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8', 'v1.0', '', 10.0);
+		$this->client 	 = new \GetStream\Stream\Client($getStreamKey, $getStreamToken, 'v1.0', '', 10.0);
 		$this->client->setLocation('us-east');
     }
 

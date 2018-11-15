@@ -21,8 +21,11 @@ class ShapePicker extends Component {
             c = { cName: "Ring", numPoints: 6, innerRadius: 10, outerRadius: 13, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
         else if(val === 'regularpolygon')
             c = { cName: "RegularPolygon", sides: 6, radius: 21, outerRadius: 21, fill: "#ffffff", stroke: "black", strokeWidth:1, shadowBlur:1 }
-
-        this.props.handleSelect && this.props.handleSelect(c);
+        else
+            return;
+        
+        console.log('Shape cliked');
+        this.props.handleSelect(c);
     }
 
     render() {

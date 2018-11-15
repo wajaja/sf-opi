@@ -1,0 +1,5 @@
+sensio_framework_extra:
+    #config for fos_rest
+    view: { annotations: true } # true used for ViewResponseListener see fos_rest
+    router: { annotations: true }
+    request: { converters: true }

@@ -16,20 +16,20 @@ security:
     #l'acces au login; register; resetting est public car, il ne faut pas que cette route soit proteger
     #tandisque le path admin require d'un ROLE_ADMIN,... 
     access_control:
-        - { path: ^/login$,     host: m.opinion.com,    role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/signup$,    host: m.opinion.com,    role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/.*,         host: m.opinion.com,    role: IS_AUTHENTICATED_FULLY }
-        - { path: ^/,          host: opinion.com,            role: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/.*,         host: opinion.com,            role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login$,     host: opinion.com,            role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/signup$,    host: opinion.com,            role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/initialize$,   host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/check_email$,  host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting,         host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/,            host: opinion.com,     role: ROLE_ADMIN }
-        - { path: ^/api/login$,        host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/signup$,       host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/,              host: opinion.com,     role: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/token/refresh, host: opinion.com,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/password/reset,    host: opinion.com,     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$,     host: '%mobile_host%',    role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/signup$,    host: '%mobile_host%',    role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/.*,         host: '%mobile_host%',    role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/,          host: '%web_host%',            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/.*,         host: '%web_host%',            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$,     host: '%web_host%',            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/signup$,    host: '%web_host%',            role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/initialize$,   host: '%web_host%',     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/check_email$,  host: '%web_host%',     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting,         host: '%web_host%',     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/,            host: '%web_host%',     role: ROLE_ADMIN }
+        - { path: ^/api/login$,        host: '%web_host%',     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/signup$,       host: '%web_host%',     role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/,              host: '%web_host%',     role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/token/refresh, host: '%web_host%',     roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/password/reset,    host: '%web_host%',     role: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/.*,              role: IS_AUTHENTICATED_ANONYMOUSLY }

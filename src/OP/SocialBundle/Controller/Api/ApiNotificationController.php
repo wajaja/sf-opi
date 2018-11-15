@@ -49,9 +49,7 @@ class ApiNotificationController extends FOSRestController implements ClassResour
      */
     public function getAlertAction(Request $request)
     {
-        $response = new JsonResponse();
         // Instantiate a new client
-        $client = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
         $nbNotes = 3;
 
         return  $nbNotes;

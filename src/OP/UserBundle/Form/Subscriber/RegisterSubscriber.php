@@ -48,7 +48,8 @@ class RegisterSubscriber implements EventSubscriberInterface
     	//$inversedStr = $lastname . $firstname;
     	$normalStr = $firstname . $lastname;
     	$usernames = $this->userManager->loadUsernamesByString($normalStr);
-    	$username  = $this->guessUsername($usernames, $normalStr);
+        //remove Uppercase & other chars
+    	$username  = $this->guessUsername($usernames, strtolower(preg_replace('/[^a-z0-9]/', '', $normalStr)));
 
     	return $username;
     }    

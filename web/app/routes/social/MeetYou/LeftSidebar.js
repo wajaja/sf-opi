@@ -91,7 +91,7 @@ const LeftSidebar = createReactClass({
                         <Fragment>
                             <ShapePicker
                                 selected={selectedShape}
-                                onSelect={onSelectShape} />
+                                handleSelect={onSelectShape} />
                         </Fragment>
                     }
                     {leftPanel === 'path' && 
@@ -146,7 +146,7 @@ const mapStateToProps = (state) => {
 ////////////
 const mapDispatchToProps = (dispatch, ownProps) => {
     let nextId = ownProps.cards.length,
-    initialFilterVal = 256 / 2,             //256 defined in FilterPiker as max range
+    initialFilterVal = 0,             //256 defined in FilterPiker as max range
     selectedPage= ownProps.selectedPage,
     size = SIZES[ownProps.page.size]; //[300, 400]
     return {
@@ -246,6 +246,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
 
         onSelectShape(shape) {
+            console.log('selected shape', shape)
             dispatch(
                 addCard({
                     x: 20,

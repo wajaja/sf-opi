@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import Konva from 'konva';
-import { Shape, Circle, Rect, Ellipse, Star }   from 'react-konva'
+import { Shape, Circle, Rect, Ellipse, Star, Ring, RegularPolygon }   from 'react-konva'
 
 
 //https://stackoverflow.com/questions/29875869/react-jsx-dynamic-component-name
 const components = {
-    star: Star,
-    rect: Rect,
-    circle: Circle,
-    ellipse: Ellipse
+    Star: Star,
+    Rect: Rect,
+    Circle: Circle,
+    Ellipse: Ellipse,
+    Ring: Ring,
+    RegularPolygon: RegularPolygon
 };
 
 class CustomShape extends React.Component {
@@ -42,6 +44,15 @@ class CustomShape extends React.Component {
                 y: e.target.y()
             }
         )
+        this.props.handleDragEnd()
+    };
+
+    handleDragStart = e => {
+        this.props.handleDragStart(e.target.x(), e.target.y(), 'CustomShape')
+    };
+
+    handleDragMove = e => {
+        this.props.handleDragMove(e.target.x(), e.target.y(), 'CustomShape')
     };
 
     handleTransformEnd = e => {
@@ -70,14 +81,17 @@ class CustomShape extends React.Component {
 
     render() {
     	// Correct! JSX type can be a capitalized variable.
-    	const SpecificShape = components[props.cName];
+    	const SpecificShape = components[this.props.cName];
+    	console.log(SpecificShape);
 
       	return <SpecificShape 
 	      			draggable 
-	      			{...props} 
+	      			{...this.props} 
 	                x={this.state.x}
 	                y={this.state.y}
-	      			onDragEnd={this.handleDragEnd} 
+	      			onDragEnd={this.handleDragEnd}
+	      			onDragMove={this.handleDragMove} 
+	      			onDragStart={this.handleDragStart}
 	      			onTransformEnd={this.handleTransformEnd}
 		            scaleX={this.state.scaleX}
 		            scaleY={this.state.scaleY}

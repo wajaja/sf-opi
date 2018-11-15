@@ -1,0 +1,40 @@
+gos_web_socket:
+    pushers:
+        zmq:
+            default: false
+            host: 127.0.0.1
+            port: 5555
+            persistent: true
+            protocol: tcp
+        wamp:
+            host: 127.0.0.1
+            port: 8080                   # Port for pusher should be same that server (socket)
+    client:
+        session_handler: session.handler.mongo   # Example: snc_redis.session.handler session.handler.mongo
+        firewall: [main, api_login, refresh, api] # ws_firewal # Example: secured_area, you must replace it by your firewall
+        storage:
+            driver:  "@gos_web_socket.client_storage.driver.predis"
+            ttl: 28800 #(optionally) time to live if you use redis driver
+            prefix: client #(optionally) prefix if you use redis driver, create key "client:1" instead key "1"
+            decorator: ~
+    shared_config: false        # Useful to keep the server configuration isolated from the application
+    # assetic: true #use assetic bundle
+    server:
+        port: 8080                          #default value
+        host: 127.0.0.1
+        origin_check:         false
+        router:
+            resources:
+                - "@OPMediaBundle/Resources/config/pubsub/routing.yml"
+                - "@OPPostBundle/Resources/config/pubsub/routing.yml"
+                - "@OPMessageBundle/Resources/config/pubsub/routing.yml"
+                # - "@OPSocialBundle/Resources/config/pubsub/routing.yml"
+            context:
+                tokenSeparator: "/"
+    rpc:                  []
+    topics:
+        - "@op_media.topic_media_service"
+        - '@OP\PostBundle\Topic\CommentTopic'
+    periodic:             []
+    servers:              []
+    origins:              []

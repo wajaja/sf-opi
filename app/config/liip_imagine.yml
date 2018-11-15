@@ -1,0 +1,33 @@
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        thumb_100x100:
+            quality: 90
+            filters:
+                thumbnail: { size: [100, 100], mode: inset }
+        thumb_50x50:
+            quality: 100
+            filters:
+                thumbnail: { size: [50, 50], mode: inset }
+        thumb_cov:
+            quality: 100
+            filters:
+                thumbnail: { size: [950, 300], mode: outbound }
+                
+        photo_10percent:
+            quality: 10
+
+        photo_50percent:
+            quality: 50
+
+        photo_80percent:
+            quality: 80
+
+        upload_min:
+            quality: 90
+            filters:
+                thumbnail: { size: [80, 80], mode: inset }

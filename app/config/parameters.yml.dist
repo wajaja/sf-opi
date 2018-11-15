@@ -29,3 +29,47 @@ parameters:
     jwt_public_key_path:  %kernel.root_dir%/../var/jwt/public.pem           # ssh public key path
     jwt_key_pass_phrase:  'opinion'                                         # ssh key pass phrase
     jwt_token_ttl:        3600
+# This file is auto-generated during the composer install
+# This file is auto-generated during the composer install
+parameters:
+    mailer_transport: gmail
+    mailer_host: smtp.gmail.com #127.0.0.1 # smtp.sendgrid.net
+    mailer_user: opinion.meetyou@gmail.com #your_sendgrid_username
+    mailer_password: 91005906010147opinion #'your_sendgrid_password'
+    #mailer_port: 587
+    locale: en
+    secret: 539d0884d4575bc6af917cb9a1cc6472b71f2b81
+    database_driver: mongo
+    database_host: 127.0.0.1
+    database_port: 27017
+    database_name: opinion
+    database_user: opiniondeveloper
+    database_password: null
+    jwt_private_key_path: '%kernel.root_dir%/../var/jwt/private.pem'
+    jwt_public_key_path: '%kernel.root_dir%/../var/jwt/public.pem'
+    jwt_key_pass_phrase: opinion
+    jwt_token_ttl: 3600
+
+    domain_name: http://opinion.com
+    file_base_url: http://opinion.com
+    mongo.session.options:
+        database: opinion # your MongoDB database name
+        collection: session  # your MongoDB collection name
+    mongodb_host: 127.0.0.1 # your MongoDB server's IP
+    elasticsearch_host: 127.0.0.1
+    elasticsearch_port: 9200
+    #config from https://blog.intelligentbee.com/2015/12/02/send-emails-in-symfony2-the-right-way/
+    contact_email: contact@opinion.com
+    from_email: developer@opinion.com
+    from_name: Opinion
+    # mongodb_username:
+    # mongodb_password:
+    container.autowiring.strict_mode: true
+    rest_pass_phrase: 'OPINION'
+    resetting_email_address: cedrickngeja@gmail.com
+    resetting_email_sender: Opinion Team
+    #for security.yml usage
+    web_host: opinion.com
+    mobile_host: m.opinion.com
+    get_stream_key: sewzt6y5y29n
+    get_stream_token: c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8

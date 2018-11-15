@@ -1,0 +1,29 @@
+framework:
+    assets:
+        base_url: http://opinion:8080                       #Configuration du bundle FrameWork
+    esi:             { enabled: true }
+    translator:      { fallbacks: ["%locale%"] }            #Traducteur
+    secret:          "%secret%"                             #Mot de passe -Secret-
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"    #Fichier de route
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:   "%locale%"
+    trusted_hosts:   ~
+    #trusted_proxies: ~ #remove since symfony3.3.0 upgrade
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id: snc_redis.session.handler  #session.handler.mongo
+        cookie_lifetime: 2592000 # optional, it is set to 30 days here
+        gc_maxlifetime: 2592000 # optional, it is set to 30 days here
+        cookie_domain: .opinion.com
+        save_path:  '%kernel.root_dir%var/session'
+        # auto_start:     true  
+        name: SFSESSID
+    fragments:       ~
+    http_method_override: true  #for foscomment;

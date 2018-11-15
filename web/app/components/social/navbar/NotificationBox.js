@@ -222,7 +222,7 @@ function mapDispatchToProps(dispatch) {
 export const NotifContentBox = connect(state => ({
     notifications: state.Notification.notifications,
 }), mapDispatchToProps)(_NotifContentBox)
-
+ 
 
 const clickOutsideConfig = {
     excludeScrollbar: true

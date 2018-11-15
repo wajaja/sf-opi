@@ -147,16 +147,16 @@
         width: 210px !important;
         // margin-left: 10px !important;
     }
+    .div-form-nav {
+        width: 210px;
+        width: 300px !important;
+    }
 }
 /*order for this code will be very important */ 
 /* starting from small to large screen width*/
 @media (min-width: 992px) {
     #hm_scond_blk{
         display: none; /*hide fixed part*/
-    }
-    .div-form-nav {
-        width: 210px;
-        width: 300px !important;
     }
     .global-nav-right{
         margin-left: 10px !important;

@@ -65,14 +65,14 @@ class TransformerComponent extends React.Component {
             ref={node => {
                 this.transformer = node;
             }}
-            anchorStroke='#d8e3ec' //#0e161d
-            anchorFill='transparent'
+            anchorStroke='#0294a5' //#0e161d
+            anchorFill='#ffffff'
             anchorSize={12}     //12
-            borderStroke='#0e161d' //#0e161d
+            borderStroke='#0294a5' //#0e161d
             centeredScaling={selectedType === `patternImage`}
             anchorStrokeWidth={1}
             borderStrokeWidth={.2}
-            rotateAnchorOffset={20}
+            rotateAnchorOffset={23}
             resizeEnabled={selectedType !== 'richtext'} //disable resize on richtext
         />
     );
@@ -83,39 +83,29 @@ class TransformerComponent extends React.Component {
 const ImageCanvas = createReactClass({
     getInitialState() {
         this.textEditor = new textEditor();
+
+        const {canvasWidth, canvasHeight} = this.props;
+        
         return { 
             selectedShapeName: "",
-            selection: [null, null] 
+            selection: [null, null],
+            centerPoints: [
+                {
+                    point: [Math.round((canvasWidth/2)) + 0.5, 0, Math.round((canvasWidth/2)) + 0.5, canvasHeight]
+                },
+                {
+                    point: [0, Math.round((canvasHeight/2)), canvasWidth, Math.round((canvasHeight/2))]
+                }
+            ] 
         };
     },
 
-    getCursors() {
-        const {start, end} = this.textEditor;
-        if (start === end) {
-          return {cursor: start, cursor1: null, cursor2: null};
-        } else {
-          return {cursor: null, cursor1: start + 1, cursor2: end + 1};
-        }
+    componentDidMount() {
+        this.gridLayer.hide();
     },
 
     redraw() {
         this.forceUpdate();
-    },
-
-    updateCursor(e) {
-        const {txt} = this.refs;
-        const {selectionStart, selectionEnd} = txt;
-        this.textEditor.setFromInput(selectionStart, selectionEnd);
-        setTimeout(this.redraw, 0);
-    },
-
-    cancelEdit(e) {
-        this.refs.bodyBox.cancelEdit(e);
-        setTimeout(this.redraw, 0);
-    },
-
-    setNoFocus() {
-        this.props.onBlur();
     },
 
     handleClickOnImage(e, mousePos) {
@@ -226,13 +216,48 @@ const ImageCanvas = createReactClass({
         evt.preventDefault();
     },
 
+    handleDragStart(x, y, type) {
+        this.gridLayer.show();
+        // this.setState({
+        //     dragStart: true
+        // })
+    },
+
+    handleDragMove(x, y, type) {
+        //TODO:: show other lines
+        // if (!e.evt.shiftKey) { return; }
+        // const pos = e.target.getStage().getPointerPosition();
+        // const x = roundBy(pos.x, gridSize);
+        // const y = roundBy(pos.y, gridSize);
+        // e.target.position({x, y});
+    },
+
+    handleDragEnd() {
+        this.gridLayer.hide();
+        // this.setState({
+        //     dragStart: true
+        // })
+    },
+
+    componentDidUpdate(oldProps, oldState) {
+        if(this.props.cards !== oldProps.cards) {
+            // save stage as a json string
+            // var json = stage.toJSON();
+            //Save in localStorage
+            // if(this.props.user && this.props.user.id) {
+            //     const item = 'meetyou_' + this.props.user.id;
+            //     this.saveStateToLS(item);
+            // } else {
+            //     const item = 'meetyou_' + 'default';
+            //     this.saveStateToLS(item);
+            // }
+        }
+    },
+
     render() {
         //////////
         const {canvasWidth, canvasHeight} = this.props;
         const {filter, isFocused, textsArr} = this.props;
-        const {image} = this.props;
-        const {text} = this.props.body;
-        const mainFrame = [0, 0, canvasWidth, canvasHeight];
 
         if(!this.props.cards.length) {
             return <div />
@@ -250,7 +275,6 @@ const ImageCanvas = createReactClass({
                     width={canvasWidth}
                     height={canvasHeight}>
                     {this.props.cards.map && this.props.cards.map((card, i) => {
-                        console.log('iterate ....', i)
                         if(card.type === 'image') 
                             return <CanvasImage 
                                       key={i}
@@ -270,6 +294,9 @@ const ImageCanvas = createReactClass({
                                       scaleX={card.scaleX}
                                       scaleY={card.scaleY}
                                       rotation={card.rotation}
+                                      handleDragEnd={this.handleDragEnd}
+                                      handleDragMove={this.handleDragMove}
+                                      handleDragStart={this.handleDragStart}
                                       updateCardPos={this.props.updateCardPos}
                                       updateCardSize={this.props.updateCardSize}
                                       onMouseDown={this.handleClickOnImage} />
@@ -292,6 +319,9 @@ const ImageCanvas = createReactClass({
                                         rotation={card.rotation}
                                         editing={this.props.editing}
                                         background={card.background}
+                                        handleDragEnd={this.handleDragEnd}
+                                        handleDragMove={this.handleDragMove}
+                                        handleDragStart={this.handleDragStart}
                                         editorState={card.editorState}
                                         defaultStyle={card.defaultStyle}
                                         textAttrs={this.props.body.textAttrs}
@@ -320,6 +350,9 @@ const ImageCanvas = createReactClass({
                                         scaleX={card.scaleX}
                                         scaleY={card.scaleY}
                                         rotation={card.rotation}
+                                        handleDragEnd={this.handleDragEnd}
+                                        handleDragMove={this.handleDragMove}
+                                        handleDragStart={this.handleDragStart}
                                         onMouseDown={this.handleClickOnImage}
                                         updateCardPos={this.props.updateCardPos}
                                         updateCardSize={this.props.updateCardSize}
@@ -339,10 +372,12 @@ const ImageCanvas = createReactClass({
                                         scaleX={card.scaleX}
                                         scaleY={card.scaleY}
                                         rotation={card.rotation}
+                                        handleDragEnd={this.handleDragEnd}
+                                        handleDragMove={this.handleDragMove}
+                                        handleDragStart={this.handleDragStart}
                                         //onMouseDown={this.handleClickOnImage}
                                         updateCardPos={this.props.updateCardPos}
                                         updateCardSize={this.props.updateCardSize}
-                                        {...card}
                                         />
                         else if(card.type === 'vectorImage')
                             return <VectorImage
@@ -361,6 +396,9 @@ const ImageCanvas = createReactClass({
                                         rotation={card.rotation}
                                         originalData={card.data}
                                         childs={card.data.childs}
+                                        handleDragEnd={this.handleDragEnd}
+                                        handleDragMove={this.handleDragMove}
+                                        handleDragStart={this.handleDragStart}
                                         viewBox={card.data.attrs.viewBox}
                                         //onMouseDown={this.handleClickOnImage}
                                         updateCardPos={this.props.updateCardPos}
@@ -370,6 +408,21 @@ const ImageCanvas = createReactClass({
                     <TransformerComponent 
                         selectedShapeName={this.state.selectedShapeName}
                         selectedType={this.state.selectedType} />          
+                </Layer>
+                <Layer
+                    x={0}
+                    y={0}
+                    width={canvasWidth}
+                    height={canvasHeight}
+                    ref={el => this.gridLayer = el} >
+                    {this.state.centerPoints.map((line, i) => {
+                        return <Line 
+                                  key={i}
+                                  points={line.point}
+                                  stroke="#red"
+                                  strokeWidth={1}
+                                  />
+                    })}         
                 </Layer>
             </Stage>
         )

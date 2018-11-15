@@ -39,6 +39,16 @@ class VectorImage extends Component {
                 y: e.target.y()
             }
         )
+
+        this.props.handleDragEnd()
+    };
+
+    handleDragStart = e => {
+        this.props.handleDragStart(e.target.x(), e.target.y(), 'VectorImage')
+    };
+
+    handleDragMove = e => {
+        this.props.handleDragMove(e.target.x(), e.target.y(), 'VectorImage')
     };
 
     handleTransformEnd = e => {
@@ -63,6 +73,8 @@ class VectorImage extends Component {
         )
     }
 
+
+
     render() {
         const { viewBox, name } = this.props
 
@@ -76,9 +88,13 @@ class VectorImage extends Component {
                 rotation={this.state.rotation}
                 width={this.state.width}
                 height={this.state.height}
+                stroke={this.props.stroke}
+                strokeWidth={this.props.strokeWidth}
                 name={name}
                 // onClick={this.handleSelect}
                 onDragEnd={this.handleDragEnd}
+                onDragMove={this.handleDragMove} 
+                onDragStart={this.handleDragStart}
                 onTransformEnd={this.handleTransformEnd}
                 > 
                 {this.props.childs.map((child, i) => {

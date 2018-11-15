@@ -1,0 +1,9 @@
+fos_js_routing:
+    routes_to_expose: [ "[a-zA-z0-9_-]+" ]          #All route will be exposed
+    cache_control:
+        # All are optional, defaults shown
+        public: false   # can be true (public) or false (private)
+        maxage: 300    # integer value, e.g. 300
+        smaxage: 300   # integer value, e.g. 300
+        expires: 5 minutes   # anything that can be fed to "new \DateTime($expires)", e.g. "5 minutes"
+        vary: []        # string or array, e.g. "Cookie" or [ Cookie, Accept ]

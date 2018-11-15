@@ -1,0 +1,6 @@
+monolog:
+    handlers:
+        main:
+            type: service
+            id: monolog.handler.redis
+            level: debug

@@ -63,6 +63,15 @@ class RichTextCard extends React.Component {
                 y: e.target.y()
             }
         )
+        this.props.handleDragEnd()
+    };
+
+    handleDragStart = e => {
+        this.props.handleDragStart(e.target.x(), e.target.y(), 'RichTextCard')
+    };
+
+    handleDragMove = e => {
+        this.props.handleDragMove(e.target.x(), e.target.y(), 'RichTextCard')
     };
 
     handleTransformEnd = e => {
@@ -88,13 +97,23 @@ class RichTextCard extends React.Component {
     }
 
     onDblClick = (e) => {
-        console.log(e, 'double click ......')
         document.body.style.cursor = "default";
         this.props.editRichText(this.props.id, this.props.editorState)
     }
  
-                // width={this.props.size.width}
-                // height={this.props.size.width}
+    onClick = (e) => {
+        var mousePos = e.target.getStage().getPointerPosition();
+        const client_rect = e.target.getClientRect({
+            skipTransform: false // get client rect without think off transformations (position, rotation, scale, offset, etc)
+            //,
+        });
+        const x = mousePos.x - client_rect.x;
+        const y = mousePos.y - client_rect.y;
+
+        console.log(client_rect, x, y)
+    }
+    // width={this.props.size.width}
+    // height={this.props.size.width}
     render() {
         return (
             <KonvaImage 
@@ -105,13 +124,19 @@ class RichTextCard extends React.Component {
                 scaleY={this.state.scaleY}
                 rotation={this.state.rotation}
                 onDragEnd={this.handleDragEnd}
+                onDragMove={this.handleDragMove} 
+                onDragStart={this.handleDragStart}
                 onTransformEnd={this.handleTransformEnd}
                 fill={this.props.background || 'transparent'}
                 image={this.props.image}
+                imageSrc={this.props.url}  //usefull for serialization
+                stroke={this.props.stroke}
+                strokeWidth={this.props.strokeWidth}
                 name={this.props.name}
                 width={this.props.width}
                 height={this.props.height}
 
+                onClick={(e) => this.onClick(e)} // onTape
                 onDblclick={(e) => this.onDblClick(e)}
                 onMouseEnter={() => {
                   document.body.style.cursor = "move";

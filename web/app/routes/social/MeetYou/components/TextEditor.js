@@ -101,7 +101,8 @@ const {
 	'color', 
 	'text-transform', 
 	'font-family',
-	'text-align'
+	'text-align',
+    'line-height'
 	], DYNAMIC_STYLES_PREFIX, customStyleMap);
 
 const TextEditor  = onClickOutside(createReactClass({
@@ -387,6 +388,14 @@ const TextEditor  = onClickOutside(createReactClass({
 	      		this.setCurrentFontSize(11);
 	    	}
 
+            // if (has(dynamicStyles, 'lineHeight')) {
+            //     this.setCurrentFontSize(
+            //         parseInt(dynamicStyles['lineHeight'].replace('px', ''), 10),
+            //     );
+            // } else {
+            //     this.setCurrentFontSize(11);
+            // }
+
 	    	if (has(dynamicStyles, 'fontFamily')) {
 	      		this.setCurrentFontFamily(dynamicStyles['fontFamily']);
 	    	} else {
@@ -540,8 +549,13 @@ const TextEditor  = onClickOutside(createReactClass({
   	addFontSize(val) {
     	const newEditorState = styles.fontSize.add(this.state.editorState, val);
     	this.setCurrentFontSize(val);
-		return this.updateEditorState(newEditorState);
+        const applyLineHeight = this.applyLineHeight(newEditorState, val);
+		return this.updateEditorState(applyLineHeight);
   	},
+
+    applyLineHeight(editorState, val) {
+        return styles.lineHeight.add(editorState, val);
+    },
 
     setCurrentFontFamily(fontFamily){
         this.setState({
@@ -735,7 +749,6 @@ const TextEditor  = onClickOutside(createReactClass({
 
 
     	const html = stateToHTML(this.state.editorState.getCurrentContent(), options);
-    	console.log(html);
     	
     	///////return
  		return(
@@ -782,28 +795,29 @@ const TextEditor  = onClickOutside(createReactClass({
 				                        stripPastedStyles={true}
 				                        customStyleFn={customStyleFn}
 				                    />
-				                    {this.state.processing && <HtmlContent 
-				                    	width={this.state.width}
-				                    	height={this.state.height}
-				                    	html={html}
-				                    	updateCard={this.updateCard}
-				                    	getHtmlCardRect={(rect) => this.setState({htmlCardRect: rect})}
-				                    	size={{ 
-				                    		width: parseInt(this.state.width), 
-				                    		height: parseInt(this.state.height) 
-				                    	}}
-				                    	defaultStyle={{
-								    		fontSize: this.state.defaultFontSize || '12px',
-											lineHeight: this.state.currentLineHeight,
-											fontFamily: this.state.defaultFontFamily || 'Arial',
-											textAlignment: this.state.currentTextAlign,
-											textDirectionality: this.state.currentTextDirectionality
-										}}
-							    		editorState={this.state.editorState}
-							    		background={this.state.editorBackground || 'transparent'}
-							    		cardId={this.props.selectedCardId} 
-							    		type="richtext"
-				                    	/>
+				                    {this.state.processing && 
+                                        <HtmlContent 
+    				                    	width={this.state.width}
+    				                    	height={this.state.height}
+    				                    	html={html}
+    				                    	updateCard={this.updateCard}
+    				                    	getHtmlCardRect={(rect) => this.setState({htmlCardRect: rect})}
+    				                    	size={{ 
+    				                    		width: parseInt(this.state.width), 
+    				                    		height: parseInt(this.state.height) 
+    				                    	}}
+    				                    	defaultStyle={{
+    								    		fontSize: this.state.defaultFontSize || '12px',
+    											lineHeight: this.state.currentLineHeight,
+    											fontFamily: this.state.defaultFontFamily || 'Arial',
+    											textAlignment: this.state.currentTextAlign,
+    											textDirectionality: this.state.currentTextDirectionality
+    										}}
+    							    		editorState={this.state.editorState}
+    							    		background={this.state.editorBackground || 'transparent'}
+    							    		cardId={this.props.selectedCardId} 
+    							    		type="richtext"
+    				                    	/>
 				                    }
 				                    <EmojiSuggestions 
 				                    	onOpen={this.onEmojiOpen}

@@ -65,13 +65,13 @@ export function updateCardSize(cardId, pageId, size) {
 
 export const UPDATE_CARD_STROKE = 'MEETYOU::UPDATE_CARD_STROKE'
 //Applyed on vectorImage
-export function updateCardStroke(card, pageId, strokeColor, strokeWidth) {
-    return { type: UPDATE_CARD_STROKE, card, strokeColor, strokeWidth} 
+export function updateCardStroke(card, pageId, stroke, strokeWidth) {
+    return { type: UPDATE_CARD_STROKE, card, stroke, strokeWidth, pageId} 
 }
 
 export const UPDATE_CARD_RGBA = 'MEETYOU::UPDATE_CARD_RGBA'
-export function updateCardRGBA(card, pageId, val, type) {
-    return { type: UPDATE_CARD_RGBA, card, val, type} 
+export function updateCardRGBA(card, pageId, val, color) {
+    return { type: UPDATE_CARD_RGBA, card, val, color, pageId} 
 }
 
 export const SET_VECTOR_IMAGE_COLOR = 'MEETYOU::SET_VECTOR_IMAGE_COLOR'

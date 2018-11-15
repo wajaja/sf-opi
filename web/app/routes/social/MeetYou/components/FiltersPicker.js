@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import createReactClass   from 'create-react-class'
 import PropTypes from 'prop-types';
+import InputRange from 'react-input-range';
 
 export default createReactClass({
   propTypes: {
@@ -20,8 +21,7 @@ export default createReactClass({
         }
     },
 
-    updateFilter(e, color) {
-        let val = parseInt(e.target.value)
+    updateFilter(val, color) {
         this.setState({
             [color] : val
         })
@@ -41,38 +41,43 @@ export default createReactClass({
             <div className="FiltersPicker" ref="select">
                 <div className="rg-ctnr">
                     <div>Red</div>
-                    <input 
-                        type="range" min="0" 
-                        max="256" step="1" value={red}
-                        onChange={(e) => this.updateFilter(e, 'red')} /> 
+                    <InputRange
+                        maxValue={255}
+                        minValue={0}
+                        value={red}
+                        onChange={value => this.updateFilter(value, 'red')} /> 
                 </div>
                 <div className="rg-ctnr">
                     <div>Green</div>
-                    <input 
-                        type="range" min="0" 
-                        max="256" step="1" value={green} 
-                        onChange={(e) => this.updateFilter(e, 'green')} /> 
+                    <InputRange
+                        maxValue={255}
+                        minValue={0}
+                        value={green}
+                        onChange={value => this.updateFilter(value, 'green')} /> 
                 </div>
                 <div className="rg-ctnr">
                     <div>Blue</div>
-                    <input 
-                        type="range" min="0" 
-                        max="256" step="1" value={blue}
-                        onChange={(e) => this.updateFilter(e, 'blue')} /> 
+                    <InputRange
+                        maxValue={255}
+                        minValue={0}
+                        value={blue}
+                        onChange={value => this.updateFilter(value, 'blue')} /> 
                 </div>
                 <div className="rg-ctnr">
                     <div>Alpha</div>
-                    <input 
-                        type="range" min="0" 
-                        max="256" step="1" value={alpha}
-                        onChange={(e) => this.updateFilter(e, 'alpha')} /> 
+                    <InputRange
+                        maxValue={255}
+                        minValue={0}
+                        value={alpha}
+                        onChange={value => this.updateFilter(value, 'alpha')} /> 
                 </div>
                 <div className="rg-ctnr">
                     <div>Contrast</div>
-                    <input 
-                        type="range" min="0" 
-                        max="256" step="1" value={contrast}
-                        onChange={(e) => this.updateFilter(e, 'contrast')} /> 
+                    <InputRange
+                        maxValue={255}
+                        minValue={0}
+                        value={contrast}
+                        onChange={value => this.updateFilter(value, 'contrast')} /> 
                 </div>
             </div>
         }

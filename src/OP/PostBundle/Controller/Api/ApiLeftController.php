@@ -5,7 +5,7 @@ use OP\PostBundle\Document\LeftComment,
     OP\PostBundle\Form\LeftCommentType,
     OP\PostBundle\Event as PostEvents,
     OP\UserBundle\Security\UserProvider,
-    Nelmio\ApiDocBundle\Annotation as Doc,
+//    Nelmio\ApiDocBundle\Annotation\ApiDoc,
     FOS\RestBundle\Controller\Annotations,
     Symfony\Component\HttpFoundation\Request,
     FOS\RestBundle\Controller\FOSRestController,
@@ -233,10 +233,6 @@ class ApiLeftController extends FOSRestController implements ClassResourceInterf
         $comment->setPostValid($post->getId());  //set the value
         $commentForm = $this->createForm(CommentType::class, $comment);
         return $commentForm;
-    }
-
-    private function getStreamClient() {
-        return new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
     }
 
     public function _getUser()

@@ -3,7 +3,6 @@ namespace OP\SocialBundle\Controller\Api;
 
 use OP\UserBundle\Document\User,
 //     FOS\RestBundle\View\View,
-    GetStream\Stream\Client,
     OP\SocialBundle\Document\Search,
     OP\UserBundle\Security\UserProvider,
     JMS\Serializer\SerializationContext,

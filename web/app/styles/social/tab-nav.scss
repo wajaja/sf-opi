@@ -39,11 +39,11 @@ div#tabnav_msg #msg_nv_ct,
 div#tabnav_invit #invit_nv_ct
 {
     position: absolute;
-    top: 31px;
-    right: -20px;
-    width: 450px;
+    top: 32px;
+    left: -50px;
+    width: 420px;
     min-height: 250px;
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
 }
 div#tabnav_nt, div#tabnav_invit, div#tabnav_msg{
     position: relative;
@@ -103,7 +103,7 @@ div#tabnav_msg .msg-nv-arraw, div#tabnav_msg .msg-nv-arraw:after
 .tabnav-box-ctnr
 {
     position: relative;
-    top: 11px;
+    top: 4px;
 }
 .tabnav-box-hd{
 

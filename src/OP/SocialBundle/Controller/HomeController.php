@@ -43,7 +43,6 @@ class HomeController extends Controller
      */
     public function indexAction(Request $request, ThreadManager $threadMan, MessageManager $msgMan, PostManager $pMan, NotificationManager $notifMan, InvitationManager $invitMan, SerializerInterface $serializer)
     {
-        //         $client = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
         $session = $request->getSession();
         // $session->invalidate();
         //control over state jwt_token key

@@ -1,0 +1,15 @@
+doctrine_mongodb:
+    connections:
+        default:
+            server: localhost:27017     #"mongodb://mongodb-01:27017,mongodb-02:27017,mongodb-03:27017"
+            options: {}
+    default_database: opinion
+    document_managers:
+        default:
+            auto_mapping: true
+            metadata_cache_driver:
+                type: redis
+                class: Doctrine\Common\Cache\RedisCache
+                host: 127.0.0.1
+                port: 6379
+                instance_class: Redis

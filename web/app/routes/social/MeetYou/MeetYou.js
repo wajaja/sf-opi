@@ -11,7 +11,7 @@ import {
         Modifier, ContentState
     }                   from "draft-js";
 import MultiDecorator   from 'draft-js-plugins-editor/lib/Editor/MultiDecorator';
-import { List, fromJS } from 'immutable'
+import { List, fromJS, setIn } from 'immutable'
 import createCustomStylesUtils from './utils/customStylesUtils';
 import * as DraftFuncs   from '../../../components/social/home/form/DraftFuncs'
 import { 
@@ -20,6 +20,7 @@ import {
 import AdminSender              from './AdminSender'
 
 import '../../../styles/social/meetyou.scss'
+import '../../../styles/lib/react-input-range.scss'
 import WorkSpace                from './WorkSpace'
 
 import MyLoadable    from '../../../components/MyLoadable'
@@ -187,10 +188,10 @@ const MeetYou = createReactClass({
                 scaleX: 1,
                 scaleY: 1,
                 rotation: 0,
-                size: {width: 80, height: 80},
+                size: {width: 120, height: 30},
                 node: null,
-                width: 80,
-                height: 80,
+                width: 120, //initial
+                height: 30, //initial
                 image: null,
                 shapes: [],
                 stroke: "transparent",
@@ -285,23 +286,29 @@ const MeetYou = createReactClass({
     },
 
     
-    updateCardStroke(card, strokeColor, strokeWidth) {
-        console.log(card, strokeColor, strokeWidth)
-        this.props.updateCardStroke(card, strokeColor, strokeWidth)
+    updateCardStroke(card, stroke, strokeWidth) {
+        this.setState({
+            selectedCard:  fromJS(card).merge({stroke: stroke, strokeWidth: strokeWidth}).toJS()
+        })
+        this.props.updateCardStroke(card, this.state.selectedPage, stroke, strokeWidth)
     },
 
-    updateCardRGBA(card, val, type) {
-        this.props.updateCardRGBA(card, val, type)
+    updateCardRGBA(card, val, color) {
+        this.setState({
+            selectedCard: setIn(fromJS(card), [color], val).toJS()
+        })
+        this.props.updateCardRGBA(card, this.state.selectedPage, val, color)
     },
 
     //changes => {textArr, }
     updateEditorCard({cardId, shapes, type, image}) {
+        console.log('jkbfvkjf:vkjf:')
         const pageId = this.state.selectedPage,
         pages = fromJS(this.props.pages);
         const item = pages.get(pageId).get('cards')
                     .filter(item => item.get('id') === cardId)
                     .get(0)
-                    .merge({shapes, image})
+                    .merge({shapes, image, width: image.width, height: image.height})
                     .toJS();
 
         if(type === 'richtext') {
@@ -344,11 +351,12 @@ const MeetYou = createReactClass({
     },
 
     onMoveZindex(val) {
+        console.log('ca au moins')
         //always redraw layer
-        const page = this.props.pages[this.state.selectedPage];
-        let card = page.cards.filter(item => item.id === this.state.selectedCardId)[0];
-        if(!!card) 
-            this.props.onMoveZindex(card, this.state.selectedPage, val)
+        // const page = this.props.pages[this.state.selectedPage];
+        // let card = page.cards.filter(item => item.id === this.state.selectedCardId)[0];
+        if(!!this.state.selectedCard) 
+            this.props.onMoveZindex(this.state.selectedCard, this.state.selectedPage, val)
     },
 
     updateSelectedShape(card) {
@@ -356,8 +364,7 @@ const MeetYou = createReactClass({
     },
 
     setVectorImageColor({selectedCard, childOrder, color}){
-        console.log('setVectorImageColor....', selectedCard, childOrder, color)
-        this.props.setVectorImageColor(selectedCard, childOrder, color)
+        this.props.setVectorImageColor(selectedCard, this.state.selectedPage, childOrder, color)
     },
 
     render() {

@@ -51,11 +51,9 @@ class ApiThreadController extends FOSRestController implements ClassResourceInte
      *
      * @return Integer
      */
-    public function countUnseenAction(Request $request, Provider $provider)
+    public function countUnseenAction(Provider $provider)
     {
         // Instantiate a new client
-        $client = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
-        $response = new JsonResponse();
         $user = $this->_getUser();
         $lastReading = $user->getLastMessageView() ? 
                        $user->getLastMessageView() :

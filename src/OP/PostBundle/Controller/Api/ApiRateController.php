@@ -190,10 +190,6 @@ class ApiRateController extends FOSRestController implements ClassResourceInterf
         return $res->setData(array('post'=>$object));
     }
 
-    private function getStreamClient() {
-        return new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
-    }
-
     /**
     * Create some notification for all users subscribed
     */

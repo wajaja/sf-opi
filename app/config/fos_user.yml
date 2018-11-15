@@ -1,0 +1,63 @@
+# FOSUserBundle Config
+fos_user:
+    db_driver:       mongodb
+    firewall_name:   api
+    user_class:      OP\UserBundle\Document\User
+
+#    #copier depuis github.../doc/configuration_reference.md
+#    group:            #utilisation de group
+##        group_class:  OP\UserBundle\Entity\Group  #la class group pour utilisateur
+    use_listener:           false
+    use_flash_notifications: true
+    use_username_form_type:   true #mettre à false pour arreter l'utilisation de forme de fosUser... à suivre
+    model_manager_name:     null  # change it to the name of your entity/document manager if you don't want to use the default one.
+    from_email:
+        address:        cedrickngeja@gmail.com #modifier par wajaja
+        sender_name:    Cedrick Ngeja
+    profile:
+        form:
+            type:               FOS\UserBundle\Form\Type\ProfileFormType # or 'fos_user_profile' on Symfony < 2.8
+            name:               fos_user_profile_form
+            validation_groups:  [Profile, Default]
+    change_password:
+        form:
+            type:               FOS\UserBundle\Form\Type\ChangePasswordFormType # or 'fos_user_change_password' on Symfony < 2.8
+            name:               fos_user_change_password_form
+            validation_groups:  [ChangePassword, Default]
+    registration:
+        confirmation:
+            from_email:          # Use this node only if you don't want the global email address for the confirmation email
+                address:        cedrickngeja@gmail.com   #modifier par wajaja
+                sender_name:    opinion             #modifier par wajaja
+            enabled:            false    #true                   # change to true for required email confirmation
+            template:           '@OPUser/Registration/email.txt.twig'
+        form:
+            type:               OP\UserBundle\Form\Type\RegistrationFormType  # 
+            name:               registration  #fait...
+            validation_groups:  [Registration, Default]
+    resetting:
+        retry_ttl: 7200 # Value in seconds, logic will use as hours
+        token_ttl: 86400
+        email:
+            from_email: # Use this node only if you don't want the global email address for the resetting email
+                address:        '%resetting_email_address%'
+                sender_name:    '%resetting_email_sender%'
+            template:   '@OPUser/Resetting/email.txt.twig'
+        form:
+            type:               OP\UserBundle\Form\Type\ResettingFormType # or 'fos_user_resetting' on Symfony < 2.8
+            name:               resetting
+            validation_groups:  [ResetPassword, Default]
+    service:
+        mailer:                 OP\UserBundle\Mailer\Mailer
+        email_canonicalizer:    fos_user.util.canonicalizer.default
+        username_canonicalizer: fos_user.util.canonicalizer.default
+        token_generator:        fos_user.util.token_generator.default
+        user_manager:           op_user.user_manager
+        #the services of op_user_registration
+    group:
+        group_class:    OP\UserBundle\Document\Group
+        group_manager:  op_user.group_manager
+        form:
+            type:               OP\UserBundle\Form\Type\GroupFormType # fos_user_group' on Symfony < 2.8
+            name:               group
+            validation_groups:  [Registration, Default]

@@ -5,7 +5,7 @@ use OP\PostBundle\Document\Like,
     OP\PostBundle\Form\LikeType,
     OP\PostBundle\Event\LikeEvent,
     OP\PostBundle\Event\OPPostEvents,
-    Nelmio\ApiDocBundle\Annotation as Doc,
+//    Nelmio\ApiDocBundle\Annotation\ApiDoc,
     FOS\RestBundle\Controller\Annotations,
     Symfony\Component\HttpFoundation\Request,
     FOS\RestBundle\Controller\FOSRestController,
@@ -16,11 +16,10 @@ use OP\PostBundle\Document\Like,
     OP\UserBundle\Security\UserProvider,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
-    OP\SocialBundle\DocumentManager\NotificationManager,
-    FOS\RestBundle\Controller\Annotations\RouteResource;
+    OP\SocialBundle\DocumentManager\NotificationManager;
 
 /**
- * @RouteResource("likes", pluralize=false)
+ * @Annotations\RouteResource("likes", pluralize=false)
  */
 class ApiLikeController extends FOSRestController implements ClassResourceInterface
 {

@@ -98,16 +98,20 @@ class HMenu extends Component {
                                 <div className="ico" onClick={() => this.onUndoClick('next')}></div>
                             </button>
                         </li> 
-                        <li className="item">
-                            <button type="button"  disabled={!cardActive} className="move-zIn-top">
-                                <div className="ico" onClick={() => this.onMoveZindex(1)}></div>
-                            </button>
-                        </li> 
-                        <li className="item">
-                            <button type="button"  disabled={!cardActive} className="move-zIn-bottom">
-                                <div className="ico" onClick={() => this.onMoveZindex(-1)}></div>
-                            </button>
-                        </li>                        
+                        {!!this.props.selectedCard && 
+                            <Fragment>
+                                <li className="item">
+                                    <button type="button"  disabled={!cardActive} className="move-zIn-top">
+                                        <div className="ico" onClick={() => this.onMoveZindex('top')}></div>
+                                    </button>
+                                </li> 
+                                <li className="item">
+                                    <button type="button"  disabled={!cardActive} className="move-zIn-bottom">
+                                        <div className="ico" onClick={() => this.onMoveZindex('bottom')}></div>
+                                    </button>
+                                </li> 
+                            </Fragment>
+                        }                       
                     </ul>
                 </div>
                 <div className={`sub-m image ${imageActive ? " active" : ""}`}>
@@ -134,7 +138,7 @@ class HMenu extends Component {
                             </div>
                         </li>
                         <li className="item">
-                            <div className="transparency" data-title="transparency">
+                            <div className="strk-ctnr">
                                 {!!selectedCard && <StrockePicker 
                                     selectedCard={selectedCard}
                                     updateCardStroke={this.props.updateCardStroke}

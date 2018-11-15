@@ -1,0 +1,76 @@
+#https://www.blog.davidfuhr.de/2016/09/28/implement-a-datetimeinterface-handler-for-jmsserializer.html
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "Y-m-d\\TH:i:sP" # ATOM; 'c' # ISO8601
+            default_timezone: "UTC" # defaults to whatever timezone set in php.ini or via date_default_timezone_set
+        array_collection:
+            initialize_excluded: false
+
+    subscribers:
+        doctrine_proxy:
+            initialize_virtual_types: false
+            initialize_excluded: false
+
+    object_constructors:
+        doctrine:
+            fallback_strategy: "null" # possible values ("null" | "exception" | "fallback")
+
+    # property_naming:
+    #     id: ~
+    #     separator:  _
+    #     lower_case: true
+    #     enable_cache: true
+
+    metadata:
+        directories:
+            userbundle:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "%kernel.root_dir%/Resources/serializer"
+        # cache: file
+        # debug: "%kernel.debug%"
+        # file_cache:
+        #     dir: "%kernel.cache_dir%/serializer"
+
+        # Using auto-detection, the mapping files for each bundle will be
+        # expected in the Resources/config/serializer directory.
+        #
+        # Example:
+        # class: My\FooBundle\Entity\User
+        # expected path: @MyFooBundle/Resources/config/serializer/Entity.User.(yml|xml|php)
+        auto_detection: true
+
+        # if you don't want to use auto-detection, you can also define the
+        # namespace prefix and the corresponding directory explicitly
+        # directories:
+        #     any-name:
+        #         namespace_prefix: "My\\FooBundle"
+        #         path: "@MyFooBundle/Resources/config/serializer"
+        #     another-name:
+        #         namespace_prefix: "My\\BarBundle"
+        #         path: "@MyBarBundle/Resources/config/serializer"
+
+    expression_evaluator:
+        id: jms_serializer.expression_evaluator # auto detected
+
+    default_context:
+        serialization:
+            serialize_null: false
+            version: ~
+            attributes: {}
+            groups: ['Default', 'Profile', 'Infos', 'Detail', 'Me', 'elastica', 'WithMutual']
+            enable_max_depth_checks: false
+        deserialization:
+            serialize_null: false
+            version: ~
+            attributes: {}
+            groups: ['Default', 'Profile', 'Infos', 'Detail', 'Me', 'elastica', 'WithMutual']
+            enable_max_depth_checks: false
+
+    # visitors:
+    #     json:
+    #         options: 0 # json_encode options bitmask, suggested JSON_PRETTY_PRINT in development
+    #     xml:
+    #         doctype_whitelist:
+    #             - '<!DOCTYPE authorized SYSTEM "http://some_url">' # an authorized document type for xml deserialization
+    #         format_output: true # suggested false in production               

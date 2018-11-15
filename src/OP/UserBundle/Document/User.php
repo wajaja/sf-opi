@@ -130,6 +130,16 @@ class User extends BaseUser implements ParticipantInterface //, ObjectManagerAwa
     protected $lastActivity;
 
     /**
+    *  @var \Integer $timing
+    *
+    * @MongoDB\Field(name="timing", type="int")
+    * @Expose
+    * @Groups({"Detail", "Infos", "Default", "Profile"})
+    * @Type("integer")
+    */
+    protected $timing;
+
+    /**
     * @MongoDB\Field(name="lastMessageView", type="date")
     * @Expose
     * @Groups({"Me"})
@@ -1464,5 +1474,27 @@ class User extends BaseUser implements ParticipantInterface //, ObjectManagerAwa
     public function getLastTimelineId()
     {
         return $this->lastTimelineId;
+    }
+
+    /**
+     * Set timing
+     *
+     * @param integer $timing
+     * @return $this
+     */
+    public function setTiming($timing)
+    {
+        $this->timing = $timing;
+        return $this;
+    }
+
+    /**
+     * Get timing
+     *
+     * @return integer $timing
+     */
+    public function getTiming()
+    {
+        return $this->timing;
     }
 }
