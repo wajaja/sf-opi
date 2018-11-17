@@ -2,8 +2,7 @@
 
 namespace OP\UserBundle\Serializer;
 
-use OP\UserBundle\Document\User,
-    OP\UserBundle\Security\UserProvider,
+use OP\UserBundle\Security\UserProvider,
     JMS\Serializer\EventDispatcher\ObjectEvent,
     OP\MessageBundle\DocumentManager\ThreadManager,
     JMS\Serializer\EventDispatcher\EventSubscriberInterface,
@@ -77,24 +76,20 @@ class UserSerializerSubscriber implements EventSubscriberInterface
     // default data in user pictire
     // 
     public function getDefaultProfilePic($user)
-    {
-        $maleAvatar = 'http://opinion.com/uploads/gallery/862fd08f285cae49ac4db2fc65ed3a4c.jpeg';
-        $femaleAvatar = 'http://opinion.com/uploads/gallery/94132ea0069186e77a530619bf4a4d36.jpeg';
+    {  
         return [
             'id' => null,
             'path' => null,
-            'web_path' => $user->getGender() === 'Male' ? $maleAvatar : $femaleAvatar
+            'web_path' => $this->user_provider->getDefaultPic($user)
         ];
     }
 
     public function getDefaultCoverPic($user)
     {
-        $maleAvatar = 'http://opinion.com/uploads/gallery/a4a2139157426ca3e2b39af6b374c458.jpeg';
-        $femaleAvatar = 'http://opinion.com/uploads/gallery/598616f0316b18de6d3a415c7f3c203b.jpeg';
         return [
             'id' => null,
             'path' => null,
-            'web_path' => $user->getGender() === 'Male' ? $maleAvatar : $femaleAvatar
+            'web_path' => $this->user_provider->getDefaultPic($user)
         ];
     }
 

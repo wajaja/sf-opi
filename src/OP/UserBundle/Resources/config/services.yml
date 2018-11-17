@@ -240,8 +240,9 @@ services:
         tags:
             - { name: jms_serializer.event_subscriber }
     OP\UserBundle\Serializer\GroupSerializerSubscriber:
-        # arguments:
-        #     - @bundle.my_very_needed_service
+        arguments:
+            - '@request_stack'
+            - '@OP\UserBundle\Security\UserProvider'
         tags:
             - { name: jms_serializer.event_subscriber }
     OP\UserBundle\Elastica\QuerySearch: ~

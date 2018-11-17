@@ -4,7 +4,6 @@ namespace OP\UserBundle\EventListener;
 
 use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Event\FormEvent,
-    Lexik\Bundle\JWTAuthenticationBundle\Events,
     FOS\UserBundle\Event\FilterGroupResponseEvent,
     Symfony\Component\HttpFoundation\RequestStack,
     Symfony\Component\EventDispatcher\EventSubscriberInterface,
@@ -12,7 +11,6 @@ use FOS\UserBundle\FOSUserEvents,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\MediaBundle\DocumentManager\PictureManager,
     Symfony\Component\Routing\Generator\UrlGeneratorInterface,
-    Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
     Symfony\Component\DependencyInjection\ContainerInterface as Container,
     Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;

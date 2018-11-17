@@ -2,22 +2,24 @@
 
 namespace OP\UserBundle\Serializer;
 
-use OP\UserBundle\Document\Group,
+use OP\UserBundle\Security\UserProvider,
     JMS\Serializer\EventDispatcher\ObjectEvent,
+    Symfony\Component\HttpFoundation\RequestStack,
     JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 
 class GroupSerializerSubscriber implements EventSubscriberInterface
 {
-    /** @var MyDependency */
-    // private $dependency;
-
     /**
-     * MyDependency $dependency
+     * services convert images object to array 
+     * @var type 
      */
-    // public function __construct(MyDependency $dependency)
-    // {
-    //     $this->dependency = $dependency;
-    // }
+    protected $request, $user_provider;
+
+
+    public function __construct(RequestStack $request, UserProvider $user_provider) {
+        $this->request          = $request->getCurrentRequest();
+        $this->user_provider    = $user_provider;
+    }
 
     public static function getSubscribedEvents()
     {
@@ -42,11 +44,10 @@ class GroupSerializerSubscriber implements EventSubscriberInterface
     // 
     public function getDefaultAvatar($group)
     {
-        $img = 'http://opinion.com/uploads/gallery/862fd08f285cae49ac4db2fc65ed3a4c.jpeg';
         return [
             'id' => null,
             'path' => null,
-            'web_path' => $img
+            'web_path' => $this->user_provider->getDefaultAvatar($group)
         ];
     }
 }

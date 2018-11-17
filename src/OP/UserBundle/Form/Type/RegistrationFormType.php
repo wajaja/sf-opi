@@ -5,7 +5,6 @@ use Symfony\Component\Form\AbstractType,
     Symfony\Component\Form\FormBuilderInterface, 
     Symfony\Component\OptionsResolver\OptionsResolver,
     Symfony\Component\Form\Extension\Core\Type\TextType,
-    Symfony\Component\Form\Extension\Core\Type\BirthdayType,
     Symfony\Component\Form\Extension\Core\Type\ChoiceType,
     OP\UserBundle\Form\Subscriber\RegisterSubscriber,
     OP\UserBundle\Repository\OpinionUserManager;

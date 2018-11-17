@@ -2,7 +2,6 @@
 namespace OP\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType,
-OP\MessageBundle\Form\UserSelectorType,
     Symfony\Component\Form\FormBuilderInterface, 
     Symfony\Component\OptionsResolver\OptionsResolver,
     Symfony\Component\Form\Extension\Core\Type as Types,

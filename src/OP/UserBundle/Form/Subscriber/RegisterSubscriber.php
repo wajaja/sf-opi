@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormEvent,
 
 class RegisterSubscriber implements EventSubscriberInterface
 {
-	private $userManager;
+    private $userManager;
 
     public function __construct(OpinionUserManager $userManager)
     {
@@ -33,11 +33,11 @@ class RegisterSubscriber implements EventSubscriberInterface
         //work only if submitted form is an user's registration
         if($form->getName() === 'registration') {
             $data     = $event->getData();
-            $async    = isset($data['firstname']) ? false : true;  //json or x-form
+            //$async    = isset($data['firstname']) ? false : true;  //json or x-form
             $username = $this->createUsername(
-                $async ? $data['registration']['firstname'] : $data['firstname'], 
-                $async ? $data['registration']['lastname'] : $data['lastname']
-            );
+                            $data['registration']['firstname'] ?? $data['firstname'], 
+                            $data['registration']['lastname'] ?? $data['lastname']
+                        );
             $form->add('username', TextType::class, ['empty_data' => $username]);
         }
     }

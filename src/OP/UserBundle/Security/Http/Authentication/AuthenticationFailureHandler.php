@@ -44,7 +44,7 @@ class AuthenticationFailureHandler implements AuthenticationFailureHandlerInterf
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $e)
     {
-        $session = $request->getSession();
+        //$session = $request->getSession();
 
         if(!$request->isXmlHttpRequest() || 
             $request->headers->get('Content-Type') !== 'application/json') {

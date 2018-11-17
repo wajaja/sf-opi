@@ -12,9 +12,6 @@ use Gos\Bundle\WebSocketBundle\Client\ClientStorageInterface,
     Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface,
     Symfony\Component\Security\Core\User\UserInterface,
     Gos\Bundle\WebSocketBundle\Client\Auth\WebsocketAuthenticationProvider as BaseAuth,
-    Gos\Bundle\WebSocketBundle\Client\Auth\WebsocketAuthenticationProviderInterface,
-    OP\UserBundle\Repository\OpinionUserManager,
-    Symfony\Component\HttpFoundation\RequestStack,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class WebsocketAuthenticationProvider extends BaseAuth

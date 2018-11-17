@@ -104,7 +104,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
 
         $this->updateLastLogin($user);
         try {
-            $this->firebaseLogin($email, $password);
+            $this->firebase->firebaseLogin($email, $password);
         } catch (\Exception $e) {
             //TODO dev
         }
@@ -114,28 +114,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         // $this->container->get("security.token_storage")->setToken($token);
         return $response;
     }
-
-    protected function firebaseLogin($email, $password) {
-        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/google-service-account.json');
-        $auth       = $this->firebase->getAuth();
-
-        try {
-            $userRecord = $auth->verifyPassword($email, $password);
-        } catch (Kreait\Firebase\Exception\Auth\InvalidPassword $e) {
-            //TODO
-            echo "userRecord string";
-            echo $e->getMessage();
-            exit;
-        }
-        //detail on https://github.com/kreait/firebase-php/issues/178
-        //Authenticate with limited privileges
-        $userConnection = (new Factory)
-            ->withServiceAccount($serviceAccount)
-            ->asUser($userRecord->uid)
-            ->create();
-    }
-
-
+    
     /**
     * copy from LocaleSubcriber
     * due to issue in InteractiveLogin Listener
@@ -165,7 +144,5 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         $this->dm->persist($device);
         // $user->setCountryInfos($countryInfos);
         $this->userManager->updateUser($user);
-
-
     }
 }

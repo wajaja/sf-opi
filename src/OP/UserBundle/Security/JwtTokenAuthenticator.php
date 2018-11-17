@@ -7,7 +7,6 @@ use Doctrine\ODM\MongoDB\DocumentManager,
     Symfony\Component\Security\Core\User\UserInterface,
     Symfony\Component\Security\Core\User\UserProviderInterface,
     Symfony\Component\Security\Guard\AbstractGuardAuthenticator,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface,
     Symfony\Component\Security\Core\Exception\AuthenticationException,
     Symfony\Component\Security\Core\Authentication\Token\TokenInterface,
@@ -72,11 +71,10 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-    	echo $handle;
         $data = array(
-         'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
-        // or to translate this message
-        // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+            // or to translate this message
+            // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
         );
         return new JsonResponse($data, 403);
     }
@@ -107,5 +105,4 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         // );
         // return new JsonResponse($data, 401);
     }
-
 }

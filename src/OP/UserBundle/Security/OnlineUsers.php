@@ -2,14 +2,7 @@
 
 namespace OP\UserBundle\Security;
 
-use Predis\Client as Redis,
-    FOS\UserBundle\Model\UserInterface,
-    Symfony\Component\HttpKernel\HttpKernel,
-    FOS\UserBundle\Model\UserManagerInterface,
-    Symfony\Component\HttpFoundation\RequestStack,
-    Symfony\Component\HttpKernel\Event\FilterControllerEvent,
-    Symfony\Component\DependencyInjection\ContainerInterface as Container,
-    Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Predis\Client as Redis;
 
 
 class OnlineUsers

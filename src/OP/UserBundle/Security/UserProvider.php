@@ -2,6 +2,11 @@
 
 namespace OP\UserBundle\Security;
 
+//TODO:: set
+define('MALE_PIC', '/uploads/gallery/a4a2139157426ca3e2b39af6b374c458.jpeg');
+define('FEMALE_PIC', '/uploads/gallery/598616f0316b18de6d3a415c7f3c203b.jpeg');
+define('GROUP_PIC', '/uploads/gallery/862fd08f285cae49ac4db2fc65ed3a4c.jpeg');
+
 use OP\UserBundle\Repository\OpinionUserManager,
     Symfony\Component\HttpFoundation\RequestStack,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
@@ -129,17 +134,22 @@ class UserProvider
         return $this->um->findUserByUsername($this->getUsername());
     }
     
-    public function getProfilePic($user) {
+    /**
+     * 
+     * @param type $user
+     * @param type $isObject
+     * @return string
+     */
+    public function getProfilePic($user, $isObject = false) {
 
+        $mal  = $this->fileBaseUrl . MALE_PIC;
+        $fem  = $this->fileBaseUrl . FEMALE_PIC;
         $id   = !isset($user['profilePic']) ? null : (String)$user['profilePic']['$id'];
-        $mal  = $this->fileBaseUrl . '/uploads/gallery/a4a2139157426ca3e2b39af6b374c458.jpeg';
-        $fem  = $this->fileBaseUrl . '/uploads/gallery/598616f0316b18de6d3a415c7f3c203b.jpeg';
-
+        
         if(!$id || gettype($id) !== 'string') {
-            if(!isset($user['gender']))
-                return $mal;
+            $gender = $user['gender'] ?? 'Male';
             
-            return $user['gender'] === 'Male' ? $mal : $fem;
+            return $gender === 'Male' ? $mal : $fem;
         }
 
         $p  = $this ->dm
@@ -147,6 +157,26 @@ class UserProvider
                     ->findOneBy(array('id' => $id));
 
         return $p->getWebPath();
+    }
+    
+    /**
+     * 
+     * @param Object $user
+     * @return string
+     */
+    public function getDefaultPic($user) : string {
+
+        $mal  = $this->fileBaseUrl . MALE_PIC;
+        $fem  = $this->fileBaseUrl . FEMALE_PIC;
+        
+        if($gender = $user->getGender())
+            return $gender === 'Male' ? $mal : $fem;
+            
+        return $mal;
+    }
+    
+    public function getDefaultAvatar($group) : string {
+        return $this->fileBaseUrl . GROUP_PIC;
     }
     
     protected function getUploadRootDir()
