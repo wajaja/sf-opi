@@ -2,13 +2,10 @@
 namespace OP\SocialBundle\Controller\Api;
 
 use FOS\RestBundle\Controller\Annotations,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     OP\UserBundle\Security\UserProvider,
     Symfony\Component\HttpFoundation\Request,
-    FOS\UserBundle\Event\GetResponseUserEvent,
     OP\UserBundle\Repository\OpinionUserManager,
     FOS\RestBundle\Controller\FOSRestController,
-    FOS\UserBundle\Event\FilterUserResponseEvent,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\SocialBundle\DocumentManager\NotificationManager,
@@ -89,7 +86,7 @@ class ApiNotificationController extends FOSRestController implements ClassResour
     * @Annotations\Get("/notifications/alert/hide")
     */
     public function hideAlertAction(Request $request, OpinionUserManager $userManager) {
-         $client = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
+         //TODO update in getStream
         //make all as seens
         $this->updateLastView($userManager);
         return  new JsonResponse(['success' => true]);
@@ -105,7 +102,6 @@ class ApiNotificationController extends FOSRestController implements ClassResour
     {
         //start session and set the $lastUrl value under Session storage
         //TODO: connecting to Stream 
-         $client = new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
         $notes = [];
         return $notes;
     }

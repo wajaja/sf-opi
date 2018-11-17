@@ -147,6 +147,7 @@ services:
             - "@service_container"
             - "@op_post.object_to_array.transformer"
             - '@OP\SocialBundle\Stream\Stream'
+            - '@gos_web_socket.wamp.pusher'
         tags:
             - { name: kernel.event_listener, event: op_post.like, method: onLike }
             - { name: kernel.event_listener, event: op_post.unlike, method: onUnLike }

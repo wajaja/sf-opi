@@ -2,15 +2,11 @@
 
 namespace OP\PostBundle\Controller;
 
-use OP\PostBundle\Document\Post,
-    OP\UserBundle\Document\User,
-    OP\PostBundle\Form\PostType,
-    OP\PostBundle\Event\PostEvent,
-    OP\PostBundle\Document\Comment,
-    OP\PostBundle\Form\CommentType,
-    OP\UserBundle\Document\Favorite,
-    OP\PostBundle\Event\OPPostEvents,
-    JMS\Serializer\SerializerInterface,
+use OP\PostBundle\Document\{Post, User, Comment, Favorite};
+use OP\PostBundle\Form\{PostType, CommentType};
+use OP\PostBundle\Event\{PostEvent, OPPostEvents};
+        
+use JMS\Serializer\SerializerInterface,
     OP\UserBundle\Security\UserProvider,
     OP\PostBundle\DocumentManager\PostManager,
     Symfony\Component\HttpFoundation\Request,
@@ -104,61 +100,7 @@ class PostController extends Controller
         } else {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-    }
-
-    /**
-     * Creates a new Post post.
-     *
-     * @Route("/create", name="post_create")
-     * @Method({"POST", "GET"})
-     * @Template("OPPostBundle:Post:new.html.twig")
-     *
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function createAction(Request $request, NewPostFormHandler $handler, ToArrayTransformer $transformer, EventDispatcherInterface $dispatcher)
-    {
-        $user   = $this->_getUser();
-        $form   = $this->createForm(PostType::class, new Post());
-        //process data througt methode
-        if($request->isXmlHttpRequest()) {
-            $res = new JsonResponse();
-            //return $response->setData(array('response'=>array('status'=>true, 'post'=>$form)));
-            if($post   = $handler->process($form, false)){
-                $event = new PostEvent($post);        
-                $dispatcher->dispatch(OPPostEvents::POST_CREATE, $event);
-                $commentForm = $this->notifyAndReturnCommentForm($post);
-                return $response->setData(
-                    array('response' => 
-                        array(
-                            'post'   => $transformer->postObjectToArray($post),
-                            'commentFormView' => $this->renderView(
-                                'OPPostBundle:Comment:xhr_newComment.html.twig',
-                                array('commentForm' => $commentForm->createView(),
-                                      'postValid'   => $post->getId(),
-                                       'user'       =>  $this->_getUser()
-                                )
-                            ),
-                            'commentsView' => []
-                        )
-                    )
-                );
-            }else{
-                return $response->setData(array('response'=>array('status'=>false, 'token'=>'')));
-            }
-        }else{
-            if($post = $handler->process($form, false)){
-                $event = new PostEvent($post);        
-                $dispatcher->dispatch(OPPostEvents::POST_CREATE, $event);
-                $commentForm = $this->notifyAndReturnCommentForm($post);
-                $post = $transformer->postObjectToArray($post);
-                return $this->render('OPPostBundle:Post:new.html.twig', array('post'=> $post));
-            }else{
-                return $this->renderView('OPSocialBundle:Home:form.html.twig', array('pform'=> $form->createView(), 'user'=>$user));
-            }
-        }
-    }
+    }    
 
     /**
      * Finds and displays a Post post.
@@ -230,65 +172,6 @@ class PostController extends Controller
             ]);
         } else {
             return $this->redirect($this->generateUrl('fos_user_security_login'));
-        }
-    }
-
-    /**
-     * Displays a form to edit an existing Post post and update.
-     *
-     * @Route("/edit/{id}", name="post_edit")
-     * @Template()
-     * @Method({"POST", "GET"})
-     * @param string $id The post ID
-     *
-     * @return array
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException If post doesn't exists
-     */
-    public function editAction(Request $request, $id, NewPostFormHandler $formHandler, ToArrayTransformer $transformer)
-    {        
-        $dm      = $this->getDocumentManager();
-        $db_post = $dm->getRepository('OPPostBundle:Post')->find($id);
-        if (!$db_post) {
-            throw $this->createNotFoundException('Unable to find Post post.');
-        }
-        $form   = $this->createForm(PostType::class, $db_post);
-        $res    = new JsonResponse();
-        $user   = $this->_getUser();
-        if($request->isXmlHttpRequest()) {
-            if($post = $formHandler->process($form, true)) {
-                return $response->setData(
-                    array('response'=>
-                        array(
-                            'status'=> true, 
-                            'token' => $this->get('security.csrf.token_manager')->refreshToken('1'),
-                            'post'=>$postTransformer->postToArray($post)
-                        )
-                    )
-                );
-            }else{
-                return $response->setData(
-                    array('editForm' => 
-                        $this->renderView(
-                            'OPPostBundle:Post:xhr_post_edit.html.twig', 
-                            array(
-                                'user' => $user, 
-                                'post' => $db_post,
-                                'editForm'=>$form->createView()
-                            )
-                        )
-                    )
-                );
-            }
-        }else{
-            //if not XmlHttpRequest
-            //echo var_dump($formHandler);
-            if($post = $formHandler->process($form, true)){
-                return $this->redirect('\/');
-            }else{
-                return  $this->render('OPPostBundle:Post:xhr_post_edit.html.twig', 
-                                                                    array('editForm'=>$form->createView(), 'user'=>$user, 'post'=>$db_post));
-            }
         }
     }
 

@@ -6,11 +6,8 @@ use FOS\RestBundle\Controller\{
     Annotations\Get, Annotations\View, Annotations\Post, Annotations\Put,
     Annotations\RouteResource, FOSRestController };
 use OP\MessageBundle\Event\{MessageEvent, OPMessageEvents};
-use OP\MessageBundle\Document\Thread,
-    JMS\Serializer\SerializationContext,
-    OP\UserBundle\Security\UserProvider,
+use OP\UserBundle\Security\UserProvider,
     Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\Security\Core\Security,
     OP\MessageBundle\FormModel\ReplyMessage,
     OP\MessageBundle\Form\ReplyMessageFormType,
     OP\MessageBundle\DocumentManager\ThreadManager,

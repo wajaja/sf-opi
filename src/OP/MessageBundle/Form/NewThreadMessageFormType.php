@@ -1,8 +1,7 @@
 <?php
 namespace OP\MessageBundle\Form;
 
-use OP\MessageBundle\Form\UserSelectorType,
-  Symfony\Component\OptionsResolver\OptionsResolver;
+use OP\MessageBundle\Form\UserSelectorType;
 use Symfony\Component\Form\{ 
   AbstractType, FormBuilderInterface, 
   Extension\Core\Type\TextareaType, Extension\Core\Type\TextType, Extension\Core\Type\FileType

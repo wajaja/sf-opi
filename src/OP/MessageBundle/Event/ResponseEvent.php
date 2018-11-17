@@ -2,10 +2,7 @@
 
 namespace OP\MessageBundle\Event;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\EventDispatcher\Event;
 use OP\MessageBundle\Document\Response;
-use OP\MessageBundle\Document\Question;
 
 class ResponseEvent extends QuestionEvent
 {

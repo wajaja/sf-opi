@@ -3,7 +3,6 @@
 namespace OP\SocialBundle\Model;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use OP\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Description of Notification

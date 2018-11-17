@@ -1,8 +1,7 @@
 <?php
 namespace OP\UserBundle\DocumentManager;
 
-use OP\UserBundle\Document\User,
-    OP\UserBundle\Form\NameType,
+use OP\UserBundle\Form\NameType,
     OP\UserBundle\Document\Address,
     OP\UserBundle\Form\AddressType,
     OP\UserBundle\Document\Contact,
@@ -11,15 +10,11 @@ use OP\UserBundle\Document\User,
     OP\UserBundle\Form\AboutMeType,
     OP\UserBundle\Form\NotificationType,
     OP\UserBundle\Document\Notification,
-    OP\UserBundle\Document\Config,
     Doctrine\ODM\MongoDB\DocumentManager,
     OP\UserBundle\Security\UserProvider,
     Symfony\Component\HttpFoundation\Request,
     OP\UserBundle\Repository\OpinionUserManager,
     Symfony\Component\Form\FormFactoryInterface,
-    OP\UserBundle\Document\Invitation\Invitation,
-    OP\UserBundle\Document\Invitation\InvitationMetadata,
-    OP\UserBundle\DataTransformer\ObjectToArrayTransformer,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**
@@ -72,8 +67,8 @@ class SettingManager
     }
 
     public function setLang(Request $request) {
-        $return   = $user->getLocale();  //default || 
         $user     = $this->_getUser();
+        $return   = $user->getLocale();  //default || 
         $language = $request->request->get('language');
         if(gettype($language) === 'array') {
             $locale   = $language['locale'];

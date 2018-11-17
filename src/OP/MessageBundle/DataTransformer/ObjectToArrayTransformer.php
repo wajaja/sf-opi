@@ -7,9 +7,7 @@ use OP\UserBundle\Security\UserProvider,
     Doctrine\ODM\MongoDB\DocumentManager,
     OP\MediaBundle\Construct\ImageConstructor,
     OP\UserBundle\Repository\OpinionUserManager,
-    OP\SocialBundle\SeveralClass\DateTransformer,
     Symfony\Component\HttpFoundation\RequestStack,
-    OP\MessageBundle\Security\ParticipantProviderInterface,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**
@@ -23,17 +21,17 @@ class ObjectToArrayTransformer
      * @var type 
      */
     protected $container, $dm, $request, $um, $user_provider,
-              $img_construct, $participantProvider, $date_trans;
+              $img_construct, $participantProvider, $fileBaseUrl;
 
 
-    public function __construct(Container $container, RequestStack $request, DocumentManager $dm, OpinionUserManager $um, ImageConstructor $img_construct, DateTransformer $date_trans, UserProvider $user_provider) {
+    public function __construct(Container $container, RequestStack $request, DocumentManager $dm, OpinionUserManager $um, ImageConstructor $img_construct, $fileBaseUrl, UserProvider $user_provider) {
         $this->dm               = $dm;
         $this->um               = $um;
         $this->request          = $request->getCurrentRequest();
         $this->container        = $container;
-        $this->date_trans       = $date_trans;
         $this->user_provider    = $user_provider;
         $this->img_construct    = $img_construct;
+        $this->fileBaseUrl     = $fileBaseUrl;
     }
 
     public function messageToArray($db_m){          
@@ -41,7 +39,7 @@ class ObjectToArrayTransformer
         $mes['body']        = $db_m['body'];
         $mes['createdAt']   = $db_m['createdAt']->{'sec'};
         $mes['threadId']    = (String)$db_m['thread']['$id'];
-        $mes['sender']      = $this->getAuthor((string)$db_m['sender']['$id']);;
+        $mes['sender']      = $this->getAuthor((string)$db_m['sender']['$id']);
         $mes['images']      = $this->getImages($db_m);
 
         return $mes;
@@ -181,9 +179,9 @@ class ObjectToArrayTransformer
         return [
             'id'        => (String)$u['_id'],
             'username'  => $u['username'],
-            'firstname' => isset($u['firstname']) ? $u['firstname'] : '',
-            'lastname'  => isset($u['lastname']) ? $u['lastname'] : '',
-            'profile_pic'=> $this->getProfilePic($u)
+            'firstname' => $u['firstname'] ?? '',
+            'lastname'  => $u['lastname'] ?? '',
+            'profile_pic'=> $this->user_provider->getProfilePic($u)
         ];
     }
 
@@ -192,11 +190,11 @@ class ObjectToArrayTransformer
     * @param object || array  $arg
     * @return array
     */
-    protected function getVideos($arg){
+    protected function getVideos($arg) : array {
         if(gettype($arg)== 'object') {
-            $videos_refs = null !== $arg->getVideos() ? $arg->getVideos() : [];
+            $videos_refs = $arg->getVideos() ?? [];
         } else {
-            $videos_refs = isset($arg['videos']) ? $arg['videos'] : [];
+            $videos_refs = $arg['videos'] ?? [];
         }
         $videos = [];
         foreach($videos_refs as $video_ref){
@@ -204,92 +202,64 @@ class ObjectToArrayTransformer
                 ->findSimpleVideosById(!is_object($video_ref) ?  (string)$video_ref['$id'] : $video_ref->getId());
             $videos [] = $video;
         }
-        return $this->img_construct->videoToArray($videos);
+        return $this->img_construct->videosToArray($videos);
     }
-
-    protected function getImages($arg){
+    
+    /**
+     * Function getImages
+     * @param type $arg
+     * @return array
+     */
+    protected function getImages($arg) : array {
         if(gettype($arg) === 'object') {
-            $ids = null !== $arg->getImagesIds() ? $arg->getImagesIds() : [];
+            $ids = $arg->getImagesIds() ?? [];
         } else {
-            $ids = isset($arg['images_ids']) ? $arg['images_ids'] : [];
+            $ids = $arg['images_ids'] ?? [];
         }
-
-        $images = [];
-        $repo =  $this->dm->getRepository('OP\MediaBundle\Document\Image');
-        foreach($ids as $id){;
-            if(strlen($id) !== 24) {
-                $image['id'] = null;
-                $image['reason'] = 'some reason';
-                $image['webPath'] = $this->img_construct->getRemovedImagePath();
-            } else {
-                $img = $repo->findPhotoById($id);
-                if(!$img){
-                    $image['id'] = null;
-                    $image['reason'] = 'some reason';
-                    $image['webPath'] = $this->img_construct->getRemovedImagePath();
-                } else {
-                    $image['id'] = (string)$img['_id'];
-                    $image['webPath'] = 'http://opinion.com/uploads/'.$img['directory'].'/'.$img['path'];
-                }
-            }
-            $images [] = $image;
-        }
-        return $images;
+        
+        $imgs = $this->dm
+                     ->getRepository('OP\MediaBundle\Document\Image')
+                     ->findcPhotos($ids);
+        
+        return $this->img_construct
+                    ->imagesToArray($imgs);
     }
 
     public function getImagesForFirebase($obj){
-        $imgs = [];
-        $ids  = null !== $obj->getImagesIds() ? $obj->getImagesIds() : [];
-        $repo = $this->dm->getRepository('OP\MediaBundle\Document\Image');
-        foreach($ids as $id){;
-            $data = $repo->findPhotoById($id);
-            $img = [
-                'id' => (string)$data['_id'],
-                'webPath' => 'http://opinion.com/uploads/'.$data['directory'].'/'.$data['path'],
-            ];
-            $imgs[] = $img;
-        }
-
-        return $imgs;
+        $ids  = $obj->getImagesIds() ?? [];
+        $imgs = $this->dm
+                     ->getRepository('OP\MediaBundle\Document\Image')
+                     ->findcPhotos($ids);
+        
+        return $this->img_construct
+                    ->imagesToArray($imgs);
     }
 
     protected function getParticipants($arg)
     {
         if(gettype($arg) == 'object') {
-            $db_participants = null !== $arg->getParticipants() ? $arg->getParticipants(): []; 
+            $db_participants = $arg->getParticipants() ?? []; 
         } else {
-            $db_participants = isset($arg['participants']) ? $arg['participants']: [];
+            $db_participants = $arg['participants'] ?? [];
         }
-        $participants = [];
-        foreach($db_participants as $db_participant){      
-            $participants[] = $this->getAuthor(!is_object($db_participant) ? 
-            (string)$db_participant['$id'] : $db_participant->getId());
+        
+        $participants = $ids = [];
+        foreach($db_participants as $db_p){
+            $ids[] = !is_object($db_p) ? (string)$db_p['$id'] : $db_p->getId();
         }
-
+        
+        $users = $this->um->findCUsersById($ids);
+        foreach($users as $u){
+            $participants[] = [
+                'id'        => (String)$u['_id'],
+                'username'  => $u['username'],
+                'firstname' => $u['firstname'] ?? '',
+                'lastname'  => $u['lastname'] ?? '',
+                'profile_pic'=> $this->getProfilePic($u)
+            ];
+        }
         return $participants;
     }
-
-    public function getProfilePic($user) {
-
-        $id   = !isset($user['profilePic']) ? null : (String)$user['profilePic']['$id'];
-        $mal  = 'http://opinion.com/uploads/gallery/a4a2139157426ca3e2b39af6b374c458.jpeg';
-        $fem  = 'http://opinion.com/uploads/gallery/598616f0316b18de6d3a415c7f3c203b.jpeg';
-
-        if(!$id || gettype($id) !== 'string') 
-            return $user['gender'] === 'Male' ? $mal : $fem;
-
-        $p      = $this ->dm
-                        ->getRepository('OP\MediaBundle\Document\Image')
-                        ->findOneBy(array('id' => $id));
-
-        return $p->getWebPath();
-    }
-
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/uploads/';
-    }
-
 
     /**
      * Gets the current authenticated user

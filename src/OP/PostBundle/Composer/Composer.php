@@ -2,6 +2,7 @@
 namespace OP\PostBundle\Composer;
 
 use OP\PostBundle\DocumentManager\PostManager;
+use OP\PostBundle\Document\{Post, Like, Comment, UnderComment, LeftComment, RightComment, Share, Rate};
 
 /**
  */
@@ -24,7 +25,7 @@ class Composer implements ComposerInterface
      */
     public function newPost()
     {
-        return new \OP\PostBundle\Document\Post();
+        return new Post();
     }
 
     /**
@@ -33,7 +34,7 @@ class Composer implements ComposerInterface
      */
     public function newComment()
     {
-        return new \OP\PostBundle\Document\Comment();
+        return new Comment();
     }
 
     /**
@@ -42,7 +43,7 @@ class Composer implements ComposerInterface
      */
     public function newLeftComment()
     {
-        return new \OP\PostBundle\Document\LeftComment();
+        return new LeftComment();
     }
 
     /**
@@ -51,7 +52,7 @@ class Composer implements ComposerInterface
      */
     public function newRightComment()
     {
-        return new \OP\PostBundle\Document\RightComment();
+        return new RightComment();
     }
 
     /**
@@ -60,7 +61,7 @@ class Composer implements ComposerInterface
      */
     public function newUnderComment()
     {
-        return new \OP\PostBundle\Document\UnderComment();
+        return new UnderComment();
     }
 
     /**
@@ -69,20 +70,20 @@ class Composer implements ComposerInterface
      */
     public function newShare()
     {
-        return new \OP\PostBundle\Document\Share();
+        return new Share();
     }
 
     /**
      */
     public function newLike()
     {
-        return new \OP\PostBundle\Document\Like();
+        return new Like();
     }
     
     /**
      */
     public function newRate()
     {
-        return new \OP\PostBundle\Document\Rate();
+        return new Rate();
     }
 }

@@ -4,7 +4,6 @@ namespace OP\PostBundle\DataTransformer;
 
 use Elastica\Document,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
-    Symfony\Component\PropertyAccess\PropertyAccessorInterface,
     FOS\ElasticaBundle\Transformer\ModelToElasticaTransformerInterface,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 

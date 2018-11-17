@@ -2,12 +2,8 @@
 
 namespace OP\MediaBundle\Controller\Api;
 
+use FOS\RestBundle\Controller\Annotations\{Get, Put, Delete, Post as PostMethod, RouteResource};
 use Symfony\Component\HttpFoundation\Request,
-    Nelmio\ApiDocBundle\Annotation as Doc,
-    FOS\RestBundle\Controller\Annotations\Get,
-    FOS\RestBundle\Controller\Annotations\Put,
-    FOS\RestBundle\Controller\Annotations\Delete,
-    FOS\RestBundle\Controller\Annotations\Post as PostMethod,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
@@ -16,9 +12,9 @@ use Symfony\Component\HttpFoundation\Request,
     OP\MediaBundle\DataTransformer\ToArrayTransformer as Transformer,
     JMS\Serializer\SerializerInterface,
     OP\UserBundle\Security\UserProvider,
+    OP\UserBundle\DocumentManager\SettingManager,
     OP\SocialBundle\DocumentManager\NotificationManager,
-    Symfony\Component\EventDispatcher\EventDispatcherInterface,
-    FOS\RestBundle\Controller\Annotations\RouteResource;
+    Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 
 /**
@@ -56,13 +52,11 @@ class ApiPhotoController extends FOSRestController implements ClassResourceInter
      *
      * @return object
      */
-    public function addTagAction(Request $request, $id, NewPostFormHandler $formHandler, EventDispatcherInterface $dispatcher, SerializerInterface $serializer, NotificationManager $notifMan)
+    public function addTagAction(Request $request, $id, SettingManager $set_man, NewPostFormHandler $formHandler, EventDispatcherInterface $dispatcher, SerializerInterface $serializer, NotificationManager $notifMan)
     {
 
-        $redirected = false;
         $res        = new JsonResponse();
         $user       = $this->_getUser();
-        $set_man    = $this->get('op_user.setting_manager');
         $image      = $dm->getRepository('OPMediaBundle:Image')->findPhotoById($id);
 
         if (!$image) return;
@@ -70,7 +64,7 @@ class ApiPhotoController extends FOSRestController implements ClassResourceInter
         $data       = json_decode($request->getContent(), true);
 
         if($tag  = $set_man->addFriendTag($user, $image, $data)) {
-            return $response->setData(
+            return $res->setData(
                 array(
                     'user' =>$serializer->toArray($this->_getUser()), 
                     'contact'=> $serializer->toArray($tag)
@@ -78,7 +72,6 @@ class ApiPhotoController extends FOSRestController implements ClassResourceInter
             );
         }
 
-        $res            = new JsonResponse();
         $form           = $this->createForm(RateType::class, new Rate());        
         if($rate = $formHandler->process($form, false)) {
             $this->notify($rate, $notifMan);
@@ -165,44 +158,7 @@ class ApiPhotoController extends FOSRestController implements ClassResourceInter
      */
     public function createGalleryAction(Request $request, ToArrayTransformer $postTransformer)
     {
-        $formHandler = $this->container->get('op_media.handler');
-        $image      = new Image();
-        $post       = new Post();
-        $form       = $this->createFormBuilder($post, array('csrf_protection'=>false))
-                           ->add('title')
-                           ->add('objectType')
-                           ->add('type')
-                           ->getForm();
-        $user=$this->_getUser();
-        //process data througt methode
-        if($request->isXmlHttpRequest()){
-            $response = new JsonResponse();
-            //return $response->setData(array('response'=>array('status'=>true, 'post'=>$form)));
-            if($post = $formHandler->process($form, false)){
-                $commentForm = $this->notifyAndReturnCommentForm($post);
-                return $response->setData(array('response'
-                    =>array('commentForm'
-                        =>$this->renderView('OPPostBundle:Comment:xhr_newComment.html.twig',
-                                array('commentForm'=>$commentForm->createView(),
-                                      'postValid'=>$post->getId(), 
-                                      'user'=>  $this->_getUser())),
-                        'post'=>$postTransformer->postObjectToArray($post))));
-            }else{
-                return $response->setData(array('response'=>array('status'=>false, 'token'=>'')));
-            }
-        }else{
-            //if not XmlHttpRequest
-            //echo var_dump($formHandler);
-            if($post = $formHandler->process($form, false)){
-                $commentForm = $this->notifyAndReturnCommentForm($post);
-                // $realtime_post = $this->container->get('op_post.realtime_post');
-                // $realtime_post->publish("channel", "initiale message");
-                $post = $postTransformer->postObjectToArray($post);
-                return var_dump($post); //$this->redirect('/');
-            }else{
-                return $this->renderView('OPSocialBundle:Home:form.html.twig', array('pform'=> $form->createView(), 'user'=>$user));
-            }
-        }
+        //TODO
     }
 
     protected function notify(Post $post, $notifMan)

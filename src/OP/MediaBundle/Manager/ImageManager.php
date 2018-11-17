@@ -11,17 +11,14 @@ use OP\MediaBundle\Document\Image,
 */
 class ImageManager
 {
-	private $dm,
-			$class;
+	private $dm, $class;
 	
-	function __construct(DocumentManager $manager, $class)
-	{
-		$this->dm 			= $manager;
-		$this->Repository 	= $dm->getRepository($class);
+	function __construct(DocumentManager $manager, $class){
+            $this->dm = $manager;
+            $this->Repository = $manager->getRepository($class);
 	}
 
-	public function get()
-	{
-		return;
+	public function get(){
+            return;
 	}
 }

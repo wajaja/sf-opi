@@ -32,32 +32,36 @@ class CommentRepository extends DocumentRepository
         return $listComments;
     }
 
-    public function loadComments($postId, $refer){
+    public function loadComments($postId, $refer, $notIn){
         $qb = $this->createQueryBuilder('\OP\PostBundle\Document\Comment');
         if($refer === 'post') {
             $qb ->field('post.$id')->equals(new \MongoId($postId))
-            ->sort('createdAt', 'DESC')
-            ->hydrate(false)
+                ->sort('createdAt', 'DESC')
+                ->field('id')->notIn($notIn)
+                ->hydrate(false)
             // ->limit()
                 ;
         } else if($refer === 'left') {
             $qb ->field('leftComment.$id')->equals(new \MongoId($postId))
-            ->sort('createdAt', 'DESC')
-            ->hydrate(false)
+                ->field('id')->notIn($notIn)
+                ->sort('createdAt', 'DESC')
+                ->hydrate(false)
             // ->limit()
                 ;
         } else if($refer === 'right') {
             $qb ->field('rightComment.$id')->equals(new \MongoId($postId))
-            ->sort('createdAt', 'DESC')
-            ->hydrate(false)
+                ->field('id')->notIn($notIn)
+                ->sort('createdAt', 'DESC')
+                ->hydrate(false)
             // ->limit()
                 ;
         } 
         else {
             $qb ->field('photo.$id')->equals(new \MongoId($postId))
-            ->sort('createdAt', 'DESC')
-            ->hydrate(false)
-            ->limit(5)
+                ->field('id')->notIn($notIn)
+                ->sort('createdAt', 'DESC')
+                ->hydrate(false)
+                ->limit(5)
                 ;
         }
         $comments = $qb ->getQuery()

@@ -7,7 +7,6 @@ use OP\UserBundle\Security\UserProvider,
     Doctrine\ODM\MongoDB\DocumentManager,
     OP\UserBundle\Repository\OpinionUserManager,
     Symfony\Component\HttpFoundation\RequestStack,
-    OP\MessageBundle\Security\ParticipantProviderInterface,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**
@@ -101,35 +100,14 @@ class ObjectToArrayTransformer
     */
     protected function getAuthor($id)
     {
-
         $u  = $this->um->findDefaultUserById($id);
-
         return [
             'id'        => (String)$u['_id'],
             'username'  => $u['username'],
-            'firstname' => isset($u['firstname']) ? $u['firstname'] : '',
-            'lastname'  => isset($u['lastname']) ? $u['lastname'] : '',
-            'profile_pic'=> $this->getProfilePic(
-                !isset($u['profilePic']) ?: (String)$u['profilePic']['$id']
-            )
+            'firstname' => $u['firstname'] ?? '',
+            'lastname'  => $u['lastname'] ?? '',
+            'profile_pic'=> $this->user_provider->getProfilePic(u)
         ];
-    }
-    
-    public function getProfilePic($id) {
-
-        if(!$id || gettype($id) !== 'string') 
-            return $this->getUploadRootDir() . "{$this->domain_name}/images/favicon.ico";
-
-        $p      = $this ->dm
-                        ->getRepository('OP\MediaBundle\Document\Image')
-                        ->findOneBy(array('id' => $id));
-
-        return $p->getWebPath();
-    }
-    
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/uploads/';
     }
 
     /**

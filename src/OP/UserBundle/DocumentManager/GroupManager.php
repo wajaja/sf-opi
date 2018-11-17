@@ -6,11 +6,6 @@ use OP\UserBundle\Document\Group,
     OP\UserBundle\Security\UserProvider,
     Doctrine\Common\Persistence\ObjectManager,
     Symfony\Component\HttpFoundation\RequestStack,
-    OP\UserBundle\Repository\OpinionUserManager,
-    Symfony\Component\Form\FormFactoryInterface,
-    OP\UserBundle\Document\Invitation\Invitation,
-    OP\UserBundle\Document\Invitation\InvitationMetadata,
-    OP\UserBundle\DataTransformer\ObjectToArrayTransformer,
     FOS\UserBundle\Doctrine\GroupManager as BaseManager,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
@@ -77,8 +72,7 @@ class GroupManager extends BaseManager
         $req->getSession()->start();
         $all     = $req->request->all();       
         $data    = json_decode($req->getContent(), true);        
-        $name    =   !$req->getFormat('application/json') ? 
-                            $all['group']['name']: $data['name'];
+        $name    = $all['group']['name'] ?? $data['name'];
 
         $group->setName($name);
         $this->dm->persist($group);
@@ -94,8 +88,7 @@ class GroupManager extends BaseManager
         $this->request->getSession()->start();
         $all     = $this->request->request->all();       
         $data    = json_decode($this->request->getContent(), true);        
-        $name    = !$this->request->getFormat('application/json') ? 
-                            $all['group']['name']: $data['name'];
+        $name    = $all['group']['name'] ?? $data['name'];
 
         $group->setName($name);
         $this->dm->flush($group);

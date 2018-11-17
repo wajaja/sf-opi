@@ -1,8 +1,7 @@
 <?php
 namespace OP\MessageBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event,
-    Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 class QuestionEvent extends Event
 {

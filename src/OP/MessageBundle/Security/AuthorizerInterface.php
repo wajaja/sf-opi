@@ -2,8 +2,8 @@
 
 namespace OP\MessageBundle\Security;
 
-use OP\MessageBundle\Model\ThreadInterface;
-use OP\MessageBundle\Model\ParticipantInterface;
+use OP\MessageBundle\Model\ThreadInterface,
+    OP\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Manages permissions to manipulate threads and messages

@@ -2,15 +2,12 @@
 
 namespace OP\MessageBundle\Controller;
 
-use FOS\UserBundle\FOSUserEvents,
-    FOS\UserBundle\Event\FormEvent,
-    OP\MessageBundle\Document\Thread,
+use OP\MessageBundle\Document\Thread,
     OP\MessageBundle\Provider\Provider,
     OP\UserBundle\Security\UserProvider,
     OP\MediaBundle\Construct\ImageConstructor,
     OP\MessageBundle\FormModel\ReplyMessage,
     Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\Security\Core\Security,
     OP\MessageBundle\Form\ReplyMessageFormType,
     OP\MessageBundle\FormModel\NewThreadMessage,
     Symfony\Component\HttpFoundation\JsonResponse,
@@ -18,7 +15,6 @@ use FOS\UserBundle\FOSUserEvents,
     OP\MessageBundle\DocumentManager\ThreadManager,
     OP\MessageBundle\DocumentManager\MessageManager,
     Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpFoundation\StreamedResponse,
     OP\MessageBundle\NewComposer\ThreadConstructor,
     OP\SocialBundle\DocumentManager\NotificationManager,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
@@ -26,9 +22,7 @@ use FOS\UserBundle\FOSUserEvents,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
     OP\MessageBundle\DataTransformer\ObjectToArrayTransformer,
-    OP\UserBundle\DocumentManager\InvitationManager,
-    Symfony\Component\Security\Core\Exception\AuthenticationException,
-    Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+    OP\UserBundle\DocumentManager\InvitationManager;
 
 
 class MessageController extends Controller
@@ -152,67 +146,67 @@ class MessageController extends Controller
         }
     }
 
-    /**
-     * Displays a form to create a new Message document.
-     *
-     * @Route("/create", name="messages_new_thread")
-     * @Template()
-     *
-     * @return array
-     */
-    public function newThreadAction(Request $request, ImageConstructor $img_construct, ThreadManager $threadMan)
-    {
-        $formHandler  = $this->container->get('op_message.new_thread_form.handler');
-        $response     = new JsonResponse();
-        $form         = $this->createForm(NewThreadMessageFormType::class, new NewThreadMessage());
-        $thread       = new Thread();
-
-        if($request->getMethod() === 'POST'){
-            if($request->isXmlHttpRequest()){
-                $content = $request->request->all();
-                $threadId = $content['thread_id'];// == '' ? '' : $content['thread_id'];
-                if(strlen($threadId)==24){ //24 lenght of mongodb object Id
-                    $formHandler = $this->container->get('op_message.reply_message_form.handler');
-                    $thread = $threadMan->findThreadById($threadId);       //get thread by it's id
-                    if (!$thread) {
-                        return $response->setData(array('response'=>array('msg'=>'Unable to find Message', 'status'=>false)));
-                    }
-                }
-            }
-        }
-        //return $response->setData(array('response'=>array('msg'=>'Unable to find Message', 'status'=>false)));
-        if($request->isXmlHttpRequest()){
-            if($message = $formHandler->process($form, $thread)){
-                $csrf = $this->get('security.csrf.token_manager');
-                return $response->setData(
-                    array('response'=>
-                        array(
-                            'status'    =>true,
-                            'token'     =>$csrf->refreshToken('8')->getValue(),
-                            'threadId'  =>$message->getThread()->getId(),
-                            'message_body'=>$message->getBody(),
-                            'images'    =>$img_construct->AjaxImageToArray($message->getImages()),
-                            'message_id'=>$message->getId()
-                        )
-                    )
-                );
-            }else{
-                //create new thread message in modal form
-                return $response->setData(array('thread'=> $this->renderView('OPMessageBundle:Message:ajax_newThread.html.twig',
-                                                            array('thread_form'=> $form->createView(),
-                                                                    'user'=>  $this->_getUser())),
-                                                'response'=>array('status'=>false, 'text'=>'new')));
-            }
-        }else{
-            if($message = $formHandler->process($form, $thread)){
-                return new RedirectResponse($this->container->get('router')->generate('op_message_thread_view', array(
-                'threadId' => $message->getThread()->getId()
-                )));
-            }else{
-                return $response->setData(array('ok'=>'no handle'));
-            }
-        }
-    }
+//    /**
+//     * Displays a form to create a new Message document.
+//     *
+//     * @Route("/create", name="messages_new_thread")
+//     * @Template()
+//     *
+//     * @return array
+//     */
+//    public function newThreadAction(Request $request, ImageConstructor $img_construct, ThreadManager $threadMan)
+//    {
+//        $formHandler  = $this->container->get('op_message.new_thread_form.handler');
+//        $response     = new JsonResponse();
+//        $form         = $this->createForm(NewThreadMessageFormType::class, new NewThreadMessage());
+//        $thread       = new Thread();
+//
+//        if($request->getMethod() === 'POST'){
+//            if($request->isXmlHttpRequest()){
+//                $content = $request->request->all();
+//                $threadId = $content['thread_id'];// == '' ? '' : $content['thread_id'];
+//                if(strlen($threadId)==24){ //24 lenght of mongodb object Id
+//                    $formHandler = $this->container->get('op_message.reply_message_form.handler');
+//                    $thread = $threadMan->findThreadById($threadId);       //get thread by it's id
+//                    if (!$thread) {
+//                        return $response->setData(array('response'=>array('msg'=>'Unable to find Message', 'status'=>false)));
+//                    }
+//                }
+//            }
+//        }
+//        //return $response->setData(array('response'=>array('msg'=>'Unable to find Message', 'status'=>false)));
+//        if($request->isXmlHttpRequest()){
+//            if($message = $formHandler->process($form, $thread)){
+//                $csrf = $this->get('security.csrf.token_manager');
+//                return $response->setData(
+//                    array('response'=>
+//                        array(
+//                            'status'    =>true,
+//                            'token'     =>$csrf->refreshToken('8')->getValue(),
+//                            'threadId'  =>$message->getThread()->getId(),
+//                            'message_body'=>$message->getBody(),
+//                            'images'    =>$img_construct->AjaxImageToArray($message->getImages()),
+//                            'message_id'=>$message->getId()
+//                        )
+//                    )
+//                );
+//            }else{
+//                //create new thread message in modal form
+//                return $response->setData(array('thread'=> $this->renderView('OPMessageBundle:Message:ajax_newThread.html.twig',
+//                                                            array('thread_form'=> $form->createView(),
+//                                                                    'user'=>  $this->_getUser())),
+//                                                'response'=>array('status'=>false, 'text'=>'new')));
+//            }
+//        }else{
+//            if($message = $formHandler->process($form, $thread)){
+//                return new RedirectResponse($this->container->get('router')->generate('op_message_thread_view', array(
+//                'threadId' => $message->getThread()->getId()
+//                )));
+//            }else{
+//                return $response->setData(array('ok'=>'no handle'));
+//            }
+//        }
+//    }
 
     /**
      * Finds and displays a Message document.

@@ -2,20 +2,15 @@
 
 namespace OP\MessageBundle\FormHandler;
 
+use OP\MessageBundle\DocumentManager\{ThreadManager, MessageManager, QuestionManager};
 use Emojione\Emojione,
     Symfony\Component\Form\Form,
-    OP\MessageBundle\Document\Thread,
     OP\MessageBundle\Document\Response,
     OP\MessageBundle\Sender\SenderInterface,
-    Symfony\Component\HttpFoundation\Request,
     OP\MessageBundle\FormModel\AbstractMessage,
     OP\MessageBundle\Composer\ComposerInterface,
     OP\MessageBundle\Model\ParticipantInterface,
     Symfony\Component\HttpFoundation\RequestStack,
-    Symfony\Component\HttpFoundation\JsonResponse,
-    OP\MessageBundle\DocumentManager\ThreadManager,
-    OP\MessageBundle\DocumentManager\MessageManager,
-    OP\MessageBundle\DocumentManager\QuestionManager,
     OP\MessageBundle\Security\ParticipantProviderInterface,
     OP\UserBundle\DataTransformer\UsernameToUserTransformer,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
@@ -63,9 +58,7 @@ abstract class AbstractMessageFormHandler
             return $this->processValidForm($form, null);
             // echo $a;
         }
-
-
-
+        
         //handle request if not json data
         $form->handleRequest($this->request);
         if($form->isValid()) {
@@ -114,7 +107,6 @@ abstract class AbstractMessageFormHandler
      */
     public function processValidForm(Form $form, $thread)
     {
-
         if($form->getName() === 'thread_message') {
             // return MessageInterface $message
             $message = $this->composeThread($form->getData(), null);

@@ -13,6 +13,24 @@ use Doctrine\ODM\MongoDB\DocumentRepository,
  */
 class ImageRepository extends DocumentRepository
 {
+    public function findCphotos($ids){
+//        foreach($ids as $id){
+//            if(strlen($id) === 24) {
+//                if(!$image)
+//                    $images [] = null;
+//                else
+//                    $images [] = $image;
+//            }
+//        }
+        $qb = $this->createQueryBuilder('OP\MediaBundle\Document\Image');
+        $qb->field('id')->in($ids)
+           ->hydrate(false)
+           ;
+        $photos = $qb->getQuery()
+                    ->execute()
+                    ->toArray();
+        return $photos;
+    }
     
     public function findPhotoById($id){
         $qb = $this->createQueryBuilder('OP\MediaBundle\Document\Image');

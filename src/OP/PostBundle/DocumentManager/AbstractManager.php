@@ -3,13 +3,11 @@ namespace OP\PostBundle\DocumentManager;
 
 use Emojione\Emojione,
     OP\MediaBundle\Document\Image,
-    OP\MediaBundle\Document\Video,
     OP\SocialBundle\Stream\Stream,
     OP\UserBundle\Security\UserProvider,
     Doctrine\ODM\MongoDB\DocumentManager,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     Symfony\Component\HttpFoundation\RequestStack,
-    Symfony\Component\HttpFoundation\File\UploadedFile,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**

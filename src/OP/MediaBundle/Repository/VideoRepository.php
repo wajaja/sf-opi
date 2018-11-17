@@ -29,4 +29,16 @@ class VideoRepository extends DocumentRepository
                    ->getSingleResult();
         return $post;    
     }
+    
+    public function findCvideos($ids)
+    {
+        $qb = $this->qb();
+        $qb ->field('id')->in($ids)
+            ->hydrate(false);
+        
+        $videos = $qb->getQuery()
+                   ->execute()
+                   ->toArray();
+        return $videos;    
+    }
 }

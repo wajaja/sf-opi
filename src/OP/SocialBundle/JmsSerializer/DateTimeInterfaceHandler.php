@@ -4,7 +4,7 @@
 namespace OP\SocialBundle\JmsSerializer;
 
 use DateTimeInterface,
-	JMS\Serializer\VisitorInterface;
+    JMS\Serializer\VisitorInterface;
 
 class DateTimeInterfaceHandler
 {

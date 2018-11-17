@@ -2,8 +2,8 @@
 
 namespace OP\MessageBundle\ModelManager;
 
-use OP\MessageBundle\Document\Message;
-use OP\MessageBundle\Model\ParticipantInterface;
+use OP\MessageBundle\Document\Message,
+    OP\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Interface to be implemented by message managers. This adds an additional level

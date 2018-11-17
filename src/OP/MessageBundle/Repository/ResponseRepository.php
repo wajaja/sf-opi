@@ -2,8 +2,8 @@
 
 namespace OP\MessageBundle\Repository;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
-use OP\UserBundle\Document\User;
+use Doctrine\ODM\MongoDB\DocumentRepository,
+    OP\UserBundle\Document\User;
 
 /**
  * QuestionRepository

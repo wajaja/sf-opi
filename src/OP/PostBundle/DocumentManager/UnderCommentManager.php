@@ -16,7 +16,6 @@ class UnderCommentManager extends AbstractManager
      */    
     public function saveUnderComment(UnderComment $underComment)
     {
-        $this->request->getSession()->start();
 
         $commentId    = $this->request->get('commentId');
         $comment      = $this->dm->getRepository('OPPostBundle:Comment')->find($commentId);
@@ -24,8 +23,7 @@ class UnderCommentManager extends AbstractManager
 
         $contents   = $this->request->request->all();       
         $data       = json_decode($this->request->getContent(), true);        
-        $content    =   !$this->request->getFormat('application/json') ? 
-                            $contents['undercomment']['content']: $data['content'];
+        $content    = $contents['undercomment']['content'] ?? $data['content'];
 
         $underComment->setComment($comment);
         $underComment->setContent($this->buildHTML($content));

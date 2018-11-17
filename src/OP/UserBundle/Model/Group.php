@@ -3,7 +3,7 @@
 namespace OP\UserBundle\Model;
 
 use FOS\UserBundle\Model\Group as BaseGroup,
-	Symfony\Component\HttpFoundation\Request;
+    Symfony\Component\HttpFoundation\Request;
 
 
 /**

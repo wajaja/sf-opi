@@ -2,20 +2,14 @@
 
 namespace OP\MessageBundle\ModelManager;
 
-use OP\MediaBundle\Document\Image,
-    OP\UserBundle\Document\User,
+use OP\UserBundle\Document\User,
     OP\MessageBundle\Document\Thread,
     OP\MessageBundle\Document\Message,
     Doctrine\ODM\MongoDB\Query\Builder,
-    Doctrine\ODM\MongoDB\DocumentManager,
-    OP\UserBundle\Security\UserProvider,
     OP\MessageBundle\Model\ThreadInterface,
     OP\MessageBundle\Model\MessageInterface,
     OP\MessageBundle\Model\ReadableInterface,
-    OP\MessageBundle\Model\ParticipantInterface,
-    Symfony\Component\HttpFoundation\RequestStack,
-    Symfony\Component\HttpFoundation\File\UploadedFile,
-    OP\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
+    OP\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract Message Manager implementation which can be used as base by

@@ -4,24 +4,9 @@
 
 namespace OP\SocialBundle\Controller\Api;
 
-use OP\UserBundle\Document\User,
-    FOS\RestBundle\View\View,
-    FOS\UserBundle\FOSUserEvents,
-    FOS\UserBundle\Event\FormEvent,
-    Nelmio\ApiDocBundle\Annotation as Doc,
-    FOS\RestBundle\Controller\Annotations,
-    Symfony\Component\HttpFoundation\Request,
-    FOS\UserBundle\Event\GetResponseUserEvent,
-    FOS\RestBundle\Controller\FOSRestController,
-    FOS\UserBundle\Event\FilterUserResponseEvent,
-    Symfony\Component\HttpFoundation\JsonResponse,
-    FOS\RestBundle\Routing\ClassResourceInterface,
-    Symfony\Component\Security\Core\User\UserInterface,
-    FOS\RestBundle\Controller\Annotations\RouteResource,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use FOS\RestBundle\Controller\FOSRestController;
 
 /**
- 
  */
 class ApiHomeController extends FOSRestController
 {

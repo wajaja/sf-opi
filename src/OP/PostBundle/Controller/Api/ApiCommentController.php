@@ -4,7 +4,6 @@ namespace OP\PostBundle\Controller\Api;
 use OP\PostBundle\Document\Comment,
     OP\PostBundle\Form\CommentType,
     OP\PostBundle\Event as PostEvents,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     OP\UserBundle\Security\UserProvider,
     FOS\RestBundle\Controller\Annotations,
     Symfony\Component\HttpFoundation\Request,
@@ -13,14 +12,13 @@ use OP\PostBundle\Document\Comment,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     OP\SocialBundle\DocumentManager\NotificationManager,
-    FOS\RestBundle\Controller\Annotations\RouteResource,
     OP\PostBundle\FormHandler\NewPostFormHandler,
     OP\PostBundle\Notification\RealTimePost,
     Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 
 /**
- * @RouteResource("comments", pluralize=false)
+ * @Annotations\RouteResource("comments", pluralize=false)
  */
 class ApiCommentController extends FOSRestController implements ClassResourceInterface
 {
@@ -39,18 +37,13 @@ class ApiCommentController extends FOSRestController implements ClassResourceInt
      *
      * @return Integer
      */
-    public function loadAction(Request $request, $postValid, ToArrayTransformer $transformer)
+    public function loadAction(Request $request, $postValid, ToArrayTransformer $transformer, $notIn = [])
     {
-        $comments    = [];
-        $dm          = $this->getDocumentManager();
-        $refer       = $request->query->get('refer');
-        $user_id     = $this->_getUser()->getId();
-        $records     = $dm->getRepository('OPPostBundle:Comment')
-                          ->loadComments($postValid, $refer);
-        foreach ($records as $record) {               
-            $comments[] = $transformer->commentToArray($record);
-        }
-        return new JsonResponse($comments);
+        $dm      = $this->getDocumentManager();
+        $refer   = $request->query->get('refer');
+        $records = $dm->getRepository('OPPostBundle:Comment')
+                      ->loadComments($postValid, $refer, $notIn);
+        return new JsonResponse($transformer->commentsToArray($records));
     }
 
     /**
@@ -61,24 +54,14 @@ class ApiCommentController extends FOSRestController implements ClassResourceInt
      */
     public function loadmoreAction(Request $request, $postId, ToArrayTransformer $transformer)
     {
-        $ids        = $request->query->get('ids');
-        $comments   = [];
-        $dm         = $this->getDocumentManager();
-        $user       = $this->_getUser();
-        foreach ($ids as $id) {
-            $comment = $dm->getRepository('OPPostBundle:Comment')
-                        ->findSimpleCommentById($id);
-            //post not found or masked
-            if(!$comments || in_array($comment['author']['$id'], $this->objectsToIds($user->getBlockedsWithMe()))) {
-                continue;
-            }
-            else {                
-                $posts[] = $transformer->postToArray($post);
-            }
-        }
+        $notIn   = $request->query->get('ids');
+        $dm      = $this->getDocumentManager();
+        $refer   = $request->query->get('refer');
+        $comments = $dm->getRepository('OPPostBundle:Comment')
+                        ->loadComments($postId, $refer, $notIn);
 
-        $response = new JsonResponse();
-        return $response->setData(array('posts'=>$posts));
+        $res = new JsonResponse();
+        return $res->setData($transformer->commentsToArray($comments));
     }
 
     /**
@@ -242,20 +225,6 @@ class ApiCommentController extends FOSRestController implements ClassResourceInt
     public function _getUser()
     {
         return $this->user_provider->getHydratedUser();
-    }
-
-    /**
-    * Convert array objects from database in 
-    * single array of ids
-    *@param array Users $objects
-    */
-    public function objectsToIds($objects)
-    {
-        $ids = [];
-        foreach ($objects as $object) {
-            $ids[] = $object->getId();
-        }
-        return $ids;
     }
 
     /**

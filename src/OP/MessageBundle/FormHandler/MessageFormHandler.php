@@ -1,10 +1,8 @@
 <?php
 namespace OP\MessageBundle\FormHandler;
 
-use OP\MessageBundle\Document\Thread,
-    OP\MessageBundle\Document\Response,
-    OP\MessageBundle\FormModel\AbstractMessage,
-    OP\MessageBundle\FormModel\NewThreadMessage;
+use OP\MessageBundle\Document\Response,
+    OP\MessageBundle\FormModel\AbstractMessage;
 /**
  * Form handler for multiple recipients support
  */

@@ -19,7 +19,7 @@ services:
     OP\MediaBundle\Document\Picture: ~
     
     OP\MediaBundle\Construct\ImageConstructor:
-        arguments: ["@service_container", "@request_stack", "@liip_imagine.cache.manager.public"]
+        arguments: ["@service_container", "@request_stack", "@liip_imagine.cache.manager.public", '%file_base_url%', '@liip_imagine.controller']
     
     OP\MediaBundle\Uploader\Storage\FilesystemStorage:
         arguments: ["%kernel.root_dir%"]
@@ -39,7 +39,14 @@ services:
     #     class: OP\MediaBundle\FormHandler\GalleryFormHandler
     #     arguments: ["@request_stack", "@op_post.post_manager", "@op_post.composer", "@op_message.participant_provider"]
     OP\MediaBundle\DataTransformer\ToArrayTransformer:
-        arguments: ["@service_container", "@request_stack", "@doctrine.odm.mongodb.document_manager.public", "@op_user.user_manager", '@OP\UserBundle\Security\UserProvider']
+        arguments: 
+            - "@service_container"
+            - "@request_stack"
+            - "@doctrine.odm.mongodb.document_manager.public"
+            - "@op_user.user_manager"
+            - '@OP\UserBundle\Security\UserProvider'
+            - '%file_base_url%'
+            - '@jms_serializer'
     OP\MediaBundle\DocumentManager\PictureManager:
         arguments: 
             - '@doctrine.odm.mongodb.document_manager.public'

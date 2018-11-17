@@ -4,12 +4,7 @@
 
 namespace OP\UserBundle\Controller\Api;
 
-use OP\UserBundle\Document\User,
-    FOS\UserBundle\FOSUserEvents,
-//     FOS\RestBundle\View\View,
-    FOS\UserBundle\Event as Events,
-    Nelmio\ApiDocBundle\Annotation as Doc,
-    FOS\RestBundle\Controller\Annotations, 
+use FOS\RestBundle\Controller\Annotations, 
     Symfony\Component\HttpFoundation\Request,
     JMS\Serializer\SerializerInterface,
     OP\UserBundle\Security\UserProvider,
@@ -19,9 +14,7 @@ use OP\UserBundle\Document\User,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\UserBundle\DocumentManager\InvitationManager,
-    Symfony\Component\Security\Core\User\UserInterface,
-    OP\PostBundle\DataTransformer\ToArrayTransformer,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+    OP\PostBundle\DataTransformer\ToArrayTransformer;
 
 /**
  * @Annotations\RouteResource("search", pluralize=false)
@@ -57,10 +50,9 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
                     'id'        => (String)$u['_id'],
                     'email'     => $u['email'],
                     'username'  => $u['username'],
-                    'firstname' => isset($u['firstname']) ?: null,
-                    'lastname'  => isset($u['lastname']) ?: null,
-                    'profilePic'=> $transformer->getProfilePic(
-                        !isset($u['profilePic']) ?: (String)$u['profilePic']['$id'])
+                    'firstname' => $u['firstname']?? null,
+                    'lastname'  => $u['lastname'] ?? null,
+                    'profilePic'=> $transformer->getProfilePic(u)
                 );
         }
 
@@ -84,10 +76,10 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
     //                 'id'        => (String)$u['_id'],
     //                 'email'     => $u['email'],
     //                 'username'  => $u['username'],
-    //                 'firstname' => isset($u['firstname']) ?: null,
-    //                 'lastname'  => isset($u['lastname']) ?: null,
-    //                 'profilePic'=> $transformer->getProfilePic(
-    //                     !isset($u['profilePic']) ?: (String)$u['profilePic']['$id'])
+    //                 'firstname' => ['firstname'] ?? null,
+    //                 'lastname'  => ['lastname'] ?? null,
+    //                 'profilePic'=> $transformer->getProfilePic(u)
+    //
     //             );
     //     }
 
@@ -194,19 +186,6 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
         return $ids;
     }
 
-    protected function getProfilePic($id){
-        $picture = $this->getDocumentManager()
-                        ->getRepository('OP\MediaBundle\Document\Image')
-                        ->findPhotoById($id);
-
-        return $this->getUploadRootDir().$picture['directory'].'/'.$picture['path'];
-    }
-    
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/uploads/';
-    }
-
     /**
      * Gets the current authenticated user
      * See::OPMEssageBundle participantprovider
@@ -216,8 +195,6 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
     {
         return $this->user_provider->getHydratedUser();
     }
-
-
 
     /**
      * Returns the DocumentManager

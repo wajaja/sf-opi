@@ -45,38 +45,7 @@ class ApiLikeController extends FOSRestController implements ClassResourceInterf
         $db_likes   = $dm->getRepository('OPPostBundle:Like')
                              ->loadBy($postId, $refer);
 
-        $likes = [];
-        foreach ($db_likes as $db_like) {
-            $likes[] = $transformer->likeToArray($db_like);
-        }
-        return $res->setData(array('likes'=>$likes));
-    }
-
-    /**
-     * Lists all follows Post posts.
-     * @Annotations\Get("/likes/loadmore/{postId}")
-     *
-     * @return Integer
-     */
-    public function loadmoreAction(Request $request, $postId, ToArrayTransformer $transformer)
-    {
-        $cmts = [];
-        $ids  = $request->query->get('ids');
-        $dm   = $this->getDocumentManager();
-        $user = $this->_getUser();
-        foreach ($ids as $id) {
-            $cmt = $dm->getRepository('OPPostBundle:Like')->findLikeByRefId($id);
-            //post not found or masked
-           /* if(!$comments || in_array($comment['author']['$id'], $this->objectsToIds($user->getBlockedsWithMe()))) {
-                continue;
-            }
-            else {                
-                $posts[] = $transformer->postToArray($post);
-            }*/
-        }
-
-        $response = new JsonResponse();
-        return $response->setData(array('posts'=>$posts));
+        return $res->setData(array('likes'=>$transformer->likeToArray($db_likes)));
     }
 
     /**
@@ -88,7 +57,6 @@ class ApiLikeController extends FOSRestController implements ClassResourceInterf
      */
     public function addAction(Request $request, NewPostFormHandler $formHandler, EventDispatcherInterface $dispatcher, NotificationManager $notifMan)
     {
-
         $form    = $this->createForm(LikeType::class, new Like());        
         if($data = $formHandler->process($form, false)) {
             $this->notify($data['like'], $notifMan);  //['like'] is object, ['data'] an array
@@ -114,7 +82,6 @@ class ApiLikeController extends FOSRestController implements ClassResourceInterf
      */
     public function deleteAction(Request $request, LikeManager $manager)
     {
-
         $user   = $this->_getUser();
         $res    = new JsonResponse();
         $dm     = $this->getDocumentManager();
@@ -127,10 +94,6 @@ class ApiLikeController extends FOSRestController implements ClassResourceInterf
 
         $data = $manager->deleteLike($like);
         return new JsonResponse($data['data']);
-    }
-
-    private function getStreamClient() {
-        return new \GetStream\Stream\Client('sewzt6y5y29n', 'c4bdc5xpez98f5vb4pfdu7myg2zsax5ykahuem2thkmsm7d5e9ddztskjwcwdhk8');
     }
 
     /**

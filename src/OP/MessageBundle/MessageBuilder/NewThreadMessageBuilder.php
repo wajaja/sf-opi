@@ -2,8 +2,8 @@
 
 namespace OP\MessageBundle\MessageBuilder;
 
-use OP\MessageBundle\Model\ParticipantInterface;
-use Doctrine\Common\Collections\Collection;
+use OP\MessageBundle\Model\ParticipantInterface,
+    Doctrine\Common\Collections\Collection;
 
 /**
  * Fluent interface message builder for new thread messages

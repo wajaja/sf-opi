@@ -2,20 +2,13 @@
 
 namespace OP\MediaBundle\Controller\Api;
 
+use FOS\RestBundle\Controller\Annotations\{Put, Post as PostMethod, Get, RouteResource};
 use Symfony\Component\HttpFoundation\Request,
-    FOS\RestBundle\Controller\Annotations\Get,
     OP\MediaBundle\Construct\ImageConstructor,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     OP\UserBundle\Security\UserProvider,
-    Symfony\Component\FileSystem\FileSystem,
-    Symfony\Component\Filesystem\Exception\IOException,
-    FOS\RestBundle\Controller\Annotations\Put,
-    FOS\RestBundle\Controller\Annotations\Post as PostMethod,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Routing\ClassResourceInterface,
-    Symfony\Component\HttpFoundation\JsonResponse,
-    FOS\RestBundle\Controller\Annotations\RouteResource;
-
+    Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @RouteResource("uploader", pluralize=false)
@@ -145,7 +138,7 @@ class ApiUploaderController extends FOSRestController implements ClassResourceIn
         $all        = $request->request->all();
         $session    = $request->getSession();
         $filename   = $all['params']['filename'];
-        $postId     = $all['params']['postId'];
+        //$postId     = $all['params']['postId'];
         $commentId  = $all['params']['commentId'];
         $galleryId  = 'gallerycommentedit'.'_'.$commentId;
 
@@ -183,7 +176,7 @@ class ApiUploaderController extends FOSRestController implements ClassResourceIn
         $all = $request->request->all();
         
         $filename   = $all['params']['filename'];
-        $postId     = $all['params']['postId'];
+        //$postId     = $all['params']['postId'];
         $commentId  = $all['params']['leftId'];
         $session    = $request->getSession();
         $galleryId  = 'galleryleftedit'.'_'.$commentId;
@@ -222,7 +215,7 @@ class ApiUploaderController extends FOSRestController implements ClassResourceIn
         $all = $request->request->all();
         
         $filename   = $all['params']['filename'];
-        $postId     = $all['params']['postId'];
+        //$postId     = $all['params']['postId'];
         $commentId  = $all['params']['rightId'];
         $session    = $request->getSession();
         $galleryId  = 'galleryrightedit'.'_'.$commentId;
@@ -281,7 +274,7 @@ class ApiUploaderController extends FOSRestController implements ClassResourceIn
         $filename   = $request->get('filename');
         $threadId   = $request->get('threadId');
         $session    = $request->getSession();
-        $orphans    = $session->get('');
+        //$orphans    = $session->get('');
         $galleryId  = 'gallerymessage'.'_'.$threadId;
         
         $this->reset($session, $filename, $galleryId);
@@ -297,8 +290,6 @@ class ApiUploaderController extends FOSRestController implements ClassResourceIn
     public function removeInGalleryQuestionAction(Request $request)
     {
         $all = $request->request->all();
-        // 
-        $response = new JsonResponse();
         $filename   = $all['params']['filename'];
         $postId     = $all['params']['postId'];
         $questionId = $all['params']['questionId'];
@@ -374,13 +365,11 @@ class ApiUploaderController extends FOSRestController implements ClassResourceIn
                           ->findImageByPath($filename);
         if (!$image) return null;
 
-        $post = null;
         return [
             'image' => $construct->imageToArray($image),
             'filePath' => '/uploader/orphanage/'. $sessionId . '/' . $galleryDir. '/'. $filename
         ];
     }
-
 
     /**
      * Returns the DocumentManager

@@ -1,9 +1,7 @@
 <?php
 namespace OP\PostBundle\FormHandler;
 
-use OP\PostBundle\Document\Post,
-    OP\MessageBundle\DataTransformer\UsernameToUserTransformer;
-
+use OP\PostBundle\Document\Post;
 
 class NewPostFormHandler extends AbstractPostFormHandler
 {

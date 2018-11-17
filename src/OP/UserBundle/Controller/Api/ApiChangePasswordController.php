@@ -6,9 +6,9 @@ namespace OP\UserBundle\Controller\Api;
 
 use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Event\FormEvent,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     FOS\RestBundle\Controller\Annotations,
     OP\UserBundle\Security\UserProvider,
+    JMS\Serializer\SerializerInterface,
     Symfony\Component\HttpFoundation\Request,
     FOS\UserBundle\Event\GetResponseUserEvent,
     FOS\RestBundle\Controller\FOSRestController,
@@ -41,15 +41,12 @@ class ApiChangePasswordController extends FOSRestController implements ClassReso
      * @Annotations\Post("/setting/password/{userId}")
      *
      */
-    public function changeAction(Request $request, $userId)
+    public function changeAction(Request $request, $userId, EventDispatcherInterface $dispatcher, SerializerInterface $serializer)
     {
         $user = $this->_getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
-
-        $serializer     = $this->get('jms_serializer');
-        $dispatcher     = $this->get('event_dispatcher');
         $contentType    = $request->headers->get('Content-Type');
 
         $event = new GetResponseUserEvent($user, $request);

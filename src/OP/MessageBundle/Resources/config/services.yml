@@ -63,7 +63,7 @@ services:
     OP\MessageBundle\DocumentManager\QuestionManager:
         arguments: ["@doctrine.odm.mongodb.document_manager.public", 'OP\MessageBundle\Document\Question', "@oneup_uploader.orphanage_manager", '@OP\UserBundle\Security\UserProvider', "@request_stack"]
     OP\MessageBundle\DataTransformer\ObjectToArrayTransformer:
-        arguments: ["@service_container", "@request_stack", "@doctrine.odm.mongodb.document_manager.public", "@op_user.user_manager", "@op_media.image_constructor", '@OP\SocialBundle\SeveralClass\DateTransformer', '@OP\UserBundle\Security\UserProvider']
+        arguments: ["@service_container", "@request_stack", "@doctrine.odm.mongodb.document_manager.public", "@op_user.user_manager", "@op_media.image_constructor", '%file_base_url%', '@OP\UserBundle\Security\UserProvider']
     
     OP\MessageBundle\Listener\MessageListener:
         arguments: 
@@ -72,6 +72,7 @@ services:
             - '@op_message.object_to_array.transformer'
             - '@op_user.user_manager'
             - '@op_message.participant_provider'
+            - '@gos_web_socket.wamp.pusher'
         tags:
             - { name: kernel.event_listener, event: op_message.thread_create, method: onThreadCreate }
             - { name: kernel.event_listener, event: op_message.message_send, method: onMessageSend }

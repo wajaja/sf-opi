@@ -1,18 +1,14 @@
 <?php
 namespace OP\SocialBundle\Controller\Api;
 
-use OP\UserBundle\Document\User,
-//     FOS\RestBundle\View\View,
-    OP\SocialBundle\Document\Search,
+use OP\SocialBundle\Document\Search,
     OP\UserBundle\Security\UserProvider,
-    JMS\Serializer\SerializationContext,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     FOS\RestBundle\Controller\Annotations,
+    OP\SocialBundle\DocumentManager\SearchManager,
     Symfony\Component\HttpFoundation\Request,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
-    Symfony\Component\Security\Core\User\UserInterface,
     Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -35,12 +31,9 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
      * just after user's login
      * @param type String
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $request, SearchManager $searchMan)
     {
-        $searchMan  = $this->container->get('op_social.search_manager');
-        $tag        = $request->query->get('tag');
-
-
+        $tag  = $request->query->get('tag');
         if($tag === 'users') 
             $results = $searchMan->searchUsers($request);
         else if($tag === 'posts') 
@@ -60,11 +53,9 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
      * just after user's login
      * @param type String
      */
-    public function recentAction(Request $request)
+    public function recentAction(Request $request, SearchManager $sMan)
     {
         $terms   = [];
-        $res     = new JsonResponse();
-        $sMan    = $this->container->get('op_social.search_manager');
         $dm      = $this->getDocumentManager();
         $searchs = $dm->getRepository('OPSocialBundle:Search')->findAll();
 
@@ -77,12 +68,9 @@ class ApiSearchController extends FOSRestController implements ClassResourceInte
 
         $results = $sMan->searchRecents($terms);
 
-        return $res->setData(array('terms' => $terms, 'results' => $results));
+        return new JsonResponse(['terms' => $terms, 'results' => $results]);
     }
 
-    /**
-     
-     */
     /**
      * @Annotations\Post("/searches")
      * 

@@ -2,14 +2,10 @@
 
 namespace OP\UserBundle\EventListener;
 
-use FOS\UserBundle\FOSUserEvents,
-    Kreait\Firebase\Factory,
+use Kreait\Firebase\Factory,
     Kreait\Firebase\ServiceAccount,
     OP\SocialBundle\Firebase\Firebase,
-    Lexik\Bundle\JWTAuthenticationBundle\Events,
     Symfony\Component\HttpFoundation\RequestStack,
-    Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpFoundation\JsonResponse,
     OP\MediaBundle\DocumentManager\PictureManager,
     Symfony\Component\Routing\Generator\UrlGeneratorInterface,
     Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager,

@@ -1,10 +1,10 @@
 <?php
 namespace OP\PostBundle\Model;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\File;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM,
+    Symfony\Component\Validator\Constraints as Assert,
+    Symfony\Component\HttpFoundation\File\File,
+    Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * OP\PostBundle\Document\Pshare

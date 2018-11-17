@@ -84,15 +84,6 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
         $u = $this->_getUser();
 
         return $u;
-            // array(
-            //     "id"            => $u->getId(),
-            //     "email"         => $u->getEmail(),
-            //     "username"      => $u->getUsername(),
-            //     "lastname"      => $u->getLastname(),
-            //     "firstname"     => $u->getFirstname(),
-            //     "last_login"    => $u->getLastLogin(),
-            //     "profile_pic"   => $transformer->getProfilePic($u->getProfilePic()->getId())
-            // );
     }
 
     /**
@@ -217,7 +208,7 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
         
         $friends    = [];
         $user       = $this->_getUser();
-        $page       = !!$request->query->get('page') ? $request->query->get('page') : 1;
+        $page       = $request->query->get('page') ?? 1;
         $profile    = $u_man->findUserByUsername($username);
         $results    = $profile->getMyFriends()->toArray();
         //Warning: it will use the "==" comparison, not the strict comparison ("===")
@@ -249,7 +240,7 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
         
         $friends    = [];
         $user       = $this->_getUser();
-        $page       = !!$request->query->get('page') ? $request->query->get('page') : 1;
+        $page       = $request->query->get('page') ?? 1;
         $profile    = $u_man->findUserByUsername($username);
         $results    = $profile->getMyFollowers()->toArray();
         //Warning: it will use the "==" comparison, not the strict comparison ("===")
@@ -298,8 +289,8 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
         $query    = $request->query;
         $utc      = new \Datetime(null, new \DateTimeZone("UTC"));
         $u_man    = $this->get('fos_user.user_manager');
-        $page     = $query->get('page') ? $query->get('page') : 1;
-        $date     = $query->get('date') ? $query->get('date') : $utc;
+        $page     = $query->get('page') ?? 1;
+        $date     = $query->get('date') ?? $utc;
         $profile  = $u_man->findUserByUsername($username);
         $results  = $this->loadTimelime($profile, $page, $date, $pMan);
 
@@ -379,10 +370,5 @@ class ApiProfileController extends FOSRestController implements ClassResourceInt
         if (!is_object($this->_getUser())) {
             throw new AccessDeniedException($message);
         }
-    }
-
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/uploads/';
     }
 }

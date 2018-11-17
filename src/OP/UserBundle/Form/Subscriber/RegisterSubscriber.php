@@ -3,11 +3,10 @@
 namespace OP\UserBundle\Form\Subscriber;
 
 use Symfony\Component\Form\FormEvent,
-	Symfony\Component\Form\FormEvents,
+    Symfony\Component\Form\FormEvents,
     OP\UserBundle\Repository\OpinionUserManager,
-    Doctrine\Common\Persistence\Mapping\ClassMetadata,
     Symfony\Component\Form\Extension\Core\Type\TextType,
-	Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
 class RegisterSubscriber implements EventSubscriberInterface
@@ -47,6 +46,7 @@ class RegisterSubscriber implements EventSubscriberInterface
     {
     	//$inversedStr = $lastname . $firstname;
     	$normalStr = $firstname . $lastname;
+        //TODO make normalStr different with ['messages', 'login', register, '...']
     	$usernames = $this->userManager->loadUsernamesByString($normalStr);
         //remove Uppercase & other chars
     	$username  = $this->guessUsername($usernames, strtolower(preg_replace('/[^a-z0-9]/', '', $normalStr)));

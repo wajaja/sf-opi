@@ -153,4 +153,15 @@ class PostRepository extends DocumentRepository
                     ->toArray();
         return $posts;    
     }
+    
+    public function findCposts($ids){
+        $qb = $this->createQueryBuilder('\OP\PostBundle\Document\Post');
+        $qb->field('id')->in($ids)
+           ->hydrate(false)
+           ;
+        $posts = $qb->getQuery()
+                    ->execute()
+                    ->toArray();
+        return $posts;
+    }
 }

@@ -1,6 +1,12 @@
 <?php
-
 namespace OP\UserBundle\EventListener;
+define('ANON_PATHS', [
+    '/', 
+    '/login', 
+    '/signup', 
+    '/meetyou',
+    '/initialize/password'
+]);
 
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\{
     JWTDecodeFailureException, JWTEncodeFailureException
@@ -65,15 +71,24 @@ class ActivityListener
      */
     public function onCoreRequest(GetResponseEvent $event)
     {
-        if ($event->getRequestType() !== HttpKernel::MASTER_REQUEST) {
+        if (!$event->isMasterRequest()){
             return;
         }
-
+        
         $request = $event->getRequest();
         $session = $request->getSession();
-        $host    = $request->getHost();
+  
+        if($session->has('domain')) {
+            return;
+        }
+        
+        $pathInfo   = $request->getPathInfo();
+        if(strpos($pathInfo, '/api/')  !== false){
+            return;
+        }
         
         //if mobile browser redirect to m.opinion.com
+        $host = $request->getHost();
         if( $host !== 'm.opinion.com' &&
             $this->isMobileBrowser($request) &&
             $session->get('domain') !== 'm.opinion.com'
@@ -89,22 +104,14 @@ class ActivityListener
             return;
         }
 
-
-        $anonPaths  = ['/signup', '/login', '/', '/initialize/password', '/meetyou'];
-        $pathInfo   = $request->getPathInfo();
-        $host       = $request->getHost();
-
-        $session->isStarted() ?: $session->start();
-
         if (!$this->isMobileBrowser($request) && 
             !$session->get('access_token') && 
-            !$this->inArrayPaths($pathInfo, $anonPaths) &&
+            !$this->inArrayPaths($pathInfo, ANON_PATHS) &&
             $session->get('pathInfo') !== '/login'
         ) {
             if($pathInfo !== '/login') {
                 $session->set('pathInfo', '/login');
-                $url      = $this->router->generate('fos_user_security_login');
-                $response = new RedirectResponse($url);
+                $response = new RedirectResponse($this->router->generate('fos_user_security_login'));
                 $event->setResponse($response);
             }
         }
@@ -120,22 +127,22 @@ class ActivityListener
     */
     public function onCoreController(FilterControllerEvent $event)
     {
-
-        if ($event->getRequestType() !== HttpKernel::MASTER_REQUEST) {
+        if (!$event->isMasterRequest()){
             return;
         }
         
-        
         $request    = $event->getRequest();
-        $session    = $request->getSession();
-        $anonPaths  = ['/signup', '/login', '/', '/initialize/password', '/meetyou'];
         $pathInfo   = $request->getPathInfo();
-        $host       = $request->getHost();
+        if(strpos($pathInfo, '/api/')  !== false){
+            return;
+        }
+        
+        $session    = $request->getSession();
 
         // redirect user to login page
         if (!$this->isMobileBrowser($request) && 
             !$session->get('access_token') && 
-            !$this->inArrayPaths($pathInfo, $anonPaths) &&
+            !$this->inArrayPaths($pathInfo, ANON_PATHS) &&
             $session->get('pathInfo') !== '/login'
         ) {
             if($pathInfo !== '/login') {
@@ -151,7 +158,7 @@ class ActivityListener
         //redirect user to home page
         if (!$this->isMobileBrowser($request) && 
             $session->get('access_token') && 
-            $this->inArrayPaths($pathInfo, $anonPaths) &&
+            $this->inArrayPaths($pathInfo, ANON_PATHS) &&
             $session->get('pathInfo') !== '/'
         ) {
             if($pathInfo !== '/') {
@@ -163,12 +170,7 @@ class ActivityListener
                 });
             }
         }
-
-        //check token based on API authentication
-        if($this->request->headers->get('authorization') !== "") {
-            
-        }
-
+        
         // Check token authentication availability
         if ($this->tokenStorage->getToken()) {
             $this->updateUser($this->getUser());

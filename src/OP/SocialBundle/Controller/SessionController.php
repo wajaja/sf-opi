@@ -3,14 +3,11 @@
 namespace OP\SocialBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request,
-    Symfony\Component\Security\Core\Security,
     Symfony\Component\HttpFoundation\JsonResponse,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    Symfony\Component\Security\Core\Exception\AuthenticationException,
-    Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * Description of SessionController
  * 

@@ -1,7 +1,6 @@
 <?php
 namespace OP\MessageBundle\Form;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\{
     Extension\Core\Type\TextareaType, AbstractType,
     Extension\Core\Type\TextType, FormBuilderInterface

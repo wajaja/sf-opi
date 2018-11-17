@@ -2,8 +2,7 @@
 
 namespace OP\PostBundle\Serializer;
 
-use OP\PostBundle\Document\Post,
-    OP\UserBundle\Security\UserProvider,
+use OP\UserBundle\Security\UserProvider,
     Doctrine\ODM\MongoDB\DocumentManager,
     JMS\Serializer\EventDispatcher\ObjectEvent,
     OP\PostBundle\DataTransformer\ToArrayTransformer,

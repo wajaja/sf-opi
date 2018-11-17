@@ -2,7 +2,6 @@
 namespace OP\PostBundle\DocumentManager;
 
 use OP\MediaBundle\Document\Image,
-    OP\MediaBundle\Document\Document,
     OP\PostBundle\Document\RightComment,
     Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -25,8 +24,7 @@ class RightManager extends AbstractManager
 
         $contents   = $this->request->request->all();       
         $data       = json_decode($this->request->getContent(), true);        
-        $content    =   !$this->request->getFormat('application/json') ? 
-                            $contents['right']['content']: $data['content'];
+        $content    = $contents['right']['content'] ?? $data['content'];
 
         $comment->setPost($post);
         $comment->setContent($this->buildHTML($content));

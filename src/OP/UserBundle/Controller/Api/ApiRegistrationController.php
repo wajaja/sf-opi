@@ -5,7 +5,6 @@ namespace OP\UserBundle\Controller\Api;
 use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Event\FormEvent,
     FOS\RestBundle\Controller\Annotations,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     Symfony\Component\HttpFoundation\Request,
     FOS\UserBundle\Event\GetResponseUserEvent,
     FOS\RestBundle\Controller\FOSRestController,
@@ -16,8 +15,7 @@ use FOS\UserBundle\FOSUserEvents,
     FOS\RestBundle\Controller\Annotations\RouteResource,
     FOS\UserBundle\Form\Factory\FormFactory,
     OP\UserBundle\Repository\OpinionUserManager,
-    Symfony\Component\EventDispatcher\EventDispatcherInterface,
-    Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+    Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @RouteResource("registration", pluralize=false)

@@ -41,6 +41,7 @@ services:
             - '@jms_serializer'
             - '@OP\UserBundle\Elastica\QuerySearch'
             - '@fos_elastica.index_manager'
+            - '@fos_elastica.finder.app.user'
     OP\SocialBundle\SeveralClass\DateTransformer: ~
     op_social.notification_constructor:
         class: OP\SocialBundle\SeveralClass\NoteConstructor

@@ -6,7 +6,6 @@ use OP\PostBundle\Event\OPPostEvents,
     OP\PostBundle\Form\UnderCommentType,
     OP\PostBundle\Event\UnderCommentEvent,
     OP\UserBundle\Security\UserProvider,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     FOS\RestBundle\Controller\Annotations,
     Symfony\Component\HttpFoundation\Request,
     FOS\RestBundle\Controller\FOSRestController,
@@ -60,24 +59,14 @@ class ApiUnderCommentController extends FOSRestController implements ClassResour
      */
     public function loadmoreAction(Request $request, $postId, ToArrayTransformer $transformer)
     {
-        $ids        = $request->query->get('ids');
-        $comments   = [];
-        $dm         = $this->getDocumentManager();
-        $user       = $this->_getUser();
-        foreach ($ids as $id) {
-            $comment = $dm->getRepository('OPPostBundle:UnderComment')
-                        ->findSimpleCommentById($id);
-            //post not found or masked
-            if(!$comments || in_array($comment['author']['$id'], $this->objectsToIds($user->getBlockedsWithMe()))) {
-                continue;
-            }
-            else {                
-                $comments[] = $transformer->commentToArray($post);
-            }
-        }
+        $notIn   = $request->query->get('ids');
+        $dm      = $this->getDocumentManager();
+        $refer   = $request->query->get('refer');
+        $comments = $dm->getRepository('OPPostBundle:UnderComment')
+                        ->loadComments($postId, $refer, $notIn);
 
-        $response = new JsonResponse();
-        return $response->setData(array('comments'=>$comments));
+        $res = new JsonResponse();
+        return $res->setData($transformer->underCommentsToArray($comments));
     }
 
     /**

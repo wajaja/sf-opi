@@ -3,10 +3,10 @@
 
 namespace OP\MessageBundle\Model;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use OP\MessageBundle\Document\ThreadMetadata;
-use Doctrine\Common\Collections\ArrayCollection;
-use OP\MessageBundle\Model\ParticipantInterface;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB,
+    OP\MessageBundle\Document\ThreadMetadata,
+    Doctrine\Common\Collections\ArrayCollection,
+    OP\MessageBundle\Model\ParticipantInterface;
 
 /**
  * OP\MessageBundle\Document\Thread

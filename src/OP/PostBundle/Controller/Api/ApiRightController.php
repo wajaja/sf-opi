@@ -7,7 +7,6 @@ use OP\PostBundle\Event\OPPostEvents,
     OP\UserBundle\Security\UserProvider,
     OP\PostBundle\Event\RightCommentEvent,
     FOS\RestBundle\Controller\Annotations,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     Symfony\Component\HttpFoundation\Request,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Routing\ClassResourceInterface,
@@ -46,8 +45,7 @@ class ApiRightController extends FOSRestController implements ClassResourceInter
         if(!$comment) {
             return $res->setData(array('comment'=>[]));
         }
-        $comment        = $transformer->opinionCommentToArray($comment, 'right');
-        return $res->setData(array('comment'=>$comment));
+        return $res->setData(array('comment'=>$transformer->opinionCommentToArray($comment, 'rightcomment')));
     }
 
     /**
@@ -58,24 +56,14 @@ class ApiRightController extends FOSRestController implements ClassResourceInter
      */
     public function loadAllAction(Request $request, $postId, ToArrayTransformer $transformer)
     {
-        $ids    = $request->query->get('ids');
-        $comments = [];
-        $dm     = $this->getDocumentManager();
-        $user   = $this->_getUser();
-        foreach ($ids as $id) {
-            $comment = $dm->getRepository('OPPostBundle:RightComment')
-                        ->findSimpleCommentById($id);
-            //post not found or masked
-            if(!$comments || in_array($comment['author']['$id'], $this->objectsToIds($user->getBlockedsWithMe()))) {
-                continue;
-            }
-            else {                
-                $posts[] = $transformer->postToArray($post);
-            }
-        }
+        $notIn   = $request->query->get('ids');
+        $dm      = $this->getDocumentManager();
+        $refer   = $request->query->get('refer');
+        $comments = $dm->getRepository('OPPostBundle:RightComment')
+                        ->loadComments($postId, $refer, $notIn);
 
-        $response = new JsonResponse();
-        return $response->setData(array('posts'=>$posts));
+        $res = new JsonResponse();
+        return $res->setData($transformer->opinionCommentsToArray($comments, 'rightcomment'));
     }
 
     /**

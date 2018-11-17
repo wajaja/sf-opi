@@ -2,15 +2,11 @@
 
 namespace OP\SocialBundle\Controller;
 
-use OP\SocialBundle\SeveralClass\Order,
-    OP\UserBundle\Security\UserProvider,
+use OP\UserBundle\Security\UserProvider,
     JMS\Serializer\SerializerInterface,
     OP\SocialBundle\Document\Notification,
     OP\SocialBundle\Form\NotificationType,
     Symfony\Component\HttpFoundation\Request,
-    OP\SocialBundle\SeveralClass\DateTransformer,
-    OP\SocialBundle\SeveralClass\NoteConstructor,
-    Symfony\Component\HttpFoundation\JsonResponse,
     OP\MessageBundle\DocumentManager\ThreadManager,
     OP\MessageBundle\DocumentManager\MessageManager,
     OP\UserBundle\DocumentManager\InvitationManager,

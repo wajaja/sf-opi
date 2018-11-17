@@ -2,17 +2,13 @@
 
 namespace OP\PostBundle\FormHandler;
 
+use OP\PostBundle\DocumentManager\{
+    LikeManager, RateManager, PostManager, LeftManager, RightManager, ShareManager,
+    CommentManager, UnderCommentManager
+};
 use Symfony\Component\Form\Form,
     OP\PostBundle\Composer\Composer,
-    OP\PostBundle\DocumentManager\LikeManager,
-    OP\PostBundle\DocumentManager\RateManager,
-    OP\PostBundle\DocumentManager\PostManager,
-    OP\PostBundle\DocumentManager\LeftManager,
-    OP\PostBundle\DocumentManager\RightManager,
-    OP\PostBundle\DocumentManager\ShareManager,
-    OP\PostBundle\DocumentManager\CommentManager,
     Symfony\Component\HttpFoundation\RequestStack,
-    OP\PostBundle\DocumentManager\UnderCommentManager,
     OP\MessageBundle\Security\ParticipantProviderInterface,
     OP\UserBundle\DataTransformer\UsernameToUserTransformer,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
@@ -58,7 +54,6 @@ abstract class AbstractPostFormHandler
         if (!in_array($this->request->getMethod(), ['POST', 'PUT', 'PATCH'])) {
             return false;
         }
-
 
         //handle and bind form data from json object
         if($this->request->getFormat('application/json')) {            

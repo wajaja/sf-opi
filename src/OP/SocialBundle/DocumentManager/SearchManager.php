@@ -2,11 +2,11 @@
 namespace OP\SocialBundle\DocumentManager;
 
 use Pagerfanta\Pagerfanta,
-	OP\SocialBundle\Document\Search,
-	OP\UserBundle\Model\UserSearch,
-	OP\UserBundle\Model\GroupSearch,
-	OP\PostBundle\Model\PostSearch,
-	Pagerfanta\Adapter\ArrayAdapter,
+    OP\SocialBundle\Document\Search,
+    OP\UserBundle\Model\UserSearch,
+    OP\UserBundle\Model\GroupSearch,
+    OP\PostBundle\Model\PostSearch,
+    Pagerfanta\Adapter\ArrayAdapter,
     Doctrine\ODM\MongoDB\DocumentManager,
     Symfony\Component\HttpFoundation\Request,
     OP\UserBundle\Elastica\QuerySearch,
@@ -14,32 +14,32 @@ use Pagerfanta\Pagerfanta,
     FOS\ElasticaBundle\Index\IndexManager,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     Symfony\Component\EventDispatcher\EventDispatcherInterface,
-	Symfony\Component\DependencyInjection\ContainerInterface as Container;
+    Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**
 * 
 */
 class SearchManager
 {
-	protected $dm, $search, $container, $pTransformer, $serializer, $querySearch, $indexManager;
-	
-	public function __construct(DocumentManager $dm, Search $search, Container $container, ToArrayTransformer $transformer, SerializerInterface $serializer, QuerySearch $querySearch, IndexManager $indexManager)
-	{
-		$this->dm 		= $dm;
-		$this->search 	= $search;
+    protected $dm, $search, $container, $pTransformer, $serializer, $querySearch, $indexManager;
+
+    public function __construct(DocumentManager $dm, Search $search, Container $container, ToArrayTransformer $transformer, SerializerInterface $serializer, QuerySearch $querySearch, IndexManager $indexManager)
+    {
+        $this->dm 	= $dm;
+        $this->search 	= $search;
         $this->container = $container;
         $this->serializer = $serializer;
         $this->querySearch = $querySearch;
         $this->pTransformer = $transformer;
         $this->indexManager = $indexManager;
-	}
+    }
 
 
-	public function searchUsers(Request $request) {
-		// notre index est directement disponible sous forme de service
-		$user 	   = new UserSearch();
-		$users 	   = [];
-		$container = $this->container;
+    public function searchUsers(Request $request) {
+        // notre index est directement disponible sous forme de service
+        $user 	   = new UserSearch();
+        $users 	   = [];
+        $container = $this->container;
 
         $user->handleRequest($request);
         $finder  = $container->get('fos_elastica.finder.app.user');
@@ -62,21 +62,17 @@ class SearchManager
         }
 
         return $users;
-	}
+    }
 
-	public function searchGroups(Request $request) {
-		// notre index est directement disponible sous forme de service
-		$group 	   = new GroupSearch();
-		$groups    = [];
-		$container = $this->container;
-
+    public function searchGroups(Request $request) {
+        // notre index est directement disponible sous forme de service
+        $group 	   = new GroupSearch();
+        $groups    = [];
+        $container = $this->container;
         $group->handleRequest($request);
+        $finder  = $container->get('fos_elastica.finder.app.group'); //TODO fix 
 
-        $serializer  = $container->get('jms_serializer');
-        $querySearch = $container->get('op_user.elastica.query_search');
-        $finder      = $container->get('fos_elastica.finder.app.group');
-
-        $query   = $querySearch->getQueryForGroup($group);
+        $query   = $this->querySearch->getQueryForGroup($group);
         $results = $finder->find($query);
 
         /** Alternatve*/
@@ -90,69 +86,70 @@ class SearchManager
         $pager->setCurrentPage($group->getPage());
 
         foreach ($pager->getCurrentPageResults() as $group) {
-            $groups[] = $serializer->toArray($group);
+            $groups[] = $this->serializer->toArray($group);
         }
 
         return $groups;
-	}
+    }
 
-	public function searchPosts(Request $request) {
-		// notre index est directement disponible sous forme de service
-		$post 	    = new PostSearch();
-		$posts    	= [];
-		$container 	= $this->container;
-	    $transformer= $container->get('op_post.elastica_to_model.transformer.post');
+    public function searchPosts(Request $request) {
+        // notre index est directement disponible sous forme de service
+        $post 	    = new PostSearch();
+        $posts    	= [];
+        $container 	= $this->container;
+        $transformer= $container->get('op_post.elastica_to_model.transformer.post');
 
         $post->handleRequest($request);
 
         if($post->getCriteria() === 'all') {
-	        //Match all posts containing some string char
-	        $search 	= $this->indexManager->getIndex('app')->createSearch();
-	        $search->addType('post');
-	        $resultSet 	= $search->search($post->getQuery());
+            //Match all posts containing some string char
+            $search 	= $this->indexManager->getIndex('app')->createSearch();
+            $search->addType('post');
+            $resultSet 	= $search->search($post->getQuery());
         }
         else {
-	        ///tri of posts list 
-	        $index 		 = $container->get('fos_elastica.index.app.post');
-	        $query   	 = $this->querySearch->getQueryForPost($post);
-	        $resultSet 	 = $index->search($query);
+            ///tri of posts list 
+            $index 		 = $container->get('fos_elastica.index.app.post');
+            $query   	 = $this->querySearch->getQueryForPost($post);
+            $resultSet 	 = $index->search($query);
         }
 
-	    $results 	= $transformer->transform($resultSet->getResults());
+	$results 	= $transformer->transform($resultSet->getResults());
         $adapter 	= new ArrayAdapter($results);
         $pager   	= new Pagerfanta($adapter);
         $pager->setMaxPerPage($post->getPerPage());
         $pager->setCurrentPage($post->getPage());
 
         return $pager->getCurrentPageResults();
-	}
+      
+    }
 
-	public function searchAll(Request $request) {
-		// notre index est directement disponible sous forme de service
-		$datas 		= [];
-		$doc 		= new Search();
+    public function searchAll(Request $request) {
+        // notre index est directement disponible sous forme de service
+        $datas 	= [];
+        $doc 	= new Search();
         $doc->handleRequest($request);
-        $search 	= $this->indexManager->getIndex('app')->createSearch();
+        $search = $this->indexManager->getIndex('app')->createSearch();
 
-        $resultSet 	= $search->search($doc->getQuery(), 21);
-	    $results 	= $resultSet->getResults();
-        $adapter 	= new ArrayAdapter($results);
-        $pager   	= new Pagerfanta($adapter);
+        $resultSet = $search->search($doc->getQuery(), 21);
+	$results   = $resultSet->getResults();
+        $adapter   = new ArrayAdapter($results);
+        $pager     = new Pagerfanta($adapter);
 
         $pager->setMaxPerPage($doc->getPerPage());
         $pager->setCurrentPage($doc->getPage());
         foreach ($pager->getCurrentPageResults() as $result) {
-        	if($result->getType() === 'post') {
-        		$post = $this->dm->getRepository('OPPostBundle:Post')
-        				->findSimplePostById($result->getId());
-        		$data = $post['type'] === 'opinion' ? $this->pTransformer->opinionToArray($post) 
-                                                    : $this->pTransformer->postToArray($post);
-        		$result->setParam('_source', $data);
+            if($result->getType() === 'post') {
+                $post = $this->dm->getRepository('OPPostBundle:Post')
+                                ->findSimplePostById($result->getId());
+                $data = $post['type'] === 'opinion' ? $this->pTransformer->opinionToArray($post) 
+                                            : $this->pTransformer->postToArray($post);
+                $result->setParam('_source', $data);
             }
             $datas[] = $this->serializer->toArray($result);
         }
         return $datas;
-	}
+    }
 
     public function searchRecents($recents = []) {
         // notre index est directement disponible sous forme de service
@@ -177,15 +174,15 @@ class SearchManager
     }
 
 
-	public function findByUserId($user_id) {
-		$qb = $this->dm->createQueryBuilder('\OP\SocialBundle\Document\Search')
-			->hydrate(false)
-		    ->field('user.$id')->equals(new \MongoId($user_id))
-			->select('search');
+    public function findByUserId($user_id) {
+        $qb = $this->dm->createQueryBuilder('\OP\SocialBundle\Document\Search')
+                    ->hydrate(false)
+                    ->field('user.$id')->equals(new \MongoId($user_id))
+                    ->select('search');
 
-		$notifs = $qb->getQuery()
-					->execute()
-					->getSingleResult();
-		return $notifs;
-	}
+        $notifs = $qb->getQuery()
+                    ->execute()
+                    ->getSingleResult();
+        return $notifs;
+    }
 }

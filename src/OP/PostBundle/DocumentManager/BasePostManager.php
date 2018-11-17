@@ -16,14 +16,11 @@ class BasePostManager extends AbstractManager
      */
     public function savePost(Post $post, $galleryDir)
     {
-        $req = $this->request;
-        $req->getSession()->start();
-        $all     = $req->request->all();       
+        $req    = $this->request;
+        $all    = $req->request->all();       
         $data    = json_decode($req->getContent(), true);        
-        $content = !$req->getFormat('application/json') ? 
-                            $all['post']['content']: $data['content'];
-        $place   = !$req->getFormat('application/json') ? 
-                            $all['post']['place']: $data['place'];
+        $content = $all['post']['content'] ?? $data['content'];
+        $place   = $all['post']['place'] ?? $data['place'];
 
         $post->setContent($this->buildHTML($content));
         $post->setPlace($place);
@@ -50,14 +47,14 @@ class BasePostManager extends AbstractManager
         $post->setMainAllie($refPost);
 
         if($refer === 'opinion') {
-            $nbAllies = null !== $refPost->getNbAllies() ? $refPost->getNbAllies() : 0;
+            $nbAllies = $refPost->getNbAllies() ?? 0;
             $post->setOpinionOrder($nbAllies + 1);
             $refPost->setNbAllies($nbAllies + 1);
             $refPost->setNbAllies($nbAllies + 1);
             $refPost->doAlliesIds($post->getId(), 'push');
         }
-        $post = $this->addXhrImagesAllie($refPost, $post, 'galleryaddpost');
-        return $post;
+        
+        return $this->addXhrImagesAllie($refPost, $post, 'galleryaddpost');
     }
 
     protected function addXhrImagesAllie($refPost, $post, $galleryDir) {
@@ -147,8 +144,7 @@ class BasePostManager extends AbstractManager
         
         $data = json_decode($this->request->getContent(), true);
         
-        $videoName      =   !$this->request->getFormat('application/json') ? 
-                            $all['post']['videoName']: $data['videoName'];
+        $videoName      =   $all['post']['videoName'] ?? $data['videoName'];
 
         $valid_filetypes = array('wav', 'webm', 'ogg', 'mp4'); 
         foreach($uploadedFiles as $uploadedFile){

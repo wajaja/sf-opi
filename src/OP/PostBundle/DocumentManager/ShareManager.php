@@ -27,8 +27,7 @@ class ShareManager extends AbstractManager
 
         $contents   = $this->request->request->all();       
         $data       = json_decode($this->request->getContent(), true);        
-        $content    =   !$this->request->getFormat('application/json') ? 
-                            $contents['share']['content']: $data['content'];
+        $content    = $contents['share']['content'] ?? $data['content'];
 
         $refer === 'post' ? $share->setPost($post) : $share->setPhoto($post);
         
@@ -77,8 +76,7 @@ class ShareManager extends AbstractManager
         $this->request->getSession()->start();
         $contents   = $this->request->request->all();       
         $data       = json_decode($this->request->getContent(), true);        
-        $content    =   !$this->request->getFormat('application/json') ? 
-                            $contents['share']['content']: $data['content'];
+        $content    = $contents['share']['content'] ?? $data['content'];
 
         $share->setContent($content);
         $share->setUpdateAt(new \DateTime(null, new \DateTimeZone("UTC")));

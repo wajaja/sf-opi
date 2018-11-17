@@ -4,27 +4,20 @@ namespace OP\UserBundle\Controller\Api;
 use FOS\UserBundle\Model\UserInterface,
 //     FOS\RestBundle\View\View,
     OP\UserBundle\Document\User,
-    FOS\UserBundle\FOSUserEvents,
     OP\SocialBundle\Stream\Stream,
-    FOS\UserBundle\Event\FormEvent,
-    JMS\Serializer\SerializationContext,
     OP\UserBundle\Security\UserProvider,
     FOS\RestBundle\Controller\Annotations,
     Nelmio\ApiDocBundle\Annotation as Doc,
     Symfony\Component\HttpFoundation\Request,
-    FOS\UserBundle\Event\GetResponseUserEvent,
     FOS\RestBundle\Controller\FOSRestController,
     OP\UserBundle\Repository\OpinionUserManager,
-    FOS\UserBundle\Event\FilterUserResponseEvent,
     OP\UserBundle\DocumentManager\InvitationManager,
     \OP\UserBundle\DataTransformer\ObjectToArrayTransformer,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     OP\SocialBundle\DocumentManager\MailManager,
     FOS\RestBundle\Controller\Annotations\RouteResource,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
  * @RouteResource("invitations", pluralize=false)

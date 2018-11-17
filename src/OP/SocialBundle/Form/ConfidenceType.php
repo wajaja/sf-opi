@@ -2,10 +2,10 @@
 
 namespace OP\SocialBundle\Form;
 
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface,
+    Symfony\Component\Form\AbstractType,
+    Symfony\Component\OptionsResolver\OptionsResolver,
+    Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ConfidenceType extends AbstractType
 {

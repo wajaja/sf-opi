@@ -2,10 +2,9 @@
 
 namespace OP\MessageBundle\Security;
 
-use OP\MessageBundle\Model\ThreadInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use OP\MessageBundle\Model\ParticipantInterface;
-use OP\MessageBundle\Security\ParticipantProviderInterface;
+use OP\MessageBundle\Model\ThreadInterface,
+    OP\MessageBundle\Model\ParticipantInterface,
+    OP\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
  * Manages permissions to manipulate threads and messages

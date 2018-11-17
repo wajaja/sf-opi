@@ -6,7 +6,6 @@ use Ratchet\Wamp\Topic,
     Ratchet\ConnectionInterface,
     Gos\Bundle\WebSocketBundle\Router\WampRequest,
     Gos\Bundle\WebSocketBundle\Topic\TopicInterface,
-    Symfony\Component\HttpFoundation\JsonResponse,
     Gos\Bundle\WebSocketBundle\Topic\PushableTopicInterface;
 
 class ThreadCreateTopic implements TopicInterface, PushableTopicInterface

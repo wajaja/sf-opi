@@ -5,26 +5,19 @@ namespace OP\UserBundle\Controller\Api;
 use FOS\UserBundle\FOSUserEvents,
     FOS\UserBundle\Event\FormEvent,
     FOS\UserBundle\Event\GroupEvent,
-    FOS\UserBundle\Model\GroupInterface,
     FOS\RestBundle\Controller\Annotations,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     OP\UserBundle\FormHandler\NewFormHandler,
     Symfony\Component\HttpFoundation\Request,
-    OP\UserBundle\Repository\OpinionUserManager,
-    FOS\UserBundle\Event\GetResponseUserEvent,
     OP\UserBundle\DocumentManager\GroupManager,
     OP\UserBundle\Security\UserProvider,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\UserBundle\Event\FilterGroupResponseEvent,
-    FOS\UserBundle\Form\Factory\FactoryInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     FOS\RestBundle\Routing\ClassResourceInterface,
     JMS\Serializer\SerializerInterface,
     Symfony\Component\HttpFoundation\RedirectResponse,
     FOS\RestBundle\Controller\Annotations\RouteResource,
-    Symfony\Component\Routing\Generator\UrlGeneratorInterface,
-    Symfony\Component\EventDispatcher\EventDispatcherInterface,
-    Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+    Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @RouteResource("registration", pluralize=false)

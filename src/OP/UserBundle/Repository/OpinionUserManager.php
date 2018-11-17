@@ -219,7 +219,7 @@ class OpinionUserManager extends BaseUserManager
         $qb ->field('id')->equals($id)
             ->field('enabled')->equals(true)
             ->hydrate(false)
-            //->select('id', 'username', 'firstname', 'lastname', 'profilePic')
+            //->select('id', 'username', 'firstname', 'lastname', 'profilePic', 'gender')
             //->field('id')->notIn($notIn_array)
             ;
         $user = $qb->getQuery()
@@ -244,7 +244,20 @@ class OpinionUserManager extends BaseUserManager
         return $user;
     }
     
+    public function findCUsersById($ids) : array {
+        $qb = $this->repository->getDocumentManager()->createQueryBuilder('OP\UserBundle\Document\User');
 
+        $qb ->field('id')->in($ids)
+            ->field('enabled')->equals(true)
+            ->hydrate(false)
+            ->select('id', 'username', 'firstname', 'lastname', 'profilePic', 'gender')
+            //->field('id')->notIn($notIn_array)
+            ;
+        $users = $qb->getQuery()
+                    ->execute()
+                    ->toArray();
+        return $users;
+    }
     public function selectFriends($username)
     {
         $qb = $this->repository->getDocumentManager()

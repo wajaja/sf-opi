@@ -3,25 +3,15 @@
 namespace OP\MediaBundle\DocumentManager;
 
 use Pagerfanta\Pagerfanta,
-    FOS\UserBundle\FOSUserEvents,
     OP\UserBundle\Document\User,
     OP\MediaBundle\Document\Image,
-    FOS\UserBundle\Event\FormEvent,
     Pagerfanta\Adapter\ArrayAdapter,
     OP\MediaBundle\Document\EveryWhere,
     Doctrine\ODM\MongoDB\DocumentManager as Manager,
-    Symfony\Component\HttpFoundation\Request,
     OP\MediaBundle\Construct\ImageConstructor,
-    FOS\UserBundle\Event\GetResponseUserEvent,
-    FOS\RestBundle\Controller\FOSRestController,
     OP\UserBundle\Repository\OpinionUserManager,
-    FOS\UserBundle\Event\FilterUserResponseEvent,
-    FOS\RestBundle\Routing\ClassResourceInterface,
-    Symfony\Component\HttpFoundation\JsonResponse,
     Symfony\Component\HttpFoundation\RequestStack,
-    Symfony\Component\HttpFoundation\File\UploadedFile,
     OP\MediaBundle\ModelManager\PictureManager as BaseManager,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**

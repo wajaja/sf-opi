@@ -2,13 +2,13 @@
 
 namespace OP\MessageBundle\Provider;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use OP\MessageBundle\ModelManager\ThreadManagerInterface;
-use OP\MessageBundle\Security\AuthorizerInterface;
-use OP\MessageBundle\Reader\ReaderInterface;
-use OP\MessageBundle\Security\ParticipantProviderInterface;
-use OP\MessageBundle\ModelManager\MessageManagerInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException,
+    Symfony\Component\Security\Core\Exception\AccessDeniedException,
+    OP\MessageBundle\ModelManager\ThreadManagerInterface,
+    OP\MessageBundle\Security\AuthorizerInterface,
+    OP\MessageBundle\Reader\ReaderInterface,
+    OP\MessageBundle\Security\ParticipantProviderInterface,
+    OP\MessageBundle\ModelManager\MessageManagerInterface;
 
 /**
  * Provides threads for the current authenticated user

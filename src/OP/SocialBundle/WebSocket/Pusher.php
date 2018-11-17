@@ -2,8 +2,8 @@
 
 namespace OP\SocialBundle\WebSocket;
 
-use Ratchet\ConnectionInterface;
-use Ratchet\Wamp\WampServerInterface;
+use Ratchet\ConnectionInterface,
+    Ratchet\Wamp\WampServerInterface;
 
 class Pusher implements WampServerInterface {
     

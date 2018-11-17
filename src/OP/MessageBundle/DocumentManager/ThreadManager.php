@@ -2,10 +2,8 @@
 
 namespace OP\MessageBundle\DocumentManager;
 
-use OP\MessageBundle\Model\{ThreadInterface, ReadableInterface, ParticipantInterface};
-use OP\MessageBundle\Document\Thread,
-    Doctrine\ODM\MongoDB\Query\Builder,
-    Doctrine\ODM\MongoDB\DocumentManager,
+use OP\MessageBundle\Model\{ ParticipantInterface};
+use Doctrine\ODM\MongoDB\DocumentManager,
     OP\UserBundle\Repository\OpinionUserManager,
     OP\MessageBundle\DataTransformer\ObjectToArrayTransformer,
     OP\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;

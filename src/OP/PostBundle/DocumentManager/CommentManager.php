@@ -36,8 +36,7 @@ class CommentManager extends AbstractManager
 
         $contents   = $this->request->request->all();       
         $data       = json_decode($this->request->getContent(), true);        
-        $content    =   !$this->request->getFormat('application/json') ? 
-                            $contents['comment']['content']: $data['content'];
+        $content    = $contents['comment']['content'] ?? $data['content'];
  
         $comment->setContent($this->buildHTML($content));
         $comment->doKeywords($content);
@@ -103,7 +102,8 @@ class CommentManager extends AbstractManager
             if (($file instanceof UploadedFile) && ($file->getError() == 0)) {               
                 $images_arr [] = $this->uploadImage($file);
             }else{
-                $status = 'failed';  $message = 'File Error';
+                $status = 'failed';
+                $message = 'File Error';
             }
         }
         $comment->setImages($images_arr);
@@ -178,8 +178,7 @@ class CommentManager extends AbstractManager
 
         $contents   = $this->request->request->all();       
         $data       = json_decode($this->request->getContent(), true);        
-        $content    =   !$this->request->getFormat('application/json') ? 
-                            $contents['comment']['content']: $data['content'];
+        $content    = $contents['comment']['content'] ?? $data['content'];
 
         // $comment->setPost($post);
         $comment->setContent($content);
@@ -198,9 +197,7 @@ class CommentManager extends AbstractManager
      * @see::OPMEssageBundle participantprovider
      * @return ParticipantInterface
      */
-    protected function getAuthenticatedUser()
-    {
+    protected function getAuthenticatedUser() {
         return $this->userProvider->getHydratedUser();
     }
-    
 }

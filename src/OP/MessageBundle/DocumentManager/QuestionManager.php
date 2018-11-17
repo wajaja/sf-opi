@@ -2,11 +2,9 @@
 
 namespace OP\MessageBundle\DocumentManager;
 
-use OP\MediaBundle\Document\Image,
-    OP\MessageBundle\Document\Question,
+use OP\MessageBundle\Document\Question,
     OP\MessageBundle\Document\Response,
     OP\UserBundle\Security\UserProvider,
-    Doctrine\ODM\MongoDB\Query\Builder,
     Doctrine\ODM\MongoDB\DocumentManager,
     OP\MessageBundle\Model\ParticipantInterface,
     Symfony\Component\HttpFoundation\RequestStack;

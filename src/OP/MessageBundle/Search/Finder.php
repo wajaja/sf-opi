@@ -2,8 +2,8 @@
 
 namespace FOS\MessageBundle\Search;
 
-use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
-use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\ModelManager\ThreadManagerInterface,
+    FOS\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
  * Finds threads of a participant, matching a given query

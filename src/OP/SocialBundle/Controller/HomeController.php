@@ -2,18 +2,15 @@
 namespace OP\SocialBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\{Method, Route, Template};
-use Symfony\Component\HttpFoundation\{ Session\Session};
 use Symfony\Component\Security\Core\{Exception\AuthenticationException, Security};
 use OP\UserBundle\Document\User,
     JMS\Serializer\SerializerInterface,
     OP\UserBundle\Security\UserProvider,
     OP\UserBundle\Controller\RegistrationController,
-    Symfony\Component\EventDispatcher\EventDispatcherInterface,
     Symfony\Component\HttpFoundation\Request,
     OP\MessageBundle\DocumentManager\ThreadManager,
     OP\MessageBundle\DocumentManager\MessageManager,
     OP\PostBundle\DocumentManager\PostManager,
-    OP\UserBundle\Repository\OpinionUserManager,
     OP\UserBundle\DocumentManager\InvitationManager,
     OP\UserBundle\Controller\SecurityController,
     OP\SocialBundle\DocumentManager\NotificationManager,

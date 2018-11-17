@@ -1,24 +1,17 @@
 <?php
 namespace OP\MessageBundle\Controller\Api;
 
-use OP\MessageBundle\Document\Question,
-    OP\MessageBundle\Document\Response,
+use FOS\RestBundle\Controller\Annotations\{Get, Put, Patch, Post as PostMethod, RouteResource};
+use OP\MessageBundle\Document\Response,
     OP\MessageBundle\Form\ResponseType,
     OP\MessageBundle\Event\ResponseEvent,
     OP\MessageBundle\Event\OPMessageEvents,
-    FOS\RestBundle\Controller\Annotations,
     OP\UserBundle\Security\UserProvider,
     Symfony\Component\HttpFoundation\Request,
-    FOS\RestBundle\Controller\Annotations\Get,
-    FOS\RestBundle\Controller\Annotations\Put,
-    FOS\RestBundle\Controller\Annotations\Patch,
-    FOS\RestBundle\Controller\Annotations\Post as PostMethod,
     FOS\RestBundle\Controller\FOSRestController,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
-    OP\MessageBundle\DocumentManager\ThreadManager,
     OP\MessageBundle\FormHandler\MessageFormHandler,
-    FOS\RestBundle\Controller\Annotations\RouteResource,
     OP\MessageBundle\DataTransformer\ObjectToArrayTransformer,
     Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -101,10 +94,8 @@ class ApiQuestionController extends FOSRestController implements ClassResourceIn
         }
 
         return $res->setData(
-                        array('question'=>$transformer->questionToArray($question), 
-                              'responses'=>$responses
-                              )
-                        );
+            array('question'=>$transformer->questionToArray($question), 
+                  'responses'=>$responses));
     }
 
     /**

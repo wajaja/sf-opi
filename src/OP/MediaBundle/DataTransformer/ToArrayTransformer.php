@@ -4,11 +4,9 @@ namespace OP\MediaBundle\DataTransformer;
 
 use OP\UserBundle\Security\UserProvider,
     Doctrine\ODM\MongoDB\DocumentManager,
-    OP\MediaBundle\Construct\ImageConstructor,
+    JMS\Serializer\SerializerInterface,
     OP\UserBundle\Repository\OpinionUserManager,
-    OP\SocialBundle\SeveralClass\DateTransformer,
     Symfony\Component\HttpFoundation\RequestStack,
-    OP\MessageBundle\Security\ParticipantProviderInterface,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**
@@ -23,15 +21,17 @@ class ToArrayTransformer
      * @var type 
      */
     protected $container, $dm, $request, $um, $user_provider,
-              $participantProvider;
+              $participantProvider, $fileBaseUrl, $serializer;
 
 
-    public function __construct(Container $container, RequestStack $request, DocumentManager $dm, OpinionUserManager $um, UserProvider $user_provider) {
+    public function __construct(Container $container, RequestStack $request, DocumentManager $dm, OpinionUserManager $um, UserProvider $user_provider, $fileBaseUrl, SerializerInterface $serializer) {
         $this->dm               = $dm;
         $this->um               = $um;
         $this->request          = $request->getCurrentRequest();
         $this->container        = $container;
         $this->user_provider    = $user_provider;
+        $this->fileBaseUrl     = $fileBaseUrl;
+        $this->serializer      = $serializer;
     }
 
     public function photoToArray($ph, $post)
@@ -55,11 +55,11 @@ class ToArrayTransformer
             'hasSecret' => $this->hasSecret($user, $ph),
             'everywhere'=> $this->getUserEver($user, $ph_id),
             'liked'     => $this->isLiker($user, $ph_id, 'photo', 'like'),
-            'nbLikers'  => isset($ph['nbLikers']) ? $ph['nbLikers'] : 0,
-            'webPath'   => 'http://opinion.com/uploads/'.$ph['directory'].'/'.$ph['path'],
-            'nbComments'=> isset($ph['nbComments']) ? $ph['nbComments'] : 0,
-            'updateAt'  => isset($ph['updateAt']) ? $ph['updateAt']->{'sec'} : null,
-            'nbQuestioners' => isset($ph['nbQuestioners']) ? $ph['nbQuestioners'] : 0
+            'nbLikers'  => $ph['nbLikers'] ?? 0,
+            'webPath'   => $this->fileBaseUrl . '/uploads/'.$ph['directory'].'/'.$ph['path'],
+            'nbComments'=> $ph['nbComments'] ?? 0,
+            'updateAt'  => $ph['updateAt']->{'sec'} ?? null,
+            'nbQuestioners' => $ph['nbQuestioners'] ?? 0
         ];
     }
 
@@ -68,43 +68,44 @@ class ToArrayTransformer
         $ever = $repo->findOneBy(array('createdBy'=>$user, 'photoId' => $ph_id));
 
         if($ever) {
-            return $this->container->get('jms_serializer')->toArray($ever);
+            return $this->serializer->toArray($ever);
         }
         return false;
     }
 
     public function photoLikeData($ph)
     {
-        $data['refer']       = 'picture';
-        $data['id']          = $ph->getId();
-        $data['nbLikers']    = $ph->getNbLikers();
-        $data['liked']       = $ph->is_liker($this->getAuthenticatedUser()->getId());
-        return $data;
+        return [
+            'id' => $ph->getId(),
+            'refer' => 'picture',
+            'nbLikers' => $ph->getNbLikers(),
+            'liked' => $ph->is_liker($this->getAuthenticatedUser()->getId())
+        ];
     }  
 
     public function commentToArray($ph)
     {
-        $ph_id = (string)$ph['_id'];
         $user = $this->getAuthenticatedUser();
         $authorId = (string)$ph['author']['$id'];
 
-        $photo['id']          = (string)$ph['_id'];
-        $photo['content']     = $ph['content'];
-        $photo['createdAt']   = $ph['createdAt']->{'sec'};
-        $photo['postValid']   = $ph['postValid'];
-        $photo['nbUnders']    = isset($ph['nbUnders']) ? $ph['nbUnders'] : 0;
-        $photo['nbLikers']    = $ph['nbLikers'];
-        $photo['total_rate']  = $ph['total_rate'];
-        $photo['images']      = $this->getImages($ph);
-        $photo['updated']     = $this->isUpdated($ph);     
-        $photo['isMasked']    = $this->isMaskedForUser($ph['maskersForUserIds']);
-        $photo['favorite']    = $this->isFavoriteForUser($ph['favoritesForUserIds']);
-        $photo['author']      = $this->getAuthor((string)$ph['author']['$id']);
-        $photo['liked']       = $this->isLiker($photo['id'], 'comment', 'like');
-        $photo['unders']      = $this->countUnderComments($photo['id']);
-        $photo['post']        = (string)$ph['post']['$id'];
-        $photo['updateAt']    = isset($ph['updateAt']) ? $ph['updateAt']->{'sec'} : null;
-        return $comment;
+        return [
+            'id'          => (string)$ph['_id'],
+            'content'     => $ph['content'],
+            'createdAt'   => $ph['createdAt']->{'sec'},
+            'postValid'   => $ph['postValid'],
+            'nbUnders'    => $ph['nbUnders'] ?? 0,
+            'nbLikers'    => $ph['nbLikers'],
+            'total_rate'  => $ph['total_rate'],
+            'images'      => $this->getImages($ph),
+            'updated'     => $this->isUpdated($ph),
+            'isMasked'    => $this->isMaskedForUser($ph['maskersForUserIds']),
+            'favorite'    => $this->isFavoriteForUser($ph['favoritesForUserIds']),
+            'author'      => $this->getAuthor((string)$ph['author']['$id']),
+            'liked'       => $this->isLiker((string)$ph['_id'], 'comment', 'like'),
+            'unders'      => $this->countUnderComments((string)$ph['_id']),
+            'post'        => (string)$ph['post']['$id'],
+            'updateAt'    => $ph['updateAt']->{'sec'} ?? null
+        ];
     }    
     
     /**
@@ -132,8 +133,8 @@ class ToArrayTransformer
         return [
             'id'        => (String)$u['_id'],
             'username'  => $u['username'],
-            'firstname' => isset($u['firstname']) ? $u['firstname'] : '',
-            'lastname'  => isset($u['lastname']) ? $u['lastname'] : '',
+            'firstname' => $u['firstname'] ?? '',
+            'lastname'  => $u['lastname'] ?? '',
             'profile_pic'=> $this->getProfilePic($u)
         ];
     }
@@ -145,9 +146,9 @@ class ToArrayTransformer
     */
     protected function getVideos($arg){
         if(gettype($arg)== 'object') {
-            $videos_refs = null !== $arg->getVideos() ? $arg->getVideos() : [];
+            $videos_refs = $arg->getVideos() ?? [];
         } else {
-            $videos_refs = isset($arg['videos']) ? $arg['videos'] : [];
+            $videos_refs = $arg['videos'] ?? [];
         }
         $videos = [];
         foreach($videos_refs as $video_ref){
@@ -155,7 +156,7 @@ class ToArrayTransformer
                 ->findSimpleVideosById(!is_object($video_ref) ?  (string)$video_ref['$id'] : $video_ref->getId());
             $videos [] = $video;
         }
-        return $this->img_construct->videoToArray($videos);
+        return $this->img_construct->videosToArray($videos);
     }
 
     protected function getImages($arg){
@@ -178,8 +179,8 @@ class ToArrayTransformer
     public function getProfilePic($user) {
 
         $id   = !isset($user['profilePic']) ? null : (String)$user['profilePic']['$id'];
-        $mal  = 'http://opinion.com/uploads/gallery/a4a2139157426ca3e2b39af6b374c458.jpeg';
-        $fem  = 'http://opinion.com/uploads/gallery/598616f0316b18de6d3a415c7f3c203b.jpeg';
+        $mal  = $this->fileBaseUrl . '/uploads/gallery/a4a2139157426ca3e2b39af6b374c458.jpeg';
+        $fem  = $this->fileBaseUrl . '/uploads/gallery/598616f0316b18de6d3a415c7f3c203b.jpeg';
 
         if(!$id || gettype($id) !== 'string') 
             return $user['gender'] === 'Male' ? $mal : $fem;
@@ -246,7 +247,7 @@ class ToArrayTransformer
     public function hasSecret($user, $ph)
     {
         $userId = $user->getId();
-        $questioners_ids = isset($ph['questioners_ids']) ? $ph['questioners_ids']: [];
+        $questioners_ids = $ph['questioners_ids'] ?? [];
         foreach ($questioners_ids as $questioner_id){
             if($questioner_id === $userId){
                 return true;

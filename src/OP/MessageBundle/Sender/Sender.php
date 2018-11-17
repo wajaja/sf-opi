@@ -2,9 +2,7 @@
 
 namespace OP\MessageBundle\Sender;
 
-use OP\MessageBundle\Event\MessageEvent,
-    OP\SocialBundle\Firebase\Firebase,
-    OP\MessageBundle\Event\OPMessageEvents,
+use OP\SocialBundle\Firebase\Firebase,
     OP\MessageBundle\Model\MessageInterface,
     Symfony\Component\HttpFoundation\RequestStack,
     OP\MessageBundle\ModelManager\ThreadManagerInterface,
@@ -75,7 +73,12 @@ class Sender implements SenderInterface
         }
         return true;
     }
-
+    
+    /**
+     * 
+     * @param type $m Message
+     * @param type $t Thread
+     */
     protected function pushInFirebase($m, $t) {
         $db        = $this->firebase->getDatabase();
         // $fireUser = $db
@@ -84,7 +87,7 @@ class Sender implements SenderInterface
         // die();
 
         $thread_arr = [
-            'id'                => $object->getId(),
+            'id'                => $t->getId(),
             'metadata'          => $this->transformer->getThreadMetadata($t),
             'lastMessage'       => $m,
             'lastMessageDate'   => $m->getCreatedAt()->getTimestamp(),
@@ -103,8 +106,10 @@ class Sender implements SenderInterface
             'metadata'  => $this->transformer->getMessageMetadata($m)
         ];
 
-        $msg_ref = $db->getReference("threads/{$thread->getId()}/messages");
+        $msg_ref = $db->getReference("threads/{$t->getId()}/messages");
+//        $thr_ref = $db->getReference("threads/{$t->getId()}/thread");
         $msg_ref->push($msg_arr);
+//        $thr_ref->push($thread_arr);
 
 
         $msg_ref->getSnapshot();

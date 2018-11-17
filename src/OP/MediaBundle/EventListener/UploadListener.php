@@ -20,11 +20,9 @@ class UploadListener
 
     public function onPreUpload(UploaderEvent\PreUploadEvent $event)
     {
-        $req    = $event->getRequest();
-        $type   = $event->getType();
+        $req     = $event->getRequest();
+        $type    = $event->getType();
         $session = $req->getSession();
-        if(!$session->isStarted()) 
-            $session->start();
         $session->set('galleryType', $type); //for storing filename
         $session->set('_galleryType', '_'.$type); //to get persisted gallery ids 
     }

@@ -4,7 +4,7 @@
 namespace OP\UserBundle\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent,
-	Symfony\Component\HttpFoundation\RequestStack;
+    Symfony\Component\HttpFoundation\RequestStack;
 
 /**
 *  

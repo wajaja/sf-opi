@@ -45,7 +45,7 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onCoreResponse }
             - { name: kernel.event_listener, event: kernel.exception, method: onCoreException }
     OP\UserBundle\Security\UserProvider:
-        arguments: ["@request_stack", "@service_container", "@op_user.user_manager", "%domain_name%"]
+        arguments: ["@request_stack", "@service_container", "@op_user.user_manager", "%domain_name%", '%file_base_url%']
     OP\UserBundle\Security\DeviceDetector:
         arguments: ["@request_stack", "@service_container"]
         # src/Acme/UserBundle/Resources/config/services.yml

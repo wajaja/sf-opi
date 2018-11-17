@@ -1,14 +1,12 @@
 <?php
 namespace OP\PostBundle\Controller\Api;
 
-use GetStream\Stream\Client, 
-    OP\PostBundle\Document\Post,
+use OP\PostBundle\Document\Post,
     OP\PostBundle\Form\PostType,
     OP\PostBundle\Event\PostEvent,
     OP\UserBundle\Document\Favorite,
     OP\PostBundle\Event\OPPostEvents,
     OP\UserBundle\Security\UserProvider,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     FOS\RestBundle\Controller\Annotations,
     Symfony\Component\HttpFoundation\Request,
     FOS\RestBundle\Controller\FOSRestController,
@@ -17,13 +15,11 @@ use GetStream\Stream\Client,
     OP\PostBundle\FormHandler\NewPostFormHandler,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     OP\SocialBundle\DocumentManager\NotificationManager,
-    Symfony\Component\EventDispatcher\EventDispatcherInterface,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException,
-    FOS\RestBundle\Controller\Annotations\RouteResource;
+    Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 
 /**
- * @RouteResource("post", pluralize=false)
+ * @Annotations\RouteResource("post", pluralize=false)
  */
 class ApiPostController extends FOSRestController implements ClassResourceInterface
 {
@@ -43,30 +39,11 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
      */
     public function loadAction(Request $request, $userId, ToArrayTransformer $transformer)
     {
-        $dm         = $this->getDocumentManager();
-        $response   = new JsonResponse();
-        // $client = $this->getStreamClient();     //getStream.io client
-
-        // Instantiate a feed object
-        // $userFeed = $client->feed('user', $user->getId());
+        $dm    = $this->getDocumentManager();
+        $ids   = ['5a42cd6ad8d25a0898001de5', '59b728dbaa95aac40e00002a', '59b6c341aa95aa100c000029', '599e9203aa95aae00400002a', '5984acddaa95aaa00a00002e', '59959ce4aa95aa4c1a00002b', '59959e3aaa95aa6408000032', '5ac82713d8d25a0578000d13', '5ac8c4bfd8d25a06c00015e7', '5ac8e462d8d25a06c00015e9', '5ae95dd5d8d25a0ee800388e'];
+        $posts = $dm->getRepository('OPPostBundle:Post')->findCposts($ids);
         
-        $posts    = [];
-        $user_id  = $this->_getUser()->getId();
-        $post_ids = ['5a42cd6ad8d25a0898001de5', '59b728dbaa95aac40e00002a', '59b6c341aa95aa100c000029', '599e9203aa95aae00400002a', '5984acddaa95aaa00a00002e', '59959ce4aa95aa4c1a00002b', '59959e3aaa95aa6408000032', '5ac82713d8d25a0578000d13', '5ac8c4bfd8d25a06c00015e7', '5ac8e462d8d25a06c00015e9', '5ae95dd5d8d25a0ee800388e'];
-        foreach ($post_ids as $post_id) {
-            $post = $dm->getRepository('OPPostBundle:Post')
-                        ->findSimplePostById($post_id);
-            //post not found or masked
-            if(!$post || in_array($user_id, $post['maskersForUserIds'])) {
-                continue;
-            }
-            else {             
-                $posts[] = $post['type'] == 'opinion' ? $transformer->opinionToArray($post) :
-                                                        $transformer->postToArray($post);
-            }
-        }
-        
-        return $response->setData(array('posts'=>$posts));
+        return new JsonResponse($transformer->postsToArray($posts));
     }
 
     /**
@@ -77,21 +54,20 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
      */
     public function showAction(Request $request, $id, ToArrayTransformer $transformer)
     {
-        $post       = [];
-        $dm         = $this->getDocumentManager();
-        $userId     = $this->_getUser()->getId();
-        $data       = $dm->getRepository('OPPostBundle:Post')->findSimplePostById($id);
+        $user = $this->_getUser();
+        $dm   = $this->getDocumentManager();
+        $post = $dm->getRepository('OPPostBundle:Post')->find($id);
         //post not found or masked
         //TODO check in blockeds users to restrict 
-        if(!$data || in_array($userId, $data['maskersForUserIds'])) {
+        if(!$post || $post->is_maskersForUser($user->getId()) ||
+           in_array($post->getAuthor()->getId(), $this->objectsToIds($user->getBlockedsWithMe()))) {
             // nothing to do continue;
         }
         else {             
-            $post = $data['type'] == 'opinion' ? $transformer->opinionToArray($data) :
-                                                 $transformer->postToArray($data);
+            $data = $post->getType() == 'opinion' ? $transformer->opinionObjectToArray($data) :
+                                                 $transformer->postObjectToArray($data);
         }
-        
-        return new JsonResponse($post);
+        return new JsonResponse(['post' => $data]);
     }
 
     /**

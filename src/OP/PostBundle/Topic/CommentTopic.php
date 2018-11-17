@@ -18,10 +18,9 @@ class CommentTopic implements TopicInterface, PushableTopicInterface
      */
     public function onPush(Topic $topic, WampRequest $request, $data, $provider)
     {
-        die();
-         $topic->broadcast([
-                    'data' => $data,
-                ]);
+        $topic->broadcast([
+            'data' => $data,
+        ]);
         // $topic->broadcast($data);
     }
 

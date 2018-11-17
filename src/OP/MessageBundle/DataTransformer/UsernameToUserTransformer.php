@@ -1,8 +1,7 @@
 <?php
 namespace OP\MessageBundle\DataTransformer;
 
-use OP\UserBundle\Document\User,
-    Doctrine\Common\Collections\Collection,
+use Doctrine\Common\Collections\Collection,
     OP\UserBundle\Repository\OpinionUserManager,
     Doctrine\Common\Collections\ArrayCollection,
     Symfony\Component\Form\DataTransformerInterface,

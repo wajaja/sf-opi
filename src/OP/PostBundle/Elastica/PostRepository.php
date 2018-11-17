@@ -2,8 +2,7 @@
 
 namespace OP\PostBundle\Elastica;
 
-use FOS\ElasticaBundle\Repository,
-    OP\UserBundle\Model\Post;
+use FOS\ElasticaBundle\Repository;
 
 class PostRepository extends Repository
 {

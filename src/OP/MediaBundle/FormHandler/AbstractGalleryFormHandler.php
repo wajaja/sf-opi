@@ -39,7 +39,7 @@ abstract class AbstractGalleryFormHandler
         if ('POST' !== $this->request->getMethod()) {
             return false;
         }
-        $data       = $request->request->all();
+        $data       = $this->request->request->all();
         $title      = $data['gallery_title'];
 
         $form->getData()->getTitle()->setValue($title);

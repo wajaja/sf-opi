@@ -1,8 +1,8 @@
 <?php
 namespace OP\PostBundle\Model;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB,
+    Doctrine\Common\Collections\ArrayCollection;
 
 
 /**

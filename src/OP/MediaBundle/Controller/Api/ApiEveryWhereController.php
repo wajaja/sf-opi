@@ -1,23 +1,19 @@
 <?php
 namespace OP\MediaBundle\Controller\Api;
 
-use OP\PostBundle\Document\EveryWhere,
-    OP\MediaBundle\Event\EveryWhereEvent,
-    OP\MediaBundle\DocumentManager\PictureManager,
-    OP\PostBundle\Event\OPPostEvents,
+use OP\MediaBundle\DocumentManager\PictureManager,
     OP\UserBundle\Security\UserProvider,
     Symfony\Component\HttpFoundation\Request,
     FOS\RestBundle\Routing\ClassResourceInterface,
     OP\PostBundle\FormHandler\NewPostFormHandler,
-    OP\PostBundle\DocumentManager\RateManager,
     JMS\Serializer\SerializerInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     \OP\PostBundle\DataTransformer\ToArrayTransformer,
     OP\SocialBundle\DocumentManager\NotificationManager;
-use FOS\RestBundle\Controller\{Annotations, FOSRestController, Annotations\RouteResource};
+use FOS\RestBundle\Controller\{Annotations, FOSRestController};
 
 /**
- * @RouteResource("everywhere", pluralize=false)
+ * @Annotations\RouteResource("everywhere", pluralize=false)
  */
 class ApiEveryWhereController extends FOSRestController implements ClassResourceInterface
 {
@@ -37,7 +33,6 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
      */
     public function loadAction(\OP\PostBundle\DataTransformer\ToArrayTransformer $transformer)
     {
-        //$client = $this->getStreamClient();     //getStream.io client
         $post_ids = $posts = [];
         $dm       = $this->getDocumentManager();
         $user_id  = $this->_getUser()->getId();
@@ -64,7 +59,7 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
      *
      * @return object
      */
-    public function addAction(Request $request, $photoId, PictureManager $pMan, NotificationManager $notifMan, SerializerInterface $serializer)
+    public function addAction($photoId, PictureManager $pMan, NotificationManager $notifMan, SerializerInterface $serializer)
     {
 
         $res  = new JsonResponse();
@@ -96,7 +91,7 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
         $dm      = $this->getDocumentManager();
         $ever    = $dm->getRepository('OPMediaBundle:EveryWhere')->find($objId);
 
-        if(!$ever) 
+        if(!$ever) {
             return new JsonResponse([
                 "error" => [
                     "errors"=> [
@@ -110,9 +105,9 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
                     "message"=> "Not Found"
                 ]
             ]);
-
+        }
+        
         $session->set('prevEveryWhere', $ever);   //store rate value in session
-
         if($ever = $pMan->updateEveryWhere($ever)) {
             // $this->notify($ever, $notifMan);
             // $dispatcher = $this->get('event_dispatcher');
@@ -170,20 +165,6 @@ class ApiEveryWhereController extends FOSRestController implements ClassResource
                     ->findSimplePostById($id);
         return $transf->opinionToArray($post);
     }
-
-    /**
-    * Convert array objects from database in 
-    * single array of ids
-    *@param array Users $objects
-    */
-    // public function objectsToIds($objects)
-    // {
-    //     $ids = [];
-    //     foreach ($objects as $object) {
-    //         $ids[] = $object->getId();
-    //     }
-    //     return $ids;
-    // }
 
     /**
      * Returns the DocumentManager

@@ -5,8 +5,6 @@ namespace OP\SocialBundle\Controller;
 use OP\UserBundle\Security\UserProvider,
     JMS\Serializer\SerializerInterface,
     Symfony\Component\HttpFoundation\Request,
-    OP\SocialBundle\SeveralClass\DateTransformer,
-    Symfony\Component\HttpFoundation\JsonResponse,
     OP\MessageBundle\DocumentManager\ThreadManager,
     OP\MessageBundle\DocumentManager\MessageManager,
     OP\UserBundle\DocumentManager\InvitationManager,

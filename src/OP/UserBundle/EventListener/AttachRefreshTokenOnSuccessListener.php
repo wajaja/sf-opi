@@ -8,7 +8,6 @@
 namespace OP\UserBundle\EventListener;
 
 use OP\UserBundle\ModelManager\RefreshTokenManagerInterface,
-    OP\UserBundle\Document\RefreshToken,
     OP\UserBundle\Request\RequestRefreshToken,
     Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent,
     Symfony\Component\Security\Core\User\UserInterface,

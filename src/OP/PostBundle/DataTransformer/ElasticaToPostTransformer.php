@@ -14,9 +14,7 @@ namespace OP\PostBundle\DataTransformer;
 use FOS\ElasticaBundle\Doctrine\AbstractElasticaToModelTransformer,
     Doctrine\Common\Persistence\ManagerRegistry,
     Doctrine\ODM\MongoDB\DocumentManager,
-    FOS\ElasticaBundle\HybridResult,
-    OP\UserBundle\Security\UserProvider,
-    FOS\ElasticaBundle\Transformer\HighlightableModelInterface;
+    OP\UserBundle\Security\UserProvider;
 
 /**
  * Maps Elastica documents with Doctrine objects
@@ -53,31 +51,14 @@ class ElasticaToPostTransformer extends AbstractElasticaToModelTransformer
      *
      * @return array of objects or arrays
      */
-    protected function findByIdentifiers(array $identifierValues, $hydrate)
-    {
+    protected function findByIdentifiers(array $identifierValues, $hydrate) : array {
 
         if(empty($identifierValues))
             return array();
     
-        $posts = [];
-        $user_id = $this->getUser()->getId();
-        $transformer = $this->postTransformer;
-
-        foreach ($identifierValues as $id) {
-            $post = $this->dm
-                        ->getRepository('OPPostBundle:Post')
-                        ->findSimplePostById($id);
-            //post not found or masked || TO DO BLOCKED IDS
-            if(!$post || in_array($user_id, $post['maskersForUserIds'])) {
-                continue;
-            }
-            else {             
-                $posts[] = $post['type'] == 'opinion' ? $transformer->opinionToArray($post) :
-                                                        $transformer->postToArray($post);
-            }
-        }
-
-        return $posts;
+        $posts   = $this->dm->getRepository('OPPostBundle:Post')
+                        ->load($identifierValues);
+        return $this->postTransformer->postsToArray($posts);
     }
 
     /**

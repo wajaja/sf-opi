@@ -15,11 +15,10 @@ use OP\PostBundle\Document\LeftComment,
     OP\PostBundle\DataTransformer\ToArrayTransformer,
     OP\PostBundle\Notification\RealTimePost,
     OP\SocialBundle\DocumentManager\NotificationManager,
-    Symfony\Component\EventDispatcher\EventDispatcherInterface,
-    FOS\RestBundle\Controller\Annotations\RouteResource;
+    Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @RouteResource("lefts", pluralize=false)
+ * @Annotations\RouteResource("lefts", pluralize=false)
  */
 class ApiLeftController extends FOSRestController implements ClassResourceInterface
 {
@@ -40,14 +39,13 @@ class ApiLeftController extends FOSRestController implements ClassResourceInterf
      */
     public function loadAction(Request $request, $postId,  ToArrayTransformer $transformer)
     {
-        $res            = new JsonResponse();
-        $dm             = $this->getDocumentManager();
-        $comment        = $dm->getRepository('OPPostBundle:LeftComment')->load($postId);
+        $res    = new JsonResponse();
+        $dm     = $this->getDocumentManager();
+        $comment= $dm->getRepository('OPPostBundle:LeftComment')->load($postId);
         if(!$comment) {
             return $res->setData(array('comment'=>[]));
         }
-        $comment        = $transformer->opinionCommentToArray($comment, 'left');
-        return $res->setData(array('comment'=>$comment));
+        return $res->setData(array('comment'=> $transformer->opinionCommentToArray($comment, 'leftcomment')));
     }
 
     /**
@@ -58,24 +56,14 @@ class ApiLeftController extends FOSRestController implements ClassResourceInterf
      */
     public function loadAllAction(Request $request, $postId, ToArrayTransformer $transformer)
     {
-        $ids        = $request->query->get('ids');
-        $comments   = [];
-        $dm         = $this->getDocumentManager();
-        $user = $this->_getUser();
-        foreach ($ids as $id) {
-            $comment = $dm->getRepository('OPPostBundle:LeftComment')
-                        ->findSimpleCommentById($id);
-            //post not found or masked
-            if(!$comments || in_array($comment['author']['$id'], $this->objectsToIds($user->getBlockedsWithMe()))) {
-                continue;
-            }
-            else {                
-                $posts[] = $transformer->postToArray($post);
-            }
-        }
+        $notIn   = $request->query->get('ids');
+        $dm      = $this->getDocumentManager();
+        $refer   = $request->query->get('refer');
+        $comments = $dm->getRepository('OPPostBundle:LeftComment')
+                        ->loadComments($postId, $refer, $notIn);
 
-        $response = new JsonResponse();
-        return $response->setData(array('posts'=>$posts));
+        $res = new JsonResponse();
+        return $res->setData($transformer->opinionCommentsToArray($comments, 'leftcomment'));
     }
 
     /**
@@ -221,37 +209,13 @@ class ApiLeftController extends FOSRestController implements ClassResourceInterf
             throw $this->createNotFoundException('Unable to find Post post.');
         }
         $com->doMaskersForUserIds($this->_getUser()->getId());
-        $dm->flush($comment);
+        $dm->flush($com);
         return $res->setData(array('data'=>$this->_getUser()->getId()));
-    }
-
-    private function returnCommentForm($notifMan)
-    {
-        $notifMan->postNotif($post);
-        $comment = new Comment();
-        $comment->setPostId($post);
-        $comment->setPostValid($post->getId());  //set the value
-        $commentForm = $this->createForm(CommentType::class, $comment);
-        return $commentForm;
     }
 
     public function _getUser()
     {
         return $this->user_provider->getHydratedUser();
-    }
-
-    /**
-    * Convert array objects from database in 
-    * single array of ids
-    *@param array Users $objects
-    */
-    public function objectsToIds($objects)
-    {
-        $ids = [];
-        foreach ($objects as $object) {
-            $ids[] = $object->getId();
-        }
-        return $ids;
     }
 
     /**

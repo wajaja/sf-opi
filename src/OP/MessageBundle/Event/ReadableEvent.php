@@ -2,9 +2,8 @@
 
 namespace OP\MessageBundle\Event;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\EventDispatcher\Event;
-use OP\MessageBundle\Model\ReadableInterface;
+use Symfony\Component\EventDispatcher\Event,
+    OP\MessageBundle\Model\ReadableInterface;
 
 class ReadableEvent extends Event
 {

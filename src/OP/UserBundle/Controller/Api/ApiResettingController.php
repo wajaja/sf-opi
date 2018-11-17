@@ -7,12 +7,10 @@ namespace OP\UserBundle\Controller\Api;
 use FOS\RestBundle\Controller\Annotations,
     FOS\UserBundle\FOSUserEvents,
     OP\UserBundle\Security\UserProvider,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     Symfony\Component\HttpFoundation\Request,
     FOS\UserBundle\Event\GetResponseUserEvent,
     FOS\RestBundle\Controller\FOSRestController,
     OP\UserBundle\Repository\OpinionUserManager,
-    OP\UserBundle\Controller\ResettingController,
     FOS\RestBundle\Routing\ClassResourceInterface,
     OP\UserBundle\Mailer\Mailer,
     FOS\UserBundle\Event\FormEvent,
@@ -23,9 +21,7 @@ use FOS\RestBundle\Controller\Annotations,
     Symfony\Component\HttpFoundation\RedirectResponse,
     FOS\RestBundle\Controller\Annotations\RouteResource,
     FOS\UserBundle\Event\GetResponseNullableUserEvent,
-    Symfony\Component\EventDispatcher\EventDispatcherInterface,
-    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
-    Symfony\Component\Security\Core\User\UserInterface;
+    Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ApiResettingController extends FOSRestController implements ClassResourceInterface
 {

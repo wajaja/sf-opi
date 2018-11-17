@@ -2,23 +2,11 @@
 
 namespace OP\MediaBundle\ModelManager;
 
-use FOS\UserBundle\FOSUserEvents,
-    OP\UserBundle\Document\User,
+use OP\UserBundle\Document\User,
     OP\UserBundle\Document\Group,
     OP\MediaBundle\Document\Image,
-    FOS\UserBundle\Event\FormEvent,
     OP\MediaBundle\Document\FriendTag,
-    OP\MediaBundle\Document\EveryWhere,
-    Doctrine\ODM\MongoDB\DocumentManager as Manager,
-    Symfony\Component\HttpFoundation\Request,
-    FOS\UserBundle\Event\GetResponseUserEvent,
-    FOS\RestBundle\Controller\FOSRestController,
-    FOS\UserBundle\Event\FilterUserResponseEvent,
-    FOS\RestBundle\Routing\ClassResourceInterface,
-    Symfony\Component\HttpFoundation\JsonResponse,
-    Symfony\Component\HttpFoundation\File\UploadedFile,
-    Symfony\Component\Security\Core\Exception\AccessDeniedException,
-    Symfony\Component\DependencyInjection\ContainerInterface as Container;
+    Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
 * 

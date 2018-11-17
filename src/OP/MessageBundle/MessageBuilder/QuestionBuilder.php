@@ -2,9 +2,9 @@
 
 namespace OP\MessageBundle\MessageBuilder;
 
-use OP\MessageBundle\Document\Question;
-use OP\MessageBundle\Model\ParticipantInterface;
-use OP\MessageBundle\Document\Response;
+use OP\MessageBundle\Document\Question,
+    OP\MessageBundle\Model\ParticipantInterface,
+    OP\MessageBundle\Document\Response;
 
 /**
  * Fluent interface message builder

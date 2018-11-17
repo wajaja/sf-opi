@@ -2,14 +2,10 @@
 
 namespace OP\PostBundle\Controller;
 
-use OP\PostBundle\Document\Post,
-    OP\PostBundle\Document\Comment,
+use OP\PostBundle\Document\Comment,
     OP\PostBundle\Form\CommentType,
-    OP\UserBundle\Document\Favorite,
-    OP\SocialBundle\Document\Notification,
     Symfony\Component\HttpFoundation\Request,
     Symfony\Component\HttpFoundation\JsonResponse,
-    Symfony\Component\HttpFoundation\File\UploadedFile,
     Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,

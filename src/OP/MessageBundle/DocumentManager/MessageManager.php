@@ -2,12 +2,8 @@
 
 namespace OP\MessageBundle\DocumentManager;
 
-use OP\MessageBundle\Model\{ThreadInterface, MessageInterface, ReadableInterface, ParticipantInterface};
+use OP\MessageBundle\Model\{ ParticipantInterface};
 use OP\MediaBundle\Document\Image,
-    OP\UserBundle\Document\User,
-    OP\MessageBundle\Document\Thread,
-    OP\MessageBundle\Document\Message,
-    Doctrine\ODM\MongoDB\Query\Builder,
     Doctrine\ODM\MongoDB\DocumentManager,
     OP\UserBundle\Security\UserProvider,
     Symfony\Component\HttpFoundation\RequestStack,

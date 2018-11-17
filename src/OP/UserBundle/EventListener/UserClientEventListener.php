@@ -4,10 +4,10 @@ namespace OP\UserBundle\EventListener;
 /* this class notifid when the user as connected or disconnected
 */
 
-use Gos\Bundle\WebSocketBundle\Event\ClientEvent;
-use Gos\Bundle\WebSocketBundle\Event\ClientErrorEvent;
-use Gos\Bundle\WebSocketBundle\Event\ServerEvent;
-use Gos\Bundle\WebSocketBundle\Event\ClientRejectedEvent;
+use Gos\Bundle\WebSocketBundle\Event\ClientEvent,
+    Gos\Bundle\WebSocketBundle\Event\ClientErrorEvent,
+    Gos\Bundle\WebSocketBundle\Event\ServerEvent,
+    Gos\Bundle\WebSocketBundle\Event\ClientRejectedEvent;
 
 class UserClientEventListener
 {
@@ -65,10 +65,9 @@ class UserClientEventListener
      *
      * @param ClientRejectedEvent $event
      */
-	public function onClientRejected(ClientRejectedEvent $event)
+    public function onClientRejected(ClientRejectedEvent $event)
     {
     	$origin = $event->getOrigin;
-
-		echo 'connection rejected from '. $origin . PHP_EOL;
+	echo 'connection rejected from '. $origin . PHP_EOL;
     }
 }

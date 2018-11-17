@@ -2,36 +2,31 @@
 
 namespace OP\UserBundle\Security;
 
-use OP\PostBundle\DocumentManager\PostManager,
-    OP\UserBundle\Repository\OpinionUserManager,
-    OP\UserBundle\Document\User,
+use OP\UserBundle\Repository\OpinionUserManager,
     Symfony\Component\HttpFoundation\RequestStack,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class UserProvider
 {
-    protected $request, $um, $container, $authorizer, $domain_name;
+    protected $request, $um, $container, $authorizer, $domain_name, $fileBaseUrl;
 
-    public function __construct(RequestStack $requestStack, Container $container, OpinionUserManager $um, $domain_name)
+    public function __construct(RequestStack $requestStack, Container $container, OpinionUserManager $um, $domain_name, $fileBaseUrl)
     {
         $this->request      = $requestStack->getCurrentRequest();
         $this->container    = $container;
         $this->um           = $um;
         $this->domain_name  = $domain_name;
-        //$this->authorizer           = $authorizer;
+        $this->fileBaseUrl  = $fileBaseUrl;
     }
 
     protected function getUserById($id){
         $author = $this->um->findSimpleUserById($id);        
-        $user['id'] = (string)$author['_id'];
-        $user['name'] = $author['firstname'].' '.$author['lastname'];
-        $user['username'] = $author['username'];
-        if(isset($author['profilePic']['$id'])){
-            $user['picPath'] = $this->getProfilePic((string)$author['profilePic']['$id']);
-        }else{
-            $user['picPath'] = "{$this->domain_name}/images/favicon.ico";
-        }
-        return $user;
+        return [
+            'id' => (string)$author['_id'],
+            'name' => $author['firstname'].' '.$author['lastname'],
+            'username' => $author['username'],
+            'picPath' => $this->getProfilePic($author)
+        ];
     }
 
     public function getFolloweds($inputIds, $from, $to)
@@ -133,11 +128,25 @@ class UserProvider
     {
         return $this->um->findUserByUsername($this->getUsername());
     }
+    
+    public function getProfilePic($user) {
 
-    protected function getProfilePic($id){
-        $picture = $this->dm->getRepository('OP\MediaBundle\Document\Picture')
-                            ->findSimplePictureById($id);
-        return '\/opinion/'.$this->getUploadRootDir().$picture['directory'].'/'.$picture['path'];
+        $id   = !isset($user['profilePic']) ? null : (String)$user['profilePic']['$id'];
+        $mal  = $this->fileBaseUrl . '/uploads/gallery/a4a2139157426ca3e2b39af6b374c458.jpeg';
+        $fem  = $this->fileBaseUrl . '/uploads/gallery/598616f0316b18de6d3a415c7f3c203b.jpeg';
+
+        if(!$id || gettype($id) !== 'string') {
+            if(!isset($user['gender']))
+                return $mal;
+            
+            return $user['gender'] === 'Male' ? $mal : $fem;
+        }
+
+        $p  = $this ->dm
+                    ->getRepository('OP\MediaBundle\Document\Image')
+                    ->findOneBy(array('id' => $id));
+
+        return $p->getWebPath();
     }
     
     protected function getUploadRootDir()

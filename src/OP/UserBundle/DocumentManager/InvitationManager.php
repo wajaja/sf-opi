@@ -71,18 +71,15 @@ class InvitationManager
 
         foreach ($datas as $d) {
             $_id = (string)$d['_id'];
-            $profileId = !isset($d['profilePic']['$id']) 
-                          ? null : (string)$d['profilePic']['$id'];
             $suggestions[] = [
                 'id'            => $_id,
                 'email'         => $d['email'],
-                'status'        => isset($d['status']) ? $d['status'] : '',
+                'status'        => $d['status'] ?? '',
                 'username'      => $d['username'],
                 'lastname'      => $d['lastname'],
                 'firstname'     => $d['firstname'],
                 'friendRequest' => $this->checkInvitationRequest($_id, $invitations),
-                'profilePic'    => $profileId ? $this->getProfilePic($profileId) 
-                                              : "{$this->domain_name}/images/favicon.ico"
+                'profilePic'    => $this->uProvider->getProfilePic($d) 
             ];
         }
 
@@ -100,16 +97,13 @@ class InvitationManager
 
         foreach ($datas as $d) {
             $_id = (string)$d['_id'];
-            $profileId = !isset($d['profilePic']['$id']) 
-                          ? null : (string)$d['profilePic']['$id'];
             $users[] = [
                 'id'            => $_id,
                 'email'         => $d['email'],
                 'username'      => $d['username'],
                 'lastname'      => $d['lastname'],
                 'firstname'     => $d['firstname'],
-                'profilePic'    => $profileId ? $this->getProfilePic($profileId) 
-                                              : "{$this->domain_name}/images/favicon.ico"
+                'profilePic'    =>  $this->uProvider->getProfilePic($d)
             ];
         }
         return $users;
@@ -250,7 +244,7 @@ class InvitationManager
         $invitations = $this->dm->getRepository('\OP\UserBundle\Document\Invitation\Invitation')
                             ->findRequestInvitations($user->getId(), false); //not confimerd
         foreach ($invitations as $i) {
-            $ids[] = isset($i['receiver_id']) ? $i['receiver_id'] : '1';
+            $ids[] = $i['receiver_id'] ?? '1';
         }
         return $ids;
     }

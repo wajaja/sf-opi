@@ -13,13 +13,13 @@ class Stream
 
     //set cancert path to avoid the following exception
     //https://stackoverflow.com/questions/21187946/curl-error-60-ssl-certificate-issue-self-signed-certificate-in-certificate-cha
-	public function __construct(Container $container, RequestStack $requestStack, string $getStreamKey, string $getStreamToken){
-		$this->container = $container;
+    public function __construct(Container $container, RequestStack $requestStack, string $getStreamKey, string $getStreamToken){
+        $this->container = $container;
         $this->request   = $requestStack->getCurrentRequest();
         //10.0 instead of 3.0 because we are in dev mode
         //TODO configure mode by using: $this->container->getParameter('kernel.environment');
-		$this->client 	 = new \GetStream\Stream\Client($getStreamKey, $getStreamToken, 'v1.0', '', 10.0);
-		$this->client->setLocation('us-east');
+        $this->client 	 = new \GetStream\Stream\Client($getStreamKey, $getStreamToken, 'v1.0', '', 10.0);
+        $this->client->setLocation('us-east');
     }
 
     // For the feed group 'user' and user id 'userId' get the feed
@@ -117,16 +117,16 @@ class Stream
     	$feed 	 = $this->client->feed('timeline_aggregated', $userId);
     	$activities = $session->get('timeline_aggregated');
     	if($activities && gettype($activities) === 'array') {
-    		$last_id = $activities[count($activities) - 1]['id'];
-    		// Get 5 activities with id less than the given UUID (Faster - Recommended!)
-			$options = ['id_lte' => $last_id];
-			$activities = $feed->getActivities(0, 5, $options)['results'];
+            $last_id = $activities[count($activities) - 1]['id'];
+            // Get 5 activities with id less than the given UUID (Faster - Recommended!)
+            $options = ['id_lte' => $last_id];
+            $activities = $feed->getActivities(0, 5, $options)['results'];
     	} else {
-    		$activities = $feed->getActivities(0, 5, $options);
+            $activities = $feed->getActivities(0, 5, $options);
     	}
 
     	$session->set('timeline_aggregated', $activities);
-		return $activities;
+	return $activities;
     }
 
     /**
@@ -135,10 +135,10 @@ class Stream
     */
     public function followSuggestion($id) {
     	$suggestions = $this->client->personalization->get('follow_recommendations', [
-		    'user_id' => $id,
-		    'source_feed_slug' => 'timeline',
-		    'target_feed_slug' => 'user',
-		]);
+            'user_id' => $id,
+            'source_feed_slug' => 'timeline',
+            'target_feed_slug' => 'user',
+        ]);
     	return $suggestions;
     }
 
@@ -151,29 +151,29 @@ class Stream
     */
     public function emailTracking() {
     	// the url to redirect to
-		$targetUrl = 'http://my.application.com/page/';
+        $targetUrl = 'http://my.application.com/page/';
 
-		$impression = [
-		  'content_list' => ['tweet:34349698', 'tweet:34349699', 'tweet:34349697'],
-		  'feed_id' => 'flat:tommaso',
-		  'location' => 'profile_page',
-		  'user_data' => ['id' => 'bubbles'],
-		  'label' => 'impression',
-		];
+        $impression = [
+          'content_list' => ['tweet:34349698', 'tweet:34349699', 'tweet:34349697'],
+          'feed_id' => 'flat:tommaso',
+          'location' => 'profile_page',
+          'user_data' => ['id' => 'bubbles'],
+          'label' => 'impression',
+        ];
 
-		$engagement = [
-		    'content' => 'tweet:34349698',
-		    'feed_id' => 'flat:tommaso',
-		    'location' => 'profile_page',
-		    'user_data' => ['id' => 'frank'],
-		    'label' => 'click',
-		];
+        $engagement = [
+            'content' => 'tweet:34349698',
+            'feed_id' => 'flat:tommaso',
+            'location' => 'profile_page',
+            'user_data' => ['id' => 'frank'],
+            'label' => 'click',
+        ];
 
-		$events = [$impression, $engagement];
-		$trackingUrl = $this->client->createRedirectUrl($targetUrl, $events);
+        $events = [$impression, $engagement];
+        $trackingUrl = $this->client->createRedirectUrl($targetUrl, $events);
 
-		// when the user opens the tracking url in their browser gets redirected to the target url
-		// the events are added to our analytics platform
+        // when the user opens the tracking url in their browser gets redirected to the target url
+        // the events are added to our analytics platform
     }
 
     //source::https://gist.github.com/tbarbugli/3d43136edb5dcf9bf98b
@@ -181,25 +181,25 @@ class Stream
     	$senderId = $notif->getSender()->getId();
     	$feed 	  = $this->client->feed("user", $senderId);
     	$date  	  = \DateTime(null, new \DateTimeZone("UTC"));
-		$date->setTimestamp($notif->getLastParticipantActivityDate());
+        $date->setTimestamp($notif->getLastParticipantActivityDate());
 
-		$to = [];
-		foreach ($notif->getParticipants() as $u) {
-			if($u->getId() !== $senderId()) {
-				$to[] = "notification:{$u->getId()}";
-			}
-		}
+        $to = [];
+        foreach ($notif->getParticipants() as $u) {
+            if($u->getId() !== $senderId()) {
+                $to[] = "notification:{$u->getId()}";
+            }
+        }
 
     	$data = [
-		    'actor' 	 => "user:{$senderId}",
-		    'verb' 		 => $verb,
-		    "foreign_id" => "note:{$notif->getId()}",
-		    'time' 		 => $date->format(DateTime::ISO8601),
-		    'object' 	 => "{$verb}:{$notif->{'get'.ucfirst($verb)}()->getId()}", //verb:12
-		    'to' 		 => $to,
-		];
+            'actor' 	 => "user:{$senderId}",
+            'verb' 		 => $verb,
+            "foreign_id" => "note:{$notif->getId()}",
+            'time' 		 => $date->format(DateTime::ISO8601),
+            'object' 	 => "{$verb}:{$notif->{'get'.ucfirst($verb)}()->getId()}", //verb:12
+            'to' 		 => $to,
+        ];
 
-		$feed->addActivity($data);
+	$feed->addActivity($data);
     }
 
     public function notifyParticipant($post) {
@@ -304,8 +304,8 @@ class Stream
 
     public function getNotifications($userId) {
     	# Reading a notification feed is very similar
-		$feed = $this->client->feed('notification', $userId);
-		$notifications = $feed->get(0, 10)['results'];
-		return $notifications;
+        $feed = $this->client->feed('notification', $userId);
+        $notifications = $feed->get(0, 10)['results'];
+        return $notifications;
     }
 }

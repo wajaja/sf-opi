@@ -6,9 +6,7 @@ use OP\UserBundle\Security\UserProvider,
     Doctrine\ODM\MongoDB\DocumentManager,
     OP\MediaBundle\Construct\ImageConstructor,
     OP\UserBundle\Repository\OpinionUserManager,
-    OP\SocialBundle\SeveralClass\DateTransformer,
     Symfony\Component\HttpFoundation\RequestStack,
-    OP\MessageBundle\Security\ParticipantProviderInterface,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**
@@ -63,7 +61,6 @@ class ObjectToArrayTransformer
         // return [];
         try {
             
-            $userId       = $this->getUser()->getId();
             $authorId     = $o->getAuthor()->getId();
             $senderId     = $o->getSender()->getId();
             $metadata     = $o->getMetadataForParticipant($this->getUser());
@@ -362,9 +359,9 @@ class ObjectToArrayTransformer
         return [
             'id'        => (String)$u['_id'],
             'username'  => $u['username'],
-            'firstname' => isset($u['firstname']) ? $u['firstname'] : '',
-            'lastname'  => isset($u['lastname']) ? $u['lastname'] : '',
-            'profile_pic'=> $this->getProfilePic(
+            'firstname' => $u['firstname'] ?? '',
+            'lastname'  => $u['lastname'] ?? '',
+            'profile_pic'=> $this->user_provider->getProfilePic(
                 !isset($u['profilePic']) ?: (String)$u['profilePic']['$id']
             )
         ];
@@ -390,33 +387,19 @@ class ObjectToArrayTransformer
         }
     }
 
-    protected function getImages($arg){
+    protected function getImages($arg) : array {
         if(gettype($arg)== 'object') {
-            $images_refs = null !== $arg->getImages() ? $arg->getImages() : [];
+            $images_refs = $arg->getImages() ?? [];
         } else {
-            $images_refs = isset($arg['images']) ? $arg['images'] : [];
+            $images_refs = $arg['images'] ?? [];
         }
-
-        $images = [];
-        foreach($images_refs as $image_ref){;
-            $image = $this->dm->getRepository('OP\MediaBundle\Document\Image')
-                ->findPhotoById(!is_object($image_ref) ? 
-                (string)$image_ref['$id'] : $image_ref->getId());
-            $images [] = $image;
+        
+        $ids = [];
+        foreach($images_refs as $id){
+            $ids[] = $id;
         }
+        $images = $this->dm->getRepository('OP\MediaBundle\Document\Image')->findCphotos($ids);        
         return $this->img_construct->imagesToArray($images);
-    }
-    
-    public function getProfilePic($id) {
-
-        if(!$id || gettype($id) !== 'string') 
-            return $this->getUploadRootDir() . "/images/favicon.ico";
-
-        $p      = $this ->dm
-                        ->getRepository('OP\MediaBundle\Document\Image')
-                        ->findOneBy(array('id' => $id));
-
-        return $p->getWebPath();
     }
 
     protected function getLikeUrl($like) {
@@ -455,11 +438,6 @@ class ObjectToArrayTransformer
         }
 
         return $url;
-    }
-    
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/uploads/';
     }
 
     /**

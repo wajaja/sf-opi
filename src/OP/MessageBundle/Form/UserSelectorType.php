@@ -2,8 +2,7 @@
 namespace OP\MessageBundle\Form;
 
 use Symfony\Component\Form\{AbstractType, FormBuilderInterface, Extension\Core\Type\TextType};
-use Doctrine\Common\Persistence\ObjectManager,
-    OP\UserBundle\Repository\OpinionUserManager,
+use OP\UserBundle\Repository\OpinionUserManager,
     Symfony\Component\OptionsResolver\OptionsResolver,
     OP\MessageBundle\DataTransformer\UsernameToUserTransformer;
 

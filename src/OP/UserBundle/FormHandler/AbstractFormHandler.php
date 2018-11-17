@@ -4,7 +4,6 @@ namespace OP\UserBundle\FormHandler;
 
 use Symfony\Component\Form\Form,
     OP\UserBundle\Document\Group,
-    OP\UserBundle\Composer\Composer,
     OP\UserBundle\DocumentManager\GroupManager,
     OP\UserBundle\DocumentManager\SettingManager,
     Symfony\Component\HttpFoundation\RequestStack,

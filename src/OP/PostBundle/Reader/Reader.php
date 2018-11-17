@@ -2,12 +2,12 @@
 
 namespace OP\MessageBundle\Reader;
 
-use OP\MessageBundle\Security\ParticipantProviderInterface;
-use OP\MessageBundle\Model\ReadableInterface;
-use OP\MessageBundle\ModelManager\ReadableManagerInterface;
-use OP\MessageBundle\Event\OPMessageEvents;
-use OP\MessageBundle\Event\ReadableEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OP\MessageBundle\Security\ParticipantProviderInterface,
+    OP\MessageBundle\Model\ReadableInterface,
+    OP\MessageBundle\ModelManager\ReadableManagerInterface,
+    OP\MessageBundle\Event\OPMessageEvents,
+    OP\MessageBundle\Event\ReadableEvent,
+    Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Marks messages and threads as read or unread

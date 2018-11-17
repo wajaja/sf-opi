@@ -30,10 +30,8 @@ class ObjectToArrayTransformer extends AbstractObjectToArrayTransformer
 
     public function opinionObjectToArray($_p)
     {
-        $p['nbLeftComments']= $_p->getNbLeftcomments() ? 
-                               $_p->getNbLeftcomments() : 0;
-        $p['nbRightComments']= $_p->getNbRightcomments() ? 
-                                $_p->getNbRightcomments() : 0;
+        $p['nbLeftComments']= $_p->getNbLeftcomments() ?? 0;
+        $p['nbRightComments']= $_p->getNbRightcomments() ?? 0;
         $p['rate']         = $this->getPostRate($_p->getId());
         $p['totalRate']    = $_p->getTotalRate();
         $p['nbAllies']     = $_p->getNbAllies();
@@ -65,23 +63,24 @@ class ObjectToArrayTransformer extends AbstractObjectToArrayTransformer
 
     private function commonPostData($_p) {
         $userId            = $this->getAuthenticatedUser()->getId();
-        $p['isMasked']     = $this->isMaskedForUser($_p->getMaskersForUserIds());
-        $p['liked']        = $_p->is_liker($userId);
-        $p['isUpdated']    = $_p->isUpdated();
-        $p['updateAt']     = $_p->getUpdateAt();
-        $p['nbLikers']     = $_p->getNbPLikers();
-        $p['images']       = $this->getImages($_p);
-        $p['confidence']   = $_p->getConfidence();
-        $p['targetMap']    = $_p->getTargetMap();
-        $p['id']           = $_p->getId();
-        $p['type']         = $_p->getType();
-        $p['timelineId']   = $_p->getTimelineId() ? $_p->getTimelineId() : $_p->getAuthor()->getId();
-        $p['timelineType'] = $_p->getTimelineType() ? $_p->getTimelineType() : 'user';
-        $p['content']      = $_p->getContent();
-        $p['createdAt']    = $_p->getCreatedAt()->getTimestamp();
-        $p['publishedAt']  = $_p->getPublishedAt()->getTimestamp();
-        $p['author']       = $this->getAuthor($_p->getAuthor()->getId());
-        return $p;
+        return [
+            'isMasked'  => $this->isMaskedForUser($_p->getMaskersForUserIds()),
+            'liked'     => $_p->is_liker($userId),
+            'isUpdated' => $_p->isUpdated(),
+            'updateAt'  => $_p->getUpdateAt(),
+            'nbLikers'  => $_p->getNbPLikers(),
+            'images'    => $this->getImages($_p),
+            'confidence'=> $_p->getConfidence(),
+            'targetMap' => $_p->getTargetMap(),
+            'id'        => $_p->getId(),
+            'type'      => $_p->getType(),
+            'timelineId'   => $_p->getTimelineId() ?? $_p->getAuthor()->getId(),
+            'timelineType' => $_p->getTimelineType() ?? 'user',
+            'content'      => $_p->getContent(),
+            'createdAt'    => $_p->getCreatedAt()->getTimestamp(),
+            'publishedAt'  => $_p->getPublishedAt()->getTimestamp(),
+            'author'       => $this->getAuthor($_p->getAuthor()->getId())
+        ];
     }
     
     public function commentObjectToArray($c_obj)
@@ -162,10 +161,8 @@ class ObjectToArrayTransformer extends AbstractObjectToArrayTransformer
         $p['author']     = $this->getAuthor($_p->getAuthor()->getId());
         $p['updateAt']   = null !== $_p->getUpdateAt() ? 
                                  $_p->getUpdateAt()->getTimestamp(): null;
-        $p['nbLeftComments']= $_p->getNbLeftcomments() ? 
-                               $_p->getNbLeftcomments() : 0;
-        $p['nbRightComments']= $_p->getNbRightcomments() ? 
-                                $_p->getNbRightcomments() : 0;
+        $p['nbLeftComments']= $_p->getNbLeftcomments() ?? 0;
+        $p['nbRightComments']= $_p->getNbRightcomments() ?? 0;
         return $p;
     }
 
@@ -193,21 +190,21 @@ class ObjectToArrayTransformer extends AbstractObjectToArrayTransformer
             $repo  = $this->dm->getRepository('OP\PostBundle\Document\Like');
 
         if($type== 'post') 
-            return $repo->findPostLiker($docId, $userId) ? true : false;
+            return $repo->findPostLiker($docId, $userId) ?? false;
         else if($type== 'comment')
-            return $repo->findCommentLiker($docId, $userId) ? true : false;
+            return $repo->findCommentLiker($docId, $userId) ?? false;
         else if($type== 'leftcomment')
-            return $repo->findLeftLiker($docId, $userId) ? true : false;
+            return $repo->findLeftLiker($docId, $userId) ?? false;
         else if($type== 'rightcomment') 
-            return $repo->findRightLiker($docId, $userId) ? true : false;
+            return $repo->findRightLiker($docId, $userId) ?? false;
         else if($type== 'undercomment') 
-            return $repo->findUnderCommentLiker($docId, $userId) ? true : false;
+            return $repo->findUnderCommentLiker($docId, $userId) ?? false;
     }
 
-    public function hasSecret($post)
+    public function hasSecret($p)
     {
         $userId= $this->getAuthenticatedUser()->getId();
-        $questioners_ids= isset($p['questioners_ids']) ? $p['questioners_ids']: [];
+        $questioners_ids= $p['questioners_ids'] ?? [];
         foreach ($questioners_ids as $questioner_id){
             if($questioner_id=== $userId){
                 return true;
@@ -218,38 +215,41 @@ class ObjectToArrayTransformer extends AbstractObjectToArrayTransformer
 
     public function leftLikeData($obj)
     {
-        $data['refer']      = 'left';
-        $data['id']         = $obj->getId();
-        $data['nbLegals']   = $obj->getNbLegals();
-        $data['liked']      = $obj->is_legal($this->getAuthenticatedUser()->getId());
-        return $data;
+        return[
+            'id'    => $obj->getId(),
+            'refer' => 'left',
+            'nbLegals' => $obj->getNbLegals(),
+            'liked'    => $obj->is_legal($this->getAuthenticatedUser()->getId()),
+        ];
     }
 
-    public function rightLikeData($obj)
-    {
-        $data['refer']      = 'right';
-        $data['id']         = $obj->getId();
-        $data['nbLegals']   = $obj->getNbLegals();
-        $data['liked']      = $obj->is_legal($this->getAuthenticatedUser()->getId());
-        return $data;
+    public function rightLikeData($obj) : array {
+        return[
+            'id'    => $obj->getId(),
+            'refer' => 'right',
+            'nbLegals' => $obj->getNbLegals(),
+            'liked'    => $obj->is_legal($this->getAuthenticatedUser()->getId()),
+        ];
     }
 
     public function postLikeData($obj)
     {
-        $data['refer']      = 'post';
-        $data['id']         = $obj->getId();
-        $data['nbLikers']   = $obj->getNbPLikers();
-        $data['liked']      = $obj->is_liker($this->getAuthenticatedUser()->getId());
-        return $data;
+        return[
+            'id'    => $obj->getId(),
+            'refer' => 'post',
+            'nbLikers' => $obj->getNbPLikers(),
+            'liked'    => $obj->is_legal($this->getAuthenticatedUser()->getId()),
+        ];
     }
 
     public function commentLikeData($obj)
     {
-        $data['refer']      = 'comment';
-        $data['id']         = $obj->getId();
-        $data['nbLikers']   = $obj->getNbLikers();
-        $data['liked']      = $obj->is_liker($this->getAuthenticatedUser()->getId());
-        return $data;
+        return[
+            'id'    => $obj->getId(),
+            'refer' => 'comment',
+            'nbLikers' => $obj->getNbLikers(),
+            'liked'    => $obj->is_legal($this->getAuthenticatedUser()->getId()),
+        ];
     }
 
     public function undercommentLikeData($obj)

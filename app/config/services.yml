@@ -14,6 +14,12 @@ services:
         arguments: 
             - '@OP\UserBundle\Security\UserProvider'
             - '@doctrine.odm.mongodb.document_manager.public'
+#    OP\MediaBundle\Controller\Api\ApiPhotoController:
+#        resource: '../../src/OP/MediaBundle/Controller/*'
+#        arguments: 
+#            - '@OP\UserBundle\Security\UserProvider'
+#            - '@doctrine.odm.mongodb.document_manager.public'
+#            - '@op_user.setting_manager'
         # exclude: '../../src/OP/MediaBundle/Controller/{Api}'
 
     OP\MessageBundle\Controller\:

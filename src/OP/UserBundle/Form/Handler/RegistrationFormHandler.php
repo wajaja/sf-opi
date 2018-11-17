@@ -2,8 +2,8 @@
 
 namespace OP\UserBundle\Form\Handler;
 
-use FOS\UserBundle\Form\Handler\RegistrationFormHandler as BaseHandler;
-use Symfony\Component\HttpFoundation\Request;
+use FOS\UserBundle\Form\Handler\RegistrationFormHandler as BaseHandler,
+    Symfony\Component\HttpFoundation\Request;
 
 class RegistrationFormHandler extends BaseHandler
 {
@@ -18,12 +18,12 @@ class RegistrationFormHandler extends BaseHandler
         // pour symfony3.0  le 02/01/2016
         $this->form->handleRequest($request);            
             
-            if ($this->form->isValid()) {
+        if ($this->form->isValid()) {
 
-                // do your custom logic here
+            // do your custom logic here
 
-                return true;
-            }
+            return true;
+        }
 
         return false;
     }

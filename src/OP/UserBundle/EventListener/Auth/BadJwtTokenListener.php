@@ -3,10 +3,10 @@
 namespace OP\UserBundle\EventListener\Auth;
 
 use Symfony\Component\HttpFoundation\JsonResponse,
-	Lexik\Bundle\JWTAuthenticationBundle\Event\JWTInvalidEvent,
-	Lexik\Bundle\JWTAuthenticationBundle\Event\JWTNotFoundEvent,
-	Lexik\Bundle\JWTAuthenticationBundle\Event\JWTExpiredEvent,
-	Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationFailureResponse;
+    Lexik\Bundle\JWTAuthenticationBundle\Event\JWTInvalidEvent,
+    Lexik\Bundle\JWTAuthenticationBundle\Event\JWTNotFoundEvent,
+    Lexik\Bundle\JWTAuthenticationBundle\Event\JWTExpiredEvent,
+    Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationFailureResponse;
 
 /**
 * 

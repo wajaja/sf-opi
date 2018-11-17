@@ -4,11 +4,9 @@ namespace OP\MessageBundle\ModelManager;
 
 use OP\MessageBundle\Document\Thread,
     Doctrine\ODM\MongoDB\Query\Builder,
-    Doctrine\ODM\MongoDB\DocumentManager,
     OP\MessageBundle\Model\ThreadInterface,
     OP\MessageBundle\Model\ReadableInterface,
-    OP\MessageBundle\Model\ParticipantInterface,
-    OP\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
+    OP\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract Thread Manager implementation which can be used as base class by your

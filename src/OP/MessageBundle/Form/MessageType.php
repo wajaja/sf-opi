@@ -2,7 +2,9 @@
 
 namespace OP\MessageBundle\Form;
 
-use Symfony\Component\{Form\AbstractType, Form\FormBuilderInterface, OptionsResolver\OptionsResolverInterface};
+use Symfony\Component\{
+    Form\AbstractType, Form\FormBuilderInterface, OptionsResolver\OptionsResolverInterface
+};
 
 class MessageType extends AbstractType
 {

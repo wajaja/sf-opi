@@ -4,7 +4,6 @@ namespace OP\UserBundle\Controller\Api;
 
 use FOS\RestBundle\Controller\Annotations,
     OP\SocialBundle\Firebase\Firebase,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     FOS\RestBundle\Controller\Annotations\Get,
     FOS\RestBundle\Controller\Annotations\Post,
     OP\UserBundle\Security\UserProvider,
@@ -30,20 +29,20 @@ class ApiSecurityController extends FOSRestController implements ClassResourceIn
         $this->user_provider = $uProvider;
     }
 
-	/**
-	* @Get("/login")
-	*
-	*/
-	public function getAction()
-	{
-		return 'eeeee';
-	}
+    /**
+    * @Get("/login")
+    *
+    */
+    public function getAction()
+    {
+            return 'eeeee';
+    }
 
 
-	/**
-	* @Post("/login_check")
-	*
-	*/
+    /**
+    * @Post("/login_check")
+    *
+    */
     public function checkAction()
     {
     	return 'eeeee';

@@ -8,7 +8,6 @@ use OP\UserBundle\Security\UserProvider,
     OP\UserBundle\Repository\OpinionUserManager,
     OP\SocialBundle\SeveralClass\DateTransformer,
     Symfony\Component\HttpFoundation\RequestStack,
-    OP\MessageBundle\Security\ParticipantProviderInterface,
     Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 /**
@@ -41,12 +40,8 @@ abstract class AbstractObjectToArrayTransformer
     * @param $document
     * @return bool
     */
-    protected function isUpdated($document)
-    {
-        if(!isset($document['updateAt'])) {
-            return false;
-        }
-        return true;
+    protected function isUpdated($document) : bool {
+        return $document['updateAt'] ?? false;
     }
     
     /**
@@ -61,9 +56,9 @@ abstract class AbstractObjectToArrayTransformer
         return [
             'id'        => (String)$u['_id'],
             'username'  => $u['username'],
-            'firstname' => isset($u['firstname']) ? $u['firstname'] : '',
-            'lastname'  => isset($u['lastname']) ? $u['lastname'] : '',
-            'profile_pic'=> $this->getProfilePic($u)
+            'firstname' => $u['firstname'] ?? '',
+            'lastname'  => $u['lastname'] ?? '',
+            'profile_pic'=> $this->user_provider->getProfilePic($u)
         ];
     }
     
@@ -77,20 +72,20 @@ abstract class AbstractObjectToArrayTransformer
         $editors = [];
         if(gettype($arg) == 'object') {
             if($side == 'editors') {
-                $db_editors = null !== $arg->getEditors() ? $arg->getEditors() : [];
+                $db_editors =  $arg->getEditors() ?? [];
             } else if($side == 'lefteditors') {
-                $db_editors = null !== $arg->getLeftEditors() ? $arg->getLeftEditors() : [];
+                $db_editors = $arg->getLeftEditors() ?? [];
             } else if($side == 'righteditors') {
-                $db_editors = null !== $arg->getRightEditors() ? $arg->getRightEditors() : [];
+                $db_editors = $arg->getRightEditors() ?? [];
             }
         } 
         else {
             if($side == 'editors') {
-                $db_editors = isset($arg['editors']) ? $arg['editors'] : [];
+                $db_editors = $arg['editors'] ?? [];
             } else if($side == 'lefteditors') { 
-                $db_editors = isset($arg['leftEditors']) ? $arg['leftEditors'] : [];
+                $db_editors = $arg['leftEditors'] ?? [];
             } else if($side == 'righteditors') {
-                $db_editors = isset($arg['rightEditors']) ? $arg['rightEditors'] : [];
+                $db_editors = $arg['rightEditors'] ?? [];
             }         
         }
         
@@ -127,47 +122,36 @@ abstract class AbstractObjectToArrayTransformer
     */
     protected function getVideos($arg){
         if(gettype($arg)== 'object') {
-            $videos_refs = null !== $arg->getVideos() ? $arg->getVideos() : [];
+            $videos_refs = $arg->getVideos() ?? [];
         } else {
-            $videos_refs = isset($arg['videos']) ? $arg['videos'] : [];
+            $videos_refs = $arg['videos'] ?? [];
         }
-        $videos = [];
+        $ids = [];
         foreach($videos_refs as $video_ref){
-            $video = $this->dm->getRepository('OP\MediaBundle\Document\Video')
-                ->findSimpleVideosById(!is_object($video_ref) ?  (string)$video_ref['$id'] : $video_ref->getId());
-            $videos [] = $video;
+            $ids [] = !is_object($video_ref) ?  (string)$video_ref['$id'] : $video_ref->getId();
         }
-        return $this->img_construct->videoToArray($videos);
+        $videos = $this->dm->getRepository('OP\MediaBundle\Document\Video')->findCvideos($ids);
+        return $this->img_construct->videosToArray($videos);
     }
 
     protected function getImages($arg){
         if(gettype($arg)== 'object') {
-            $ids = null !== $arg->getImagesIds() ? $arg->getImagesIds() : [];
+            $ids = $arg->getImagesIds() ?? [];
         } else {
-            $ids = isset($arg['images_ids']) ? $arg['images_ids'] : [];
+            $ids = $arg['images_ids'] ?? [];
         }
 
-        $images = [];
-        foreach($ids as $id){
-            if(strlen($id) === 24) {
-                $image = $this->dm->getRepository('OP\MediaBundle\Document\Image')
-                                  ->findPhotoById($id);
-                if(!$image)
-                    $images [] = null;
-                else
-                    $images [] = $image;
-            }
-        }
-
+        $images = $this->dm->getRepository('OP\MediaBundle\Document\Image')
+                          ->findCphotos($ids);
         return $this->img_construct->imagesToArray($images);
     }
     
     protected function getParticipants($arg)
     {
         if(gettype($arg) == 'object') {
-            $db_participants = null !== $arg->getParticipants() ? $arg->getParticipants(): []; 
+            $db_participants = $arg->getParticipants() ?? []; 
         } else {
-            $db_participants = isset($arg['participants']) ? $arg['participants']: [];
+            $db_participants = $arg['participants'] ?? [];
         }
         $participants = [];
         foreach($db_participants as $db_participant){      
@@ -176,27 +160,6 @@ abstract class AbstractObjectToArrayTransformer
         }
 
         return $participants;
-    }
-    
-    public function getProfilePic($user) {
-
-        $id   = !isset($user['profilePic']) ? null : (String)$user['profilePic']['$id'];
-        $mal  = 'http://opinion.com/uploads/gallery/a4a2139157426ca3e2b39af6b374c458.jpeg';
-        $fem  = 'http://opinion.com/uploads/gallery/598616f0316b18de6d3a415c7f3c203b.jpeg';
-
-        if(!$id || gettype($id) !== 'string') 
-            return $user['gender'] === 'Male' ? $mal : $fem;
-
-        $p      = $this ->dm
-                        ->getRepository('OP\MediaBundle\Document\Image')
-                        ->findOneBy(array('id' => $id));
-
-        return $p->getWebPath();
-    }
-    
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/uploads/';
     }
 
     protected function getPostRate($post_id)
@@ -268,11 +231,12 @@ abstract class AbstractObjectToArrayTransformer
     protected function getPostAllies($arg)
     {
         if(gettype($arg) == 'object') {
-            $refs = $arg->getAllies() ? $arg->getAllies() : []; 
+            $refs = $arg->getAllies() ?? []; 
         } else {
-            $refs = isset($arg['allies']) ? $arg['allies'] : [];            
+            $refs = $arg['allies'] ?? [];            
         }
         $posts = [];
+        //TODO set Performance
         foreach($refs as $ref){
             $post = $this->dm
                     ->getRepository('OP\PostBundle\Document\Post')

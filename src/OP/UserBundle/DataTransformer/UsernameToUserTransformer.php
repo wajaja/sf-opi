@@ -20,8 +20,6 @@ class UsernameToUserTransformer implements DataTransformerInterface
         $this->manager = $userManager;
     }
 
-
-
     /**
      * Transforms a collection of users into a string
      *

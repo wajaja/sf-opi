@@ -2,8 +2,8 @@
 
 namespace OP\SocialBundle\Firebase;
 
-use Kreait\Firebase\Factory;
-use Kreait\Firebase\ServiceAccount;
+use Kreait\Firebase\Factory,
+    Kreait\Firebase\ServiceAccount;
 
 class Firebase 
 {

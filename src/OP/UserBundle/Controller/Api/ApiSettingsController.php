@@ -2,30 +2,20 @@
 
 namespace OP\UserBundle\Controller\Api;
 
-use FOS\UserBundle\FOSUserEvents,
-    OP\MediaBundle\Document\Image,
+use OP\MediaBundle\Document\Image,
     OP\UserBundle\Document\Address,
     OP\UserBundle\Form\AddressType,
-    OP\UserBundle\Document\Contact,
-    OP\UserBundle\Form\ContactType,
-    OP\UserBundle\Document\AboutMe,
-    OP\UserBundle\Form\AboutMeType,
-    FOS\UserBundle\Event\FormEvent,
     JMS\Serializer\SerializerInterface,
     OP\UserBundle\Security\UserProvider,
     FOS\RestBundle\Controller\Annotations,
-    Nelmio\ApiDocBundle\Annotation as Doc,
     Symfony\Component\HttpFoundation\Request,
-    FOS\UserBundle\Event\GetResponseUserEvent,
     FOS\RestBundle\Controller\FOSRestController,
     OP\UserBundle\Repository\OpinionUserManager,
     OP\UserBundle\DocumentManager\SettingManager,
     OP\MediaBundle\DocumentManager\PictureManager,
-    FOS\UserBundle\Event\FilterUserResponseEvent,
     FOS\RestBundle\Routing\ClassResourceInterface,
     Symfony\Component\HttpFoundation\JsonResponse,
     Symfony\Component\HttpFoundation\RedirectResponse,
-    Symfony\Component\HttpFoundation\File\UploadedFile,
     FOS\RestBundle\Controller\Annotations\RouteResource,
     Symfony\Component\Security\Core\Exception\AccessDeniedException;
 

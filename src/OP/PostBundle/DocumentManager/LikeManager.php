@@ -13,13 +13,8 @@ class LikeManager extends AbstractManager
      */    
     public function saveLike(Like $like)
     {
-
-        $all    = $this->request->request->all();
-
         $refer   = $this->request->get('refer');
         $postId  = $this->request->get('postId');
-        $userId = $this->getAuthenticatedUser()->getId();
-
         $like->setType($refer);
         $like->setRefValid($postId);
 
