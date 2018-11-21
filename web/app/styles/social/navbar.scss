@@ -365,19 +365,26 @@ ul{
     border-bottom: 1px solid #d5dad8;
     color: #3e5a6b;
 }
-.nt-nv-bd:hover,
-.msg-nv-bd:hover,
-.invit-nv-bd:hover
-{
-
-}
 .nt-nv-bd, .msg-nv-bd, .invit-nv-bd {
     overflow-x: hidden;
     overflow-y: auto;
 	max-height:430px;
-    background: #fff;
+    /*background: #fff;*/
     border-left: 1px solid rgb(203, 197, 197);
     border-right: 1px solid rgb(203, 197, 197);
+
+    .thr-elem{
+        height: 60px;
+        border-bottom: 1px solid #e1eaef;
+        &:hover{
+            background: #e5edf1;
+        }
+        .thr-lst-msg-bdy{
+            p:first-letter{
+                text-transform: capitalize;
+            }
+        }
+    }
 }
 /*scroll*/
 .nt-nv-bd::-webkit-scrollbar,

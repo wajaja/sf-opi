@@ -537,7 +537,10 @@ input.nw-msg-recip-modal{
         span{
             margin-right: 6px;
             display: inline-block;
-            text-transform: capitalize;
+            text-transform: lowercase;
+            &:first-letter{
+                text-transform: capitalize;
+            }
         }
     }
 }
@@ -644,7 +647,7 @@ input.nw-msg-recip-modal{
     float: left;
     width: 24px;
     height: 22px;
-    top: 2px;
+    top: -2px;
     display: inline-block;
     vertical-align: top;
     opacity: .7;

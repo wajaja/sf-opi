@@ -47,7 +47,7 @@ const Invitation  = onClickOutside(
                                             <Box
                                                 user={this.props.user}
                                                 invitation={inv} 
-                                                dispatch={dispatch}
+                                                dispatch={this.props.dispatch}
                                                 onFriendConfirm={this.props.confirm}
                                                 onDeleteInvitation={this.props.deleteInvitation}
                                                 /> 

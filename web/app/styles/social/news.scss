@@ -621,8 +621,8 @@ a:focus, a:hover{
     height: 50px;
 }
 .pst-aut-nm{
-    color: #087986;
-    font-size: 13px;
+    color: #04606b;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.6px;
     font-variant: inherit;
@@ -637,8 +637,11 @@ a:focus, a:hover{
     }
     span {
         display: inline-block;
-        text-transform:  capitalize;
+        text-transform:  lowercase;
         margin-right: 5px;
+        &:first-letter{
+            text-transform:  capitalize;
+        }
     }
 }
 .lft-pst-ctnr-mdl{

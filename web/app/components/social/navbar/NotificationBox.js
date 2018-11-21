@@ -250,7 +250,8 @@ const NotificationBox  = onClickOutside(
         },
 
         render() {
-            const { notifications }     = this.props;
+            const notifications    = this.props.notifications || [];
+            console.log(notifications);
 
             return (
                 <div className="tabnav-box-ctnr">
@@ -261,7 +262,7 @@ const NotificationBox  = onClickOutside(
                         </div>
                         <div id="nt_nv_bd" className="nt-nv-bd">
                             <div className="nt-nv-ul">
-                                {!!notifications && notifications.map((data, i) => {
+                                {notifications.map((data, i) => {
                                     return <NotifContentBox 
                                                 key={i} 
                                                 data={data} 
