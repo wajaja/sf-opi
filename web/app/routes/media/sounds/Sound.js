@@ -109,7 +109,7 @@ const Sound  = createReactClass( {
             screenWidth:  window.screen.width
         })
         const { user, postIds, dispatch } = this.props;
-        findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll)
+        findDOMNode(this).addEventListener('scroll', this.handleScroll)
 
         // dispatch(PostsActions.load(user.id, postIds));   //redux saga
     },
@@ -118,7 +118,7 @@ const Sound  = createReactClass( {
      * componentWillUnmount
      */
     componentWillUnmount() {
-        findDOMNode(this._pageElm).removeEventListener('scroll', this.handleScroll)
+        findDOMNode(this).removeEventListener('scroll', this.handleScroll)
     },
 
     componentWillReceiveProps(nextProps) {

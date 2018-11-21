@@ -4,7 +4,7 @@ const Post  = require('./../routes/post/posts/Post').default,
 Video       = require('./../routes/media/videos/components/Video').default,
 Sound       = require('./../routes/media/sounds/Sound').default, 
 Home        = require('./../routes/social/Home/Home').default,
-MeetYou     = require('./../routes/social/MeetYou/MeetYou').default,
+// MeetYou     = require('./../routes/social/MeetYou/MeetYou').default,
 Welcome     = require('./../routes/social/Welcome/Welcome').default,
 Group       = require('./../routes/user/group/Group').default,
 Place       = require('./../routes/social/place/Place').default,
@@ -86,11 +86,6 @@ class Root extends React.PureComponent {
                         {...props}  
                     />} 
                 />
-                <Route path="/meetyou" children={() => 
-                    <MeetYou 
-                        {...props}  
-                    />} 
-                />
                 <Route path="/posts/:id" children={() => 
                     <Post 
                         {...props} 
@@ -146,5 +141,10 @@ class Root extends React.PureComponent {
         )
     }
 }
+                // <Route path="/meetyou" children={() => 
+                //     <MeetYou 
+                //         {...props}  
+                //     />} 
+                // />
 
 export default Root

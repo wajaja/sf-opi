@@ -300,3 +300,25 @@ export function abordRequest(userID, targetID) {
         })
     }
 }
+
+export const LOAD_REQ = 'INVITATION::LOAD_REQ'
+export const _loadReq = (data) => ({type: LOAD_REQ})
+
+export const LOAD_RESPONSE = 'INVITATION::LOAD_RESPONSE'
+export const _loadResponse = (data) => ({type: LOAD_RESPONSE, data})
+
+export function loadInvitations(page) {
+    return (dispatch, getState) => {
+        dispatch(_loadReq())
+        axios.get(`${BASE_PATH}/api/invitations/load`, { 
+                params : {
+                    page: page
+                }})
+             .then(function (res) {
+                console.log('loadNotifications', res.data)
+                dispatch(_loadResponse(res.data))
+            }, function(err) { 
+                console.log('err :', err);
+            })
+    }
+}

@@ -40,7 +40,7 @@ const Thread = createReactClass({
 			messages: [],
 			uniqueString: document && document.createElement && uniqueString(),
 			//get latest user's configuration for submitting messages or default
-			enterToSubmit: (user.config && user.config.enter_to_submit_message) || enterToSubmit,
+			enterToSubmit: (!!user && user.config && user.config.enter_to_submit_message) || enterToSubmit,
 			canAddRecipient: newThread,
 			recipients: _thread  ? _thread.recipients : [], //array of usernames 
 			participants: _thread ? _thread.participants : []

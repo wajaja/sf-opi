@@ -73,14 +73,14 @@ const Basic  = createReactClass( {
         this.setState({
             screenWidth:  window.screen.width
         })
-        //findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll)
+        //findDOMNode(this).addEventListener('scroll', this.handleScroll)
     },
 
     /**
      * componentWillUnmount
      */
     componentWillUnmount() {
-        findDOMNode(this._pageElm).removeEventListener('scroll', this.handleScroll)
+        findDOMNode(this).removeEventListener('scroll', this.handleScroll)
     },
 
     componentWillReceiveProps(nextProps) {

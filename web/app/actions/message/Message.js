@@ -245,7 +245,7 @@ export function loadThread(threadId) {
 	}
 }
 
-export const LOAD_MESSAGES_REQUEST = 'MESSAGE::LOAD_MESSAGES_REQUEST'
+/*export const LOAD_MESSAGES_REQUEST = 'MESSAGE::LOAD_MESSAGES_REQUEST'
 
 export const _loadMessagesRequest = (threadId, page) => ({type: LOAD_MESSAGES_REQUEST})
 
@@ -268,7 +268,7 @@ export function loadMessages(threadId, page) {
 				console.log('err :', err);
 			})
 	}
-}
+}*/
 
 export const GET_MESSAGE_RESPONSE = 'GET_MESSAGE_RESPONSE'
 export const _getMessage = (message) => ({type: GET_MESSAGE_RESPONSE, message})
@@ -301,18 +301,18 @@ export function inbox() {
 }
 
 export const LIST_MESSAGES_REQUEST = 'LIST_MESSAGES_REQUEST'
-export const _listMessagesReq = () => ({type: LIST_MESSAGES_REQUEST,})
+export const _loadMessagesReq = () => ({type: LIST_MESSAGES_REQUEST,})
 
 export const LIST_MESSAGES_RESPONSE = 'LIST_MESSAGES_RESPONSE'
-export const _listMessages = (data, page) => ({type: LIST_MESSAGES_RESPONSE, data, page})
+export const _loadMessages = (data, page) => ({type: LIST_MESSAGES_RESPONSE, data, page})
 
-export function listMessage(page) {
+export function loadMessages(page) {
 	return (dispatch, getState) => 
 		new Promise(function (resolve, reject) {
-			dispatch(_listMessagesReq())
+			dispatch(_loadMessagesReq())
 			axios.get(`${BASE_PATH}/api/messages/load/${page}`)
 				 .then(function (res) {
-					dispatch(_listMessages(res.data, page))
+					dispatch(_loadMessages(res.data, page))
 					console.log(res.data)
 					resolve(res.data)
 				}, function(err) { 

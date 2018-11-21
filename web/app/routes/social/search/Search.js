@@ -132,7 +132,7 @@ const Search  = createReactClass({
      */
     componentWillUnmount() {
         window.clearRequestTimeout(this.$scroll)
-        findDOMNode(this._pageElm).removeEventListener('scroll', this.handleScroll)
+        findDOMNode(this).removeEventListener('scroll', this.handleScroll)
     },
 
     componentWillReceiveProps(nextProps) {

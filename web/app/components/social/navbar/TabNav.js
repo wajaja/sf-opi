@@ -9,7 +9,7 @@ import PropTypes                from 'prop-types'
 
 import MessageBox               from './MessageBox'
 import NotificationBox          from './NotificationBox'
-import InvitationBox            from './InvitationBox'
+import Invitation               from './Invitation'
 
 import { 
     App as AppActions,
@@ -36,6 +36,21 @@ const _Tabs  = createReactClass({
         this.props.changeTab(tab);
     },
 
+    toggleNavMessage(e) {
+        e.preventDefault();
+        this.props.toggleNavMessage();
+    },
+
+    toggleNavInvits(e){
+        e.preventDefault()
+        this.props.toggleNavInvits();
+    },
+
+    toggleNavNotifs(e) {
+        e.preventDefault();
+        this.props.toggleNavNotifs()
+    },
+
     componentDidUpdate(oldProps) {
         // if(this.props.currentTab != oldProps.currentTab) {
         //     this.setState({currentTab: this.props.currentTab})
@@ -51,21 +66,58 @@ const _Tabs  = createReactClass({
     render(){
         return (
             <div className="tabs-ctnr">
-                <div className="tabs-ctnr-a">           
-                    <MessageBox 
-                        {...this.props}
-                        toggleNavMessage={this.props.toggleNavMessage}
-                        />
+                <div className="tabs-ctnr-a">  
+
+                    <div className="dv-tabnav-ct" id='tabnav_msg' >
+                        <div className={this.props.navMessageBox ? 'currentTab' : ''}>
+                            <span className="unseenMessages"></span>
+                            <Link
+                                to="/messages"
+                                onClick={this.toggleNavMessage}
+                                className={this.props.navMessageBox ? `active link-message` : `link-message`}>
+                            </Link>         
+                            {this.props.navMessageBox && 
+                                <MessageBox 
+                                    {...this.props}
+                                    toggleNavMessage={this.props.toggleNavMessage}
+                                    />
+                            }
+                        </div>
+                    </div>
                 
-                    <InvitationBox 
-                        {...this.props}
-                        toggleNavInvits={this.props.toggleNavInvits}
-                        />
-             
-                    <NotificationBox 
-                        {...this.props}
-                        toggleNavNotifs={this.props.toggleNavNotifs}
-                        />
+                    <div className="dv-tabnav-ct" id='tabnav_invit' >
+                        <div className={this.props.navInvitsBox ? 'currentTab' : ''}>
+                            <span className="unseenInvitations"></span>
+                            <Link 
+                                to="/invitations/"
+                                onClick={this.toggleNavInvits}
+                                className={this.props.navInvitsBox ? `active invit-nv-lk` : `invit-nv-lk`}>
+                            </Link>
+                            {this.props.navInvitsBox &&
+                                <Invitation 
+                                    {...this.props}
+                                    toggleNavInvits={this.props.toggleNavInvits}
+                                    />
+                            }
+                        </div>
+                    </div>
+
+                    <div className="dv-tabnav-ct" id='tabnav_nt' >
+                        <div className={this.props.navNotifsBox ? 'currentTab' : ''}>
+                            <span className="unseenNotifications"></span>
+                            <Link
+                                to="/notifications/"
+                                onClick={this.toggleNavNotifs}
+                                className={this.props.navNotifsBox ? `active nt-nv-a-lk` : `nt-nv-a-lk`}>
+                            </Link>
+                            {this.props.navNotifsBox &&
+                                <NotificationBox 
+                                    {...this.props}
+                                    toggleNavNotifs={this.props.toggleNavNotifs}
+                                    />
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         );

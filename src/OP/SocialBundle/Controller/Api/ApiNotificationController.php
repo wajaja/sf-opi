@@ -29,14 +29,14 @@ class ApiNotificationController extends FOSRestController implements ClassResour
     *
     */
     public function loadNotificationsActions(Request $request, NotificationManager $notifMan) {
-        $res        = new JsonResponse();
-        $query      = $request->query;
-        $user       = $this->_getUser();
-        $initIds    = $query->get('initIds') ? $query->get('initIds') : [];
-        $limit      = $query->get('limit') ? $query->get('limit') : 10;
-        $datas      = $notifMan->loadNotifications($user, $initIds, $limit);
+        $res     = new JsonResponse();
+        $query   = $request->query;
+        $user    = $this->_getUser();
+        $initIds = $query->get('initIds') ? $query->get('initIds') : [];
+        $limit   = $query->get('limit') ? $query->get('limit') : 10;
+        $data    = $notifMan->loadNotifications($user, $initIds, $limit);
 
-        return $res->setData(array('datas' => $datas));
+        return new JsonResponse($data);
     }
 
     /**

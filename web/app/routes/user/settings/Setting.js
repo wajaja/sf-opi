@@ -63,7 +63,7 @@ const Setting  = createReactClass( {
 
         this.$scroll = window.requestTimeout(() => {
 
-            const d = findDOMNode(this._pageElm)
+            const d = findDOMNode(this)
             const threshold = (d.offsetHeight / 2)
 
             if ((d.scrollTop + d.offsetHeight) >= (d.scrollHeight - threshold)) {
@@ -101,7 +101,7 @@ const Setting  = createReactClass( {
             screenWidth:  window.screen.width
         })
         // const { user, postIds, dispatch } = this.props;
-        findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll)
+        findDOMNode(this).addEventListener('scroll', this.handleScroll)
         const tag = getUrlParameterByName('tag', this.props.location.search)
         //check if the current query search exist in allowed array of setting searchs
         if(!inArray(this.state.tagsArr, tag)){
@@ -116,7 +116,7 @@ const Setting  = createReactClass( {
      */
     componentWillUnmount() {
         window.clearRequestTimeout(this.$scroll);
-        findDOMNode(this._pageElm).removeEventListener('scroll', this.handleScroll)
+        findDOMNode(this).removeEventListener('scroll', this.handleScroll)
     },
 
     componentWillReceiveProps(nextProps) {

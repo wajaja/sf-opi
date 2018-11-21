@@ -4,9 +4,7 @@ import { Provider }         from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import ReduxToastr          from 'react-redux-toastr'
 import { fromJS }           from 'immutable'
-import { 
-  routerReducer,
-  routerMiddleware }        from 'react-router-redux'
+import { routerReducer, }   from 'react-router-redux'
 import { 
   createStore, 
   combineReducers, 

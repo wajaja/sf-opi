@@ -38,6 +38,11 @@ const MoreOption = onClickOutside(
 						{this.props.active && 
 							<div className="min-mor-opt-ctnr" >
 								<div className="min-mor-opt-ctnr-a" >
+									<div 
+										className="clse-opt" 
+										onClick={(e) => this.props.closeOption(e)}>
+										x
+									</div>
 									<Link to="/groups/list" className="hm-g-group">
 					                    <i className="fa fa-users" aria-hidden="true"></i>
 					                    <span className="min-prof-not-child" >Groups</span>

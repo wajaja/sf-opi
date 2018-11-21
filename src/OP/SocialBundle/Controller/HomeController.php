@@ -83,16 +83,19 @@ class HomeController extends Controller
                     ],
                     'Notification'  => [
                         'nbAlerts'  =>  $notifMan->countAlerts($user),
+                        'notifications' => []
                     ],
                     'Invitation'    => [
                         'nbAlerts'  =>  $this->getInvitationManager()
-                                             ->countAlerts($user),
+                                             ->countAlerts($user)
                     ],
                     'RelationShip'  => [
-                        'suggestions' => $invitMan->getSuggestionForUser($user, [])
+                        'suggestions' => $invitMan->getSuggestionForUser($user, []),
+                        'invitations' => []
                     ],
                     'Message'       => [
                         'nbAlerts'  =>  $msgMan->countAlerts($user),
+                        'messages' => [],
                         'threadsIds' => $threadMan->findParticipantInboxThreadsIds($user)
                     ],
                     'Users'         => [

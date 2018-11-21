@@ -66,7 +66,7 @@ const New  = createReactClass( {
 
         this.$scroll = window.requestTimeout(() => {
 
-            const d = findDOMNode(this._pageElm)
+            const d = findDOMNode(this)
             const threshold = (d.offsetHeight / 2)
 
             if ((d.scrollTop + d.offsetHeight) >= (d.scrollHeight - threshold)) {

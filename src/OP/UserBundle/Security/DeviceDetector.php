@@ -2,7 +2,8 @@
 
 namespace OP\UserBundle\Security;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+use Symfony\Component\HttpFoundation\RequestStack,
+    Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 
 class DeviceDetector
@@ -83,6 +84,9 @@ class DeviceDetector
         { 
             $bname = 'Netscape'; 
             $ub = "Netscape"; 
+        } else {
+            $bname = $u_agent;
+            $ub = $u_agent;
         } 
         
         // finally get the correct version number
@@ -99,14 +103,14 @@ class DeviceDetector
             //we will have two since we are not using 'other' argument yet
             //see if version is before or after the name
             if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
-                $version= $matches['version'][0];
+                $version= $matches['version'][0] ?? null;
             }
             else {
-                $version= $matches['version'][1];
+                $version= $matches['version'][1] ?? null;
             }
         }
         else {
-            $version= $matches['version'][0];
+            $version= $matches['version'][0] ?? null;
         }
         
         // check if we have a number

@@ -76,7 +76,7 @@ const Invitation  = createReactClass({
 
         this.$scroll = window.requestTimeout(() => {
 
-            const d = findDOMNode(this._pageElm)
+            const d = findDOMNode(this)
             const threshold = (d.offsetHeight / 2)
 
             if ((d.scrollTop + d.offsetHeight) >= (d.scrollHeight - threshold)) {
@@ -84,14 +84,6 @@ const Invitation  = createReactClass({
             }
 
         }, 25)
-    },
-
-    componentWillMount() {
-        // this.screenWidth =  window.screen.width
-        //far make more operations for newsRefs
-        this.setState({
-            newsRefs: this.props.newsRefs,
-        })
     },
 
     /**
@@ -102,7 +94,7 @@ const Invitation  = createReactClass({
             screenWidth:  window.screen.width
         })
         const { user, postIds, dispatch } = this.props;
-        findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll)
+        findDOMNode(this).addEventListener('scroll', this.handleScroll)
     },
 
     /**
@@ -110,7 +102,7 @@ const Invitation  = createReactClass({
      */
     componentWillUnmount() {
         window.clearRequestTimeout(this.$scroll);
-        findDOMNode(this._pageElm).removeEventListener('scroll', this.handleScroll)
+        findDOMNode(this).removeEventListener('scroll', this.handleScroll)
     },
 
     componentWillReceiveProps(nextProps) {

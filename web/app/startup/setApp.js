@@ -17,8 +17,6 @@ import {
 import { REHYDRATE, PURGE } from 'redux-persist/lib/constants'
 import { addLocaleData }    from 'react-intl'
 
-import rootSaga              from './../sagas/rootSaga'
-
 /**
  * Stuff for i8n
  */

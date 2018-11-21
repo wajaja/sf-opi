@@ -215,13 +215,9 @@ const _NotifContentBox  = createReactClass({
     }         
 })
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(Object.assign({}, NotificationActions), dispatch)
-}
-
 export const NotifContentBox = connect(state => ({
     notifications: state.Notification.notifications,
-}), mapDispatchToProps)(_NotifContentBox)
+}))(_NotifContentBox)
  
 
 const clickOutsideConfig = {
@@ -240,51 +236,42 @@ const NotificationBox  = onClickOutside(
             console.log('navbar note click')
         },
 
-        toggleNavNotifs(e) {
-            e.preventDefault();
-            this.props.toggleNavNotifs()
-        },
-
         //method from 'react-onclickoutside' module
         handleClickOutside(e) {
             this.props.toggleNavNotifs(false)
+        },
+
+        componentDidMount() {
+            this.props.loadNotifications(1)
+            /*.then(
+                data => console.log(data),
+                err => console.log(err)
+            )*/
         },
 
         render() {
             const { notifications }     = this.props;
 
             return (
-                <div className="dv-tabnav-ct" id='tabnav_nt' >
-                    <div className={this.props.navNotifsBox ? 'currentTab' : ''}>
-                        <span className="unseenNotifications"></span>
-                        <Link
-                            to="/notifications"
-                            onClick={this.toggleNavNotifs}
-                            className={this.props.navNotifsBox ? `active nt-nv-a-lk` : `nt-nv-a-lk`}>
-                        </Link>
-                        {this.props.navNotifsBox &&
-                            <div className="tabnav-box-ctnr">
-                                <div className="nt-nv-arraw" id="nt_nv_arraw"></div>
-                                <div className="nt-nv-ct" id="nt_nv_ct">
-                                    <div className="tabnav-box-hd">
-                                        <div className="nt-nv-ttl note-opn" id="nt_nv_ttl">Notifications</div>
-                                    </div>
-                                    <div id="nt_nv_bd" className="nt-nv-bd">
-                                        <div className="nt-nv-ul">
-                                            {notifications && notifications.map((data, i) => {
-                                                return <NotifContentBox 
-                                                            key={i} 
-                                                            data={data} 
-                                                            handleNotifClick={this.handleNotifClick}
-                                                            />  
-                                            })}
+                <div className="tabnav-box-ctnr">
+                    <div className="nt-nv-arraw" id="nt_nv_arraw"></div>
+                    <div className="nt-nv-ct" id="nt_nv_ct">
+                        <div className="tabnav-box-hd">
+                            <div className="nt-nv-ttl note-opn" id="nt_nv_ttl">Notifications</div>
+                        </div>
+                        <div id="nt_nv_bd" className="nt-nv-bd">
+                            <div className="nt-nv-ul">
+                                {!!notifications && notifications.map((data, i) => {
+                                    return <NotifContentBox 
+                                                key={i} 
+                                                data={data} 
+                                                handleNotifClick={this.handleNotifClick}
+                                                />  
+                                })}
 
-                                        </div>
-                                        <div className='notif-load-gif'></div>
-                                    </div>
-                                </div>
                             </div>
-                        }
+                            <div className='notif-load-gif'></div>
+                        </div>
                     </div>
                 </div>
             )
@@ -292,6 +279,10 @@ const NotificationBox  = onClickOutside(
     }), clickOutsideConfig
 )
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(Object.assign({}, NotificationActions), dispatch)
+}
+
 export default connect(state =>({
     notification: state.Notification.notifications
-}))(NotificationBox)
+}), mapDispatchToProps)(NotificationBox)

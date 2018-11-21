@@ -41,7 +41,7 @@ const Chat = createReactClass({
 		// if(this.threadList)
 		if(view === 'thread_list' && !this.props.list) {
 			//fetch first thread's list (page 1)
-			this.props.listMessage(1).then(
+			this.props.loadMessages(1).then(
 				(data) => { console.log('ok finished...')},
 				(err) => { console.log('err')}
 			);

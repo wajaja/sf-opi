@@ -30,6 +30,7 @@ function Message(state=initialState, action) {
 			}
 
 			case MessageActions.LIST_MESSAGES_RESPONSE: {
+				console.log('LIST_MESSAGES_RESPONSE LIST_MESSAGES_RESPONSE')
 				const ImState = fromJS(state),
 				data 	  = action.data;
 				return ImState.set('fetch_list', false)

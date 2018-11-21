@@ -10,6 +10,7 @@ import {
 export const initialState = {
 	nbAlerts: 0,
 	unreads: 0,
+    loading: false,
 	notifications: [],
     notificationIds: [],
 }
@@ -45,8 +46,16 @@ function Notification(state = initialState, action) {
                 notificationIds: action.data.ids,
                 notificationsById: action.data.notifications
             })
+        case NotificationsActions.LOAD_REQ: 
+            return Object.assign({}, state, { loading: true });
 
-
+        case NotificationsActions.LOAD_RESPONSE: 
+            let data = action.data,
+            _newData = fromJS(state).get('notifications').concat(data);
+            return Object.assign({}, state, {
+                notifications: _newData.toJS(),
+                loading: false 
+            });
 
         case NotificationsActions.DIARY_PUSH_INFO: {
             const year = action.info.year,

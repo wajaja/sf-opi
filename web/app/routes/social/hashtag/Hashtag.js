@@ -118,7 +118,7 @@ const Hashtag  = createReactClass({
 
         this.$scroll = window.requestTimeout(() => {
 
-            const d = findDOMNode(this._pageElm)
+            const d = findDOMNode(this)
             const threshold = (d.offsetHeight / 2)
 
             if ((d.scrollTop + d.offsetHeight) >= (d.scrollHeight - threshold)) {
@@ -147,14 +147,14 @@ const Hashtag  = createReactClass({
             screenWidth:  window.screen.width
         })
         const { user, dispatch } = this.props;
-        findDOMNode(this._pageElm).addEventListener('scroll', this.handleScroll);
+        findDOMNode(this).addEventListener('scroll', this.handleScroll);
     },
 
     /**
      * componentWillUnmount
      */
     componentWillUnmount() {
-        findDOMNode(this._pageElm).removeEventListener('scroll', this.handleScroll)
+        findDOMNode(this).removeEventListener('scroll', this.handleScroll)
         window.clearRequestTimeout(this.$scroll);
     },
 

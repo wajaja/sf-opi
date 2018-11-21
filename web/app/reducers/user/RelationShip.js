@@ -3,6 +3,7 @@ import Immutable, { List, Map, Set, fromJS } from 'immutable'
 
 import {
     RelationShip as RelationShipActions,
+    Invitation as InvitationsActions,
 } from '../../actions/user'
 
 /**
@@ -12,6 +13,7 @@ import {
 export const initialState = {
     friendIds: [],   //see serializer schema from server
     followerIds: [],
+    fetch_invit: false,
     blockedIds: [],
     invitations: [],
     suggestions: [],
@@ -66,7 +68,19 @@ function RelationShip(state = initialState, action) {
             users       = List(lists).concat(fromJS(state).get('suggestions'));
             return fromJS(state).set('suggestions', users).toJS();
         }
-            return state
+
+        case InvitationsActions.LOAD_REQ: 
+            return Object.assign({}, state, {fetch_invit: true });
+        
+        case InvitationsActions.LOAD_RESPONSE: 
+            let data = action.data,
+            _newData = fromJS(state).get('invitations').concat(data);
+            return Object.assign({}, state, {
+                invitations: _newData.toJS(),
+                fetch_invit: false 
+            });
+
+        return state
 
     }
 

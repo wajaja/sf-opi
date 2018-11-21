@@ -90,7 +90,7 @@ const NotMatched  = createReactClass({
      * componentWillUnmount
      */
     componentWillUnmount() {
-        findDOMNode(this._pageElm).removeEventListener('scroll', this.handleScroll);
+        findDOMNode(this).removeEventListener('scroll', this.handleScroll);
         // window.clearRequestTimeout(this.$scroll);
     },
 

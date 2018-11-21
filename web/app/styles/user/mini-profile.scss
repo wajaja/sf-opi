@@ -23,10 +23,11 @@
 .mn-pic-ctnr{
     display: inline-block;
     position: relative;
-    left: 4px;
+    padding-left: 5px;
     top: -53px;
-    width: 50px;
+    width: 270px;
     height: 50px;
+    box-shadow: inset 15px -11px 4px 7px #a9c2ce59;
 }
 .min-pic-img{
     display: block;
@@ -93,7 +94,7 @@
     border-radius: 4px;
     padding: 3px 4px;
     cursor: pointer;
-    color: #3a7b8a;
+    color: #2e8bd2;
     i {
         width: 25px;
     }
@@ -102,7 +103,7 @@
     }
 }
 .min-prof-name{
-    font-size: 11px;
+    font-size: 12px;
     position: relative;
     font-weight: 600;
 }
@@ -122,7 +123,7 @@
     left: 58px;
     top: 29px;
     text-transform: capitalize;
-    color: #337ab7;
+    color: #0b808e;
 }
 .min-pic{
 	width: 50px;
@@ -138,7 +139,7 @@
     display: block;
     min-height: 25px;
     margin: 3px 0;
-    color: #3a7b8a;
+    color: #2e84ce;
     border-radius: 4px;
     padding: 3px 4px;
     cursor: pointer;
@@ -159,6 +160,7 @@
 .min-prof-not-b{
 	margin: 0 0 10px;
     position: relative;
+    z-index: 10;
     .min-prof-not-b-a{
         position: relative;
     }
@@ -166,15 +168,13 @@
 
 .min-mor-opt-ctnr{
     position: absolute;
-    left: 275px;
-    width: 230px;
-    min-height: 350px;
-    top: -190px;
-    border-radius: 0px;
+    width: 271px;
+    min-height: 290px;
+    border-radius: 4px;
     background: #f1f7f5;
-    padding: 10px 10px;
+    padding: 8px 1px;
     border: 1px solid;
-    border-color: transparent #ced2d4 transparent transparent;
+    border-color: #ced3d6;
 }
 .min-prof-not-c{
 	margin: 0 0 10px;
