@@ -10,6 +10,7 @@ import { Search as SearchActions } from '../../actions/social'
  */
 export const initialState = {
     active: null,
+    boxActive: false, //mounting results div
     hits: [],
     term: '',
     total: 0,
@@ -41,6 +42,9 @@ function Search(state = initialState, action) {
                 return Object.assign({}, state, { active: action.search })
             }
             return state
+
+        case SearchActions.TOGGLLE_BOX:
+            return Object.assign({}, state, { boxActive: action.val })
 
         case SearchActions.SEARCH:
             if (action.response) {

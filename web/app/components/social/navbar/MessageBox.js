@@ -25,7 +25,9 @@ const MessageBox  = onClickOutside(
         },
         
         componentDidMount() {
-            this.props.loadMessages(1)
+            if(!this.props.list) {
+                this.props.loadMessages(1)
+            }
             // .then(
             //     (data) => { console.log('ok finished...')},
             //     (err) => { console.log('err')}

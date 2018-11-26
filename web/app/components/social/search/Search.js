@@ -3,6 +3,8 @@ import createReactClass from 'create-react-class'
 import { connect }      from 'react-redux'
 import ReactDOM         from 'react-dom'
 import Filters          from './filter'
+import onClickOutside           from 'react-onclickoutside'
+import { bindActionCreators }   from 'redux'
 import { BASE_PATH } from '../../../config/api'
 
 import { Search as SearchActions } from '../../../actions/social'
@@ -11,8 +13,11 @@ import { Search as SearchActions } from '../../../actions/social'
 
 //diplay the matched users list
 
+const clickOutsideConfig = {
+    excludeScrollbar: true
+};
 //////
-const Search  = createReactClass({
+const Search  =  onClickOutside(createReactClass({
 
     getInitialState() {
         return {
@@ -26,13 +31,12 @@ const Search  = createReactClass({
     },
 
     onFocus(e) {
-        console.log('search recieve focus')
-        this.setState({active: true})
+        this.props.toggleResultBox(true)
     },
 
-    onBlur(e) {
+    /*onBlur(e) {
         this.setState({active: false})
-    },
+    },*/
 
     /**
      * handleSearchChange
@@ -94,15 +98,12 @@ const Search  = createReactClass({
         }
     },
 
-    /**
-     * componentDidUpdate
-     * @param oldProps
-     */
-    componentDidUpdate(oldProps) {
-        if (this.props.search.active != oldProps.search.active) {
-        }
+    //method from 'react-onclickoutside' module
+    handleClickOutside(e) {
+        // this.setState({active: false})
+        if(this.props.search.boxActive)
+            this.props.toggleResultBox(false)
     },
-
     // doSearch(queryText){
     //     //this.getStorageData();
     //     console.log(queryText)
@@ -122,7 +123,7 @@ const Search  = createReactClass({
 
     render() {
 
-        const { recentHits, recentTerms, hits, term, total } = this.props.search
+        const { recentHits, recentTerms, hits, term, total, boxActive } = this.props.search
         
         return (
             <div className="frm-contrib-ctnr-b">
@@ -146,7 +147,7 @@ const Search  = createReactClass({
                         <span className="glyphicon glyphicon-search"></span>
                     </button>                                    
                 </form>
-                {this.state.active && 
+                {boxActive && 
                     <Filters
                         onClick={this.handleFilterClick}
                         recentTerms={recentTerms}
@@ -160,8 +161,11 @@ const Search  = createReactClass({
             </div>
         );
     }
-})
+}), clickOutsideConfig)
 
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(Object.assign({}, SearchActions), dispatch)
+}
 export default connect(state => ({
     search: state.Search
-}) /*, */)(Search)
+}) /*, */, mapDispatchToProps)(Search)

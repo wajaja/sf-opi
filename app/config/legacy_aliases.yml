@@ -9,6 +9,7 @@ services:
     op_media.file_storage: '@OP\MediaBundle\Uploader\Storage\FilesystemStorage'
     op_media.video_orphanage: '@OP\MediaBundle\Uploader\Storage\FilesystemOrphanageStorage'
     op_media.picture_manager: '@OP\MediaBundle\DocumentManager\PictureManager'
+    op_social.search_manager: '@OP\SocialBundle\DocumentManager\SearchManager'
     op_media.document.class: '@OP\MediaBundle\Document\Document'
     op_media.image.class: '@OP\MediaBundle\Document\Image'
     op_media.picture.class: '@OP\MediaBundle\Document\Picture'

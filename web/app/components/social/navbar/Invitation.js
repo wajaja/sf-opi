@@ -25,8 +25,10 @@ const Invitation  = onClickOutside(
         },
 
     	componentDidMount() {
-            const page = 1;
-            this.props.loadInvitations(page);
+            if(!this.props.invitations.length) {
+                const page = 1;
+                this.props.loadInvitations(page);
+            }
     	},
 
     	render() {

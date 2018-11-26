@@ -22,6 +22,9 @@ const _searchRequest = (term) => ({ type: SEARCH, term, })
  */
 const _searchResponse = (term, response) => ({ type: SEARCH, term, response, })
 
+export const TOGGLE_BOX = 'SEARCH::TOGGLE_BOX'
+export const toggleResultBox = (val) => ({ type: TOGGLE_BOX, val, })
+toggleResultBox 
 /**
  * search
  * Make a search request to algolia based on term (string) and type

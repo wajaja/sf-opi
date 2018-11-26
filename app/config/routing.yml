@@ -66,14 +66,25 @@ fos_js_routing:
 #    resource: OP\UserBundle\Controller\UsersController
 ##
 _liip_imagine:
-    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+    resource: "@LiipImagineBundle/Resources/config/routing.yaml"
 
 oneup_uploader:
     resource: .
     type: uploader
-NelmioApiDocBundle:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /api/doc
+# NelmioApiDocBundle:
+#     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+#     prefix:   /api/doc
+
+# app.swagger_ui:
+#     path: /api/doc
+#     methods: GET
+#     defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+# nelmio_api_doc:
+#     areas:
+#         path_patterns: # an array of regexps
+#             - ^/api(?!/doc$)
+#         host_patterns:
+#             - ^api\.
 
 # Make sure to include this route in your routing configuration at the very end 
 # of your route listing. Otherwise, you risk redirecting real routes 

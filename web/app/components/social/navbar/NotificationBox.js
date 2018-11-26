@@ -77,141 +77,139 @@ const _NotifContentBox  = createReactClass({
         const { isRead } = this.state,
         { data } = this.props,
         { type } = data;
-        return (
-            <div className="note-content" >
-                <div className={isRead ? 'notif-li-read' : 'notif-li-unread' }>
-                    {type === 'notification.opinion.main.create' && 
-                            <OpinionCreated 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />} 
+        
+        if(type === 'notification.opinion.main.create') 
+            return <OpinionCreated 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.opinion.allie.create' && 
-                            <OpinionAllieCreated 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />} 
+        else if(type === 'notification.opinion.allie.create')
+            return <OpinionAllieCreated 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.post.allie.create' && 
-                            <AllieCreated 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />} 
+        else if(type === 'notification.post.allie.create')
+            return <AllieCreated 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.side.to_author' && 
-                            <SideToAuthor 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />} 
+        else if(type === 'notification.side.to_author')
+            return <SideToAuthor 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.side.to_user' && 
-                            <SideToUser 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.side.to_user')
+            return <SideToUser 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.side.comment.from_author' &&
-                            <SideCommentFromAuthor 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.side.comment.from_author')
+            return <SideCommentFromAuthor 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.side.comment.to_author' &&
-                            <SideCommentToAuthor 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.side.comment.to_author')
+            return <SideCommentToAuthor 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.side.comment.to_user' &&
-                            <SideCommentToUser 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.side.comment.to_user')
+            return <SideCommentToUser 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.post.comment.to_author' &&
-                            <CommentUserPostToAuthor 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.post.comment.to_author')
+            return <CommentUserPostToAuthor 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.photo.comment.to_author' &&
-                            <CommentUserPhotoToAuthor 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.photo.comment.to_author')
+            return <CommentUserPhotoToAuthor 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.photo.comment.from_author' &&
-                            <CommentAuthorPhoto 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.photo.comment.from_author')
+            return <CommentAuthorPhoto 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.post.comment.from_author' &&
-                            <CommentAuthorPost 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.post.comment.from_author')
+            return <CommentAuthorPost 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.photo.comment.to_user' &&
-                            <CommentUserPhoto 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.photo.comment.to_user')
+            return <CommentUserPhoto 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.post.comment.to_user' &&
-                            <CommentUserPost 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.post.comment.to_user')
+            return <CommentUserPost 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.rate.from_author' &&
-                            <RateAuthorPost 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.rate.from_author')
+            return <RateAuthorPost 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.legal.from_user' &&
-                            <LegalAuthorPost 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.legal.from_user')
+            return <LegalAuthorPost 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.reply.to_user' &&
-                            <ReplyUserComment 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.reply.to_user')
+            return <ReplyUserComment 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.reply.to_author' &&
-                            <ReplyUserToAuthor 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.reply.to_author')
+            return <ReplyUserToAuthor 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.legal.to_author' &&
-                            <LegalUserToAuthor 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.legal.to_author')
+            return <LegalUserToAuthor 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.reply.from_author' &&
-                            <ReplyAuthorComment 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.reply.from_author')
+            return <ReplyAuthorComment 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.rate.to_author' &&
-                            <RateUserPostToAuthor 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.rate.to_author')
+            return <RateUserPostToAuthor 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.like.to_author' &&
-                        <LikeUserToAuthor 
-                            handleNotifClick={this.handleNotifClick}
-                            data={data} />}
+        else if(type === 'notification.like.to_author')
+            return <LikeUserToAuthor 
+                handleNotifClick={this.handleNotifClick}
+                data={data} />
 
-                    {type === 'notification.legal.to_user' &&
-                            <LegalUserPost 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.legal.to_user')
+            return <LegalUserPost 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.rate.to_user' &&
-                            <RateUserPost 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.rate.to_user')
+            return <RateUserPost 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.like.to_user' &&
-                            <LikeUserPost 
-                                handleNotifClick={this.handleNotifClick}
-                                data={data} />}
+        else if(type === 'notification.like.to_user')
+            return <LikeUserPost 
+                    handleNotifClick={this.handleNotifClick}
+                    data={data} />
 
-                    {type === 'notification.like.from_author' &&
-                        <LikeAuthorPost 
-                            handleNotifClick={this.handleNotifClick}
-                            data={data} />}
-                </div>
-            </div>
-        )
+        else if(type === 'notification.like.from_author')
+            <LikeAuthorPost 
+                handleNotifClick={this.handleNotifClick}
+                data={data} />
+        else
+            return <div/>
+        
     }         
 })
 
@@ -242,7 +240,8 @@ const NotificationBox  = onClickOutside(
         },
 
         componentDidMount() {
-            this.props.loadNotifications(1)
+            if(!this.props.notifications.length)
+                this.props.loadNotifications(1)
             /*.then(
                 data => console.log(data),
                 err => console.log(err)
@@ -285,5 +284,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(state =>({
-    notification: state.Notification.notifications
+    notifications: state.Notification.notifications
 }), mapDispatchToProps)(NotificationBox)

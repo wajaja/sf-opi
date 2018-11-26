@@ -22,7 +22,7 @@ class QuestionRepository extends DocumentRepository
 
         $questions = $qb->getQuery()
                         ->execute()
-                        ->getSingleResult();
+                        ->toArray();
         return count($questions);
     }
     
@@ -34,7 +34,7 @@ class QuestionRepository extends DocumentRepository
 
         $questions = $qb->getQuery()
                         ->execute()
-                        ->getSingleResult();
+                        ->toArray();
         return count($questions);
     }
 

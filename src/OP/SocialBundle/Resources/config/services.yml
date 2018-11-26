@@ -31,8 +31,7 @@ services:
         class: OP\SocialBundle\Document\Notification
     OP\SocialBundle\DocumentManager\NotificationManager:
         arguments: ["@doctrine.odm.mongodb.document_manager.public", "@op_social.notification.class", "@service_container", '@OP\SocialBundle\Stream\Stream', '@OP\SocialBundle\DataTransformer\ObjectToArrayTransformer']
-    op_social.search_manager:
-        class: OP\SocialBundle\DocumentManager\SearchManager
+    OP\SocialBundle\DocumentManager\SearchManager:
         arguments: 
             - '@doctrine.odm.mongodb.document_manager.public'
             - '@op_social.search.class'

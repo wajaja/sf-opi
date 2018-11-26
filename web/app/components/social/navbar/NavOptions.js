@@ -68,10 +68,6 @@ const NavOptions  = onClickOutside(
 			this.props.toggleNavParams()
 		},
 
-		componentWillMount () {
-	        
-	    },
-
 	    componentDidMount() {
 	    	document.addEventListener('click', this.handleClick, false);
 	    },
