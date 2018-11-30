@@ -175,6 +175,21 @@
     padding: 8px 1px;
     border: 1px solid;
     border-color: #ced3d6;
+    .min-mor-opt-ctnr-a{
+        position: relative;
+        margin-top: 15px;
+    }
+    .clse-opt{
+        position: absolute;
+        right: 5px;
+        font-size: 16px;
+        font-weight: 600;
+        top: -21px;
+        color: #0277a5;
+        cursor: pointer;
+        width: 20px;
+        padding: 0px 6px;
+    }
 }
 .min-prof-not-c{
 	margin: 0 0 10px;

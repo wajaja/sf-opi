@@ -317,6 +317,53 @@ const Profile  = createReactClass( {
                             user={user}
                             createMessageTo={this.createMessageTo}
                             />
+                        <div id="home-center-div" className="central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
+                            {tag === null && 
+                                <Center 
+                                    {...this.props} 
+                                    onShare={this.onShare} 
+                                    onComment={this.onComment}
+                                    onLike={this.onLike}
+                                    home={false}
+                                    profile={profileUser}
+                                    newsRefs={newsRefsUser}
+                                    fetchPosts={this._fetchPostsStream}
+                                    onSideComment={this.onSideComment}
+                                    postFormFocus={this.postFormFocus}
+                                    editPostFormFocus={this.editPostFormFocus}
+                                    referIn="profile"
+                                    timelineId={profileUser.id}
+                                    timeType='user'
+                                    />
+                            }
+                            <div className="hm-main-blk-ctnr"> 
+                                {tag === 'photos' && 
+                                    <PhotosCenter 
+                                        {...this.props}
+                                        user={user}
+                                        photos={profile.photos}
+                                        profile={profileUser}
+                                        />
+                                }
+
+                                {tag === 'infos' && 
+                                    <AboutCenter 
+                                        {...this.props}
+                                        user={user}
+                                        about={profile.about}
+                                        profile={profileUser}
+                                        />
+                                }
+                                {tag === 'relationship' && 
+                                    <RelationShipCenter 
+                                        {...this.props}
+                                        user={user}
+                                        friends={profile.friends}
+                                        profile={profileUser}
+                                        />
+                                }
+                            </div>
+                        </div>
                         <div className="lft-dv-a">
                             <StickyNavLinks
                                 {...this.props}
@@ -383,55 +430,6 @@ const Profile  = createReactClass( {
                                     profile={profileUser}
                                     />
                             }
-                        </div>
-                    </div>
-                    <div id="hm_main_blk" className="hm_main_blk home-center-div">
-                        <div className="hm-main-blk-ctnr"> 
-                            {tag === 'photos' && 
-                                <PhotosCenter 
-                                    {...this.props}
-                                    user={user}
-                                    photos={profile.photos}
-                                    profile={profileUser}
-                                    />
-                            }
-
-                            {tag === 'infos' && 
-                                <AboutCenter 
-                                    {...this.props}
-                                    user={user}
-                                    about={profile.about}
-                                    profile={profileUser}
-                                    />
-                            }
-                            {tag === 'relationship' && 
-                                <RelationShipCenter 
-                                    {...this.props}
-                                    user={user}
-                                    friends={profile.friends}
-                                    profile={profileUser}
-                                    />
-                            }
-                            <div id="home-center-div" className="central-border col-xs-8 col-sm-8 col-md-6 col-lg-6">
-                                {tag === null && 
-                                    <Center 
-                                        {...this.props} 
-                                        onShare={this.onShare} 
-                                        onComment={this.onComment}
-                                        onLike={this.onLike}
-                                        home={false}
-                                        profile={profileUser}
-                                        newsRefs={newsRefsUser}
-                                        fetchPosts={this._fetchPostsStream}
-                                        onSideComment={this.onSideComment}
-                                        postFormFocus={this.postFormFocus}
-                                        editPostFormFocus={this.editPostFormFocus}
-                                        referIn="profile"
-                                        timelineId={profileUser.id}
-                                        timeType='user'
-                                        />
-                                }
-                            </div>
                         </div>
                     </div>
                     <ModalVideoConfirm />

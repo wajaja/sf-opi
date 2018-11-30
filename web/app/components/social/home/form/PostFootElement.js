@@ -293,10 +293,10 @@ const _VideoUploader  = createReactClass({
     },
 
     componentWillUnmount() {
-        socket.removeListener('videoPreview', this.void);
-        socket.removeListener('MoreData', this.void);
-        socket.removeListener('Manifest', this.void);
-        socket.removeListener('Done', this.void);
+        socket && socket.removeListener('videoPreview', this.void);
+        socket && socket.removeListener('MoreData', this.void);
+        socket && socket.removeListener('Manifest', this.void);
+        socket && socket.removeListener('Done', this.void);
     },
 
     void() {

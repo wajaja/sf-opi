@@ -99,7 +99,7 @@ const LoginForm  = createReactClass({
 				            <a href="http://opinion.com/app_dev.php/resetting/request" className="psw-fgt">Forgot password ?</a>
 				        </div>
 				        <div className="lgn-dv-sbm-btn-ctnr">
-				            <button className="btn btn-primary" disabled={isLoading} >Login</button>
+				            <button className="btn go-check" disabled={isLoading} >Login</button>
 				        </div>
 				    </div>
 	            </form>

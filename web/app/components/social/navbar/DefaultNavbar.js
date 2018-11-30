@@ -27,12 +27,12 @@ const DefaultNavBar  = createReactClass( {
 		            <div className="nav-ctnr">
 		            	<div className="dft-g-rgstr-ctnr">
 			        		{location.pathname !== '/signup' && 
-			        			<div className="btn go-regiter-btn">
+			        			<div className="go-regiter-btn">
 			            			<a href="http://opinion.com/app_dev.php/signup" className="go-regiter">Sign Up</a>
 			            		</div>
 			        		}
 			        		{location.pathname !== '/login' && 
-			            		<div className="btn go-regiter-btn">
+			            		<div className="go-regiter-btn">
 			            			<a href="http://opinion.com/app_dev.php/login" className="go-regiter">Login</a>
 			            		</div>
 			        		}

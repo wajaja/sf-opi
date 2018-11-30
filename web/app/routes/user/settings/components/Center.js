@@ -1,7 +1,7 @@
 import React 			from 'react'
 import createReactClass from 'create-react-class'
 import { connect } 		from 'react-redux'
-
+import LoadingComponent	from '../../../../components'
 import { getUrlParameterByName } from '../../../../utils/funcs'
 import { 
 	Adress, Contact,
@@ -26,7 +26,10 @@ const Center = createReactClass({
 	render() {
 
 		const { location } = this.props,
-		tag = getUrlParameterByName('tag', location.search)
+		tag = getUrlParameterByName('tag', location.search);
+		
+		if(!this.props.setting) 
+			<LoadingComponent />
 
 		if(tag === 'adress')
 			return <Adress {...this.props} />
@@ -41,7 +44,10 @@ const Center = createReactClass({
 			return <Security {...this.props} />
 
 		else if(!tag || tag === 'general')
-			return <General {...this.props} />
+			return <General 
+						{...this.props} 
+						general={this.props.setting.general}
+						/>
 		else 
 			return <div></div>
 	}

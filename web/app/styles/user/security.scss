@@ -114,8 +114,8 @@
     width: 460px;
     text-align: center;
     // height: 350px;
-    border-radius: 8px;
-    border: 1px solid #c0cad6;
+    border-radius: 5px;
+    border: 1px solid #c3cdd2;
     &.reset-req {
         position: absolute;
         form{
@@ -193,6 +193,11 @@
     right: 1px;
     button{
         width: 100px;
+        width: 100px;
+        color: #fff;
+        background-color: #0294a5;
+        border-color: #0294a5;
+        border-radius: 3px;
         // color: #0294a5;
         // font-weight: 600;
     }
@@ -238,13 +243,20 @@
 
     .go-regiter-btn{
         margin-top: 20px;
-        width: 300px;
+        width: 100%;
         a{
+
+            border: 1px solid #24b2c3;
+            background-color: #26bacc;
             width: 100%;
             background-color: #0294a5;
-            padding: 8px;
-            border: 1px solid #098590;
+            padding: 9px;
+            border: 1px solid #0294a5;
             font-size: 14px !important;
+            color: #ffffff;
+            border-radius: 4px;
+            text-align: center;
+            display: block;
         }
     }
 }
@@ -261,12 +273,14 @@
     }
 }
 .frm-msg-ttl{
-    font-size: 20px;
-    /* font-weight: 600; */
-    margin-bottom: 32px;
-    color: #14181b;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    color: #087380;
     letter-spacing: 0.4px;
     font-family: sans-serif;
+    border-bottom: 1px solid #e6dfdf;
 }
 .sbmit-login {
     height: 28px;

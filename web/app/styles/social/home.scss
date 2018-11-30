@@ -43,11 +43,14 @@
     }
 
     &.profile {
+        #home-center-div{
+            margin-top: 12px;
+        }
         .lft-dv-a{
             flex: auto;
             width: 280px;
             position: relative;
-            margin-top: 5px;
+            margin-top: 12px;
         }
         #hm_frst_blk {
             width: 280px;

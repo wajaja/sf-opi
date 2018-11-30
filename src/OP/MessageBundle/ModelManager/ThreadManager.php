@@ -133,6 +133,7 @@ abstract class ThreadManager implements ThreadManagerInterface
 
             $threads = $qb->getQuery()
                             ->execute()->toArray();
+
             return $threads;
     }
 

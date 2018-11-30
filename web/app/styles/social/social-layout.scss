@@ -21,7 +21,10 @@ and open the template in the editor.
     }
 }
 .bdy-children-a{
-  display: flex;
+    display: flex;
+    .out-auth{
+        width: 100%;
+    }
 }
 input {
 	outline: none;
@@ -68,4 +71,13 @@ input {
     font-weight: 600;
     border: 1px solid #ced4ea;
     border-radius: 4px;
+}
+.LoadingComponent{
+    width: 32px;
+    height: 32px;
+    top: -2px;
+    /* margin: auto; */
+    background: transparent url(http://opinion.com/images/ajax-loader-cmt-img.gif) 50% 50% no-repeat;
+
+    background-size: contain;
 }

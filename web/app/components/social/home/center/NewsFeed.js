@@ -298,7 +298,7 @@ const NewsFeed  = createReactClass({
                                                     className={!!serverSide ? `news-div-a place-holder` : `news-div-a`}>
                                                     <List
                                                         autoHeight
-                                                        width={516}
+                                                        width={width}
                                                         height={height}
                                                         className={this.props.edit_form_focus ? `nws-div-b active` : `nws-div-b`}
                                                         ref={this._setListRef}

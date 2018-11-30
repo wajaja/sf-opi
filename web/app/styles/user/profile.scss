@@ -4,7 +4,7 @@
     height: auto;
     background: #fff;
     border: 1px solid #d2d9dc;
-    border-radius: 0px 0px 6px 6px;
+    border-radius: 0px 0px 3px 3px;
 }
 .cover_ctnr_0{
     display: flex;
@@ -12,32 +12,31 @@
     width: 1080px;
     left: 10px;
     z-index: 1;
-    height: 280px;
 }
 .cov-a{
     width: 100%;
     overflow: hidden;
-    height: 200px;
+    height: 140px;
     border-bottom: 1px solid #d8d9da;
-}
-.cov-b{
-    width: 100%;
-    height: 100%;
+    .cov-b{
+        width: 100%;
+        height: 100%;
+    }
 }
 .in-top-a{
-    margin-right: 10px;
+    // margin-right: 10px;
     position: relative;
 }
 .in-top-b{
-    width: 798px;
+    width: 282px;
     /*background-color: #fff;*/
 }
 .in-top-plus-a{
     position: relative;
     background: #fff;
-    height: 78px;
+    height: 70px;
     margin:auto;
-    border-radius: 0px 0px 6px 6px;
+    border-radius: 0px 0px 2px 2px;
 }
 .in-top-plus-plus{
     /*display: inline-block;*/
@@ -57,12 +56,12 @@
 }
 .pro-pic-a{
     display: inline-block;
-    width: 160px;
-    height: 160px;
+    width: 180px;
+    height: 180px;
     position: absolute;
-    left: 52px;
+    left: 50px;
     bottom: 8px;
-    border-radius: 6px;
+    border-radius: 2px;
 }
 .pro-pic-show{
     display: inline-block;
@@ -76,7 +75,6 @@
 .in-top-plus-rgt-ctnr{
     display: inline-block;
     position: relative;
-    padding-left: 240px;
     vertical-align: top;
     width: 100%;
 }
@@ -97,7 +95,7 @@
     display: inline-block;
 }
 .in-top-name>span{
-    margin-right: 10px
+    margin-right: 10px;
 }
 .in-top-name span::first-letter{
     text-transform: uppercase;
@@ -128,9 +126,9 @@
     margin-right: 10px;
 }
 .in-top-plus-pic{
-    height: 154px;
-    width: 154px;
-    border-radius: 15px;
+    height: 100%;
+    width: 100%;
+    border-radius: 2px;
     border: 1px solid #d2d9dc;
 }
 .pro-pic-ctnr{
@@ -284,7 +282,7 @@
 }
 .in-menu-home,
 .in-menu-about,
-.in-menu-freinds, 
+.in-menu-freinds,
 .in-menu-images,
 .in-menu-opinion {
     display: -webkit-inline-box;
@@ -433,7 +431,7 @@
 }
 .gal-ldr-pst{
     right: 17px;
-    top: 5px
+    top: 5px;
 }
 .gal-ldr-save{
     left: 28px;
@@ -475,7 +473,7 @@
     animation-timing-function: ease-out;
     -webkit-animation-duration: 600ms;
     -moz-animation-duration: 600ms;
-    animation-duration: 600ms;    
+    animation-duration: 600ms;
 }
 #st-profiles-container,
 #create-gal-container{
@@ -531,7 +529,7 @@
     border-top: 1px solid #ccc;
 }
 #mdl_cover_upt_hd{
-    
+
 }
 .mdl-st-prf-frm-dv{
     height: 100%;
@@ -714,7 +712,7 @@
     overflow: hidden;
 }
 .usr-plus-fr-ctnr{
-    
+
 }
 .sml-dv-usr-ctnr{
     display: flex;
@@ -775,13 +773,12 @@
         /*opacity: .6;*/
         width: 18px;
         height: 18px;
-        margin: 0 8px 0 0 ;
+        margin: 0 8px 0 0;
         background: transparent url(http://opinion.com/images/if_Info_blue_32.png) 50% 50% no-repeat;
         top: 1px;
     }
 }
 .in-detail-hd i {
-    
     font-size: 15px;
 }
 .edit-about-info,
@@ -825,6 +822,8 @@
 .usr-abt-info-txt{
     display: inline-block;
     color: #2e4bb9;
+    position: absolute;
+    left: 100px;
 }
 .show-usr-plus-pho{
     display: block;
@@ -980,7 +979,7 @@
     }
 }
 .selct-per-ctnr{
-        display: block;
+    display: block;
     position: absolute;
     right: 8px;
     top: 2px;

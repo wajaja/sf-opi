@@ -195,4 +195,5 @@ function mapDispatchToProps(dispatch) {
 //////
 export default  withRouter(connect(state =>({
 	user: state.User.user,
+    setting: state.User.setting,
 }), mapDispatchToProps)(Setting))

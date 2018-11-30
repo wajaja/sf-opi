@@ -185,9 +185,9 @@ const General = createReactClass({
     }
 })
 
+//////
 export default withRouter(connect(state => ({
-    general: state.User.setting.general,
-    loadData: state.User.setting.loadData,
+    loadData: !!state.User.setting && state.User.setting.loadData,
     status: state.User.status,
     nameForm: state.form.NameForm,
 }))(General))

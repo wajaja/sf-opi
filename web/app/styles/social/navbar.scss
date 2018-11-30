@@ -12,21 +12,22 @@ nav .container {
     .nav-ctnr{
         .dft-g-rgstr-ctnr{
             position: absolute;
-            top: 9px;
+            top: 6px;
             right: 0;
         }
         .go-regiter-btn{
             letter-spacing: 1px;
             margin: 0 20px;
             a {
-                border-radius: unset;
-                border: 1px solid #5a8a8e;
+                border: 1px solid #178a98;
                 text-align: center;
                 padding: 8px;
-                background-color: #65d3e0;
-                min-width: 150px;
-                font-size: 13px !important;
-                font-weight: 600;
+                background-color: #26bacc;
+                width: 150px;
+                font-size: 14px !important;
+                display: block;
+                color: #ffffff;
+                border-radius: 5px;
             }
         }
     }
@@ -359,7 +360,7 @@ ul{
     z-index: 1000;
     font-weight: 600;
     height: 28px;
-    padding: 5px 10px 4px 15px;
+    padding: 5px 10px 4px 8px;
     font-size: 13px;
     /* background-color: rgba(57, 184, 220, 0.99); */
     border-bottom: 1px solid #d5dad8;
@@ -370,8 +371,8 @@ ul{
     overflow-y: auto;
 	max-height:430px;
     /*background: #fff;*/
-    border-left: 1px solid rgb(203, 197, 197);
-    border-right: 1px solid rgb(203, 197, 197);
+    // border-left: 1px solid rgb(203, 197, 197);
+    // border-right: 1px solid rgb(203, 197, 197);
 
     .thr-elem{
         height: 60px;
@@ -574,20 +575,26 @@ ul{
     background: #ccc;
 }
 .notif-li-read{
-    background: #fff;
-    display: initial; /*...!important*/
+    background: #f1f7f5;
+    padding: 0 7px;
+    height: 100%;
+}
+.notif-li-unread{
+    padding: 0 7px;
+    height: 100%;
 }
 .note-content-a{
-    color: #4d6287;
+    color: #181d25;
     font-size: 13px;
-    padding-top: 6px;
+    padding-top: 5px;
 }
 .invit-nv-ul, .nt-nv-ul, .msg-nv-ul{
     padding: 0px;
 
     .note-content{
         display: inline-block;
-        height: 65px;
+        height: 60px;
+        border-bottom: 1px solid #d5dad8;
     }
 }
 .notif-left{
@@ -624,11 +631,19 @@ ul{
 }
 .invit-nv-ul{
     .inv-nv-box{
-        /* height: 60px; */
-        border-bottom: 1px solid #dce4e8;
+        height: 72px; 
+        /*border-bottom: 1px solid #dce4e8;*/
+        img{
+            display: inline-block;
+            height: 53px;
+            width: 53px;
+            border: 1px solid #ccc;
+        }
         .u-invit-lft{
             display: inline-block;
             vertical-align: top;
+            position: relative;
+            top: 1px;
         }
         .u-invit-rght{
             display: inline-block;
@@ -637,13 +652,14 @@ ul{
         }
         .nm-link-u-invit{
             font-weight: 600;
+            text-transform: capitalize;
         }
         .mutuals-users{
             display: none;
         }
         .req-invit-btn-ct{
             position: relative;
-            margin-top: 5px;
+            margin-top: 8px;
             .lft, .rght{
                 display: inline-block;
                 vertical-align: top;
@@ -651,14 +667,15 @@ ul{
             }
             button{
                 text-transform: capitalize;
-                font-weight: 600;
+                /*font-weight: 600;*/
                 font-size: 13px;
-                padding: 5px 12px;
+                padding: 2px 7px;
+                border-radius: 2px;
             }
         }
     }
     .u-invit-el{
-        padding: 2px 5px;
+        padding: 5px 8px;
         position: relative;
     }
 }

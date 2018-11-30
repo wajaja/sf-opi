@@ -99,15 +99,22 @@ class ObjectToArrayTransformer
 
     public function threadObjectToArray($object) {
         $user   = $this->getAuthenticatedUser();
-        return [
-            'id'                => $object->getId(),
-            'metadata'          => $this->getThreadMetadata($object),
-            'lastMessage'       => $this->getThreadLastMessage($object),
-            'lastMessageDate'   => $object->getLastMessageDate()->getTimestamp(),
-            'isReadByParticipant'=> $object->isReadByParticipant($user),
-            'createdAt'         => $object->getCreatedAt()->getTimestamp(),
-            'otherParticipants' => $this->getOtherParticipants($object, $user),
-        ];
+        $th = [];
+
+        try {
+            $th = [
+                'id'                => $object->getId(),
+                'metadata'          => $this->getThreadMetadata($object),
+                'lastMessage'       => $this->getThreadLastMessage($object),
+                'lastMessageDate'   => $object->getLastMessageDate()->getTimestamp(),
+                'isReadByParticipant'=> $object->isReadByParticipant($user),
+                'createdAt'         => $object->getCreatedAt()->getTimestamp(),
+                'otherParticipants' => $this->getOtherParticipants($object, $user),
+            ];
+        } catch (Exception $e) {
+            
+        }
+        return $th;
     }
 
     protected function getThreadMetadata($thread) {

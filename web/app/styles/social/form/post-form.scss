@@ -5,18 +5,18 @@
     display: none;
 }
 .home-form {
-    display: block;
+    display: none;
     position: relative;
     height: 32px;
     padding: 6px;
-    background-color: #f1f7f5; 
+    /* background-color: #f1f7f5; */
     border-bottom: 1px solid #e4eaec;
     border-radius: 4px 4px 0 0;
 }
 .post-form-body{
     background-color: #fff;
     border-bottom-left-radius: 3px;
-    border-bott om-right-radius: 3px;
+    border-bottom-right-radius: 3px;
     padding: 5px 10px;
 }
 .start-list-form-lft{
@@ -297,6 +297,9 @@ pre{
 .post-support-textarea{
     width: 100%;
     display: block;
+    &:first-letter{
+        text-transform: capitalize;
+    }
 }
 /*Textarea in both home-form
 ----------------------------------------------------------------------------------------------------*/
@@ -435,11 +438,13 @@ pre{
 /*
 ---------------------------------------------------------------------------------------------------*/
 .gl-frm-foo{
-    height: 39px;
-    border-top: 1px solid #dee1e2;
-    background: #f1f7f5;
+    display: none;
     position: relative;
     border-radius: 0 0 4px 4px;
+    height: unset !important;
+    border-top: 1px solid transparent;
+    background: #fff;
+    padding: 3px;
     &.pst-foo-opt-space{
         margin-top: 100px;
     }
@@ -505,16 +510,24 @@ pre{
     /*font-weight: 600;*/
 }
 .gl-frm-a{
+    padding: 4px;
     z-index: 5;
     position: relative;
     border: 1px solid #d2d9dc;
-    border-radius: 2px;
+    border-radius: 4px;
+    background: #fff;
     &.out-active{
         border: none !important;
         border-radius: 2px;
         z-index: 1140;        
         .post-form-body{
             min-height: 115px;  /*when form focus expand textarea*/
+        }
+        .home-form{
+            display: block !important;
+        }
+        .gl-frm-foo{
+            display: block !important;
         }
     }
     .pst-select-recip{
@@ -2142,10 +2155,4 @@ select::-ms-expand{
         height: 33px;
         margin: -13px;
     }
-}
-.gl-frm-foo{
-    height: unset !important;
-    border-top: 1px solid transparent;
-    background: #fff;
-    padding: 3px;
 }

@@ -46,7 +46,7 @@ export { Center, NewsFeed, PostForm,
 		 CheckRelationShipButton, MiniProfile,
 		 BuildHtmlString, ErrorStack, WelcomeFoot,
 		 BuildTextArr, FontSelector, FontSizeSelector,
-		 ColorPicker, BackgroundColorPicker }					from './social'
+		 ColorPicker, BackgroundColorPicker, MeetYouViewer }	from './social'
 
 export { LoginPage, LoginForm, 
 		 SignupPage, SignupForm,
@@ -60,3 +60,4 @@ export { LoginPage, LoginForm,
 } 									from './user'
 
 export MyLoadable               from './MyLoadable'
+export LoadingComponent 		from './LoadingComponent'

@@ -42,6 +42,7 @@ div#tabnav_invit #invit_nv_ct
     top: 32px;
     left: -50px;
     width: 420px;
+    padding: 0px;
     min-height: 250px;
     border-radius: 0 0 4px 4px;
 }
@@ -81,7 +82,7 @@ div#tabnav_msg .msg-nv-arraw, div#tabnav_msg .msg-nv-arraw:after
 #nt_nv_ct, 
 #invit_nv_ct, 
 #msg_nv_ct {
-    background-color: #f1f7f5;
+    background-color: #ffffff;
     box-shadow:  0px 5px 14px #928d8d;
     -webkit-box-shadow: 0px 5px 14px #928d8d;
     overflow: visible;

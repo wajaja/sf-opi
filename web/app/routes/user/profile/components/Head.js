@@ -57,52 +57,52 @@ const Head = createReactClass({
 			                	{...this.props}
 			                	profile={profile}
 			                	/>
-			                <div className="in-top-plus-rgt-ctnr">
-			                    <div className="in-top-plus-rgt-ctnr-a">
-			                        <div className="in-top-name">
-			                            <span>{profile.firstname}</span>
-			                            <span>{profile.lastname}</span>
-			                        </div>
-			                        {false && <div className="in-top-sts-ctnr">
-				                            <i className="fa fa-quote-left" aria-hidden="true"></i>
-				                            <span className="sts-txt">
-				                                {profile.status}
-				                            </span>
-				                            {user.id === profile.id &&
-				                                <div className="edt-status">
-				                                	<i className="fa fa-pencil" aria-hidden="true"></i>
-				                                </div>
-				                            }
-				                        </div>
-				                    }
-			                    </div>
-			                    <div className="in-top-plus-plus">
-			                        {user.id != profile.id &&
-				                        <div className="in-top-plus-plus-a">
-				                            <div className="spa-in-add-freind">
-					                        	<CheckRelationShipButton 
-					                        		user={user}
-					                        		profile={profile}
-					                        		onFriendConfirm={this.onFriendConfirm}
-							        				onFollowRequest={this.onFollowRequest}
-							        				onFriendRequest={this.onFriendRequest}
-							        				onDeleteInvitation={this.onDeleteInvitation}
-							        				onUnFollowRequest={this.onUnFollowRequest}
-					                        		/>			                                
-				                            </div>
-				                            <div className="spa-in-sd-message">
-				                                <button 
-				                                	className="btn-in-sd-message btn"
-				                                	onClick={this.createMessage}>
-				                                    <i className="fa fa-envelope"></i>
-				                                    <span>Message</span>
-				                                </button>
-				                            </div>        
-			                        	</div>
-			                        }
-			                    </div>
-			                </div>
 			            </div>
+		                <div className="in-top-plus-rgt-ctnr">
+		                    <div className="in-top-plus-rgt-ctnr-a">
+		                        <div className="in-top-name">
+		                            <span>{profile.firstname}</span>
+		                            <span>{profile.lastname}</span>
+		                        </div>
+		                        {false && <div className="in-top-sts-ctnr">
+			                            <i className="fa fa-quote-left" aria-hidden="true"></i>
+			                            <span className="sts-txt">
+			                                {profile.status}
+			                            </span>
+			                            {user.id === profile.id &&
+			                                <div className="edt-status">
+			                                	<i className="fa fa-pencil" aria-hidden="true"></i>
+			                                </div>
+			                            }
+			                        </div>
+			                    }
+		                    </div>
+		                    <div className="in-top-plus-plus">
+		                        {user.id != profile.id &&
+			                        <div className="in-top-plus-plus-a">
+			                            <div className="spa-in-add-freind">
+				                        	<CheckRelationShipButton 
+				                        		user={user}
+				                        		profile={profile}
+				                        		onFriendConfirm={this.onFriendConfirm}
+						        				onFollowRequest={this.onFollowRequest}
+						        				onFriendRequest={this.onFriendRequest}
+						        				onDeleteInvitation={this.onDeleteInvitation}
+						        				onUnFollowRequest={this.onUnFollowRequest}
+				                        		/>			                                
+			                            </div>
+			                            <div className="spa-in-sd-message">
+			                                <button 
+			                                	className="btn-in-sd-message btn"
+			                                	onClick={this.createMessage}>
+			                                    <i className="fa fa-envelope"></i>
+			                                    <span>Message</span>
+			                                </button>
+			                            </div>        
+		                        	</div>
+		                        }
+		                    </div>
+		                </div>
 			        </div>
 			    </div>
 			</div>

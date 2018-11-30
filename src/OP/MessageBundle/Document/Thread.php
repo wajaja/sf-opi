@@ -39,9 +39,9 @@ class Thread extends BaseThread
      */
     protected $createdBy;
 
-     /**
+    /**
     *
-    * @ODM\ReferenceMany(targetDocument="OP\MessageBundle\Document\Message", mappedBy="thread")
+    * @ODM\ReferenceMany(targetDocument="OP\MessageBundle\Document\Message", mappedBy="thread", prime={"thread"})
     */
     public $messages;
 

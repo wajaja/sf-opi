@@ -7,7 +7,7 @@ import { Link, withRouter,
          Switch, Route }    from 'react-router-dom'
 
 import { LiveActivities, Diary, TVChannel,
-         SuggestUsers, }            from '../../../components'
+         SuggestUsers, MeetYouViewer }            from '../../../components'
 import { 
     Left, Center, Right, ModalVideoConfirm 
 }                                   from '../../../components/social/home'
@@ -249,11 +249,7 @@ const Home  = createReactClass({
                             {this.props.screenWidth > 992 && 
                                 <div className="lft-dv">
                                     <div className="lft-dv-a">
-                                        <Diary 
-                                            dispatch={dispatch}
-                                            forUserId={userId}
-                                            hasOwnDiary= {hasOwnDiary}
-                                            />
+                                        <MeetYouViewer dispatch={this.props.dispatch} />
                                         <SuggestUsers 
                                             user={this.props.user}
                                             history={this.props.history}
@@ -267,6 +263,11 @@ const Home  = createReactClass({
                                             onFriendRequest={this.onFriendRequest}
                                             onUnFollowRequest={this.onUnFollowRequest}
                                             onDeleteInvitation={this.onDeleteInvitation}
+                                            />
+                                        <Diary 
+                                            dispatch={dispatch}
+                                            forUserId={userId}
+                                            hasOwnDiary= {hasOwnDiary}
                                             />
                                         <Foot dispatch={this.props.dispatch} />                                
                                     </div>
