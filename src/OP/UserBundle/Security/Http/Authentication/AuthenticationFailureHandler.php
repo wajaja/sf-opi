@@ -46,9 +46,7 @@ class AuthenticationFailureHandler implements AuthenticationFailureHandlerInterf
     {
         //$session = $request->getSession();
 
-        if(!$request->isXmlHttpRequest() || 
-            $request->headers->get('Content-Type') !== 'application/json') {
-
+        if($request->headers->get('Content-Type') !== 'application/json') {
             $route      = $this->router->generate('fos_user_security_login');
             $response   = new RedirectResponse($route);    //we will redirect user to referer
             $event      = new AuthenticationFailureEvent($e, new JWTAuthenticationFailureResponse());

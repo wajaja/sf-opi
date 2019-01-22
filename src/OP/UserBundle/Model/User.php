@@ -217,7 +217,7 @@ class User extends BaseUser
     protected $listProfilePics;
     
     /**
-    * @MongoDB\ReferenceOne(targetDocument="OP\MediaBundle\Document\Image", cascade={"persist", "remove"},  nullable=true)
+    * @MongoDB\ReferenceOne(targetDocument="OP\MediaBundle\Document\Image", cascade={"remove"},  nullable=true)
     * 
     * @Expose
     * @Groups({"Infos", "Default", "Detail", "Me", "Profile", "elastica", "WithMutual"})

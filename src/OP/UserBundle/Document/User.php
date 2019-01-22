@@ -213,7 +213,7 @@ class User extends BaseUser implements ParticipantInterface //, ObjectManagerAwa
     protected $signInDate;
 
     /**
-    * @MongoDB\ReferenceOne(targetDocument="OP\MediaBundle\Document\Image", cascade={"persist", "remove"}, nullable=true)
+    * @MongoDB\ReferenceOne(targetDocument="OP\MediaBundle\Document\Image", cascade={"remove"}, nullable=true)
     * 
     * Embed One target Path to user Profile
     * @Expose

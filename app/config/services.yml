@@ -43,12 +43,12 @@ services:
             - '%fos_user.resetting.retry_ttl%'
     OP\UserBundle\Controller\ChangePasswordController:
         arguments: ['@translator', '@OP\UserBundle\Security\UserProvider', '@fos_user.registration.form.factory']
-    OP\UserBundle\Controller\Api\RegistrationController:
-        arguments: 
-            - '@OP\UserBundle\Security\UserProvider'
-            - '@doctrine.odm.mongodb.document_manager.public'
-            - '@op_user.user_manager'
-            - '@OP\UserBundle\Controller\ResettingController'
+    # OP\UserBundle\Controller\Api\RegistrationController:  #todo 
+    #     arguments: 
+    #         - '@OP\UserBundle\Security\UserProvider'
+    #         - '@doctrine.odm.mongodb.document_manager.public'
+    #         - '@op_user.user_manager'
+    #         - '@OP\UserBundle\Controller\ResettingController'
     OP\UserBundle\Controller\Api\ApiResettingController:
         arguments: 
             - '@OP\UserBundle\Security\UserProvider'

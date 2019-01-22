@@ -77,7 +77,8 @@
     },
     "require-dev": {
         "symfony/maker-bundle": "1.0",
-        "symfony/phpunit-bridge": "^2.7"
+        "symfony/phpunit-bridge": "^2.7",
+        "symfony/dotenv": "^3.4"
     },
     "scripts": {
         "post-install-cmd": [

@@ -40,12 +40,14 @@ class NewPostFormHandler extends AbstractPostFormHandler
                 ->setIsMainPost(true)
                 ->addLeftEditors($this->userTransformer->reverseTransform($post->getLeftEditorTexts()))
                 ->addRightEditors($this->userTransformer->reverseTransform($post->getRightEditorTexts()));
-        }        
-
-        if("post" === $post->getType() && $post->getIsMainPost()) {
+        } 
+        else if("post" === $post->getType() && $post->getIsMainPost()) {
             $doc->setIsMainPost(true)
                 ->addEditors($this->userTransformer->reverseTransform($post->getEditorTexts()))
                 ;        
+        } 
+        else if('card' === $post->getType() && $post->getIsMainPost()) {
+            $doc->setIsMainPost(true);
         }
         return $doc;
     }

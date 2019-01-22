@@ -22,14 +22,25 @@ class BasePostManager extends AbstractManager
         $content = $all['post']['content'] ?? $data['content'];
         $place   = $all['post']['place'] ?? $data['place'];
 
-        $post->setContent($this->buildHTML($content));
-        $post->setPlace($place);
-        $post->doKeywords($content);
-        $this->dm->persist($post);        
+        $cardId = $req->get('cardId');  //meetYou card design
+
+        if($cardId && strlen($cardId) === 24) {
+            $post->setCardId($cardId);
+            $this->dm->persist($post);
+            $this->dm->flush();
+            return;
+        } else {
+            $post->setContent($this->buildHTML($content));
+            $post->setPlace($place);
+            $post->doKeywords($content);
+        }
+
+        $this->dm->persist($post);
 
         if(null !== $req->get('refer')){
-            $post   = $this->setReference($post, $req);
+            $post   = $this->setReference($post, $req); // for allies
         } else {
+            //todo more control before image processing
             $post   = $this->addXhrImage($post, $galleryDir);
             $this->addXhrVideo($post);          //add video if exist
         }

@@ -9,6 +9,7 @@ namespace OP\UserBundle\EventListener;
 
 use OP\UserBundle\ModelManager\RefreshTokenManagerInterface,
     OP\UserBundle\Request\RequestRefreshToken,
+    JMS\Serializer\SerializerInterface,
     Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent,
     Symfony\Component\Security\Core\User\UserInterface,
     Symfony\Component\Validator\Validator\ValidatorInterface,
@@ -22,13 +23,14 @@ use OP\UserBundle\ModelManager\RefreshTokenManagerInterface,
 class AttachRefreshTokenOnSuccessListener 
 {
     protected $userRefreshTokenManager, $ttl,
-              $validator, $requestStack;
+              $validator, $requestStack, $serializer;
 
-    public function __construct(RefreshTokenManagerInterface $refreshTokenManager, $ttl, ValidatorInterface $validator, RequestStack $requestStack)
+    public function __construct(RefreshTokenManagerInterface $refreshTokenManager, $ttl, ValidatorInterface $validator, RequestStack $requestStack, SerializerInterface $serializer)
     {
         $this->refreshTokenManager = $refreshTokenManager;
         $this->ttl = $ttl;
         $this->validator = $validator;
+        $this->serializer = $serializer;
         $this->requestStack = $requestStack;
     }
 
@@ -71,6 +73,12 @@ class AttachRefreshTokenOnSuccessListener
 
             $this->refreshTokenManager->save($refreshToken);
             $data['refresh_token'] = $refreshToken->getRefreshToken();
+        }
+
+        //additional user info for meetyou usage
+        if($request->headers->get('X-App-Name') === 'MeetYou/Web') {
+            $data['user_id'] = $user->getId();
+            // $data['profile_pic'] = $user->getProfilePic();
         }
 
         $event->setData($data);

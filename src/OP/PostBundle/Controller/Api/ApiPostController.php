@@ -153,6 +153,34 @@ class ApiPostController extends FOSRestController implements ClassResourceInterf
     }
 
     /**
+     * Creates a new Post post.
+     *
+     * @Annotations\Post("/posts/share-card/{$cardId}")
+     *
+     * @return object
+     */
+    public function shareCardAction(Request $request, EventDispatcherInterface $dispatcher, ToArrayTransformer $transformer, NotificationManager $notifMan)
+    {        
+        $res     = new JsonResponse();
+        $form    = $this->createForm(PostType::class, new Post());
+        
+        if($post = $handler->process($form, false)) {
+            $this->notify($post, $notifMan);
+            if($post->getType() == 'opinion')
+                $data = $transformer->opinionObjectToArray($post);
+            else 
+                $data = $transformer->postObjectToArray($post);
+
+            $dispatcher->dispatch(OPPostEvents::POST_CREATE, new PostEvent($data));
+
+            return $res->setData(array('post' =>$data));
+        }
+        else {
+            return $response->setData(array('error'=>'error'));
+        }
+    }
+
+    /**
     * Create some notification for all users subscribed
     *
     */

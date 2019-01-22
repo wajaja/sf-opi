@@ -195,6 +195,7 @@ const PostForm  = onClickOutside(
 		sendPost(data) {
 			axios.post(`${BASE_PATH}/api/posts/create`, data)
 				.then((res) => {
+					console.log(res.data)
 					this.props.dispatch(PostsActions.newPost(res.data.post));
 					this.afterSend();
 				}, function(err) {
@@ -230,7 +231,7 @@ const PostForm  = onClickOutside(
 				editorClassnames: 'custom-form-editor',
 				editorState: EditorState.push(this.state.editorState, ContentState.createFromText(''))
 			})
-			this.props.postFormFocus(false)
+			this.props.postFormFocus(false);
 			this.uploader.methods.reset();
 			this.uploader.methods.setParams({unique: unique});
 			this.props.reset(); //dispatch

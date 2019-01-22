@@ -82,7 +82,12 @@ services:
     OP\UserBundle\DataTransformer\UsernameToUserTransformer:
         arguments: ["@op_user.user_manager"]
     OP\UserBundle\EventListener\AttachRefreshTokenOnSuccessListener:
-        arguments: [ "@op_user.jwtrefreshtoken.refresh_token_manager", "%op_user.refresh_token.ttl%", "@validator", "@request_stack" ]
+        arguments: 
+            - "@op_user.jwtrefreshtoken.refresh_token_manager"
+            - "%op_user.refresh_token.ttl%"
+            - "@validator"
+            - "@request_stack"
+            - '@jms_serializer'
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: attachRefreshToken }
 

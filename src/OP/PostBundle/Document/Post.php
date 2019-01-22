@@ -201,6 +201,14 @@ class Post extends BasePost
     protected $timelineId;
 
     /**
+     * 
+     * @MongoDB\Field(name="cardId", type="object_id")
+     * 
+     * @var cardId
+     */
+    protected $cardId;
+
+    /**
      * $timelineType (user || group)
      * @MongoDB\Field(name="timelineType", type="string")
      * 
@@ -1959,6 +1967,28 @@ class Post extends BasePost
     public function getTimelineId()
     {
         return $this->timelineId;
+    }
+
+    /**
+     * Set cardId
+     *
+     * @param object_id $cardId
+     * @return $this
+     */
+    public function setCardId($cardId)
+    {
+        $this->cardId = $cardId;
+        return $this;
+    }
+
+    /**
+     * Get cardId
+     *
+     * @return object_id $cardId
+     */
+    public function getCardId()
+    {
+        return $this->cardId;
     }
 
     /**
