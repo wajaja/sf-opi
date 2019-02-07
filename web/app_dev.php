@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Dotenv\Dotenv;  //since 3.2; §https://stackoverflow.com/questions/50335804/how-do-i-get-an-environment-parameter-in-a-controller-in-symfony-3-4
 use Symfony\Component\Debug\Debug;
 
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
@@ -23,6 +24,8 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
  */
 $loader = require __DIR__.'/../app/autoload.php';
 Debug::enable();
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__.'/../app/config/.env');
 
 $kernel = new AppKernel('dev', true);
 // $kernel->loadClassCache();

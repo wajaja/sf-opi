@@ -73,12 +73,13 @@
         "white-october/pagerfanta-bundle": "^v1.2.1",
         "egeloen/google-map": "^2.0",
         "nmred/kafka-php": "v0.2.0.8",
-        "psr/log": "1.0.2"
+        "psr/log": "1.0.2",
+        "aws/aws-sdk-php": "^3.0",
+        "symfony/dotenv": "^3.4"
     },
     "require-dev": {
         "symfony/maker-bundle": "1.0",
-        "symfony/phpunit-bridge": "^2.7",
-        "symfony/dotenv": "^3.4"
+        "symfony/phpunit-bridge": "^2.7"
     },
     "scripts": {
         "post-install-cmd": [

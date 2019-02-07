@@ -126,6 +126,7 @@ const PictureComments  = createReactClass({
             this.setState({comments: _.uniqBy(comments, 'id')})
         }
     },
+http://127.0.0.1:3002/events/create-card?id=5c4b1701b7064d1fec462b89
 
 	render() {
 		const { editingComment, comments, scroll_height } = this.state,

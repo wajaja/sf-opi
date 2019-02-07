@@ -1,0 +1,26 @@
+#https://github.com/1up-lab/OneupUploaderBundle/issues/241
+
+knp_gaufrette:
+    adapters:
+        gallery:
+            aws_s3:
+                service_id: "ms.amazon.s3" 
+                bucket_name: "%amazon_s3_bucket_name%"
+                options:
+                    directory: listings
+                    create: false
+
+    filesystems:
+        gallery:
+            adapter: gallery
+# Services
+    ms.amazon.s3Credentials:
+        class: Aws\Credentials\Credentials
+        arguments: ["%amazon_aws_key%", "%amazon_aws_secret_key%"]
+
+    ms.amazon.s3:
+        class: Aws\S3\S3Client
+        arguments:
+            - version: %amazon_s3_version%
+              region: %amazon_s3_region%
+              credentials: "@ms.amazon.s3Credentials"
